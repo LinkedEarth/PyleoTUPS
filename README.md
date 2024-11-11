@@ -1,37 +1,56 @@
-# PyTUPS
-PyTUPS: Table Understanding for Paleoclimate Studies in Python
+# NOAAStudies Module
+Welcome to the NOAAStudies module, a Python package designed to interface with the NOAA (National Centers for Environmental Information) database for paleoclimatology studies. This guide will walk you through setting up and using the NOAAStudies module to access and analyze climate study data effectively.
 
-Using the PyTUPS notebook, you would be able to make pytups object, to access the NCEI NOAA respositories by basic arguments like xmlId,NOAAStudyId, dataPublisher, investigators, latitude, longitude, location.
+### Configuration
 
-Steps to access:
+No initial configuration is necessary to start using the module with the default settings. The module uses pre-defined endpoints to interact with the NOAA API.
 
-#### 1. Create a PyTUPS object;
-```python
-pytups = pyTups()
-```
+## Usage
 
-#### 2. Search for studies:
-if xmlID or NOAAId is availble, either of these IDs will have preference. Else, search using other parameters
+This section will guide you through basic operations you can perform with the NOAAStudies module.
 
-example:
+### Searching for Studies
+
+To search for paleoclimatology studies by various parameters, you can use the `search_studies` method. Here's an example of how to search for studies based on the investigator's name:
 
 ```python
-pytups.search_studies(xml_id=16017) #option 1
-pytups.search_studies(data_publisher="NOAA", investigators="Khider") #option 2
+from NOAAStudies import NOAAStudies
+
+# Create an instance of the NOAAStudies class
+noaa = NOAAStudies()
+
+# Search for studies where 'khider' is an investigator
+noaa.search_studies(investigators='khider')
+
+# Display the results
+print(noaa.display_responses())
 ```
 
-search_studies() gives an output of a dataframe displaying appropriate matches as per arguments passed
+### Displaying Publications
 
-#### 3. Select respective url
+If you're interested in the publications of a specific study, you can retrieve and display them as follows:
+
 ```python
-pytups.select_study_url(0)  # Replace 0 with the desired index of the response dataframe
+# Display publications for a specific study ID
+publications_df = noaa.display_publications('some_study_id')
+print(publications_df)
 ```
 
-#### 4. Load Studies/Data
-Only after the above 3 steps, Call the load data method
+### Fetching Data from Sites
+
+To access detailed information about sites within a study, use the `display_sites` method:
+
 ```python
-df, metadata = pytups.load_data_from_selected_url()
+# Display site details for a given study ID
+sites_info_df = noaa.display_sites('some_study_id')
+print(sites_info_df)
 ```
-The method will return a dataframe and metadata associated with the respective study/datafile
 
+### Fetching Raw Data
 
+If you need to download raw data files associated with a study's data table, the `get_data` method can be used:
+
+```python
+# Fetch data using a data table ID
+data_df = noaa.get_data(dataTableID='some_data_table_id')
+print(data_df)

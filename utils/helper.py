@@ -44,7 +44,7 @@ def assert_list(input_item):
     else:
         return []
 
-def get_citation(publication):
+def get_citation_key(publication):
     """
     Generate a citation key for a publication.
 

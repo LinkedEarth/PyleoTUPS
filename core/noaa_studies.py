@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 from pybtex.database import BibliographyData, Entry
 import re
-# from utils.helper import search_studies, assert_list, get_citation, fetch_data
+# from utils.helper import search_studies, assert_list, get_citation_key, fetch_data
 from utils.helper import *
 
 class NOAAStudies:
@@ -72,22 +72,6 @@ class NOAAStudies:
         #     print(f"Error fetching studies: {response.status_code}")
 
         self.response_parser(search_studies(params))
-
-    # def params_validators(self, key, value):
-    #     """
-    #     - Validations: 
-    #         - minLon, maxLon, minLat, maxLat:
-    #             Latitude Shall be in the -90 to +90 range
-    #             Longitude shall be in the -180 to +180 range
-    #         - Parse multiple inputs: 
-    #             Implement parsing for more than one keyword, DataTypeId
-    #         - species:
-    #             Limit till 4 letter code
-    #         - earliestYear/ latestYear:
-    #         Validate Year
-
-    #     """
-    #     pass
 
     def response_parser(self, data):
         """
@@ -179,8 +163,10 @@ class NOAAStudies:
             site.get('NOAASiteId', np.nan): {
                 'siteName': site.get('siteName', np.nan),
                 'locationName': site.get('locationName', np.nan),
-                'lat': site.get('geo', {}).get('geometry', {}).get('coordinates', [None, None])[0],
-                'lon': site.get('geo', {}).get('geometry', {}).get('coordinates', [None, None])[1],
+                'lat': site.get('geo', {}).get('geometry', {}).get('coordinates', [np.nan, np.nan])[0],
+                'lon': site.get('geo', {}).get('geometry', {}).get('coordinates', [np.nan, np.nan])[1],
+                'minElevationMeters': site.get('geo', {}).get('properties', {}).get('minElevationMeters', np.nan),
+                'maxElevationMeters': site.get('geo', {}).get('properties', {}).get('maxElevationMeters', np.nan),
                 'paleoData': self.load_paleo_data(site.get('paleoData', []), study_id, site.get('NOAASiteId'))
             }
             for site in study.get('site', [])
@@ -219,23 +205,6 @@ class NOAAStudies:
                 'site_id': site_id
             }
         return paleo_dict
-
-    # def assert_list(self, input_item):
-        # """
-        # Ensure the input is a list. If it's not a list, convert it into a single-element list.
-
-        # Parameters:
-        #     input_item: A single element or a list.
-
-        # Returns:
-        #     list: A list containing the input item(s).
-        # """
-        # if isinstance(input_item, list):
-        #     return input_item
-        # elif input_item is not None:
-        #     return [input_item]
-        # else:
-        #     return []
         
     def get_response(self):
         """
@@ -252,31 +221,6 @@ class NOAAStudies:
             'sites': study['sites']
         } for study in self.studies.values()]
         return pd.DataFrame(data)
-
-    # def get_citation(self, publication):
-        # """
-        # Generate a citation key for a publication.
-
-        # Parameters:
-        #     publication (dict): A dictionary containing publication details.
-
-        # Returns:
-        #     str: A unique citation key.
-        # """
-        # # Extract last name from the author field
-        # last_name = publication.get('author', 'Unknown Author').split()[-1]
-
-        # # Extract first significant word from the title
-        # title = publication.get('title', 'Unknown Title')
-        # words = re.findall(r'\w+', title)
-        # first_significant_word = next((word.capitalize() for word in words if len(word) > 2 and word.lower() != 'the'), "Unknown")
-
-        # # Get the year and NOAAStudyId
-        # pub_year = publication.get('year', 'Unknown Year')
-        # study_id = publication.get('NOAAStudyId', 'UnknownID')
-
-        # # Create citation key
-        # return f"{last_name}_{first_significant_word}_{pub_year}_{study_id}".replace(" ", "")
     
     def get_publications(self, study_ids, output_format="dataframe"):
         """
@@ -316,7 +260,7 @@ class NOAAStudies:
                     for pub in publications:
                         fields = {k: v for k, v in pub.items() if k not in ['NOAAStudyId'] and v}
                         entry = Entry('article', fields=fields)
-                        citation_key = get_citation(pub)
+                        citation_key = get_citation_key(pub)
                         bib_entries[citation_key] = entry
                 else:
                     print(f"Study ID {study_id} not found.")
@@ -356,7 +300,6 @@ class NOAAStudies:
             if sites_list:
                 df = pd.DataFrame(sites_list)
                 dfs.append(df)
-                # print(dfs)
         
         result = pd.concat(dfs) if dfs else pd.DataFrame()
         result.set_index('NOAAStudyId', inplace=True)  # Set NOAAStudyId as the index
@@ -387,21 +330,26 @@ class NOAAStudies:
                 if not file_url:
                     print(f"Data Table ID {dataTableID} not found or no associated file URL.")
                     continue
-                df = fetch_data(file_url)
+                df = self._fetch_data(file_url)
 
-            study_id = self.data_table_index[dataTableID].get('study_id')
-            site_id = self.data_table_index[dataTableID].get('site_id')
-            study_data = self.studies.get(study_id, {})
+                study_id = self.data_table_index[dataTableID].get('study_id')
+                site_id = self.data_table_index[dataTableID].get('site_id')
+                study_data = self.studies.get(study_id, {})
+                site_data = study_data.get('sites', {}).get(site_id, {})
+                
+                # Attach attributes to DataFrame
+                df.attrs['NOAAStudyId'] = study_id
+                # df.attrs['Publication'] = study_data.get('publications', 'N/A')
+                df.attrs['StudyName'] = study_data.get('base_meta').get('studyName')
+                
+                df.attrs['SiteName'] = site_data.get('siteName', np.nan)
+                df.attrs['Lat'] = site_data.get('lat', np.nan)
+                df.attrs['Lon'] = site_data.get('lon', np.nan)
+                df.attrs['minElevationMeters'] = site_data.get('minElevationMeters', np.nan)
+                df.attrs['maxElevationMeters'] = site_data.get('maxElevationMeters', np.nan)
+
+                dfs.append(df)
             
-            # Attach attributes to DataFrame
-            df.attrs['NOAAStudyId'] = study_id
-            df.attrs['Publication'] = study_data.get('publications', 'N/A')
-            site_data = study_data.get('sites', {}).get(site_id, {})
-            df.attrs['Lat'] = site_data.get('lat', 'N/A')
-            df.attrs['Lon'] = site_data.get('lon', 'N/A')
-            df.attrs['fileURL'] = file_url
-
-            dfs.append(df)
             return dfs
         
         if file_urls:
@@ -411,18 +359,3 @@ class NOAAStudies:
 
         print("No dataTableID or file URL provided.")
         return pd.DataFrame()
-        
-    # def _fetch_data(self, file_url):
-    #     """
-    #     Helper method to fetch data from a file URL and return it as a DataFrame.
-    #     """
-    #     response = requests.get(file_url)
-    #     if response.status_code == 200:
-    #         lines = response.text.split('\n')
-    #         data_lines = [line for line in lines if not line.startswith('#') and line.strip()]
-    #         if data_lines:
-    #             headers = data_lines[0].split('\t')
-    #             data = [line.split('\t') for line in data_lines[1:]]
-    #             return pd.DataFrame(data, columns=headers)
-    #     print(f"Failed to fetch data from {file_url}.")
-    #     return pd.DataFrame()

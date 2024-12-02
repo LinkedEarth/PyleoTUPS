@@ -63,13 +63,6 @@ class NOAAStudies:
             'latestYear': latest_year, 
             'recent' : recent,
         }
-        # Filtering out None values
-        # params = {k: v for k, v in params.items() if v}
-        # response = requests.get(self.BASE_URL, params=params)
-        # if response.status_code == 200:
-        #     self.response_parser(response.json())
-        # else:
-        #     print(f"Error fetching studies: {response.status_code}")
 
         self.response_parser(search_studies(params))
 
@@ -319,8 +312,7 @@ class NOAAStudies:
 
         """ 
         @TODO: 
-            Add attributes to each data frame
-             
+            Add attributes to data frame for file_urls method  
         """
         if dataTableIDs:
             dataTableIDs = assert_list(dataTableIDs)
@@ -330,7 +322,7 @@ class NOAAStudies:
                 if not file_url:
                     print(f"Data Table ID {dataTableID} not found or no associated file URL.")
                     continue
-                df = self._fetch_data(file_url)
+                df = fetch_data(file_url)
 
                 study_id = self.data_table_index[dataTableID].get('study_id')
                 site_id = self.data_table_index[dataTableID].get('site_id')

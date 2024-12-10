@@ -1,16 +1,16 @@
 from setuptools import setup, find_packages
 
 setup(
-    name = 'PyTUPS',
+    name = 'pytups',
     version = '0.1.0',
     author = 'Deborah Khider, Jay Pujara, Dhiren Oswal',
     author_email = 'linkedearth@gmail.com',
     description = 'A package to interact with NCEI studies API',
-    license = 'GPL-3.0 License',
+    license = 'Apache License 2.0',
     long_description = open('README.md').read(),
     long_description_content_type = 'text/markdown',
-    url='https://github.com/LinkedEarth/PyTUPS',
-    keywords = ['Paleoclimate, Data Analysis, PyTUPS'],
+    url='https://github.com/LinkedEarth/PyTUPS/pytups',
+    keywords = ['Paleoclimate, Data Analysis, Table Understanding'],
     packages = find_packages(),
     install_requires = [
         'pandas',

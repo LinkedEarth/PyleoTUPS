@@ -1,1 +1,1 @@
-from core.noaa_studies import NOAAStudies
+from .noaa_studies import NOAAStudies

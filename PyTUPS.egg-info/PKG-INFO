@@ -1,12 +1,12 @@
 Metadata-Version: 2.1
-Name: PyTUPS
-Version: 0.1.0
+Name: pytups
+Version: 0.0.1
 Summary: A package to interact with NCEI studies API
-Home-page: https://github.com/LinkedEarth/PyTUPS
+Home-page: https://github.com/LinkedEarth/PyTUPS/pytups
 Author: Deborah Khider, Jay Pujara, Dhiren Oswal
 Author-email: linkedearth@gmail.com
-License: GPL-3.0 License
-Keywords: Paleoclimate, Data Analysis, PyTUPS
+License: Apache License 2.0
+Keywords: Paleoclimate, Data Analysis, Table Understanding
 Requires-Python: >=3.7
 Description-Content-Type: text/markdown
 License-File: LICENSE

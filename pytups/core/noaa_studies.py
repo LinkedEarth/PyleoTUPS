@@ -4,7 +4,7 @@ import numpy as np
 from pybtex.database import BibliographyData, Entry
 import re
 # from utils.helper import search_studies, assert_list, get_citation_key, fetch_data
-from utils.helper import *
+from ..utils.helper import *
 
 class NOAAStudies:
     def __init__(self):

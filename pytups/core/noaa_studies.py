@@ -7,39 +7,80 @@ import re
 from ..utils.helper import *
 
 class NOAAStudies:
+    """
+    Class to interact with NOAA's Paleo Data Search API.
+
+    Provides methods to search, parse, and retrieve metadata and data from NOAA studies.
+
+    Attributes
+    ----------
+    BASE_URL : str
+        The base URL for NOAA Paleo Data Search API.
+    studies : dict
+        A dictionary to store study metadata retrieved from the API.
+    data_table_index : dict
+        A dictionary to map data table IDs to their associated metadata.
+    """
+
     def __init__(self):
         """
-        Initialize the NOAAStudies class with base URL and dictionaries to hold studies and data table indices.
+        Initialize the NOAAStudies class.
 
-
-        The search parameters are designed to be flexible and can vary for different searches using the same object.
-        Instead of overwriting the initialized default parameters, each search maintains its own set of parameters, 
-        allowing for independent configurations across multiple searches.
+        Sets up the base URL for the NOAA API and initializes dictionaries for studies
+        and data table indices.
         """
         self.BASE_URL = "https://www.ncei.noaa.gov/access/paleo-search/study/search.json"
         self.studies = {}
         self.data_table_index = {}
 
-    def search_studies(self, xml_id=None, noaa_id=None, data_publisher="NOAA", data_type_id = None, keywords = None, investigators=None, 
-                       max_lat=None, min_lat=None, max_lon=None, min_lon=None, location = None, publication = None, search_text = None, 
-                       earliest_year = None, latest_year = None, cv_whats = None, recent = False):
+    def search_studies(self, xml_id=None, noaa_id=None, data_publisher="NOAA", data_type_id=None, keywords=None,
+                       investigators=None, max_lat=None, min_lat=None, max_lon=None, min_lon=None, location=None,
+                       publication=None, search_text=None, earliest_year=None, latest_year=None, cv_whats=None,
+                       recent=False):
         """
         Search for NOAA studies using specific search parameters.
-        
-        Parameters:
-            xml_id (str): XML ID of the study. (Primary)
-            noaa_id (str): NOAA study ID. (Primary)
-            data_publisher (str): Data publisher's name. Default: NOAA 
-            data_type_id (str): Data Type specific Studies.
-            keywords (str): Keywords to search for.  
-            investigators (str): Name(s) of investigators.
-            min_lat/max_lat (float): Latitude range for location-based search.
-            min_lat/max_lat (float): Longitude range for location-based search.
-            location (str): Location description.
-            species (str): FOUR letter code species code
-            publication (str): Specific publication.
-            search_text (str): Publication / studyNotes / String based search.
-           
+
+        Parameters
+        ----------
+        xml_id : str, optional
+            XML ID of the study.
+        noaa_id : str, optional
+            NOAA study ID.
+        data_publisher : str, default="NOAA"
+            Data publisher's name.
+        data_type_id : str, optional
+            Data type ID for specific studies.
+        keywords : str, optional
+            Keywords for the search query.
+        investigators : str, optional
+            Investigator(s) associated with the study.
+        max_lat : float, optional
+            Maximum latitude for location-based search.
+        min_lat : float, optional
+            Minimum latitude for location-based search.
+        max_lon : float, optional
+            Maximum longitude for location-based search.
+        min_lon : float, optional
+            Minimum longitude for location-based search.
+        location : str, optional
+            Location description.
+        publication : str, optional
+            Publication associated with the study.
+        search_text : str, optional
+            Text-based search in publication or study notes.
+        earliest_year : int, optional
+            Earliest year for the study.
+        latest_year : int, optional
+            Latest year for the study.
+        cv_whats : str, optional
+            Controlled vocabulary search term.
+        recent : bool, optional
+            Whether to search for recent studies.
+
+        Returns
+        -------
+        None
+            Populates the `self.studies` dictionary with the search results.
         """
         if noaa_id:
             params = {'NOAAStudyId': noaa_id}
@@ -47,22 +88,22 @@ class NOAAStudies:
             params = {'xmlId': xml_id}
         else:
             params = {
-            'dataPublisher' : data_publisher,
-            'dataTypeId' : data_type_id,
-            'keywords' : keywords, 
-            'investigators' : investigators,
-            'minLat' : min_lat,
-            'maxLat' : max_lat,
-            'minLon' : min_lon,
-            'maxLon' : max_lon,
-            'locations' : location,
-            'searchText' : publication, 
-            'searchText' : search_text,
-            'cvWhats': cv_whats,
-            'earliestYear' : earliest_year,
-            'latestYear': latest_year, 
-            'recent' : recent,
-        }
+                'dataPublisher': data_publisher,
+                'dataTypeId': data_type_id,
+                'keywords': keywords,
+                'investigators': investigators,
+                'minLat': min_lat,
+                'maxLat': max_lat,
+                'minLon': min_lon,
+                'maxLon': max_lon,
+                'locations': location,
+                'searchText': publication,
+                'searchText': search_text,
+                'cvWhats': cv_whats,
+                'earliestYear': earliest_year,
+                'latestYear': latest_year,
+                'recent': recent,
+            }
 
         self.response_parser(search_studies(params))
 
@@ -71,9 +112,16 @@ class NOAAStudies:
     def response_parser(self, data):
         """
         Parse the JSON response from NOAA and populate the studies dictionary.
-        
-        Parameters:
-            data (dict): The JSON data returned from a search query.
+
+        Parameters
+        ----------
+        data : dict
+            The JSON data returned from a search query.
+
+        Returns
+        -------
+        None
+            Populates the `self.studies` dictionary.
         """
         for study in data.get('study', []):
             noaa_study_id = study.get('NOAAStudyId')
@@ -83,16 +131,22 @@ class NOAAStudies:
                 'investigators': self.load_investigators(study),
                 'publications': self.load_publications(study),
                 'sites': self.load_sites(study, noaa_study_id),
-                # 'number of sites': len(sites)
-                'pageUrl' : study.get('onlineResourceLink', np.nan)
+                'pageUrl': study.get('onlineResourceLink', np.nan)
             }
 
     def load_base_meta(self, study):
         """
         Load base metadata for a study.
-        
-        Parameters:
-            study (dict): Part of the JSON data pertaining to a single study.
+
+        Parameters
+        ----------
+        study : dict
+            A dictionary containing study metadata.
+
+        Returns
+        -------
+        dict
+            A dictionary with base metadata fields and their values.
         """
         fields = ['NOAAStudyId', 'studyName', 'dataType', 'earliestYearBP', 'mostRecentYearBP',
                   'earliestYearCE', 'mostRecentYearCE', 'studyNotes', 'scienceKeywords']
@@ -101,9 +155,16 @@ class NOAAStudies:
     def load_investigators(self, study):
         """
         Extract investigator details from the study data.
-        
-        Parameters:
-            study (dict): Part of the JSON data pertaining to a single study.
+
+        Parameters
+        ----------
+        study : dict
+            A dictionary containing study metadata.
+
+        Returns
+        -------
+        str or float
+            A string of concatenated investigator names or NaN if no investigators are found.
         """
         investigators = study.get("investigatorDetails", [])
         if investigators:
@@ -112,21 +173,23 @@ class NOAAStudies:
 
     def load_publications(self, study):
         """
-        Extract and format publication data from the study as a dictionary.
+        Extract and format publication data from the study.
 
-        Parameters:
-            study (dict): Part of the JSON data pertaining to a single study.
-            study_id (str): The unique identifier for the NOAA study.
+        Parameters
+        ----------
+        study : dict
+            A dictionary containing study metadata.
 
-        Returns:
-            list: A list of dictionaries representing publication details.
+        Returns
+        -------
+        list
+            A list of dictionaries representing publication details.
         """
         publications = []
         for pub in study.get('publication', []):
             author_info = pub.get('author', {})
             identifier_info = pub.get('identifier', {})
 
-            # Extract fields for the publication dictionary
             publication_data = {
                 'NOAAStudyId': study.get('NOAAStudyId'),
                 'author': author_info.get('name', 'Unknown Author'),
@@ -141,18 +204,26 @@ class NOAAStudies:
                 'url': identifier_info.get('url', np.nan) if identifier_info else np.nan
             }
 
-            # Add the publication dictionary to the list
             publications.append(publication_data)
-        
+
         return publications
+
 
     def load_sites(self, study, study_id):
         """
         Load and format site data associated with the study.
-        
-        Parameters:
-            study (dict): Part of the JSON data pertaining to a single study.
-            study_id (str): The unique identifier of the study for reference.
+
+        Parameters
+        ----------
+        study : dict
+            A dictionary containing study metadata, including site information.
+        study_id : str
+            The unique identifier of the study for reference.
+
+        Returns
+        -------
+        dict
+            A dictionary where keys are NOAA site IDs, and values are site metadata.
         """        
         return {
             site.get('NOAASiteId', np.nan): {
@@ -170,12 +241,21 @@ class NOAAStudies:
     def load_paleo_data(self, paleoData, study_id, site_id):
         """
         Extract and format paleo data associated with a site.
-        
-        Parameters:
-            paleoData (list): List of paleo data from the site.
-            study_id (str): The unique identifier of the study.
-            site_id (str): The unique identifier of the site.
-        """
+
+        Parameters
+        ----------
+        paleoData : list
+            A list of paleo data dictionaries from the site.
+        study_id : str
+            The unique identifier of the study.
+        site_id : str
+            The unique identifier of the site.
+
+        Returns
+        -------
+        dict
+            A dictionary where keys are NOAA data table IDs, and values are formatted paleo data details.
+        """    
         paleo_dict = {}
         for paleo in paleoData:
             # Safe access to 'dataFile' list
@@ -203,11 +283,13 @@ class NOAAStudies:
         
     def get_response(self):
         """
-        Compile and return a DataFrame of all loaded studies along with their detailed metadata and linked information.
-        
-        Returns:
-            DataFrame: A DataFrame representing the consolidated data of all studies, including metadata, investigators,
-                       publications, and site details.
+        Compile and return a DataFrame of all loaded studies with detailed metadata.
+
+        Returns
+        -------
+        pd.DataFrame
+            A DataFrame representing consolidated data of all studies, including metadata,
+            investigators, publications, and site details.
         """
         data = [{
             **study['base_meta'],
@@ -221,14 +303,24 @@ class NOAAStudies:
         """
         Return publications for one or more study IDs in the specified format.
 
-        Parameters:
-            study_ids (list or str): Single or list of NOAAStudyIds.
-            output_format (str): The desired output format. Options:
-                - "dataframe": Returns a pandas DataFrame of publication details.
-                - "bibtex": Returns a pybtex.database.BibliographyData object.
+        Parameters
+        ----------
+        study_ids : list or str
+            A single NOAA study ID or a list of NOAA study IDs.
+        output_format : str, optional
+            The desired output format. Options:
+            - "dataframe": Returns a pandas DataFrame of publication details.
+            - "bibtex": Returns a pybtex.database.BibliographyData object.
 
-        Returns:
-            pd.DataFrame or pybtex.database.BibliographyData: Publications data in the chosen format.
+        Returns
+        -------
+        pd.DataFrame or pybtex.database.BibliographyData
+            Publications data in the chosen format.
+
+        Raises
+        ------
+        ValueError
+            If the output format is not "dataframe" or "bibtex".
         """
         study_ids = assert_list(study_ids)  # Ensure study_ids is a list
 
@@ -269,11 +361,16 @@ class NOAAStudies:
         """
         Return a DataFrame of sites for one or more study IDs.
 
-        Parameters:
-            study_ids (list or str): Single or list of NOAAStudyIds.
+        Parameters
+        ----------
+        study_ids : list or str
+            A single NOAA study ID or a list of NOAA study IDs.
 
-        Returns:
-            pd.DataFrame: Sites DataFrame.
+        Returns
+        -------
+        pd.DataFrame
+            A DataFrame where each row represents a site associated with the given study IDs,
+            including metadata and paleo data details.
         """
         study_ids = assert_list(study_ids)  # Convert to list if single ID
         
@@ -304,17 +401,22 @@ class NOAAStudies:
         """
         Fetch and return the data for one or more dataTableIDs or file URLs.
 
-        Parameters:
-            dataTableIDs (list or str): Single or list of NOAADataTableIds.
-            file_urls (list or str): Single or list of file URLs.
+        Parameters
+        ----------
+        dataTableIDs : list or str, optional
+            A single NOAA data table ID or a list of NOAA data table IDs.
+        file_urls : list or str, optional
+            A single file URL or a list of file URLs.
 
-        Returns:
-            pd.DataFrame: Combined DataFrame of all fetched data.
-        """
+        Returns
+        -------
+        list of pd.DataFrame
+            A list of DataFrames where each DataFrame corresponds to a fetched data table.
 
-        """ 
-        @TODO: 
-            Add attributes to data frame for file_urls method  
+        Raises
+        ------
+        ValueError
+            If neither dataTableIDs nor file_urls are provided.
         """
         if dataTableIDs:
             dataTableIDs = assert_list(dataTableIDs)

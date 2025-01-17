@@ -121,6 +121,25 @@ def get_citation_key(publication):
     # Create citation key
     return f"{last_name}_{first_significant_word}_{pub_year}_{study_id}".replace(" ", "")
 
+def detect_line_terminator(content):
+    # Now, simulate reading the last portion like a file
+    read_size = 1024  # Define how much of the end you want to simulate reading
+    if len(content) < read_size:
+        last_part = content  # If the content is smaller than the read size
+    else:
+        last_part = content[-read_size:]  # Get the last 'read_size' bytes
+
+    # Check for line terminators in the last part
+    if b'\r\n' in last_part:
+        return r'\r\n'
+    elif b'\n' in last_part:
+        return r'\n'
+    elif b'\r' in last_part:
+        return r'\r'
+    
+    return r'\n'  # Default to '\n' if nothing else is found
+
+
 def fetch_data(file_url):
     """
     Fetch and parse data from a file URL.
@@ -155,7 +174,7 @@ def fetch_data(file_url):
     - Unsupported formats:
         - Returns an empty DataFrame and prints a warning message.
     """
-    print(file_url)
+    # print(file_url)
     if file_url.endswith(".xls") or file_url.endswith(".xlsx"):
         try:
             excel_data = pd.read_excel(file_url, sheet_name=None, comment='#', header = 0)
@@ -171,15 +190,15 @@ def fetch_data(file_url):
         response = requests.get(file_url)
         if response.status_code == 200:
             try:
-                lines = re.split(r'\r\n', response.text)
+                lines = re.split(detect_line_terminator(response.content), response.text)
                 data_lines = [line for line in lines if not line.startswith('#') and line.strip()]
                 if data_lines:
                     headers = data_lines[0].split('\t')
-                    print(headers)
+                    # print(headers)
                     data = [line.split('\t') for line in data_lines[1:]]
                     return pd.DataFrame(data, columns=headers)
             except Exception as e:
-                print(f"Error parsing text file: {e}")
+                print(f"Error parsing text file {file_url}: {e}")
                 return pd.DataFrame()
         
         print(f"Failed to fetch data from {file_url}.")

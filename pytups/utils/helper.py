@@ -191,7 +191,7 @@ def fetch_data(file_url):
         if response.status_code == 200:
             try:
                 lines = re.split(detect_line_terminator(response.content), response.text)
-                data_lines = [line for line in lines if not line.startswith('#') and line.strip()]
+                data_lines = [line for line in lines if not line.startswith('#') and line.strip() and line.split('\t')>1]
                 if data_lines:
                     headers = data_lines[0].split('\t')
                     # print(headers)

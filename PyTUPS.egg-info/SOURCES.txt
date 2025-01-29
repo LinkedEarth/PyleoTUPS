@@ -1,11 +1,6 @@
 LICENSE
 README.md
 setup.py
-PyTUPS.egg-info/PKG-INFO
-PyTUPS.egg-info/SOURCES.txt
-PyTUPS.egg-info/dependency_links.txt
-PyTUPS.egg-info/requires.txt
-PyTUPS.egg-info/top_level.txt
 pytups/__init__.py
 pytups.egg-info/PKG-INFO
 pytups.egg-info/SOURCES.txt

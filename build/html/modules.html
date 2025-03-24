@@ -61,6 +61,11 @@
 <li class="toctree-l3"><a class="reference internal" href="#pytups.core.noaa_studies.NOAAStudies.search_studies"><code class="docutils literal notranslate"><span class="pre">NOAAStudies.search_studies()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#pytups.utils.helper.assert_list"><code class="docutils literal notranslate"><span class="pre">assert_list()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pytups.utils.helper.fetch_data"><code class="docutils literal notranslate"><span class="pre">fetch_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pytups.utils.helper.get_citation_key"><code class="docutils literal notranslate"><span class="pre">get_citation_key()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pytups.utils.helper.params_validators"><code class="docutils literal notranslate"><span class="pre">params_validators()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pytups.utils.helper.search_studies"><code class="docutils literal notranslate"><span class="pre">search_studies()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -355,6 +360,177 @@ including metadata and paleo data details.</p>
 </dl>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="py function" id="module-pytups.utils.helper">
+<dt class="sig sig-object py" id="pytups.utils.helper.assert_list">
+<span class="sig-prename descclassname"><span class="pre">pytups.utils.helper.</span></span><span class="sig-name descname"><span class="pre">assert_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_item</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/utils/helper.html#assert_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.utils.helper.assert_list" title="Link to this definition"></a></dt>
+<dd><p>Ensure the input is a list. If it is not a list, convert it into a single-element list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input_item</strong> (<em>Any</em>) -- The input item that may or may not be a list.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list containing the input item(s).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pytups.utils.helper.fetch_data">
+<span class="sig-prename descclassname"><span class="pre">pytups.utils.helper.</span></span><span class="sig-name descname"><span class="pre">fetch_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_url</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/utils/helper.html#fetch_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.utils.helper.fetch_data" title="Link to this definition"></a></dt>
+<dd><p>Fetch and parse data from a file URL.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_url</strong> (<em>str</em>) -- The URL of the file to fetch. Supported formats include:
+- <cite>.xls</cite> / <cite>.xlsx</cite> for Excel files.
+- <cite>.txt</cite> for tab-delimited text files.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A pandas DataFrame containing the parsed data. If the file cannot be read
+or parsed, an empty DataFrame is returned.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> -- If there is an error while reading or parsing the file.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Excel files (.xls, .xlsx):</dt><dd><ul>
+<li><p>Reads all sheets into DataFrames and returns them as a list.</p></li>
+<li><p>If there is an error reading the file, an empty DataFrame is returned.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Text files (.txt):</dt><dd><ul>
+<li><p>Parses tab-delimited lines and skips lines starting with <cite>#</cite>.</p></li>
+<li><p>The first non-comment line is treated as the header.</p></li>
+<li><p>If there is an error reading or parsing the file, an empty DataFrame is returned.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Unsupported formats:</dt><dd><ul>
+<li><p>Returns an empty DataFrame and prints a warning message.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pytups.utils.helper.get_citation_key">
+<span class="sig-prename descclassname"><span class="pre">pytups.utils.helper.</span></span><span class="sig-name descname"><span class="pre">get_citation_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">publication</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/utils/helper.html#get_citation_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.utils.helper.get_citation_key" title="Link to this definition"></a></dt>
+<dd><p>Generate a unique citation key for a publication.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>publication</strong> (<em>dict</em>) -- A dictionary containing publication details, including:
+- <cite>author</cite> (str): The author(s) of the publication.
+- <cite>title</cite> (str): The title of the publication.
+- <cite>year</cite> (str): The publication year.
+- <cite>NOAAStudyId</cite> (str): The unique identifier for the study.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A citation key formatted as: &quot;&lt;LastName&gt;_&lt;FirstSignificantWord&gt;_&lt;Year&gt;_&lt;NOAAStudyId&gt;&quot;.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>The first significant word in the title excludes words like &quot;the&quot;.</p></li>
+<li><p>Spaces in the citation key are removed.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pytups.utils.helper.params_validators">
+<span class="sig-prename descclassname"><span class="pre">pytups.utils.helper.</span></span><span class="sig-name descname"><span class="pre">params_validators</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/utils/helper.html#params_validators"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.utils.helper.params_validators" title="Link to this definition"></a></dt>
+<dd><p>Validate and process search parameters for NOAA studies.</p>
+<section id="validations">
+<h2>Validations<a class="headerlink" href="#validations" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Latitude and longitude:</dt><dd><ul>
+<li><p><cite>minLat</cite> and <cite>maxLat</cite> must be within the range [-90, 90].</p></li>
+<li><p><cite>minLon</cite> and <cite>maxLon</cite> must be within the range [-180, 180].</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Keywords and data types:</dt><dd><ul>
+<li><p>Parse multiple inputs for <cite>keywords</cite> and <cite>dataTypeId</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Species:</dt><dd><ul>
+<li><p>Ensure species codes are limited to 4 characters.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Year:</dt><dd><ul>
+<li><p>Validate <cite>earliestYear</cite> and <cite>latestYear</cite> for correctness.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">param key<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The name of the parameter to validate.</p>
+</dd>
+<dt class="field-even">type key<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+<dt class="field-odd">param value<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The value of the parameter to validate.</p>
+</dd>
+<dt class="field-even">type value<span class="colon">:</span></dt>
+<dd class="field-even"><p>Any</p>
+</dd>
+<dt class="field-odd">rtype<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pytups.utils.helper.search_studies">
+<span class="sig-prename descclassname"><span class="pre">pytups.utils.helper.</span></span><span class="sig-name descname"><span class="pre">search_studies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/utils/helper.html#search_studies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.utils.helper.search_studies" title="Link to this definition"></a></dt>
+<dd><p>Perform a search for NOAA studies using specified parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>params</strong> (<em>dict</em>) -- A dictionary of search parameters where keys are parameter names and
+values are their corresponding values.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A JSON response containing the results of the study search.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> -- If the HTTP request fails or returns a status code other than 200.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>

@@ -5,3 +5,8 @@ Project Modules
    :members:
    :undoc-members:
    :show-inheritance:
+
+.. automodule:: pytups.utils.helper
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -3,7 +3,7 @@ import re
 import pandas as pd
 import warnings
 
-warnings.filterwarnings("ignore", category=DeprecationWarning)
+warnings.filterwarnings("ignore", category=UserWarning)
 
 def search_studies(params):
     """
@@ -175,14 +175,15 @@ def fetch_data(file_url):
                 data_lines = [line for line in lines if not line.startswith('#') and line.strip()]
                 if data_lines:
                     headers = data_lines[0].split('\t')
-                    print(headers)
+                    # print(headers)
                     data = [line.split('\t') for line in data_lines[1:]]
                     return pd.DataFrame(data, columns=headers)
             except Exception as e:
                 print(f"Error parsing text file: {e}")
                 return pd.DataFrame()
         
-        print(f"Failed to fetch data from {file_url}.")
+        else:
+            print(f"Failed to fetch data from {file_url}.")
     
     else:
         print(f"Unsupported file format: {file_url}")

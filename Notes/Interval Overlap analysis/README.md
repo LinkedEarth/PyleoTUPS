@@ -12,4 +12,5 @@ Match tokens to headers based on positional overlaps.
 
 ### Improvement: 
 - In case of multiple overlaps, break ties to header with stronger overlaps
-- If a tag has no overlaps with any header, assign it to the header of token whic is immediate right to the current free token (Check Dataframe 1: row 26)
+- If a tag has no overlaps with any header, assign it to the header which is immediate right to the current free token 
+e.g. Visually the elements seem to overlap. ![alt text](image1.png) However, [Notebook: Dataframe 1: row 26] ![alt text](image.png) shows the element "�0.5" starts at 38 and end and 41. The header above spans for 34-37. Hence, "�0.5" becoomes a free token. Best estimate in such cases would be to assign it to the immediate rightmost header.

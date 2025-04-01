@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["pytups1*"]
+
+[project]
+name = "pytups1"
+version = "0.0.1"
+description = "A package to interact with NCEI studies API"
+authors = [
+  { name = "Dhiren Oswal", email = "linkedearth@gmail.com" },
+  { name = "Deborah Khider", email = "linkedearth@gmail.com" },
+  { name = "Jay Pujara", email = "linkedearth@gmail.com" }
+]
+license = { text = "Apache License 2.0" }
+requires-python = ">=3.8"
+dependencies = [
+  "pandas",
+  "requests",
+  "numpy",
+  "pybtex"
+]
+keywords = ["PyTUPS", "Table Understanding", "Data Analysis"]
+urls = { Homepage = "https://github.com/LinkedEarth/PyTUPS/pytups" }
+
+[tool.setuptools]
+license-files = []

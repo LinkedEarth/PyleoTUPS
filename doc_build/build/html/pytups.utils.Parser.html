@@ -1,0 +1,309 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pytups.utils.Parser package &mdash; PyTUPS 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/plot_directive.css?v=7f9a90b1" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=7026087e"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            PyTUPS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">pytups.utils.Parser package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-pytups.utils.Parser.StandardParser">pytups.utils.Parser.StandardParser module</a><ul>
+<li><a class="reference internal" href="#pytups.utils.Parser.StandardParser.DataFetcher"><code class="docutils literal notranslate"><span class="pre">DataFetcher</span></code></a><ul>
+<li><a class="reference internal" href="#pytups.utils.Parser.StandardParser.DataFetcher.fetch_data"><code class="docutils literal notranslate"><span class="pre">DataFetcher.fetch_data()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pytups.utils.Parser.StandardParser.StandardParser"><code class="docutils literal notranslate"><span class="pre">StandardParser</span></code></a><ul>
+<li><a class="reference internal" href="#pytups.utils.Parser.StandardParser.StandardParser.url"><code class="docutils literal notranslate"><span class="pre">StandardParser.url</span></code></a></li>
+<li><a class="reference internal" href="#pytups.utils.Parser.StandardParser.StandardParser.lines"><code class="docutils literal notranslate"><span class="pre">StandardParser.lines</span></code></a></li>
+<li><a class="reference internal" href="#pytups.utils.Parser.StandardParser.StandardParser.meta_start"><code class="docutils literal notranslate"><span class="pre">StandardParser.meta_start</span></code></a></li>
+<li><a class="reference internal" href="#pytups.utils.Parser.StandardParser.StandardParser.meta_end"><code class="docutils literal notranslate"><span class="pre">StandardParser.meta_end</span></code></a></li>
+<li><a class="reference internal" href="#pytups.utils.Parser.StandardParser.StandardParser.variables"><code class="docutils literal notranslate"><span class="pre">StandardParser.variables</span></code></a></li>
+<li><a class="reference internal" href="#pytups.utils.Parser.StandardParser.StandardParser.skip_lines"><code class="docutils literal notranslate"><span class="pre">StandardParser.skip_lines</span></code></a></li>
+<li><a class="reference internal" href="#pytups.utils.Parser.StandardParser.StandardParser.data"><code class="docutils literal notranslate"><span class="pre">StandardParser.data</span></code></a></li>
+<li><a class="reference internal" href="#pytups.utils.Parser.StandardParser.StandardParser.df"><code class="docutils literal notranslate"><span class="pre">StandardParser.df</span></code></a></li>
+<li><a class="reference internal" href="#pytups.utils.Parser.StandardParser.StandardParser.parse"><code class="docutils literal notranslate"><span class="pre">StandardParser.parse()</span></code></a></li>
+<li><a class="reference internal" href="#pytups.utils.Parser.StandardParser.StandardParser._fetch_file"><code class="docutils literal notranslate"><span class="pre">StandardParser._fetch_file()</span></code></a></li>
+<li><a class="reference internal" href="#pytups.utils.Parser.StandardParser.StandardParser._identify_metadata"><code class="docutils literal notranslate"><span class="pre">StandardParser._identify_metadata()</span></code></a></li>
+<li><a class="reference internal" href="#pytups.utils.Parser.StandardParser.StandardParser._extract_variables"><code class="docutils literal notranslate"><span class="pre">StandardParser._extract_variables()</span></code></a></li>
+<li><a class="reference internal" href="#pytups.utils.Parser.StandardParser.StandardParser._parse_data"><code class="docutils literal notranslate"><span class="pre">StandardParser._parse_data()</span></code></a></li>
+<li><a class="reference internal" href="#pytups.utils.Parser.StandardParser.StandardParser._construct_dataframe"><code class="docutils literal notranslate"><span class="pre">StandardParser._construct_dataframe()</span></code></a></li>
+<li><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">StandardParser.parse()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-pytups.utils.Parser">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PyTUPS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">pytups.utils.Parser package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/pytups.utils.Parser.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="pytups-utils-parser-package">
+<h1>pytups.utils.Parser package<a class="headerlink" href="#pytups-utils-parser-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-pytups.utils.Parser.StandardParser">
+<span id="pytups-utils-parser-standardparser-module"></span><h2>pytups.utils.Parser.StandardParser module<a class="headerlink" href="#module-pytups.utils.Parser.StandardParser" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pytups.utils.Parser.StandardParser.DataFetcher">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pytups.utils.Parser.StandardParser.</span></span><span class="sig-name descname"><span class="pre">DataFetcher</span></span><a class="reference internal" href="_modules/pytups/utils/Parser/StandardParser.html#DataFetcher"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.utils.Parser.StandardParser.DataFetcher" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Standard parser for fetching and parsing external data files.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pytups.utils.Parser.StandardParser.DataFetcher.fetch_data">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fetch_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_url</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/utils/Parser/StandardParser.html#DataFetcher.fetch_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.utils.Parser.StandardParser.DataFetcher.fetch_data" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pytups.utils.Parser.StandardParser.StandardParser">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pytups.utils.Parser.StandardParser.</span></span><span class="sig-name descname"><span class="pre">StandardParser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/utils/Parser/StandardParser.html#StandardParser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.utils.Parser.StandardParser.StandardParser" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>StandardParser encapsulates the complete workflow for downloading and parsing a NOAA text file.</p>
+<p>The class maintains attributes such as the URL, file lines, metadata boundaries, extracted variable names,
+header skip count, parsed data, and the final DataFrame.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.Parser.StandardParser.StandardParser.url">
+<span class="sig-name descname"><span class="pre">url</span></span><a class="headerlink" href="#pytups.utils.Parser.StandardParser.StandardParser.url" title="Link to this definition"></a></dt>
+<dd><p>The URL of the file to parse.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.Parser.StandardParser.StandardParser.lines">
+<span class="sig-name descname"><span class="pre">lines</span></span><a class="headerlink" href="#pytups.utils.Parser.StandardParser.StandardParser.lines" title="Link to this definition"></a></dt>
+<dd><p>The content of the file split into lines.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.Parser.StandardParser.StandardParser.meta_start">
+<span class="sig-name descname"><span class="pre">meta_start</span></span><a class="headerlink" href="#pytups.utils.Parser.StandardParser.StandardParser.meta_start" title="Link to this definition"></a></dt>
+<dd><p>The index of the first metadata line.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.Parser.StandardParser.StandardParser.meta_end">
+<span class="sig-name descname"><span class="pre">meta_end</span></span><a class="headerlink" href="#pytups.utils.Parser.StandardParser.StandardParser.meta_end" title="Link to this definition"></a></dt>
+<dd><p>The index of the last metadata line.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.Parser.StandardParser.StandardParser.variables">
+<span class="sig-name descname"><span class="pre">variables</span></span><a class="headerlink" href="#pytups.utils.Parser.StandardParser.StandardParser.variables" title="Link to this definition"></a></dt>
+<dd><p>The extracted variable names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.Parser.StandardParser.StandardParser.skip_lines">
+<span class="sig-name descname"><span class="pre">skip_lines</span></span><a class="headerlink" href="#pytups.utils.Parser.StandardParser.StandardParser.skip_lines" title="Link to this definition"></a></dt>
+<dd><p>The number of header lines to skip in the data block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.Parser.StandardParser.StandardParser.data">
+<span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#pytups.utils.Parser.StandardParser.StandardParser.data" title="Link to this definition"></a></dt>
+<dd><p>The parsed data rows.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of list of str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.Parser.StandardParser.StandardParser.df">
+<span class="sig-name descname"><span class="pre">df</span></span><a class="headerlink" href="#pytups.utils.Parser.StandardParser.StandardParser.df" title="Link to this definition"></a></dt>
+<dd><p>The constructed DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytups.utils.Parser.StandardParser.StandardParser.parse">
+<span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/utils/Parser/StandardParser.html#StandardParser.parse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.utils.Parser.StandardParser.StandardParser.parse" title="Link to this definition"></a></dt>
+<dd><p>Execute the full parsing workflow and return the constructed DataFrame.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytups.utils.Parser.StandardParser.StandardParser._fetch_file">
+<span class="sig-name descname"><span class="pre">_fetch_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/utils/Parser/StandardParser.html#StandardParser._fetch_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.utils.Parser.StandardParser.StandardParser._fetch_file" title="Link to this definition"></a></dt>
+<dd><p>Fetch the file and set the ‘lines’ attribute.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytups.utils.Parser.StandardParser.StandardParser._identify_metadata">
+<span class="sig-name descname"><span class="pre">_identify_metadata</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/utils/Parser/StandardParser.html#StandardParser._identify_metadata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.utils.Parser.StandardParser.StandardParser._identify_metadata" title="Link to this definition"></a></dt>
+<dd><p>Identify metadata boundaries and set ‘meta_start’ and ‘meta_end’.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytups.utils.Parser.StandardParser.StandardParser._extract_variables">
+<span class="sig-name descname"><span class="pre">_extract_variables</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/utils/Parser/StandardParser.html#StandardParser._extract_variables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.utils.Parser.StandardParser.StandardParser._extract_variables" title="Link to this definition"></a></dt>
+<dd><p>Extract variable names and header skip count, setting ‘variables’ and ‘skip_lines’.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytups.utils.Parser.StandardParser.StandardParser._parse_data">
+<span class="sig-name descname"><span class="pre">_parse_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/utils/Parser/StandardParser.html#StandardParser._parse_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.utils.Parser.StandardParser.StandardParser._parse_data" title="Link to this definition"></a></dt>
+<dd><p>Parse the data block from the file and set the ‘data’ attribute.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytups.utils.Parser.StandardParser.StandardParser._construct_dataframe">
+<span class="sig-name descname"><span class="pre">_construct_dataframe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/utils/Parser/StandardParser.html#StandardParser._construct_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.utils.Parser.StandardParser.StandardParser._construct_dataframe" title="Link to this definition"></a></dt>
+<dd><p>Construct the final DataFrame from parsed data and variables.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/utils/Parser/StandardParser.html#StandardParser.parse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd><p>Orchestrate the full parsing process.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>url</strong> (<em>str</em><em>, </em><em>optional</em>) – The URL to parse. If provided, it overrides the existing URL attribute.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The constructed DataFrame.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ParsingError</strong> – If any step of the parsing process fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-pytups.utils.Parser">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pytups.utils.Parser" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Dhiren Oswal, Deborah Khider, Jay Pujara.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

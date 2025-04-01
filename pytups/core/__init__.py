@@ -1,1 +1,2 @@
-from .noaa_studies import NOAAStudies
+from .NOAAStudy import NOAAStudy
+from .NOAAStudyWrapper import NOAAStudyWrapper

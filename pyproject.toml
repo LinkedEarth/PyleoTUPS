@@ -4,10 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["pytups1*"]
+include = ["pytups*"]
 
 [project]
-name = "pytups1"
+name = "pytups"
 version = "0.0.1"
 description = "A package to interact with NCEI studies API"
 authors = [

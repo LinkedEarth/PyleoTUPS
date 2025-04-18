@@ -78,7 +78,7 @@
 | cv > 0 and header_extent == 0                                   | check previous blocks for headers → fallback assignment    |
 
 
-## 🔹 Function Execution Paths
+## Function Execution Paths
 
 | Step                      | Functions                                                       |
 |---------------------------|------------------------------------------------------------------|
@@ -90,3 +90,7 @@
 | Data Construction         | generate_df(), assign_tokens_by_overlap()                       |
 | Block Classification      | process_block(), most_common(), safe_cv()                        |
 | Fallback Block Handling   | find previous block with "header-only"                           |
+
+
+## UPCOMING-FEATURES:
+Grab titles, metadata from previous blocks 

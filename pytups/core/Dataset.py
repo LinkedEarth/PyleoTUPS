@@ -1,13 +1,13 @@
-__all__ = ['NOAAStudyWrapper']
+__all__ = ['Dataset']
 
 import requests
 import pandas as pd
 import warnings
-from ..core.NOAAStudy import NOAAStudy
+from .NOAADataset import NOAADataset
 from ..utils.helpers import assert_list
 from ..utils.Parser.StandardParser import DataFetcher, StandardParser
 
-class NOAAStudyWrapper:
+class Dataset:
     """
     A wrapper class for interacting with the NOAA Studies API.
 
@@ -19,14 +19,14 @@ class NOAAStudyWrapper:
     BASE_URL : str
         The NOAA API endpoint URL.
     studies : dict
-        A mapping from NOAAStudyId to NOAAStudy instances.
+        A mapping from NOAADatasetId to NOAADataset instances.
     data_table_index : dict
         A mapping from dataTableID to associated study, site, and paleo data.
 
     Methods
     -------
     __init__()
-        Initializes the NoaaStudyWrapper.
+        Initializes the Dataset.
     search_studies(...)
         Searches for studies using provided parameters and parses the response.
     _fetch_api(params)
@@ -47,11 +47,11 @@ class NOAAStudyWrapper:
 
     def __init__(self):
         """
-        Initialize the NoaaStudyWrapper instance.
+        Initialize the Dataset instance.
 
         Attributes are set to their default empty values.
         """
-        self.studies = {}               # NOAAStudyId -> NOAAStudy instance
+        self.studies = {}               # NOAADatasetId -> NOAADataset instance
         self.data_table_index = {}      # dataTableID -> dict with study, site, paleo_data
         self.file_url_to_datatable = {} # file_url -> dataTableID
     def search_studies(self, xml_id=None, noaa_id=None, data_publisher="NOAA", data_type_id=None,
@@ -107,7 +107,7 @@ class NOAAStudyWrapper:
             Requires at least one single parameter. Parameter validation to be implemented soon. 
         """
         if noaa_id:
-            params = {'NOAAStudyId': noaa_id}
+            params = {'NOAADatasetId': noaa_id}
         elif xml_id:
             params = {'xmlId': xml_id}
         else:
@@ -178,7 +178,7 @@ class NOAAStudyWrapper:
         self.file_url_to_datatable.clear()
         # self.sites.clear()
         for study_data in data.get('study', []):
-            study_obj = NOAAStudy(study_data)
+            study_obj = NOAADataset(study_data)
             self.studies[study_obj.study_id] = study_obj
             # print(study_obj.study_id)
             # Process each site in the study.
@@ -298,7 +298,7 @@ class NOAAStudyWrapper:
                 fetched_data = DataFetcher.fetch_data(file_url)
                 if isinstance(fetched_data, list):
                     for df in fetched_data:
-                        df.attrs['NOAAStudyId'] = mapping['study_id']
+                        df.attrs['NOAADatasetId'] = mapping['study_id']
                         df.attrs['SiteID'] = mapping['site_id']
                         study_obj = self.studies.get(mapping['study_id'], {})
                         df.attrs['StudyName'] = study_obj.metadata.get("studyName") if hasattr(study_obj, 'metadata') else None
@@ -310,7 +310,7 @@ class NOAAStudyWrapper:
                                 df.attrs['PublicationDOI'].append(doi)                                
                         dfs.append(df)
                 else:
-                    fetched_data.attrs['NOAAStudyId'] = mapping['study_id']
+                    fetched_data.attrs['NOAADatasetId'] = mapping['study_id']
                     fetched_data.attrs['SiteID'] = mapping['site_id']
                     study_obj = self.studies.get(mapping['study_id'], {})
                     fetched_data.attrs['StudyName'] = study_obj.metadata.get("studyName") if hasattr(study_obj, 'metadata') else None
@@ -366,7 +366,7 @@ class NOAAStudyWrapper:
 
         def attach_metadata(df, mapping):
             # Attach study metadata.
-            df.attrs['NOAAStudyId'] = mapping.get('study_id')
+            df.attrs['NOAADatasetId'] = mapping.get('study_id')
             study_obj = self.studies.get(mapping.get('study_id'), {})
             df.attrs['StudyName'] = study_obj.metadata.get("studyName") if hasattr(study_obj, 'metadata') else None
             # Attach site metadata if available.

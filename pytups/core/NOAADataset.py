@@ -1,11 +1,11 @@
-__all__ = ['NOAAStudy']
+__all__ = ['NOAADataset']
 
 from ..utils.Publication import Publication
 from ..utils.Site import Site
 from ..utils.PaleoData import PaleoData
 import numpy as np
 
-class NOAAStudy:
+class NOAADataset:
     """
     This class encapsulates study metadata and its related components (e.g. publications,
     sites) retrieved from the NOAA API.
@@ -28,7 +28,7 @@ class NOAAStudy:
     Methods
     -------
     __init__(study_data)
-        Initializes the NOAAStudy instance using a dictionary of study data.
+        Initializes the NOAADataset instance using a dictionary of study data.
     _load_metadata(study_data)
         Extracts metadata from the study data.
     _load_investigators(study_data)
@@ -38,14 +38,14 @@ class NOAAStudy:
     """
     def __init__(self, study_data):
         """
-        Initialize a NOAAStudy instance.
+        Initialize a NOAADataset instance.
 
         Parameters
         ----------
         study_data : dict
             JSON object for a NOAA study.
         """
-        self.study_id = study_data.get('NOAAStudyId')
+        self.study_id = study_data.get('NOAADatasetId')
         self.xml_id = study_data.get('xmlId')
         self.metadata = self._load_metadata(study_data)
         self.investigators = self._load_investigators(study_data)

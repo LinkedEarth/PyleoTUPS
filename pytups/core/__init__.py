@@ -1,2 +1,2 @@
-from .NOAAStudy import NOAAStudy
-from .NOAAStudyWrapper import NOAAStudyWrapper
+from .NOAADataset import NOAADataset
+from .Dataset import Dataset

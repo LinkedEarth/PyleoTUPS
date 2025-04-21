@@ -5,20 +5,25 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pytups.utils.helpers &mdash; PyTUPS 0.0.0 documentation</title>
+  <title>pytups.utils.helpers &mdash; PyTUPS 0.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/jupyter-sphinx.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/thebelab.css" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=7026087e"></script>
+      <script src="../../../_static/documentation_options.js?v=d45e8c67"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/thebelab-helper.js"></script>
       <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
       <script src="../../../_static/copybutton.js?v=f281be69"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -44,8 +49,19 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <!-- Local TOC -->
-              <div class="local-toc"></div>
+              <p class="caption" role="heading"><span class="caption-text">Working with PyTUPS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installing PyTUPS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">PyTUPS User API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html#core-components">Core Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html#utility-classes">Utility Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html#parsers">Parsers</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Involved</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../contribution_guide.html">Contributing to PyTUPS</a></li>
+</ul>
+
         </div>
       </div>
     </nav>
@@ -74,7 +90,7 @@
 <span></span><span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;assert_list&#39;</span><span class="p">,</span> <span class="s1">&#39;params_validators&#39;</span><span class="p">]</span>
 
 <div class="viewcode-block" id="assert_list">
-<a class="viewcode-back" href="../../../pytups.utils.html#pytups.utils.helpers.assert_list">[docs]</a>
+<a class="viewcode-back" href="../../../source/pytups.utils.html#pytups.utils.helpers.assert_list">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">assert_list</span><span class="p">(</span><span class="n">input_item</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Ensure the input is a list.</span>
@@ -100,7 +116,7 @@
 
 
 <div class="viewcode-block" id="params_validators">
-<a class="viewcode-back" href="../../../pytups.utils.html#pytups.utils.helpers.params_validators">[docs]</a>
+<a class="viewcode-back" href="../../../source/pytups.utils.html#pytups.utils.helpers.params_validators">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">params_validators</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Validate and process a parameter for the NOAA studies.</span>

@@ -1,0 +1,1144 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PyTUPS User API &mdash; PyTUPS 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
+      <link rel="stylesheet" type="text/css" href="_static/thebelab.css" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/thebelab-helper.js"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Contributing to PyTUPS" href="contribution_guide.html" />
+    <link rel="prev" title="Installing PyTUPS" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            PyTUPS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Working with PyTUPS</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installing PyTUPS</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">PyTUPS User API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#core-components">Core Components</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#dataset-pytups-core-dataset-dataset">Dataset (pytups.core.Dataset.Dataset)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pytups.core.Dataset.Dataset"><code class="docutils literal notranslate"><span class="pre">Dataset</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.core.Dataset.Dataset.BASE_URL"><code class="docutils literal notranslate"><span class="pre">Dataset.BASE_URL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.core.Dataset.Dataset.studies"><code class="docutils literal notranslate"><span class="pre">Dataset.studies</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.core.Dataset.Dataset.data_table_index"><code class="docutils literal notranslate"><span class="pre">Dataset.data_table_index</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.core.Dataset.Dataset.__init__"><code class="docutils literal notranslate"><span class="pre">Dataset.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.core.Dataset.Dataset.search_studies"><code class="docutils literal notranslate"><span class="pre">Dataset.search_studies()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.core.Dataset.Dataset._fetch_api"><code class="docutils literal notranslate"><span class="pre">Dataset._fetch_api()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.core.Dataset.Dataset._parse_response"><code class="docutils literal notranslate"><span class="pre">Dataset._parse_response()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.core.Dataset.Dataset.get_summary_dataframe"><code class="docutils literal notranslate"><span class="pre">Dataset.get_summary_dataframe()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.core.Dataset.Dataset.get_publications_dataframe"><code class="docutils literal notranslate"><span class="pre">Dataset.get_publications_dataframe()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.core.Dataset.Dataset.get_sites_dataframe"><code class="docutils literal notranslate"><span class="pre">Dataset.get_sites_dataframe()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.core.Dataset.Dataset.get_data"><code class="docutils literal notranslate"><span class="pre">Dataset.get_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">Dataset.BASE_URL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1"><code class="docutils literal notranslate"><span class="pre">Dataset.get_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.core.Dataset.Dataset.get_data_deprecated"><code class="docutils literal notranslate"><span class="pre">Dataset.get_data_deprecated()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2"><code class="docutils literal notranslate"><span class="pre">Dataset.get_publications_dataframe()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3"><code class="docutils literal notranslate"><span class="pre">Dataset.get_sites_dataframe()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4"><code class="docutils literal notranslate"><span class="pre">Dataset.get_summary_dataframe()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5"><code class="docutils literal notranslate"><span class="pre">Dataset.search_studies()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#noaadataset-pytups-core-noaadataset-noaadataset">NOAADataset (pytups.core.NOAADataset.NOAADataset)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pytups.core.NOAADataset.NOAADataset"><code class="docutils literal notranslate"><span class="pre">NOAADataset</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.core.NOAADataset.NOAADataset.study_id"><code class="docutils literal notranslate"><span class="pre">NOAADataset.study_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.core.NOAADataset.NOAADataset.xml_id"><code class="docutils literal notranslate"><span class="pre">NOAADataset.xml_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.core.NOAADataset.NOAADataset.metadata"><code class="docutils literal notranslate"><span class="pre">NOAADataset.metadata</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.core.NOAADataset.NOAADataset.investigators"><code class="docutils literal notranslate"><span class="pre">NOAADataset.investigators</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.core.NOAADataset.NOAADataset.publications"><code class="docutils literal notranslate"><span class="pre">NOAADataset.publications</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.core.NOAADataset.NOAADataset.sites"><code class="docutils literal notranslate"><span class="pre">NOAADataset.sites</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.core.NOAADataset.NOAADataset.__init__"><code class="docutils literal notranslate"><span class="pre">NOAADataset.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.core.NOAADataset.NOAADataset._load_metadata"><code class="docutils literal notranslate"><span class="pre">NOAADataset._load_metadata()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.core.NOAADataset.NOAADataset._load_investigators"><code class="docutils literal notranslate"><span class="pre">NOAADataset._load_investigators()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.core.NOAADataset.NOAADataset.to_dict"><code class="docutils literal notranslate"><span class="pre">NOAADataset.to_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6"><code class="docutils literal notranslate"><span class="pre">NOAADataset.to_dict()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#utility-classes">Utility Classes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#paleodata-pytups-utils-paleodata-paleodata">PaleoData (pytups.utils.PaleoData.PaleoData)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pytups.utils.PaleoData.PaleoData"><code class="docutils literal notranslate"><span class="pre">PaleoData</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.PaleoData.PaleoData.datatable_id"><code class="docutils literal notranslate"><span class="pre">PaleoData.datatable_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.PaleoData.PaleoData.dataTableName"><code class="docutils literal notranslate"><span class="pre">PaleoData.dataTableName</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.PaleoData.PaleoData.timeUnit"><code class="docutils literal notranslate"><span class="pre">PaleoData.timeUnit</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.PaleoData.PaleoData.file_url"><code class="docutils literal notranslate"><span class="pre">PaleoData.file_url</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.PaleoData.PaleoData.variables"><code class="docutils literal notranslate"><span class="pre">PaleoData.variables</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.PaleoData.PaleoData.study_id"><code class="docutils literal notranslate"><span class="pre">PaleoData.study_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.PaleoData.PaleoData.site_id"><code class="docutils literal notranslate"><span class="pre">PaleoData.site_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.PaleoData.PaleoData.to_dict"><code class="docutils literal notranslate"><span class="pre">PaleoData.to_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7"><code class="docutils literal notranslate"><span class="pre">PaleoData.to_dict()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#publication-pytups-utils-publication-publication">Publication (pytups.utils.Publication.Publication)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pytups.utils.Publication.Publication"><code class="docutils literal notranslate"><span class="pre">Publication</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Publication.Publication.author"><code class="docutils literal notranslate"><span class="pre">Publication.author</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Publication.Publication.title"><code class="docutils literal notranslate"><span class="pre">Publication.title</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Publication.Publication.journal"><code class="docutils literal notranslate"><span class="pre">Publication.journal</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Publication.Publication.year"><code class="docutils literal notranslate"><span class="pre">Publication.year</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Publication.Publication.volume"><code class="docutils literal notranslate"><span class="pre">Publication.volume</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Publication.Publication.number"><code class="docutils literal notranslate"><span class="pre">Publication.number</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Publication.Publication.pages"><code class="docutils literal notranslate"><span class="pre">Publication.pages</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Publication.Publication.pub_type"><code class="docutils literal notranslate"><span class="pre">Publication.pub_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Publication.Publication.doi"><code class="docutils literal notranslate"><span class="pre">Publication.doi</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Publication.Publication.url"><code class="docutils literal notranslate"><span class="pre">Publication.url</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Publication.Publication.study_id"><code class="docutils literal notranslate"><span class="pre">Publication.study_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Publication.Publication.get_citation_key"><code class="docutils literal notranslate"><span class="pre">Publication.get_citation_key()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Publication.Publication.to_dict"><code class="docutils literal notranslate"><span class="pre">Publication.to_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8"><code class="docutils literal notranslate"><span class="pre">Publication.get_citation_key()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9"><code class="docutils literal notranslate"><span class="pre">Publication.to_dict()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#site-pytups-utils-site-site">Site (pytups.utils.Site.Site)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pytups.utils.Site.Site"><code class="docutils literal notranslate"><span class="pre">Site</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Site.Site.site_id"><code class="docutils literal notranslate"><span class="pre">Site.site_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Site.Site.site_name"><code class="docutils literal notranslate"><span class="pre">Site.site_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Site.Site.location_name"><code class="docutils literal notranslate"><span class="pre">Site.location_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Site.Site.lat"><code class="docutils literal notranslate"><span class="pre">Site.lat</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Site.Site.lon"><code class="docutils literal notranslate"><span class="pre">Site.lon</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Site.Site.min_elevation"><code class="docutils literal notranslate"><span class="pre">Site.min_elevation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Site.Site.max_elevation"><code class="docutils literal notranslate"><span class="pre">Site.max_elevation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Site.Site.paleo_data"><code class="docutils literal notranslate"><span class="pre">Site.paleo_data</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Site.Site.to_dict"><code class="docutils literal notranslate"><span class="pre">Site.to_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10"><code class="docutils literal notranslate"><span class="pre">Site.to_dict()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#parsers">Parsers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#standardparser-pytups-utils-parser-standardparser-standardparser">StandardParser (pytups.utils.Parser.StandardParser.StandardParser)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pytups.utils.Parser.StandardParser.StandardParser"><code class="docutils literal notranslate"><span class="pre">StandardParser</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Parser.StandardParser.StandardParser.url"><code class="docutils literal notranslate"><span class="pre">StandardParser.url</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Parser.StandardParser.StandardParser.lines"><code class="docutils literal notranslate"><span class="pre">StandardParser.lines</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Parser.StandardParser.StandardParser.meta_start"><code class="docutils literal notranslate"><span class="pre">StandardParser.meta_start</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Parser.StandardParser.StandardParser.meta_end"><code class="docutils literal notranslate"><span class="pre">StandardParser.meta_end</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Parser.StandardParser.StandardParser.variables"><code class="docutils literal notranslate"><span class="pre">StandardParser.variables</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Parser.StandardParser.StandardParser.skip_lines"><code class="docutils literal notranslate"><span class="pre">StandardParser.skip_lines</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Parser.StandardParser.StandardParser.data"><code class="docutils literal notranslate"><span class="pre">StandardParser.data</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Parser.StandardParser.StandardParser.df"><code class="docutils literal notranslate"><span class="pre">StandardParser.df</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Parser.StandardParser.StandardParser.parse"><code class="docutils literal notranslate"><span class="pre">StandardParser.parse()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Parser.StandardParser.StandardParser._fetch_file"><code class="docutils literal notranslate"><span class="pre">StandardParser._fetch_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Parser.StandardParser.StandardParser._identify_metadata"><code class="docutils literal notranslate"><span class="pre">StandardParser._identify_metadata()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Parser.StandardParser.StandardParser._extract_variables"><code class="docutils literal notranslate"><span class="pre">StandardParser._extract_variables()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Parser.StandardParser.StandardParser._parse_data"><code class="docutils literal notranslate"><span class="pre">StandardParser._parse_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pytups.utils.Parser.StandardParser.StandardParser._construct_dataframe"><code class="docutils literal notranslate"><span class="pre">StandardParser._construct_dataframe()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id11"><code class="docutils literal notranslate"><span class="pre">StandardParser.parse()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Involved</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contribution_guide.html">Contributing to PyTUPS</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PyTUPS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">PyTUPS User API</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/api.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="pytups-user-api">
+<span id="api"></span><h1>PyTUPS User API<a class="headerlink" href="#pytups-user-api" title="Link to this heading"></a></h1>
+<p>The following describes the main classes that make up PyTUPS.
+Most users will primarily interact with the functionalities exposed in these classes.</p>
+</section>
+<section id="core-components">
+<h1>Core Components<a class="headerlink" href="#core-components" title="Link to this heading"></a></h1>
+<section id="dataset-pytups-core-dataset-dataset">
+<h2>Dataset (pytups.core.Dataset.Dataset)<a class="headerlink" href="#dataset-pytups-core-dataset-dataset" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pytups.core.Dataset.Dataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pytups.core.Dataset.</span></span><span class="sig-name descname"><span class="pre">Dataset</span></span><a class="reference internal" href="_modules/pytups/core/Dataset.html#Dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.core.Dataset.Dataset" title="Link to this definition"></a></dt>
+<dd><p>A wrapper class for interacting with the NOAA Studies API.</p>
+<p>Manages the retrieval, parsing, and aggregation of NOAA study data,
+and provides methods to access summaries, publications, sites, and external data files.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.core.Dataset.Dataset.BASE_URL">
+<span class="sig-name descname"><span class="pre">BASE_URL</span></span><a class="headerlink" href="#pytups.core.Dataset.Dataset.BASE_URL" title="Link to this definition"></a></dt>
+<dd><p>The NOAA API endpoint URL.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.core.Dataset.Dataset.studies">
+<span class="sig-name descname"><span class="pre">studies</span></span><a class="headerlink" href="#pytups.core.Dataset.Dataset.studies" title="Link to this definition"></a></dt>
+<dd><p>A mapping from NOAADatasetId to NOAADataset instances.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.core.Dataset.Dataset.data_table_index">
+<span class="sig-name descname"><span class="pre">data_table_index</span></span><a class="headerlink" href="#pytups.core.Dataset.Dataset.data_table_index" title="Link to this definition"></a></dt>
+<dd><p>A mapping from dataTableID to associated study, site, and paleo data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytups.core.Dataset.Dataset.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/core/Dataset.html#Dataset.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.core.Dataset.Dataset.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initializes the Dataset.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytups.core.Dataset.Dataset.search_studies">
+<span class="sig-name descname"><span class="pre">search_studies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">...</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/core/Dataset.html#Dataset.search_studies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.core.Dataset.Dataset.search_studies" title="Link to this definition"></a></dt>
+<dd><p>Searches for studies using provided parameters and parses the response.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytups.core.Dataset.Dataset._fetch_api">
+<span class="sig-name descname"><span class="pre">_fetch_api</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/core/Dataset.html#Dataset._fetch_api"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.core.Dataset.Dataset._fetch_api" title="Link to this definition"></a></dt>
+<dd><p>Internal method to make an HTTP GET request to the NOAA API.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytups.core.Dataset.Dataset._parse_response">
+<span class="sig-name descname"><span class="pre">_parse_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/core/Dataset.html#Dataset._parse_response"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.core.Dataset.Dataset._parse_response" title="Link to this definition"></a></dt>
+<dd><p>Internal method to parse the JSON response and populate studies.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytups.core.Dataset.Dataset.get_summary_dataframe">
+<span class="sig-name descname"><span class="pre">get_summary_dataframe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/core/Dataset.html#Dataset.get_summary_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.core.Dataset.Dataset.get_summary_dataframe" title="Link to this definition"></a></dt>
+<dd><p>Returns a DataFrame summarizing all loaded studies.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytups.core.Dataset.Dataset.get_publications_dataframe">
+<span class="sig-name descname"><span class="pre">get_publications_dataframe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/core/Dataset.html#Dataset.get_publications_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.core.Dataset.Dataset.get_publications_dataframe" title="Link to this definition"></a></dt>
+<dd><p>Returns a DataFrame of publications aggregated from studies.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytups.core.Dataset.Dataset.get_sites_dataframe">
+<span class="sig-name descname"><span class="pre">get_sites_dataframe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/core/Dataset.html#Dataset.get_sites_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.core.Dataset.Dataset.get_sites_dataframe" title="Link to this definition"></a></dt>
+<dd><p>Returns a DataFrame of sites aggregated from studies.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytups.core.Dataset.Dataset.get_data">
+<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataTableIDs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_urls</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/core/Dataset.html#Dataset.get_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.core.Dataset.Dataset.get_data" title="Link to this definition"></a></dt>
+<dd><p>Fetches and returns external data based on data table IDs or file URLs.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">BASE_URL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'https://www.ncei.noaa.gov/access/paleo-search/study/search.json'</span></em><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataTableIDs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_urls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/core/Dataset.html#Dataset.get_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd><p>Fetch external data for given dataTableIDs or file URLs, perform validations,
+and attach study and site metadata.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataTableIDs</strong> (<em>list</em><em> or </em><em>str</em><em>, </em><em>optional</em>) – One or more NOAA data table IDs.</p></li>
+<li><p><strong>file_urls</strong> (<em>list</em><em> or </em><em>str</em><em>, </em><em>optional</em>) – One or more file URLs.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of DataFrames corresponding to the fetched data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of pandas.DataFrame</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – For missing parent study mapping, missing file URL, or proprietary/unsupported file types.</p></li>
+<li><p><strong>Exception</strong> – Propagates any exceptions raised by the parser.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytups.core.Dataset.Dataset.get_data_deprecated">
+<span class="sig-name descname"><span class="pre">get_data_deprecated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataTableIDs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_urls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/core/Dataset.html#Dataset.get_data_deprecated"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.core.Dataset.Dataset.get_data_deprecated" title="Link to this definition"></a></dt>
+<dd><p>Fetch external data for given dataTableIDs or file URLs and attach study/site metadata.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataTableIDs</strong> (<em>list</em><em> or </em><em>str</em><em>, </em><em>optional</em>) – One or more NOAA data table IDs.</p></li>
+<li><p><strong>file_urls</strong> (<em>list</em><em> or </em><em>str</em><em>, </em><em>optional</em>) – One or more file URLs.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of DataFrames, each corresponding to fetched data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">get_publications_dataframe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/core/Dataset.html#Dataset.get_publications_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dd><p>Get a DataFrame of all publications aggregated from the studies.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A DataFrame containing publication details with study context.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">get_sites_dataframe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/core/Dataset.html#Dataset.get_sites_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
+<dd><p>Get a DataFrame of all sites aggregated from the studies, including paleo data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A DataFrame containing site details with study context and paleo data.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">get_summary_dataframe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/core/Dataset.html#Dataset.get_summary_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id4" title="Link to this definition"></a></dt>
+<dd><p>Get a DataFrame summarizing all loaded studies.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A DataFrame with a summary of study metadata and components.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">search_studies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xml_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noaa_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_publisher</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'NOAA'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_type_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keywords</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">investigators</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_lat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_lat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_lon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_lon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">publication</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">earliest_year</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latest_year</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cv_whats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/core/Dataset.html#Dataset.search_studies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
+<dd><p>Search for NOAA studies using the provided parameters.</p>
+<p>At least one parameter must be specified for a search to be initiated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xml_id</strong> (<em>str</em><em>, </em><em>optional</em>) – XML identifier for a study.</p></li>
+<li><p><strong>noaa_id</strong> (<em>str</em><em>, </em><em>optional</em>) – NOAA study identifier.</p></li>
+<li><p><strong>data_publisher</strong> (<em>str</em><em>, </em><em>optional</em>) – Publisher of the data, default is “NOAA”.</p></li>
+<li><p><strong>data_type_id</strong> (<em>str</em><em>, </em><em>optional</em>) – Data type identifier.</p></li>
+<li><p><strong>keywords</strong> (<em>str</em><em>, </em><em>optional</em>) – Keywords for the search.</p></li>
+<li><p><strong>investigators</strong> (<em>str</em><em>, </em><em>optional</em>) – Investigator names.</p></li>
+<li><p><strong>max_lat</strong> (<em>float</em><em>, </em><em>optional</em>) – Maximum latitude.</p></li>
+<li><p><strong>min_lat</strong> (<em>float</em><em>, </em><em>optional</em>) – Minimum latitude.</p></li>
+<li><p><strong>max_lon</strong> (<em>float</em><em>, </em><em>optional</em>) – Maximum longitude.</p></li>
+<li><p><strong>min_lon</strong> (<em>float</em><em>, </em><em>optional</em>) – Minimum longitude.</p></li>
+<li><p><strong>location</strong> (<em>str</em><em>, </em><em>optional</em>) – Location description.</p></li>
+<li><p><strong>publication</strong> (<em>str</em><em>, </em><em>optional</em>) – Publication details.</p></li>
+<li><p><strong>search_text</strong> (<em>str</em><em>, </em><em>optional</em>) – Additional text to search within the study.</p></li>
+<li><p><strong>earliest_year</strong> (<em>int</em><em>, </em><em>optional</em>) – Earliest year of study.</p></li>
+<li><p><strong>latest_year</strong> (<em>int</em><em>, </em><em>optional</em>) – Latest year of study.</p></li>
+<li><p><strong>cv_whats</strong> (<em>str</em><em>, </em><em>optional</em>) – Controlled vocabulary term.</p></li>
+<li><p><strong>recent</strong> (<em>bool</em><em>, </em><em>optional</em>) – Flag to filter recent studies.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The method populates internal attributes with the retrieved data.
+Requires at least one single parameter. Parameter validation to be implemented soon.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="noaadataset-pytups-core-noaadataset-noaadataset">
+<h2>NOAADataset (pytups.core.NOAADataset.NOAADataset)<a class="headerlink" href="#noaadataset-pytups-core-noaadataset-noaadataset" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pytups.core.NOAADataset.NOAADataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pytups.core.NOAADataset.</span></span><span class="sig-name descname"><span class="pre">NOAADataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">study_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/core/NOAADataset.html#NOAADataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.core.NOAADataset.NOAADataset" title="Link to this definition"></a></dt>
+<dd><p>This class encapsulates study metadata and its related components (e.g. publications,
+sites) retrieved from the NOAA API.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.core.NOAADataset.NOAADataset.study_id">
+<span class="sig-name descname"><span class="pre">study_id</span></span><a class="headerlink" href="#pytups.core.NOAADataset.NOAADataset.study_id" title="Link to this definition"></a></dt>
+<dd><p>The unique NOAA study identifier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.core.NOAADataset.NOAADataset.xml_id">
+<span class="sig-name descname"><span class="pre">xml_id</span></span><a class="headerlink" href="#pytups.core.NOAADataset.NOAADataset.xml_id" title="Link to this definition"></a></dt>
+<dd><p>The XML identifier of the study.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.core.NOAADataset.NOAADataset.metadata">
+<span class="sig-name descname"><span class="pre">metadata</span></span><a class="headerlink" href="#pytups.core.NOAADataset.NOAADataset.metadata" title="Link to this definition"></a></dt>
+<dd><p>A dictionary containing basic metadata such as studyName, dataType, earliestYearBP, etc.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.core.NOAADataset.NOAADataset.investigators">
+<span class="sig-name descname"><span class="pre">investigators</span></span><a class="headerlink" href="#pytups.core.NOAADataset.NOAADataset.investigators" title="Link to this definition"></a></dt>
+<dd><p>A comma-separated string of investigator names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.core.NOAADataset.NOAADataset.publications">
+<span class="sig-name descname"><span class="pre">publications</span></span><a class="headerlink" href="#pytups.core.NOAADataset.NOAADataset.publications" title="Link to this definition"></a></dt>
+<dd><p>A list of Publication objects associated with the study.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of <a class="reference internal" href="source/pytups.utils.html#pytups.utils.Publication.Publication" title="pytups.utils.Publication.Publication">Publication</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.core.NOAADataset.NOAADataset.sites">
+<span class="sig-name descname"><span class="pre">sites</span></span><a class="headerlink" href="#pytups.core.NOAADataset.NOAADataset.sites" title="Link to this definition"></a></dt>
+<dd><p>A list of Site objects associated with the study.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of <a class="reference internal" href="source/pytups.utils.html#pytups.utils.Site.Site" title="pytups.utils.Site.Site">Site</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytups.core.NOAADataset.NOAADataset.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">study_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/core/NOAADataset.html#NOAADataset.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.core.NOAADataset.NOAADataset.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initializes the NOAADataset instance using a dictionary of study data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytups.core.NOAADataset.NOAADataset._load_metadata">
+<span class="sig-name descname"><span class="pre">_load_metadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">study_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/core/NOAADataset.html#NOAADataset._load_metadata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.core.NOAADataset.NOAADataset._load_metadata" title="Link to this definition"></a></dt>
+<dd><p>Extracts metadata from the study data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytups.core.NOAADataset.NOAADataset._load_investigators">
+<span class="sig-name descname"><span class="pre">_load_investigators</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">study_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/core/NOAADataset.html#NOAADataset._load_investigators"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.core.NOAADataset.NOAADataset._load_investigators" title="Link to this definition"></a></dt>
+<dd><p>Extracts investigator details from the study data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytups.core.NOAADataset.NOAADataset.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/core/NOAADataset.html#NOAADataset.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.core.NOAADataset.NOAADataset.to_dict" title="Link to this definition"></a></dt>
+<dd><p>Returns a dictionary summary of the study and its components.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/core/NOAADataset.html#NOAADataset.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id6" title="Link to this definition"></a></dt>
+<dd><p>Convert the study data and its components to a dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary representing the study including metadata, investigators,
+publications, and sites.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+<section id="utility-classes">
+<h1>Utility Classes<a class="headerlink" href="#utility-classes" title="Link to this heading"></a></h1>
+<section id="paleodata-pytups-utils-paleodata-paleodata">
+<h2>PaleoData (pytups.utils.PaleoData.PaleoData)<a class="headerlink" href="#paleodata-pytups-utils-paleodata-paleodata" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pytups.utils.PaleoData.PaleoData">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pytups.utils.PaleoData.</span></span><span class="sig-name descname"><span class="pre">PaleoData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">paleo_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">study_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">site_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/utils/PaleoData.html#PaleoData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.utils.PaleoData.PaleoData" title="Link to this definition"></a></dt>
+<dd><p>Represents paleo data associated with a site.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.PaleoData.PaleoData.datatable_id">
+<span class="sig-name descname"><span class="pre">datatable_id</span></span><a class="headerlink" href="#pytups.utils.PaleoData.PaleoData.datatable_id" title="Link to this definition"></a></dt>
+<dd><p>The NOAA data table identifier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.PaleoData.PaleoData.dataTableName">
+<span class="sig-name descname"><span class="pre">dataTableName</span></span><a class="headerlink" href="#pytups.utils.PaleoData.PaleoData.dataTableName" title="Link to this definition"></a></dt>
+<dd><p>The name of the data table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.PaleoData.PaleoData.timeUnit">
+<span class="sig-name descname"><span class="pre">timeUnit</span></span><a class="headerlink" href="#pytups.utils.PaleoData.PaleoData.timeUnit" title="Link to this definition"></a></dt>
+<dd><p>The unit of time for the data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.PaleoData.PaleoData.file_url">
+<span class="sig-name descname"><span class="pre">file_url</span></span><a class="headerlink" href="#pytups.utils.PaleoData.PaleoData.file_url" title="Link to this definition"></a></dt>
+<dd><p>The URL from which the data file can be fetched.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.PaleoData.PaleoData.variables">
+<span class="sig-name descname"><span class="pre">variables</span></span><a class="headerlink" href="#pytups.utils.PaleoData.PaleoData.variables" title="Link to this definition"></a></dt>
+<dd><p>A list of variable names or identifiers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.PaleoData.PaleoData.study_id">
+<span class="sig-name descname"><span class="pre">study_id</span></span><a class="headerlink" href="#pytups.utils.PaleoData.PaleoData.study_id" title="Link to this definition"></a></dt>
+<dd><p>The NOAA study ID this data belongs to.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.PaleoData.PaleoData.site_id">
+<span class="sig-name descname"><span class="pre">site_id</span></span><a class="headerlink" href="#pytups.utils.PaleoData.PaleoData.site_id" title="Link to this definition"></a></dt>
+<dd><p>The site identifier this data belongs to.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytups.utils.PaleoData.PaleoData.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/utils/PaleoData.html#PaleoData.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.utils.PaleoData.PaleoData.to_dict" title="Link to this definition"></a></dt>
+<dd><p>Return a dictionary representation of the paleo data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/utils/PaleoData.html#PaleoData.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id7" title="Link to this definition"></a></dt>
+<dd><p>Convert the paleo data into a dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary representation of the paleo data.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="publication-pytups-utils-publication-publication">
+<h2>Publication (pytups.utils.Publication.Publication)<a class="headerlink" href="#publication-pytups-utils-publication-publication" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pytups.utils.Publication.Publication">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pytups.utils.Publication.</span></span><span class="sig-name descname"><span class="pre">Publication</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pub_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/utils/Publication.html#Publication"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.utils.Publication.Publication" title="Link to this definition"></a></dt>
+<dd><p>Represents a publication within a study.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.Publication.Publication.author">
+<span class="sig-name descname"><span class="pre">author</span></span><a class="headerlink" href="#pytups.utils.Publication.Publication.author" title="Link to this definition"></a></dt>
+<dd><p>The name of the author(s) of the publication.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.Publication.Publication.title">
+<span class="sig-name descname"><span class="pre">title</span></span><a class="headerlink" href="#pytups.utils.Publication.Publication.title" title="Link to this definition"></a></dt>
+<dd><p>The title of the publication.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.Publication.Publication.journal">
+<span class="sig-name descname"><span class="pre">journal</span></span><a class="headerlink" href="#pytups.utils.Publication.Publication.journal" title="Link to this definition"></a></dt>
+<dd><p>The journal where the publication appeared.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.Publication.Publication.year">
+<span class="sig-name descname"><span class="pre">year</span></span><a class="headerlink" href="#pytups.utils.Publication.Publication.year" title="Link to this definition"></a></dt>
+<dd><p>The publication year.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.Publication.Publication.volume">
+<span class="sig-name descname"><span class="pre">volume</span></span><a class="headerlink" href="#pytups.utils.Publication.Publication.volume" title="Link to this definition"></a></dt>
+<dd><p>The volume number (if applicable).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.Publication.Publication.number">
+<span class="sig-name descname"><span class="pre">number</span></span><a class="headerlink" href="#pytups.utils.Publication.Publication.number" title="Link to this definition"></a></dt>
+<dd><p>The issue number (if applicable).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.Publication.Publication.pages">
+<span class="sig-name descname"><span class="pre">pages</span></span><a class="headerlink" href="#pytups.utils.Publication.Publication.pages" title="Link to this definition"></a></dt>
+<dd><p>The page numbers (if applicable).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.Publication.Publication.pub_type">
+<span class="sig-name descname"><span class="pre">pub_type</span></span><a class="headerlink" href="#pytups.utils.Publication.Publication.pub_type" title="Link to this definition"></a></dt>
+<dd><p>The type of publication.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.Publication.Publication.doi">
+<span class="sig-name descname"><span class="pre">doi</span></span><a class="headerlink" href="#pytups.utils.Publication.Publication.doi" title="Link to this definition"></a></dt>
+<dd><p>The Digital Object Identifier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.Publication.Publication.url">
+<span class="sig-name descname"><span class="pre">url</span></span><a class="headerlink" href="#pytups.utils.Publication.Publication.url" title="Link to this definition"></a></dt>
+<dd><p>URL for the publication.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.Publication.Publication.study_id">
+<span class="sig-name descname"><span class="pre">study_id</span></span><a class="headerlink" href="#pytups.utils.Publication.Publication.study_id" title="Link to this definition"></a></dt>
+<dd><p>The NOAA study ID to which this publication belongs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytups.utils.Publication.Publication.get_citation_key">
+<span class="sig-name descname"><span class="pre">get_citation_key</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/utils/Publication.html#Publication.get_citation_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.utils.Publication.Publication.get_citation_key" title="Link to this definition"></a></dt>
+<dd><p>Generate and return a unique citation key.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytups.utils.Publication.Publication.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/utils/Publication.html#Publication.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.utils.Publication.Publication.to_dict" title="Link to this definition"></a></dt>
+<dd><p>Return a dictionary representation of the publication.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id8">
+<span class="sig-name descname"><span class="pre">get_citation_key</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/utils/Publication.html#Publication.get_citation_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id8" title="Link to this definition"></a></dt>
+<dd><p>Generate a unique citation key for the publication.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A citation key in the format: “&lt;LastName&gt;_&lt;FirstSignificantWord&gt;_&lt;Year&gt;_&lt;StudyID&gt;”.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id9">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/utils/Publication.html#Publication.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id9" title="Link to this definition"></a></dt>
+<dd><p>Convert the publication data into a dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary representation of the publication.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="site-pytups-utils-site-site">
+<h2>Site (pytups.utils.Site.Site)<a class="headerlink" href="#site-pytups-utils-site-site" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pytups.utils.Site.Site">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pytups.utils.Site.</span></span><span class="sig-name descname"><span class="pre">Site</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">site_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">study_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/utils/Site.html#Site"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.utils.Site.Site" title="Link to this definition"></a></dt>
+<dd><p>Represents a site within a study.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.Site.Site.site_id">
+<span class="sig-name descname"><span class="pre">site_id</span></span><a class="headerlink" href="#pytups.utils.Site.Site.site_id" title="Link to this definition"></a></dt>
+<dd><p>The unique identifier for the site.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.Site.Site.site_name">
+<span class="sig-name descname"><span class="pre">site_name</span></span><a class="headerlink" href="#pytups.utils.Site.Site.site_name" title="Link to this definition"></a></dt>
+<dd><p>The name of the site.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.Site.Site.location_name">
+<span class="sig-name descname"><span class="pre">location_name</span></span><a class="headerlink" href="#pytups.utils.Site.Site.location_name" title="Link to this definition"></a></dt>
+<dd><p>A descriptive location name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.Site.Site.lat">
+<span class="sig-name descname"><span class="pre">lat</span></span><a class="headerlink" href="#pytups.utils.Site.Site.lat" title="Link to this definition"></a></dt>
+<dd><p>The latitude coordinate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float or str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.Site.Site.lon">
+<span class="sig-name descname"><span class="pre">lon</span></span><a class="headerlink" href="#pytups.utils.Site.Site.lon" title="Link to this definition"></a></dt>
+<dd><p>The longitude coordinate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float or str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.Site.Site.min_elevation">
+<span class="sig-name descname"><span class="pre">min_elevation</span></span><a class="headerlink" href="#pytups.utils.Site.Site.min_elevation" title="Link to this definition"></a></dt>
+<dd><p>The minimum elevation in meters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.Site.Site.max_elevation">
+<span class="sig-name descname"><span class="pre">max_elevation</span></span><a class="headerlink" href="#pytups.utils.Site.Site.max_elevation" title="Link to this definition"></a></dt>
+<dd><p>The maximum elevation in meters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.Site.Site.paleo_data">
+<span class="sig-name descname"><span class="pre">paleo_data</span></span><a class="headerlink" href="#pytups.utils.Site.Site.paleo_data" title="Link to this definition"></a></dt>
+<dd><p>A list of PaleoData objects associated with this site.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of <a class="reference internal" href="source/pytups.utils.html#pytups.utils.PaleoData.PaleoData" title="pytups.utils.PaleoData.PaleoData">PaleoData</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytups.utils.Site.Site.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/utils/Site.html#Site.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.utils.Site.Site.to_dict" title="Link to this definition"></a></dt>
+<dd><p>Return a dictionary representation of the site.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id10">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/utils/Site.html#Site.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id10" title="Link to this definition"></a></dt>
+<dd><p>Convert the site data into a dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary representation of the site, including its paleo data.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+<section id="parsers">
+<h1>Parsers<a class="headerlink" href="#parsers" title="Link to this heading"></a></h1>
+<section id="standardparser-pytups-utils-parser-standardparser-standardparser">
+<h2>StandardParser (pytups.utils.Parser.StandardParser.StandardParser)<a class="headerlink" href="#standardparser-pytups-utils-parser-standardparser-standardparser" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pytups.utils.Parser.StandardParser.StandardParser">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pytups.utils.Parser.StandardParser.</span></span><span class="sig-name descname"><span class="pre">StandardParser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/utils/Parser/StandardParser.html#StandardParser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.utils.Parser.StandardParser.StandardParser" title="Link to this definition"></a></dt>
+<dd><p>StandardParser encapsulates the complete workflow for downloading and parsing a NOAA text file.</p>
+<p>The class maintains attributes such as the URL, file lines, metadata boundaries, extracted variable names,
+header skip count, parsed data, and the final DataFrame.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.Parser.StandardParser.StandardParser.url">
+<span class="sig-name descname"><span class="pre">url</span></span><a class="headerlink" href="#pytups.utils.Parser.StandardParser.StandardParser.url" title="Link to this definition"></a></dt>
+<dd><p>The URL of the file to parse.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.Parser.StandardParser.StandardParser.lines">
+<span class="sig-name descname"><span class="pre">lines</span></span><a class="headerlink" href="#pytups.utils.Parser.StandardParser.StandardParser.lines" title="Link to this definition"></a></dt>
+<dd><p>The content of the file split into lines.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.Parser.StandardParser.StandardParser.meta_start">
+<span class="sig-name descname"><span class="pre">meta_start</span></span><a class="headerlink" href="#pytups.utils.Parser.StandardParser.StandardParser.meta_start" title="Link to this definition"></a></dt>
+<dd><p>The index of the first metadata line.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.Parser.StandardParser.StandardParser.meta_end">
+<span class="sig-name descname"><span class="pre">meta_end</span></span><a class="headerlink" href="#pytups.utils.Parser.StandardParser.StandardParser.meta_end" title="Link to this definition"></a></dt>
+<dd><p>The index of the last metadata line.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.Parser.StandardParser.StandardParser.variables">
+<span class="sig-name descname"><span class="pre">variables</span></span><a class="headerlink" href="#pytups.utils.Parser.StandardParser.StandardParser.variables" title="Link to this definition"></a></dt>
+<dd><p>The extracted variable names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.Parser.StandardParser.StandardParser.skip_lines">
+<span class="sig-name descname"><span class="pre">skip_lines</span></span><a class="headerlink" href="#pytups.utils.Parser.StandardParser.StandardParser.skip_lines" title="Link to this definition"></a></dt>
+<dd><p>The number of header lines to skip in the data block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.Parser.StandardParser.StandardParser.data">
+<span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#pytups.utils.Parser.StandardParser.StandardParser.data" title="Link to this definition"></a></dt>
+<dd><p>The parsed data rows.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of list of str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pytups.utils.Parser.StandardParser.StandardParser.df">
+<span class="sig-name descname"><span class="pre">df</span></span><a class="headerlink" href="#pytups.utils.Parser.StandardParser.StandardParser.df" title="Link to this definition"></a></dt>
+<dd><p>The constructed DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytups.utils.Parser.StandardParser.StandardParser.parse">
+<span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/utils/Parser/StandardParser.html#StandardParser.parse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.utils.Parser.StandardParser.StandardParser.parse" title="Link to this definition"></a></dt>
+<dd><p>Execute the full parsing workflow and return the constructed DataFrame.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytups.utils.Parser.StandardParser.StandardParser._fetch_file">
+<span class="sig-name descname"><span class="pre">_fetch_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/utils/Parser/StandardParser.html#StandardParser._fetch_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.utils.Parser.StandardParser.StandardParser._fetch_file" title="Link to this definition"></a></dt>
+<dd><p>Fetch the file and set the ‘lines’ attribute.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytups.utils.Parser.StandardParser.StandardParser._identify_metadata">
+<span class="sig-name descname"><span class="pre">_identify_metadata</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/utils/Parser/StandardParser.html#StandardParser._identify_metadata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.utils.Parser.StandardParser.StandardParser._identify_metadata" title="Link to this definition"></a></dt>
+<dd><p>Identify metadata boundaries and set ‘meta_start’ and ‘meta_end’.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytups.utils.Parser.StandardParser.StandardParser._extract_variables">
+<span class="sig-name descname"><span class="pre">_extract_variables</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/utils/Parser/StandardParser.html#StandardParser._extract_variables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.utils.Parser.StandardParser.StandardParser._extract_variables" title="Link to this definition"></a></dt>
+<dd><p>Extract variable names and header skip count, setting ‘variables’ and ‘skip_lines’.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytups.utils.Parser.StandardParser.StandardParser._parse_data">
+<span class="sig-name descname"><span class="pre">_parse_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/utils/Parser/StandardParser.html#StandardParser._parse_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.utils.Parser.StandardParser.StandardParser._parse_data" title="Link to this definition"></a></dt>
+<dd><p>Parse the data block from the file and set the ‘data’ attribute.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytups.utils.Parser.StandardParser.StandardParser._construct_dataframe">
+<span class="sig-name descname"><span class="pre">_construct_dataframe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/utils/Parser/StandardParser.html#StandardParser._construct_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytups.utils.Parser.StandardParser.StandardParser._construct_dataframe" title="Link to this definition"></a></dt>
+<dd><p>Construct the final DataFrame from parsed data and variables.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id11">
+<span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytups/utils/Parser/StandardParser.html#StandardParser.parse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id11" title="Link to this definition"></a></dt>
+<dd><p>Orchestrate the full parsing process.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>url</strong> (<em>str</em><em>, </em><em>optional</em>) – The URL to parse. If provided, it overrides the existing URL attribute.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The constructed DataFrame.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ParsingError</strong> – If any step of the parsing process fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installing PyTUPS" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="contribution_guide.html" class="btn btn-neutral float-right" title="Contributing to PyTUPS" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Dhiren Oswal, Deborah Khider, Jay Pujara.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -19,7 +19,7 @@ class Dataset:
     BASE_URL : str
         The NOAA API endpoint URL.
     studies : dict
-        A mapping from NOAADatasetId to NOAADataset instances.
+        A mapping from NOAAStudyId to NOAADataset instances.
     data_table_index : dict
         A mapping from dataTableID to associated study, site, and paleo data.
 

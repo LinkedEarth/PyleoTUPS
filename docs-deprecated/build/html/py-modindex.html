@@ -5,17 +5,25 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Python Module Index &mdash; PyTUPS 0.0.0 documentation</title>
+  <title>Python Module Index &mdash; PyTUPS 0.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="_static/plot_directive.css?v=7f9a90b1" />
+      <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
+      <link rel="stylesheet" type="text/css" href="_static/thebelab.css" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=7026087e"></script>
+      <script src="_static/documentation_options.js?v=d45e8c67"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/thebelab-helper.js"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -44,11 +52,17 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Working with PyTUPS</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">pytups</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pytups.core.html">pytups.core package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pytups.utils.html">pytups.utils package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installing PyTUPS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">PyTUPS User API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html#core-components">Core Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html#utility-classes">Utility Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html#parsers">Parsers</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Involved</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contribution_guide.html">Contributing to PyTUPS</a></li>
 </ul>
 
         </div>
@@ -89,57 +103,57 @@
        <td><img src="_static/minus.png" class="toggler"
               id="toggle-1" style="display: none" alt="-" /></td>
        <td>
-       <a href="pytups.html#module-pytups"><code class="xref">pytups</code></a></td><td>
+       <a href="source/pytups.html#module-pytups"><code class="xref">pytups</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="pytups.core.html#module-pytups.core"><code class="xref">pytups.core</code></a></td><td>
+       <a href="source/pytups.core.html#module-pytups.core"><code class="xref">pytups.core</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="pytups.core.html#module-pytups.core.NOAAStudy"><code class="xref">pytups.core.NOAAStudy</code></a></td><td>
+       <a href="source/pytups.core.html#module-pytups.core.Dataset"><code class="xref">pytups.core.Dataset</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="pytups.core.html#module-pytups.core.NOAAStudyWrapper"><code class="xref">pytups.core.NOAAStudyWrapper</code></a></td><td>
+       <a href="source/pytups.core.html#module-pytups.core.NOAADataset"><code class="xref">pytups.core.NOAADataset</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="pytups.utils.html#module-pytups.utils"><code class="xref">pytups.utils</code></a></td><td>
+       <a href="source/pytups.utils.html#module-pytups.utils"><code class="xref">pytups.utils</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="pytups.utils.html#module-pytups.utils.helpers"><code class="xref">pytups.utils.helpers</code></a></td><td>
+       <a href="source/pytups.utils.html#module-pytups.utils.helpers"><code class="xref">pytups.utils.helpers</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="pytups.utils.html#module-pytups.utils.PaleoData"><code class="xref">pytups.utils.PaleoData</code></a></td><td>
+       <a href="source/pytups.utils.html#module-pytups.utils.PaleoData"><code class="xref">pytups.utils.PaleoData</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="pytups.utils.Parser.html#module-pytups.utils.Parser"><code class="xref">pytups.utils.Parser</code></a></td><td>
+       <a href="source/pytups.utils.Parser.html#module-pytups.utils.Parser"><code class="xref">pytups.utils.Parser</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="pytups.utils.Parser.html#module-pytups.utils.Parser.StandardParser"><code class="xref">pytups.utils.Parser.StandardParser</code></a></td><td>
+       <a href="source/pytups.utils.Parser.html#module-pytups.utils.Parser.StandardParser"><code class="xref">pytups.utils.Parser.StandardParser</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="pytups.utils.html#module-pytups.utils.Publication"><code class="xref">pytups.utils.Publication</code></a></td><td>
+       <a href="source/pytups.utils.html#module-pytups.utils.Publication"><code class="xref">pytups.utils.Publication</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="pytups.utils.html#module-pytups.utils.Site"><code class="xref">pytups.utils.Site</code></a></td><td>
+       <a href="source/pytups.utils.html#module-pytups.utils.Site"><code class="xref">pytups.utils.Site</code></a></td><td>
        <em></em></td></tr>
    </table>
 

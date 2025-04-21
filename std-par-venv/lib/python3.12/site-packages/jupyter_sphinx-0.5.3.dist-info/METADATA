@@ -1,0 +1,83 @@
+Metadata-Version: 2.1
+Name: jupyter-sphinx
+Version: 0.5.3
+Summary: Jupyter Sphinx Extensions
+Project-URL: Bug Tracker, https://github.com/jupyter/jupyter-sphinx/issues/
+Project-URL: Documentation, https://jupyter-sphinx.readthedocs.io
+Project-URL: Homepage, https://jupyter.org
+Project-URL: Source Code, https://github.com/jupyter/jupyter-sphinx/
+Author-email: Jupyter Development Team <jupyter@googlegroups.com>
+License: Copyright (c) 2015-2016, Brian E. Granger and Jake Vanderplas
+        Copyright (c) 2016-2019, Project Jupyter Contributors
+        All rights reserved.
+        
+        Redistribution and use in source and binary forms, with or without
+        modification, are permitted provided that the following conditions are met:
+        
+        1. Redistributions of source code must retain the above copyright notice, this
+           list of conditions and the following disclaimer.
+        
+        2. Redistributions in binary form must reproduce the above copyright notice,
+           this list of conditions and the following disclaimer in the documentation
+           and/or other materials provided with the distribution.
+        
+        3. Neither the name of the copyright holder nor the names of its
+           contributors may be used to endorse or promote products derived from
+           this software without specific prior written permission.
+        
+        THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+        AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+        IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+        DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+        FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+        DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+        SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+        CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+        OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+        OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+License-File: LICENSE
+Requires-Python: >=3.8
+Requires-Dist: ipykernel>=4.5.1
+Requires-Dist: ipython
+Requires-Dist: ipywidgets>=7.0.0
+Requires-Dist: nbconvert>=5.5
+Requires-Dist: nbformat
+Requires-Dist: sphinx>=7
+Provides-Extra: doc
+Requires-Dist: matplotlib; extra == 'doc'
+Provides-Extra: test
+Requires-Dist: bash-kernel; extra == 'test'
+Requires-Dist: pytest; extra == 'test'
+Description-Content-Type: text/markdown
+
+# Jupyter Sphinx Extensions
+
+`jupyter-sphinx` enables running code embedded in Sphinx documentation and
+embedding output of that code into the resulting document. It has support
+for rich output such as images and even Jupyter interactive widgets.
+
+## Installation
+
+With pip:
+
+```bash
+pip install jupyter_sphinx
+```
+
+with conda:
+
+```bash
+conda install jupyter_sphinx -c conda-forge
+```
+
+## Usage
+
+You can check out the documentation on https://jupyter-sphinx.readthedocs.io for up to date
+usage information and examples.
+
+## License
+
+We use a shared copyright model that enables all contributors to maintain the
+copyright on their contributions.
+
+All code is licensed under the terms of the revised BSD license.

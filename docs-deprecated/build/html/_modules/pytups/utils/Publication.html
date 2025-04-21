@@ -5,20 +5,25 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pytups.utils.Publication &mdash; PyTUPS 0.0.0 documentation</title>
+  <title>pytups.utils.Publication &mdash; PyTUPS 0.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/jupyter-sphinx.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/thebelab.css" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=7026087e"></script>
+      <script src="../../../_static/documentation_options.js?v=d45e8c67"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/thebelab-helper.js"></script>
       <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
       <script src="../../../_static/copybutton.js?v=f281be69"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -44,8 +49,19 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <!-- Local TOC -->
-              <div class="local-toc"></div>
+              <p class="caption" role="heading"><span class="caption-text">Working with PyTUPS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installing PyTUPS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">PyTUPS User API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html#core-components">Core Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html#utility-classes">Utility Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html#parsers">Parsers</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Involved</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../contribution_guide.html">Contributing to PyTUPS</a></li>
+</ul>
+
         </div>
       </div>
     </nav>
@@ -77,7 +93,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <div class="viewcode-block" id="Publication">
-<a class="viewcode-back" href="../../../pytups.utils.html#pytups.utils.Publication.Publication">[docs]</a>
+<a class="viewcode-back" href="../../../source/pytups.utils.html#pytups.utils.Publication.Publication">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Publication</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents a publication within a study.</span>
@@ -123,7 +139,6 @@
 <span class="sd">        pub_data : dict</span>
 <span class="sd">            Dictionary containing publication data.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">author</span> <span class="o">=</span> <span class="n">pub_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;author&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;Unknown Author&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">pub_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;Unknown Title&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">journal</span> <span class="o">=</span> <span class="n">pub_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;journal&#39;</span><span class="p">,</span> <span class="s1">&#39;Unknown Journal&#39;</span><span class="p">)</span>
@@ -138,7 +153,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">study_id</span> <span class="o">=</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="Publication.get_citation_key">
-<a class="viewcode-back" href="../../../pytups.utils.html#pytups.utils.Publication.Publication.get_citation_key">[docs]</a>
+<a class="viewcode-back" href="../../../source/pytups.utils.html#pytups.utils.Publication.Publication.get_citation_key">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_citation_key</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate a unique citation key for the publication.</span>
@@ -148,7 +163,7 @@
 <span class="sd">        str</span>
 <span class="sd">            A citation key in the format: &quot;&lt;LastName&gt;_&lt;FirstSignificantWord&gt;_&lt;Year&gt;_&lt;StudyID&gt;&quot;.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+        
         <span class="n">last_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">words</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\w+&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
         <span class="n">first_significant_word</span> <span class="o">=</span> <span class="nb">next</span><span class="p">((</span><span class="n">word</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;the&#39;</span><span class="p">),</span> <span class="s2">&quot;Unknown&quot;</span><span class="p">)</span>
@@ -156,7 +171,7 @@
 
 
 <div class="viewcode-block" id="Publication.to_dict">
-<a class="viewcode-back" href="../../../pytups.utils.html#pytups.utils.Publication.Publication.to_dict">[docs]</a>
+<a class="viewcode-back" href="../../../source/pytups.utils.html#pytups.utils.Publication.Publication.to_dict">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convert the publication data into a dictionary.</span>

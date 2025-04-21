@@ -54,7 +54,7 @@
 ```
 
 
-## Block Types - Verbal Case Table
+## Rules for Parsing:
 
 | Pattern Detected                                  | Block Type       | Description                                      | Functions Triggered                              |
 |--------------------------------------------------|------------------|--------------------------------------------------|--------------------------------------------------|
@@ -77,20 +77,6 @@
 | cv > 0 and header_extent > 0 and subblock_cv > 0                | fallback: assign by interval overlap                       |
 | cv > 0 and header_extent == 0                                   | check previous blocks for headers → fallback assignment    |
 
-
-## Function Execution Paths
-
-| Step                      | Functions                                                       |
-|---------------------------|------------------------------------------------------------------|
-| File Parsing              | read_file(), split_lines()                                       |
-| Block Extraction          | segregate_blocks()                                               |
-| Stat Computation          | compute_statistics()                                             |
-| Header Detection          | detect_header_extent(), generate_row_pattern()                  |
-| Header Parsing            | extract_headers(), get_token_intervals_multi(), merge_headers() |
-| Data Construction         | generate_df(), assign_tokens_by_overlap()                       |
-| Block Classification      | process_block(), most_common(), safe_cv()                        |
-| Fallback Block Handling   | find previous block with "header-only"                           |
-
-
-## UPCOMING-FEATURES:
-Grab titles, metadata from previous blocks 
+We make use of two features, 
+- Number of elements we get per line throughout a block, given a delimiter/line splitter (single space i.e. \s+, multi space i.e. \s{2,}, tab i.e. \t) [Used to assess if a table is present and the homogenieity of the shape of the data]
+- Nature of datatype of tokens generated per line [Used to classify if a block is narrative/simple text block or to detect headers]

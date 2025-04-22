@@ -13,7 +13,7 @@ def mock_response():
         "study": [
             {
                 "xmlId": "16017",
-                "NOAADatasetId": "18315",
+                "NOAAStudyId": "18315",
                 "studyName": "Makassar Strait - Single specimens of P. obliquiloculata d18O and d13C from 704-1851 AD",
                 "dataPublisher": "NOAA",
                 "dataType": "PALEOCEANOGRAPHY",
@@ -133,7 +133,7 @@ def mock_response():
 def test_search_studies(noaa_wrapper, mock_response):
     # Directly call the _parse_response method (private, but acceptable for testing)
     noaa_wrapper._parse_response(mock_response)
-    # Check that the study is loaded by its NOAADatasetId.
+    # Check that the study is loaded by its NOAAStudyId.
     assert '18315' in noaa_wrapper.studies
     study = noaa_wrapper.studies['18315']
     assert study.metadata['studyName'] == 'Makassar Strait - Single specimens of P. obliquiloculata d18O and d13C from 704-1851 AD'

@@ -3,9 +3,14 @@ __all__ = ['Dataset']
 import requests
 import pandas as pd
 import warnings
-from .NOAADataset import NOAADataset
+from ..utils.NOAADataset import NOAADataset
 from ..utils.helpers import assert_list
 from ..utils.Parser.StandardParser import DataFetcher, StandardParser
+
+class UnsupportedFileTypeError(Exception):
+    """Raised when a file type is not supported by the parser."""
+    pass
+
 
 class Dataset:
     """
@@ -33,11 +38,11 @@ class Dataset:
         Internal method to make an HTTP GET request to the NOAA API.
     _parse_response(data)
         Internal method to parse the JSON response and populate studies.
-    get_summary_dataframe()
+    get_summary()
         Returns a DataFrame summarizing all loaded studies.
-    get_publications_dataframe()
+    get_publications()
         Returns a DataFrame of publications aggregated from studies.
-    get_sites_dataframe()
+    get_sites()
         Returns a DataFrame of sites aggregated from studies.
     get_data(dataTableIDs, file_urls)
         Fetches and returns external data based on data table IDs or file URLs.
@@ -51,7 +56,7 @@ class Dataset:
 
         Attributes are set to their default empty values.
         """
-        self.studies = {}               # NOAADatasetId -> NOAADataset instance
+        self.studies = {}               # NOAAStudyId -> NOAADataset instance
         self.data_table_index = {}      # dataTableID -> dict with study, site, paleo_data
         self.file_url_to_datatable = {} # file_url -> dataTableID
     def search_studies(self, xml_id=None, noaa_id=None, data_publisher="NOAA", data_type_id=None,
@@ -107,7 +112,7 @@ class Dataset:
             Requires at least one single parameter. Parameter validation to be implemented soon. 
         """
         if noaa_id:
-            params = {'NOAADatasetId': noaa_id}
+            params = {'NOAAStudyId': noaa_id}
         elif xml_id:
             params = {'xmlId': xml_id}
         else:
@@ -131,7 +136,7 @@ class Dataset:
 
         response_json = self._fetch_api(params)
         self._parse_response(response_json)
-        self.get_summary_dataframe()
+        self.get_summary()
 
     def _fetch_api(self, params):
         """
@@ -196,7 +201,7 @@ class Dataset:
                         self.file_url_to_datatable[paleo.file_url] = paleo.datatable_id
 
 
-    def get_summary_dataframe(self):
+    def get_summary(self):
         """
         Get a DataFrame summarizing all loaded studies.
 
@@ -208,7 +213,7 @@ class Dataset:
         data = [study.to_dict() for study in self.studies.values()]
         return pd.DataFrame(data)
 
-    def get_publications_dataframe(self):
+    def get_publications(self):
         """
         Get a DataFrame of all publications aggregated from the studies.
 
@@ -226,7 +231,7 @@ class Dataset:
                 publications_data.append(pub_dict)
         return pd.DataFrame(publications_data)
 
-    def get_sites_dataframe(self):
+    def get_sites(self):
         """
         Get a DataFrame of all sites aggregated from the studies, including paleo data.
         
@@ -298,7 +303,7 @@ class Dataset:
                 fetched_data = DataFetcher.fetch_data(file_url)
                 if isinstance(fetched_data, list):
                     for df in fetched_data:
-                        df.attrs['NOAADatasetId'] = mapping['study_id']
+                        df.attrs['NOAAStudyId'] = mapping['study_id']
                         df.attrs['SiteID'] = mapping['site_id']
                         study_obj = self.studies.get(mapping['study_id'], {})
                         df.attrs['StudyName'] = study_obj.metadata.get("studyName") if hasattr(study_obj, 'metadata') else None
@@ -310,7 +315,7 @@ class Dataset:
                                 df.attrs['PublicationDOI'].append(doi)                                
                         dfs.append(df)
                 else:
-                    fetched_data.attrs['NOAADatasetId'] = mapping['study_id']
+                    fetched_data.attrs['NOAAStudyId'] = mapping['study_id']
                     fetched_data.attrs['SiteID'] = mapping['site_id']
                     study_obj = self.studies.get(mapping['study_id'], {})
                     fetched_data.attrs['StudyName'] = study_obj.metadata.get("studyName") if hasattr(study_obj, 'metadata') else None
@@ -353,10 +358,10 @@ class Dataset:
 
         file_type = file_url.split('.')[-1].lower()
         if file_type in self._PROPRIETARY_TYPES:
-             raise ValueError(f"File type '{file_type}' requires proprietary software for processing. "
-                             "Please use the appropriate software.")
+             raise UnsupportedFileTypeError(f"Pytups works with .txt files only. "
+                             "File type '{file_type}' can be processed with a {proprietary software}.") #{proprietary software} shall be replaced by respective mapping. 
         if file_type != 'txt':
-            raise ValueError(f"Invalid file type '{file_type}'. Only .txt files are supported.")
+            raise UnsupportedFileTypeError(f"Invalid file type '{file_type}'. Only .txt files are supported.")
 
         try:
             # print(file_url, type(file_url))
@@ -366,7 +371,7 @@ class Dataset:
 
         def attach_metadata(df, mapping):
             # Attach study metadata.
-            df.attrs['NOAADatasetId'] = mapping.get('study_id')
+            df.attrs['NOAAStudyId'] = mapping.get('study_id')
             study_obj = self.studies.get(mapping.get('study_id'), {})
             df.attrs['StudyName'] = study_obj.metadata.get("studyName") if hasattr(study_obj, 'metadata') else None
             # Attach site metadata if available.

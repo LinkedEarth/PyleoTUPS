@@ -314,7 +314,7 @@ def skip_empty_lines(lines, index):
 
 
 def detect_delimiter(data_lines):
-    """
+    r"""
     Detect the delimiter used in a set of data lines.
 
     It first tries tab-delimitation; if token counts are inconsistent, it falls back to splitting 

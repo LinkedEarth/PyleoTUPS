@@ -25,6 +25,27 @@ Getting Started
    installation.rst
    api.rst
 
+Advanced Functions
+==================
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Advanced Functions
+
+   pytups.utils.Parser
+
+
+For Developers
+==============
+
+.. toctree::
+   :maxdepth: 1
+   :caption: For Developers
+
+   pytups.utils.PaleoData
+   pytups.utils.Publication
+   pytups.utils.Site
+
 Getting Involved
 ================
 

@@ -166,39 +166,28 @@ class Dataset:
 
     def _parse_response(self, data):
         """
-        Parse the JSON response and populate the internal studies and data_table_index.
-
-        Parameters
-        ----------
-        data : dict
-            The JSON data returned from the NOAA API.
-
-        Returns
-        -------
-        None
+        Parse the JSON response and populate studies and reverse mapping indexes.
         """
-    
         self.studies.clear()
         self.data_table_index.clear()
         self.file_url_to_datatable.clear()
-        # self.sites.clear()
+
         for study_data in data.get('study', []):
             study_obj = NOAADataset(study_data)
             self.studies[study_obj.study_id] = study_obj
-            # print(study_obj.study_id)
-            # Process each site in the study.
+
             for site in study_obj.sites:
-                # self.sites[site.site_id] = site
-                # Build index for each PaleoData object and map file URL to dataTableID.
-                # print(site.site_id)
                 for paleo in site.paleo_data:
                     self.data_table_index[paleo.datatable_id] = {
                         'study_id': study_obj.study_id,
                         'site_id': site.site_id,
                         'paleo_data': paleo
                     }
-                    if paleo.file_url:
-                        self.file_url_to_datatable[paleo.file_url] = paleo.datatable_id
+                    for file_obj in paleo.files:
+                        file_url = file_obj.get('fileUrl')
+                        if file_url:
+                            self.file_url_to_datatable[file_url] = paleo.datatable_id
+
 
 
     def get_summary(self):
@@ -233,40 +222,29 @@ class Dataset:
 
     def get_sites(self):
         """
-        Get a DataFrame of all sites aggregated from the studies, including paleo data.
-        
+        Get a DataFrame of all sites expanded to paleo data files.
+
         Returns
         -------
         pandas.DataFrame
-            A DataFrame containing site details with study context and paleo data.
+            A DataFrame with one row per (Site × PaleoData × File).
         """
+        import pandas as pd
+
         records = []
         for study in self.studies.values():
             study_id = study.study_id
             study_name = study.metadata.get("studyName")
+
             for site in study.sites:
-                site_dict = site.to_dict()
-                # Remove PaleoData from site_dict so it doesn't duplicate the paleo records.
-                paleo_data = site_dict.pop('PaleoData', None)
-                
-                if paleo_data and isinstance(paleo_data, list) and len(paleo_data) > 0:
-                    # For each paleo record in the list, create a merged record.
-                    for paleo_record in paleo_data:
-                        # Merge site data and paleo record. If paleo_record contains an ID,
-                        # you might extract and set it as NOAADataTableId.
-                        record = {**site_dict, **paleo_record}
-                        record.update({
-                            'StudyID': study_id,
-                            'StudyName': study_name,
-                        })
-                        records.append(record)
-                else:
-                    # If no paleo data is present, record the site as is.
-                    site_dict.update({
-                        'StudyID': study_id,
-                        'StudyName': study_name
+                paleo_data_records = site.to_dict()  # Already flattened per file
+                for paleo_record in paleo_data_records:
+                    paleo_record.update({
+                        "StudyID": study_id,
+                        "StudyName": study_name
                     })
-                    records.append(site_dict)
+                    records.append(paleo_record)
+
         return pd.DataFrame(records)
 
 

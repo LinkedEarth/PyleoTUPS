@@ -21,4 +21,4 @@ Thumbs.db
 # Logs
 *.log
 
-.std-parser/
+std-parser/

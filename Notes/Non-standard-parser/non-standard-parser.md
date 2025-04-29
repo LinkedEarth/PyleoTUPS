@@ -55,7 +55,7 @@
 ```
 
 
-## Block Types - Verbal Case Table
+## Rules for Parsing:
 
 | Pattern Detected                                  | Block Type       | Description                                      | Functions Triggered                              |
 |--------------------------------------------------|------------------|--------------------------------------------------|--------------------------------------------------|
@@ -79,7 +79,6 @@
 | Header Extent | Number of lines at the start of a block considered as the table’s column names. |
 | Subblock CV | CV calculated only over data lines after header: used when deciding if fallback is needed. |
 | Overlap Assignment | If simple splitting fails, assign tokens into columns by their visual position (spacing-based matching). |
-
 
 
 

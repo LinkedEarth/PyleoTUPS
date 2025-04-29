@@ -22,3 +22,5 @@ Thumbs.db
 *.log
 
 std-parser/
+
+nonstd-parser/

@@ -47,18 +47,24 @@ class PaleoData:
 
             # Safely extract variable metadata
             variables_meta = {}
+            used_names = {}
+
             for i, var in enumerate(file_info.get('variables', []), start=1):
                 if not isinstance(var, dict):
                     continue
 
                 # Resolve variable name (fallback logic)
-                var_name = None
                 if isinstance(var.get("cvShortName"), str) and var["cvShortName"].strip():
-                    var_name = var["cvShortName"].strip()
+                    base_name = var["cvShortName"].strip()
                 elif isinstance(var.get("cvWhat"), str) and ">" in var["cvWhat"]:
-                    var_name = var["cvWhat"].split(">")[-1].strip()
+                    base_name = var["cvWhat"].split(">")[-1].strip()
                 else:
-                    var_name = f"Var{i}"
+                    base_name = f"Var{i}"
+
+                # Ensure unique variable name
+                count = used_names.get(base_name, 0)
+                var_name = base_name if count == 0 else f"{base_name}_{count}"
+                used_names[base_name] = count + 1
 
                 # Store full variable metadata dictionary
                 variables_meta[var_name] = {

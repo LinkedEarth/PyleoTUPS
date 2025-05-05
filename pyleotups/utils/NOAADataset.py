@@ -49,6 +49,7 @@ class NOAADataset:
         self.xml_id = study_data.get('xmlId')
         self.metadata = self._load_metadata(study_data)
         self.investigators = self._load_investigators(study_data)
+        self.funding = self._load_funding(study_data)
 
         # ✅ Safe construction of Publication objects
         self.publications = []
@@ -115,6 +116,32 @@ class NOAADataset:
         if investigators:
             return ", ".join([f"{i.get('firstName', 'N/A')} {i.get('lastName', 'N/A')}" for i in investigators])
         return None
+    
+    def _load_funding(self, study_data):
+        """
+        Extract funding information from the study data.
+
+        Parameters
+        ----------
+        study_data : dict
+            The dictionary containing study information.
+
+        Returns
+        -------
+        list of dict
+            A list of dictionaries with 'fundingAgency' and 'fundingGrant'.
+        """
+        funding_info = study_data.get("funding", [])
+        if isinstance(funding_info, list):
+            return [
+                {
+                    "fundingAgency": f.get("fundingAgency", None),
+                    "fundingGrant": f.get("fundingGrant", None)
+                }
+                for f in funding_info if isinstance(f, dict)
+            ]
+        return []
+
 
     def to_dict(self):
         """
@@ -139,5 +166,6 @@ class NOAADataset:
             "ScienceKeywords": self.metadata.get("scienceKeywords"),
             "Investigators": self.investigators,
             "Publications": [pub.to_dict() for pub in self.publications],
-            "Sites": [site.to_dict() for site in self.sites]
+            "Sites": [site.to_dict() for site in self.sites],
+            "Funding": self.funding
         }

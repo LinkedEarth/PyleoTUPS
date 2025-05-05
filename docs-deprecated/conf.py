@@ -1,21 +1,21 @@
 
 import os, sys
 
-# Add the parent directory (package folder) to sys.path so that 'pytups' is importable.
-package_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../pytups'))
+# Add the parent directory (package folder) to sys.path so that 'pyleotups' is importable.
+package_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../pyleotups'))
 sys.path.insert(0, package_path)
 # Optional: if other scripts rely on PYTHONPATH
 os.environ['PYTHONPATH'] = f"{package_path}:{os.environ.get('PYTHONPATH', '')}"
 autodoc_mock_imports = ["_tkinter"]
 
-# Now import pytups safely.
-import pytups
+# Now import pyleotups safely.
+import pyleotups
 
-project = 'PyTUPS'
+project = 'pyleotups'
 copyright = '2025, Dhiren Oswal, Deborah Khider, Jay Pujara'
 author = 'Dhiren Oswal, Deborah Khider, Jay Pujara'
-release = pytups.__version__
-version = pytups.__version__
+release = PyleoTUPS.__version__
+version = PyleoTUPS.__version__
 
 
 autodoc_mock_imports = ["_tkinter"]
@@ -65,16 +65,16 @@ numpydoc_show_class_members = False
 # templates_path = ['_templates']
 # exclude_patterns = []
 
-version = pytups.__version__
+version = PyleoTUPS.__version__
 # The full version, including alpha/beta/rc tags.
-release = pytups.__version__
+release = PyleoTUPS.__version__
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = 'sphinx_rtd_theme'
 
-htmlhelp_basename = 'Pytupsdoc'
+htmlhelp_basename = 'pyleotupsdoc'
 html_static_path = ['_static']
 master_doc = 'index'
 # man_pages = [

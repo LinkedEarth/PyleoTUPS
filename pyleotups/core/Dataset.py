@@ -373,7 +373,6 @@ class Dataset:
         pandas.DataFrame
             A DataFrame with one row per (Site × PaleoData × File).
         """
-        import pandas as pd
 
         records = []
         for study in self.studies.values():
@@ -400,7 +399,6 @@ class Dataset:
         pandas.DataFrame
             A DataFrame with one row per (Site × PaleoData × File).
         """
-        import pandas as pd
 
         records = []
         for study in self.studies.values():
@@ -418,7 +416,6 @@ class Dataset:
 
         return pd.DataFrame(records)
 
-    import pandas as pd
 
     def get_geo(self):
         """
@@ -452,7 +449,34 @@ class Dataset:
         return pd.DataFrame(site_records)
 
 
+    def get_funding(self):
+        """
+        Get a DataFrame of all funding records across loaded studies.
 
+        Returns
+        -------
+        pandas.DataFrame
+            A DataFrame with columns ['StudyID', 'StudyName', 'FundingAgency', 'FundingGrant'].
+            Returns an empty DataFrame if no funding is available.
+        """
+        records = []
+        for study in self.studies.values():
+            study_id = study.study_id
+            study_name = study.metadata.get("studyName")
+
+            for fund in study.funding:
+                if isinstance(fund, dict):
+                    records.append({
+                        "StudyID": study_id,
+                        "StudyName": study_name,
+                        "FundingAgency": fund.get("fundingAgency", None),
+                        "FundingGrant": fund.get("fundingGrant", None)
+                    })
+
+        return pd.DataFrame(records, columns=["StudyID", "StudyName", "FundingAgency", "FundingGrant"])
+    
+
+    @DeprecationWarning
     def get_data_deprecated(self, dataTableIDs=None, file_urls=None):
         """
         Fetch external data for given dataTableIDs or file URLs and attach study/site metadata.
@@ -540,7 +564,7 @@ class Dataset:
 
         file_type = file_url.split('.')[-1].lower()
         if file_type in self._PROPRIETARY_TYPES:
-             raise UnsupportedFileTypeError(f"Pytups works with .txt files only. "
+             raise UnsupportedFileTypeError(f"pyleotups works with .txt files only. "
                              "File type '{file_type}' can be processed with a {proprietary software}.") #{proprietary software} shall be replaced by respective mapping. 
         if file_type != 'txt':
             raise UnsupportedFileTypeError(f"Invalid file type '{file_type}'. Only .txt files are supported.")

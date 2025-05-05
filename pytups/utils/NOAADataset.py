@@ -49,15 +49,35 @@ class NOAADataset:
         self.xml_id = study_data.get('xmlId')
         self.metadata = self._load_metadata(study_data)
         self.investigators = self._load_investigators(study_data)
+
+        # ✅ Safe construction of Publication objects
         self.publications = []
         for pub in study_data.get('publication', []):
-            publication_obj = Publication(pub)
-            publication_obj.study_id = self.study_id
-            self.publications.append(publication_obj)
+            if isinstance(pub, dict):
+                try:
+                    publication_obj = Publication(pub)
+                    publication_obj.study_id = self.study_id
+                    self.publications.append(publication_obj)
+                except Exception as e:
+                    raise ValueError(
+                        f"Failed to parse a publication in study {self.study_id}. "
+                        "Malformed publication entry encountered. Original error: "
+                        f"{str(e)}"
+                    )
+
+        # ✅ Safe construction of Site objects
         self.sites = []
         for site in study_data.get('site', []):
-            site_obj = Site(site, self.study_id)
-            self.sites.append(site_obj)
+            if isinstance(site, dict):
+                try:
+                    site_obj = Site(site, self.study_id)
+                    self.sites.append(site_obj)
+                except Exception as e:
+                    raise ValueError(
+                        f"Failed to parse a site in study {self.study_id}. "
+                        "Malformed site entry encountered. Original error: "
+                        f"{str(e)}"
+                    )
 
     def _load_metadata(self, study_data):
         """

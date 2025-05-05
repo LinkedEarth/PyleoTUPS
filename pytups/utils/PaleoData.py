@@ -29,7 +29,11 @@ class PaleoData:
         # Store all associated files
         self.files = []
         for file_info in paleo_data.get('dataFile', []):
-            if file_info.get('fileUrl'):
+            if (
+            isinstance(file_info, dict) and
+            isinstance(file_info.get('fileUrl'), str) and
+            file_info['fileUrl'].strip() != ""
+            ):                
                 self.files.append(file_info)
 
         # For backward access (optional fields)

@@ -59,58 +59,129 @@ class Dataset:
         self.studies = {}               # NOAAStudyId -> NOAADataset instance
         self.data_table_index = {}      # dataTableID -> dict with study, site, paleo_data
         self.file_url_to_datatable = {} # file_url -> dataTableID
+    
     def search_studies(self, xml_id=None, noaa_id=None, data_publisher="NOAA", data_type_id=None,
                        keywords=None, investigators=None, max_lat=None, min_lat=None, max_lon=None,
                        min_lon=None, location=None, publication=None, search_text=None, earliest_year=None,
-                       latest_year=None, cv_whats=None, recent=False):
+                       latest_year=None, cv_whats=None, recent=False, limit = 100):
         """
-        Search for NOAA studies using the provided parameters.
+        Search for NOAA studies using the specified parameters.
 
-        At least one parameter must be specified for a search to be initiated.  
+        At least one parameter must be provided to perform a search. This method interfaces with
+        the NOAA NCEI Paleo Study Search API. Use it to filter studies based on location,
+        investigators, time range, keywords, and more.
 
         Parameters
         ----------
         xml_id : str, optional
-            XML identifier for a study.
+            Specify the internal XML document ID. Must be an exact match (e.g., '1840').
+
         noaa_id : str, optional
-            NOAA study identifier.
-        data_publisher : str, optional
-            Publisher of the data, default is "NOAA".
-        data_type_id : str, optional
-            Data type identifier.
-        keywords : str, optional
-            Keywords for the search.
-        investigators : str, optional
-            Investigator names.
-        max_lat : float, optional
-            Maximum latitude.
-        min_lat : float, optional
-            Minimum latitude.
-        max_lon : float, optional
-            Maximum longitude.
-        min_lon : float, optional
-            Minimum longitude.
-        location : str, optional
-            Location description.
-        publication : str, optional
-            Publication details.
+            Provide the unique NOAA Study ID as a number (e.g., '13156').
+
         search_text : str, optional
-            Additional text to search within the study.
+            General text search across study content. Supports wildcards (%) and logical operators (AND, OR).
+            Examples: 'younger dryas', 'loess AND stratigraphy'
+
+        data_publisher : by default 'NOAA'
+            Choose from: 'NOAA', 'NEOTOMA', or 'PANGAEA'.
+            Example: 'NOAA'
+
+        data_type_id : str, optional
+            Filter by data type. Use one or more type IDs separated by '|'.
+            Available IDs:
+                1: BOREHOLE, 2: CLIMATE FORCING, 3: CLIMATE RECONSTRUCTIONS, 4: CORALS AND SCLEROSPONGES,
+                6: HISTORICAL, 7: ICE CORES, 8: INSECT, 9: LAKE LEVELS, 10: LOESS,
+                11: PALEOCLIMATIC MODELING, 12: FIRE HISTORY, 13: PALEOLIMNOLOGY, 14: PALEOCEANOGRAPHY,
+                15: PLANT MACROFOSSILS, 16: POLLEN, 17: SPELEOTHEMS, 18: TREE RING,
+                19: OTHER COLLECTIONS, 20: INSTRUMENTAL, 59: SOFTWARE, 60: REPOSITORY
+            Example: '4|18'
+
+        keywords : str, optional
+            Use hierarchical terms separated by '>'. Separate multiple values using '|'.
+            Example: 'earth science>paleoclimate>paleocean>biomarkers'
+
+        investigators : str, optional
+            Specify one or more investigator names. Use '|' to separate multiple names.
+            Example: 'Wahl, E.R.|Vose, R.S.'
+
+        max_lat : float, optional
+            Upper bound for latitude. Must be between -90 and 90.
+            Example: 90
+
+        min_lat : float, optional
+            Lower bound for latitude. Must be between -90 and 90.
+            Example: -90
+
+        max_lon : float, optional
+            Upper bound for longitude. Must be between -180 and 180.
+            Example: 180
+
+        min_lon : float, optional
+            Lower bound for longitude. Must be between -180 and 180.
+            Example: -180
+
+        location : str, optional
+            Use region hierarchy separated by '>'.
+            Example: 'Continent>Africa>Eastern Africa>Zambia'
+
+        publication : str, optional
+            Match against publication metadata such as title, author, or citation.
+            Example: 'Khider'
+
         earliest_year : int, optional
-            Earliest year of study.
+            Starting year (can be negative for BCE). Used with `timeFormat` and `timeMethod`.
+            Example: -500
+
         latest_year : int, optional
-            Latest year of study.
+            Ending year. Used with `timeFormat` and `timeMethod`.
+            Example: 2020
+
         cv_whats : str, optional
-            Controlled vocabulary term.
+            Search using controlled vocabulary terms for measured variables.
+            Format: Hierarchical string using '>'
+            Example: 'chemical composition>compound>inorganic compound>carbon dioxide'
+
         recent : bool, optional
-            Flag to filter recent studies.
+            Set to True to only return studies from the last two years. Results are sorted by newest.
+
+        limit : int, optional
+            Set to 100 by default. Limits the number of studies retrieved. 
 
         Returns
         -------
-        None
-            The method populates internal attributes with the retrieved data.
-            Requires at least one single parameter. Parameter validation to be implemented soon. 
+        pandas.DataFrame
+            Response DataFrame
+            Fills the internal `studies` attribute with structured NOAA study data.
+        
+        Raises
+        ------
+        ValueError
+            If no inputs are passed.
+
+        requests.HTTPError
+            If the HTTP request returned an unsuccessful status code.
+
+        Notes
+        -----
+        - At least one parameter must be specified, otherwise the API call will fail.
         """
+        
+        # Validate input
+        if not any([xml_id, noaa_id, data_type_id, keywords, investigators, max_lat, min_lat, max_lon,
+                    min_lon, location, publication, search_text, earliest_year, latest_year, cv_whats, recent]):
+            raise ValueError(
+                "At least one search parameter must be specified to initiate a query. "
+                "To view available parameters and usage examples, run: help(Dataset.search_studies)"
+            )
+        
+        if data_publisher != "NOAA":
+            raise NotImplementedError(
+                f"PyleoTUPS does not support '{data_publisher}' as the data publisher in the current version."
+                "Please retry a search with data_publisher = NOAA "
+                "Please check future versions for support of other publishers."
+            ) 
+
         if noaa_id:
             params = {'NOAAStudyId': noaa_id}
         elif xml_id:
@@ -131,12 +202,31 @@ class Dataset:
                 'earliestYear': earliest_year,
                 'latestYear': latest_year,
                 'recent': recent,
+                'limit': limit
             }
             params = {k: v for k, v in params.items() if v is not None}
 
-        response_json = self._fetch_api(params)
-        self._parse_response(response_json)
-        self.get_summary()
+        try:
+            response = requests.get(self.BASE_URL, params=params)
+            response.raise_for_status()
+            response_json = response.json()
+        except requests.HTTPError as e:
+            raise RuntimeError(f"HTTP error from NOAA API: {e}")
+        except Exception as e:
+            raise RuntimeError(f"Failed to fetch or parse response: {e}")
+        
+        self.studies.clear()
+        self.file_url_to_datatable.clear()  
+        
+        from tqdm import tqdm
+        for study_data in tqdm(response_json.get("study", []), desc="Parsing NOAA studies"):
+            try:
+                study_obj = NOAADataset(study_data)
+                self.studies[study_obj.study_id] = study_obj
+            except Exception as e:
+                print(f"Skipping study due to error: {e}")
+
+        return self.get_summary()
 
     def _fetch_api(self, params):
         """
@@ -202,23 +292,104 @@ class Dataset:
         data = [study.to_dict() for study in self.studies.values()]
         return pd.DataFrame(data)
 
-    def get_publications(self):
+    def get_publications(self, save=False, path=None, verbose=False):
         """
-        Get a DataFrame of all publications aggregated from the studies.
+        Get all publications in both BibTeX and DataFrame formats.
+
+        Parameters
+        ----------
+        save : bool, default=False
+            If True, save the BibTeX to a .bib file.
+        path : str or None, optional
+            Path to save the .bib file. If None and save=True,
+            saves to 'bibtex_<timestamp>.bib'.
+        verbose : bool, default=False
+            If True, print the BibTeX content to console.
 
         Returns
         -------
-        pandas.DataFrame
-            A DataFrame containing publication details with study context.
+        tuple (pybtex.database.BibliographyData, pandas.DataFrame)
+            BibTeX object and DataFrame of publication details.
         """
+        from pybtex.database import BibliographyData
+        
         publications_data = []
+        bib_entries = {}
+
+        # Collect publication metadata and BibTeX entries
         for study in self.studies.values():
             for pub in study.publications:
                 pub_dict = pub.to_dict()
                 pub_dict['StudyID'] = study.study_id
-                pub_dict['StudyName'] = study.metadata.get("studyName")
+                pub_dict['StudyName'] = study.metadata.get("studyName") or "Unknown Study"
                 publications_data.append(pub_dict)
-        return pd.DataFrame(publications_data)
+
+                try:
+                    citation_key = pub.get_citation_key()
+                    bib_entries[citation_key] = pub.to_bibtex_entry()
+                except Exception as e:
+                    raise ValueError(
+                        f"Failed to convert a publication in study {study.study_id} to BibTeX. "
+                        f"Original error: {e}"
+                    )
+
+        df = pd.DataFrame(publications_data)
+        bibs = BibliographyData(entries=bib_entries)
+
+        # Save to file if requested
+        if save:
+            import datetime
+            from pybtex.database.output.bibtex import Writer
+            from pathlib import Path
+
+            if not path:
+                timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M")
+                path = f"bibtex_{timestamp}.bib"
+                warnings.warn(f"No path specified. Saving BibTeX to: {path}")
+
+            try:
+                writer = Writer()
+                with open(Path(path), "w", encoding="utf-8") as f:
+                    writer.write_stream(bibs, f)
+            except Exception as e:
+                raise IOError(f"Failed to write BibTeX file to '{path}': {e}")
+
+        # Print if verbose
+        if verbose:
+            from pybtex.database.output.bibtex import Writer
+            from io import StringIO
+            buffer = StringIO()
+            Writer().write_stream(bibs, buffer)
+            print(buffer.getvalue())
+
+        return bibs, df    
+    
+    def get_tables(self):
+        """
+        Get a DataFrame of all sites expanded to paleo data files.
+
+        Returns
+        -------
+        pandas.DataFrame
+            A DataFrame with one row per (Site × PaleoData × File).
+        """
+        import pandas as pd
+
+        records = []
+        for study in self.studies.values():
+            study_id = study.study_id
+            study_name = study.metadata.get("studyName")
+
+            for site in study.sites:
+                paleo_data_records = site.to_dict()  # Already flattened per file
+                for paleo_record in paleo_data_records:
+                    paleo_record.update({
+                        "StudyID": study_id,
+                        "StudyName": study_name
+                    })
+                    records.append(paleo_record)
+
+        return pd.DataFrame(records)
 
     def get_sites(self):
         """
@@ -246,6 +417,39 @@ class Dataset:
                     records.append(paleo_record)
 
         return pd.DataFrame(records)
+
+    import pandas as pd
+
+    def get_geo(self):
+        """
+        Get a DataFrame of site-level geospatial metadata and associated data types
+        from all studies loaded into the Dataset.
+
+        Returns
+        -------
+        pandas.DataFrame
+            A DataFrame with one row per site and columns:
+            ['StudyID', 'SiteID', 'SiteName', 'LocationName',
+            'Latitude', 'Longitude', 'MinElevation', 'MaxElevation', 'DataType']
+        """
+        site_records = []
+
+        for study in self.studies.values():
+            study_id = study.study_id
+            data_type = study.metadata.get("dataType", "Unknown")
+
+            for site in study.sites:
+                site_dict = {
+                    "StudyID": study_id,
+                    "DataType": data_type,
+                    **{
+                        k: v for k, v in site.to_dict()[0].items()  # site.to_dict() returns list of dicts (1 per file)
+                        if k in ["SiteID", "SiteName", "LocationName", "Latitude", "Longitude", "MinElevation", "MaxElevation"]
+                    }
+                }
+                site_records.append(site_dict)
+
+        return pd.DataFrame(site_records)
 
 
 
@@ -435,7 +639,7 @@ class Dataset:
                 mapping = self.file_url_to_datatable.get(url)
                 if not mapping:
                     warnings.warn(
-                        f"Attached '{url}' is not linked to any parent study; additional metadata will not be attached.",
+                        f"Attached '{url}' is not linked to any parent study; can not add metadata.",
                         UserWarning
                     )
                     dfs.extend(self._process_file(url))
@@ -443,7 +647,7 @@ class Dataset:
                     mapping_details = self.data_table_index.get(mapping)
                     if not mapping_details:
                         warnings.warn(
-                            f"Mapping details for file URL '{url}' (Data Table ID '{mapping}') not found; additional metadata will not be attached.",
+                            f"Mapping details for file URL '{url}' (Data Table ID '{mapping}') not found; can not add metadata.",
                             UserWarning
                         )
                         dfs.extend(self._process_file(url))

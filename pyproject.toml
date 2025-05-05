@@ -21,7 +21,9 @@ dependencies = [
   "pandas",
   "requests",
   "numpy",
-  "pybtex"
+  "pybtex",
+  "setuptools",
+  "tqdm"
 ]
 keywords = ["PyTUPS", "Table Understanding", "Data Analysis"]
 urls = { Homepage = "https://github.com/LinkedEarth/PyTUPS/pytups" }

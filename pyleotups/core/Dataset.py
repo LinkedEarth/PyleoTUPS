@@ -218,13 +218,7 @@ class Dataset:
         self.studies.clear()
         self.file_url_to_datatable.clear()  
         
-        from tqdm import tqdm
-        for study_data in tqdm(response_json.get("study", []), desc="Parsing NOAA studies"):
-            try:
-                study_obj = NOAADataset(study_data)
-                self.studies[study_obj.study_id] = study_obj
-            except Exception as e:
-                print(f"Skipping study due to error: {e}")
+        self._parse_response(response_json)
 
         return self.get_summary()
 
@@ -258,11 +252,13 @@ class Dataset:
         """
         Parse the JSON response and populate studies and reverse mapping indexes.
         """
+        from tqdm import tqdm
+        
         self.studies.clear()
         self.data_table_index.clear()
         self.file_url_to_datatable.clear()
 
-        for study_data in data.get('study', []):
+        for study_data in tqdm(data.get('study', []), desc="Parsing NOAA studies"):
             study_obj = NOAADataset(study_data)
             self.studies[study_obj.study_id] = study_obj
 
@@ -475,6 +471,55 @@ class Dataset:
 
         return pd.DataFrame(records, columns=["StudyID", "StudyName", "FundingAgency", "FundingGrant"])
     
+
+    def get_variables(self, dataTableIDs):
+        """
+        Retrieve variable metadata for specified dataTableIDs.
+
+        Parameters
+        ----------
+        dataTableIDs : list or str
+            One or more NOAA dataTableIDs.
+
+        Returns
+        -------
+        pandas.DataFrame
+            A DataFrame indexed by DataTableID with one row per (file × variable).
+            Includes full variable metadata such as cvShortName, cvUnit, etc.
+        """
+        dataTableIDs = assert_list(dataTableIDs)
+        records = []
+
+        for dt_id in dataTableIDs:
+            mapping = self.data_table_index.get(dt_id)
+            if not mapping:
+                raise ValueError(f"DataTableID '{dt_id}' not found. Please run `search_studies` first.")
+
+            paleo = mapping["paleo_data"]
+            study_id = paleo.study_id
+            site_id = paleo.site_id
+
+            for file in paleo.files:
+                file_url = file.get("fileUrl")
+                if not file_url:
+                    continue
+
+                var_map = paleo.file_variable_map.get(file_url, {})
+                for var_name, var_meta in var_map.items():
+                    records.append({
+                        "DataTableID": dt_id,
+                        "StudyID": study_id,
+                        "SiteID": site_id,
+                        "FileURL": file_url,
+                        "VariableName": var_name,
+                        **var_meta  # includes all cv* fields
+                    })
+
+        df = pd.DataFrame(records)
+        if df.empty:
+            return pd.DataFrame(columns=["StudyID", "SiteID", "FileURL", "VariableName"])  # fallback for no data
+
+        return df.set_index("DataTableID")
 
     @DeprecationWarning
     def get_data_deprecated(self, dataTableIDs=None, file_urls=None):

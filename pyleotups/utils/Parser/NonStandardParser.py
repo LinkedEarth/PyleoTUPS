@@ -72,7 +72,7 @@ class NonStandardParser:
         try:
             response = requests.get(self.file_path)
             response.raise_for_status()
-            lines = response.text.splitlines()
+            self.lines = response.text.splitlines()
         except Exception as e:
             raise ParsingError(f"Failed to read file {self.file_path}: {e}")
 

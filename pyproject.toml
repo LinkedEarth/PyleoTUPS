@@ -4,10 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["pytups*"]
+include = ["pyleotups*"]
 
 [project]
-name = "pytups"
+name = "pyleotups"
 version = "0.0.1"
 description = "A package to interact with NCEI studies API"
 authors = [
@@ -21,10 +21,13 @@ dependencies = [
   "pandas",
   "requests",
   "numpy",
-  "pybtex"
+  "pybtex",
+  "setuptools",
+  "tqdm",
+  "nbstripout"
 ]
-keywords = ["PyTUPS", "Table Understanding", "Data Analysis"]
-urls = { Homepage = "https://github.com/LinkedEarth/PyTUPS/pytups" }
+keywords = ["pyleotups", "Table Understanding", "Data Analysis"]
+urls = { Homepage = "https://github.com/LinkedEarth/pyleotups/pyleotups" }
 
 [tool.setuptools]
 license-files = []

@@ -1,11 +1,11 @@
 import pytest
 import pandas as pd
-import pytups
-# from pytups.core.Dataset import Dataset
+import pyleotups
+# from pyleotups.core.Dataset import Dataset
 
 @pytest.fixture
 def noaa_wrapper():
-    return pytups.core.Dataset()
+    return pyleotups.core.Dataset()
 
 @pytest.fixture
 def mock_response():
@@ -165,7 +165,7 @@ def test_get_data(monkeypatch, noaa_wrapper, mock_response):
         return dummy_df
     
     # Monkeypatch DataFetcher.fetch_data in the StandardParser module.
-    from pytups.utils.Parser.StandardParser import DataFetcher
+    from pyleotups.utils.Parser.StandardParser import DataFetcher
     monkeypatch.setattr(DataFetcher, 'fetch_data', fake_fetch_data)
     
     data_list = noaa_wrapper.get_data(['28674'])

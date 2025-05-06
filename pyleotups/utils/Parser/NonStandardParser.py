@@ -1,6 +1,6 @@
 import pandas as pd
 import re
-
+import requests
 class ParsingError(Exception):
     """
     Exception raised when parsing a non-standard file fails.
@@ -70,8 +70,9 @@ class NonStandardParser:
             If the file cannot be read.
         """
         try:
-            with open(self.file_path, 'r', encoding='utf-8') as f:
-                self.lines = f.read().splitlines()
+            response = requests.get(self.file_path)
+            response.raise_for_status()
+            lines = response.text.splitlines()
         except Exception as e:
             raise ParsingError(f"Failed to read file {self.file_path}: {e}")
 

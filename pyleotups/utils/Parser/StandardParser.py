@@ -4,6 +4,7 @@ import requests
 import pandas as pd
 import re
 
+@DeprecationWarning
 class DataFetcher:
     """
     Standard parser for fetching and parsing external data files.

@@ -161,9 +161,9 @@ class NonStandardParser:
 
         if block['cv_tab_tokens'] == 0 or block['cv_multispace_tokens'] == 0:
             headers = self._extract_headers(block, delimiter)
-            print(headers)
+            # print(headers)
             data_lines = lines[len(headers):]
-            print(data_lines)
+            # print(data_lines)
             if headers and data_lines:
                 block['df'] = self._generate_df(headers, data_lines, delimiter)
                 block['block_type'] = 'complete-tabular'
@@ -223,7 +223,7 @@ class NonStandardParser:
         lines = block['lines']
         headers = []
         header_extent, title_line = self.detect_header_extent(block, delimiter)
-        print(self.detect_header_extent(block, delimiter))
+        # print(self.detect_header_extent(block, delimiter))
         for line in lines[:header_extent]:
             if delimiter == '\t':
                 tokens = line.split('\t')

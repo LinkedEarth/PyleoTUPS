@@ -1,4 +1,4 @@
-__all__ = ['Dataset']
+__all__ = ['Dataset', 'UnsupportedFileTypeError']
 
 import requests
 import pandas as pd
@@ -359,7 +359,7 @@ class Dataset:
             Writer().write_stream(bibs, buffer)
             print(buffer.getvalue())
 
-        return bibs, df    
+        return bibs, df
     
     def get_tables(self):
         """

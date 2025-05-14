@@ -22,5 +22,5 @@ Thumbs.db
 *.log
 
 std-parser/
-
+test-pyleotups/
 nonstd-parser/

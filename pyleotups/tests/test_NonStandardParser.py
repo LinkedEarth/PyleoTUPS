@@ -1,6 +1,6 @@
 import pytest
 import pandas as pd
-from pytups.utils.Parser.NonStandardParser import NonStandardParser, ParsingError  
+from pyleotups.utils.Parser.NonStandardParser import NonStandardParser, ParsingError  
 
 @pytest.fixture
 def parser():

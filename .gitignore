@@ -24,3 +24,4 @@ Thumbs.db
 std-parser/
 test-pyleotups/
 nonstd-parser/
+/docs/build/**

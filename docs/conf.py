@@ -9,13 +9,13 @@ os.environ['PYTHONPATH'] = f"{package_path}:{os.environ.get('PYTHONPATH', '')}"
 autodoc_mock_imports = ["_tkinter"]
 
 # Now import pyleotups safely.
-import pyleotups
+import pyleotups as tups
 
 project = 'pyleotups'
 copyright = '2025, Dhiren Oswal, Deborah Khider, Jay Pujara'
 author = 'Dhiren Oswal, Deborah Khider, Jay Pujara'
-release = PyleoTUPS.__version__
-version = PyleoTUPS.__version__
+release = tups.__version__
+version = tups.__version__
 
 
 autodoc_mock_imports = ["_tkinter"]
@@ -64,10 +64,6 @@ numpydoc_show_class_members = False
 
 # templates_path = ['_templates']
 # exclude_patterns = []
-
-version = PyleoTUPS.__version__
-# The full version, including alpha/beta/rc tags.
-release = PyleoTUPS.__version__
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output

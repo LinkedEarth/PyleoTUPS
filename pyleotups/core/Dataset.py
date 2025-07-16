@@ -3,7 +3,6 @@ __all__ = ['Dataset', 'UnsupportedFileTypeError']
 import requests
 import pandas as pd
 import warnings
-import numpy as np
 from ..utils.NOAADataset import NOAADataset
 from ..utils.helpers import assert_list
 from ..utils.Parser.StandardParser import DataFetcher, StandardParser
@@ -287,7 +286,7 @@ class Dataset:
 
             from pyleotups import Dataset
             ds=Dataset()
-            df = ds.search_studies(noaa_id=33213).get_summary()
+            df = ds.search_studies(noaa_id=33213)
             df.head()
         """
         
@@ -753,8 +752,8 @@ class Dataset:
 
             from pyleotups import Dataset
             ds=Dataset()
-            dsf = ds.search_studies(noaa_id=33213)
-            df = ds.get_data(dataTableIDs="45859")
+            df = ds.search_studies(noaa_id=33213)
+            dfs = ds.get_data(dataTableIDs="45859")
             dfs[0].head()
         """
         dfs = []

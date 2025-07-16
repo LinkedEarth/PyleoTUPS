@@ -31,13 +31,6 @@ class Publication:
         URL for the publication.
     study_id : str or None
         The NOAA study ID to which this publication belongs.
-
-    Methods
-    -------
-    get_citation_key()
-        Generate and return a unique citation key.
-    to_dict()
-        Return a dictionary representation of the publication.
     """
     def __init__(self, pub_data):
         """

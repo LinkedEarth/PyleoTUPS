@@ -11,8 +11,8 @@ autodoc_mock_imports = ["_tkinter"]
 # Now import pyleotups safely.
 import pyleotups as tups
 
-project = 'pyleotups'
-copyright = '2025, Dhiren Oswal, Deborah Khider, Jay Pujara'
+project = 'PyleoTUPS'
+copyright = '2025, LinkedEarth'
 author = 'Dhiren Oswal, Deborah Khider, Jay Pujara'
 release = tups.__version__
 version = tups.__version__
@@ -36,7 +36,7 @@ extensions = [
     'nbsphinx',
     # 'IPython.sphinxext.ipython_console_highlighting',
     # 'IPython.sphinxext.ipython_directive',
-    # 'sphinx_search.extension',
+    'sphinx_search.extension',
     'jupyter_sphinx',
     'sphinx_copybutton'
 ]
@@ -70,10 +70,15 @@ numpydoc_show_class_members = False
 
 html_theme = 'sphinx_rtd_theme'
 
+source_suffix = '.rst'
+
 htmlhelp_basename = 'pyleotupsdoc'
-html_static_path = ['_static']
-master_doc = 'index'
-# man_pages = [
-#     (master_doc, 'pyleoclim', 'Pyleoclim Documentation',
-#      [author], 1)
-# ]
+#html_static_path = ['_static']
+
+exclude_patterns = ['build']
+
+# The name of the Pygments (syntax highlighting) style to use.
+pygments_style = 'sphinx'
+
+#Logo
+html_logo = 'pyleotups_logo_small.png'

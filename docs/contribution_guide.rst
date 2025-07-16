@@ -1,16 +1,15 @@
-.. _contributing_to_PyTUPS:
+.. _contributing_to_pyleotups:
 
 #########################
-Contributing to PyTUPS
+Contributing to PyleoTUPS
 #########################
-
 
 GitHub, GitHub, GitHub
 =======================
 All contributions, bug reports, bug fixes, documentation improvements, enhancements,
-and ideas are welcome, and take place through `GitHub <https://github.com/LinkedEarth/PyTUPS/issues>`_
+and ideas are welcome, and take place through `GitHub <https://github.com/LinkedEarth/PyleoTUPS/issues>`_
 
-There are several levels of contributions to an open development software package like PyTUPS, including:
+There are several levels of contributions to an open development software package like PyleoTUPS, including:
 
 #.  Reporting Bugs
 #.  Updating the documentation
@@ -32,24 +31,27 @@ Bug reports must:
 
 1. Include a minimal working example (a short, self*contained Python snippet reproducing the problem). You can format the code nicely by using GitHub Flavored Markdown::
 
+    from pyleotups import Dataset
+    ds=Dataset()
+    ds.search_studies(noaa_id=33213)
     
 
-2. Include the full version string of PyTUPS, which you can obtain through::
+2. Include the full version string of PyleoTUPS, which you can obtain through::
 
-    import pytups
-    pytups.__version__
+    import pyleotups
+    pyleotups.__version__
 
 3. Explain why the current behavior is wrong/not desired and what you expect or would like to see instead.
 
 
-Working with the PyTUPS codebase
+Working with the PyleoTUPS codebase
 ===================================
 Version control, Git, and GitHub
 """"""""""""""""""""""""""""""""
 
 To the neophyte, working with Git is one of the more daunting aspects of contributing to open source projects.
 It can very quickly become overwhelming, but sticking to the guidelines below will help keep the process straightforward and mostly trouble free. As always, if you are having difficulties please feel free to ask for help.
-The code is hosted on `GitHub <https://github.com/LinkedEarth/pytups>`_. To contribute you will need to `sign up for a (free) GitHub account <https://github.com/signup/free>`_. `Git <https://git*scm.com/>`_ is the industry standard for version control to allow many people to work together on the project, keep track of issues, manage the project, and much more.
+The code is hosted on `GitHub <https://github.com/LinkedEarth/PyleoTUPS>`_. To contribute you will need to `sign up for a (free) GitHub account <https://github.com/signup/free>`_. `Git <https://git*scm.com/>`_ is the industry standard for version control to allow many people to work together on the project, keep track of issues, manage the project, and much more.
 
 Some great resources for learning Git:
   * the `GitHub help pages <https://help.github.com/>`_
@@ -60,18 +62,18 @@ GitHub has `instructions <https://help.github.com/set-up-git-redirect>`_ for ins
 
 Forking
 """""""
-You will need your own fork to work on the code. Go to the PyTUPS repository and hit the Fork button. You will then want to clone your fork (i.e. download all the code to your local machine so you can edit it locally).
+You will need your own fork to work on the code. Go to the PyleoTUPS repository and hit the Fork button. You will then want to clone your fork (i.e. download all the code to your local machine so you can edit it locally).
 At the command line, this would like something like::
 
-    git clone https://github.com/your-user-name/pytups.git pytups-yourname
-    cd pytups-yourname
-    git remote add upstream https://github.com/LinkedEarth/pytups.git
+    git clone https://github.com/your-user-name/PyleoTUPS.git PyleoTUPS-yourname
+    cd PyleoTUPS-yourname
+    git remote add upstream https://github.com/LinkedEarth/PyleoTUPS.git
 
-This creates the directory `pytups-yourname` and connects your repository to the upstream (main project) PyTUPS repository.  However, most Git first-timers may find it easier to do so through the Github web interface or desktop app (where there is a proverbial “button for that”).
+This creates the directory `PyleoTUPS-yourname` and connects your repository to the upstream (main project) PyleoTUPS repository.  However, most Git first-timers may find it easier to do so through the Github web interface or desktop app (where there is a proverbial “button for that”).
 
 Creating a development environment
 """"""""""""""""""""""""""""""""""
-We recommend developing in the same conda environment in which you installed PyTUPS.
+We recommend developing in the same conda environment in which you installed PyleoTUPS.
 
 Creating a branch
 """""""""""""""""
@@ -84,7 +86,7 @@ The above can be simplified to::
 
     git checkout -b shiny-new-feature
 
-This changes your working directory to the `shiny-new-feature` branch. Keep any changes in this branch specific to one bug or feature so it is clear what the branch brings to PyTUPS. You can have many `shiny-new-features` and switch in between them using the `git checkout` command.
+This changes your working directory to the `shiny-new-feature` branch. Keep any changes in this branch specific to one bug or feature so it is clear what the branch brings to PyleoTUPS. You can have many `shiny-new-features` and switch in between them using the `git checkout` command.
 When creating this branch, make sure your main branch is up to date with the latest upstream main version. To update your local main branch, you can do::
 
     git checkout main
@@ -92,37 +94,37 @@ When creating this branch, make sure your main branch is up to date with the lat
 
 When you want to update the feature branch with changes in main after you created the branch, check the section on updating a pull request.
 
-PyTUPS Protocol
+PyleoTUPS Protocol
 """"""""""""""""""
 
 Contributing new functionalities
 ********************************
 
 1.  Open an issue on GitHub (See above)
-2.  Implement outside of PyTUPS
+2.  Implement outside of PyleoTUPS
 
-    Before incorporating any code into PyTUPS, make sure you have a solution that works outside PyTUPS. Demonstrate this in a notebook, which can be hosted on GitHub as well so it is easy for the maintainers to check out. The notebook should be organized as follows:
+    Before incorporating any code into PyleoTUPS, make sure you have a solution that works outside PyleoTUPS. Demonstrate this in a notebook, which can be hosted on GitHub as well so it is easy for the maintainers to check out. The notebook should be organized as follows:
 
     - dependencies (package names and versions),
     - body of the function
     - example usage
 3.  Integrate the new functionality
 
-    Now you may implement the new functionality inside PyTUPS. In so doing, make sure you:
+    Now you may implement the new functionality inside PyleoTUPS. In so doing, make sure you:
 
-    * Re-use as many of PyTUPS’s existing utilities as you can, introducing new package  dependencies only as necessary.
+    * Re-use as many of PyleoTUPS’s existing utilities as you can, introducing new package  dependencies only as necessary.
     * Create a docstring for your new function, describing arguments and returned variables, and showing an example of use. (Use an existing docstring for inspiration).
-    * If possible, also include a unit test for `continuous integration <https://youtu.be/_WvjhrZR01U>`_ (PyTUPS uses `pytest`). Feel free to ask for help from the package developers.
+    * If possible, also include a unit test for `continuous integration <https://youtu.be/_WvjhrZR01U>`_ (PyleoTUPS uses `pytest`). Feel free to ask for help from the package developers.
 
-4.  Expose the new functionality in the PyTUPS user API. 
+4.  Expose the new functionality in the PyleoTUPS user API. 
 
 
 Updating existing functionalities
 **********************************
 
 1. Open an issue on GitHub (same advice as above)
-2. Implement outside of PyTUPS, including a benchmark of how the existing function performs vs the proposed upgrade (e.g. with `timeit`).  Take into consideration memory requirements and describe on what architecture/OS you ran the test.
-3. Integrate the new functionality within PyTUPS (same advice as above)
+2. Implement outside of PyleoTUPS, including a benchmark of how the existing function performs vs the proposed upgrade (e.g. with `timeit`).  Take into consideration memory requirements and describe on what architecture/OS you ran the test.
+3. Integrate the new functionality within PyleoTUPS (same advice as above)
 4. Update the unit test(s) to make sure they still pass muster. Depending on the complexity of the feature, there may be more than one test to update.
 
 Testing
@@ -133,14 +135,14 @@ Testing is hugely important, as you don’t want your “upgrades” to break th
 1. class: `Test{filename}{Class}{method}` with appropriate camel case convention
 2. function: `test_{method}_t{test_id}`
 
-(see e.g. `test_LiPD.py <https://github.com/LinkedEarth/PyTUPS/blob/main/PyTUPS/tests/test_LiPD.py>`_ for example)
+(see e.g. `test_Dataset.py <https://github.com/LinkedEarth/PyleoTUPS/blob/main/PyleoTUPS/tests/test_Dataset.py>`_ for example)
 
-Your test should be as minimal as possible; it is aimed to see if the function your wrote/updated works as advertised given a reasonably comprehensive list of possible arguments. As much as possible, please use the datasets shipped with PyTUPS to test your code and only introduce new datasets if absolutely necessary. In general, the simpler the test, the better, as it will run in less time and won’t get the GitHub gods angry with us.
+Your test should be as minimal as possible; it is aimed to see if the function your wrote/updated works as advertised given a reasonably comprehensive list of possible arguments. As much as possible, please use the datasets shipped with PyleoTUPS to test your code and only introduce new datasets if absolutely necessary. In general, the simpler the test, the better, as it will run in less time and won’t get the GitHub gods angry with us.
 
 To run the test(s):
 
 0.  Make sure the `pytest package <https://docs.pytest.org>`_ is installed on your system; run `pip install pytest` if not.
-1.  In your terminal, switch to the “tests” subdirectory of your PyTUPS forked repository. If you wish to test a specific class/method inside a specified file, run `pytest {file_path}\::{TestClass}\::{test_method}`
+1.  In your terminal, switch to the “tests” subdirectory of your PyleoTUPS forked repository. If you wish to test a specific class/method inside a specified file, run `pytest {file_path}\::{TestClass}\::{test_method}`
 2.  To run *all* tests in the specified file, run `pytest {file_path}`
 3.  To perform all tests in all testing files inside the specified directory, execute `pytest {directory_path}`
 
@@ -148,13 +150,13 @@ The order above is somewhat loose, but goes from least complex (time-consuming) 
 
 Stylistic considerations
 """"""""""""""""""""""""
-Guido van Rossum’s great insight is that code is read far more often than it is written, so it is important for the code to be of a somewhat uniform style, so that people can read and understand it with relative ease. PyTUPS strives to use fairly consistent notation, including:
+Guido van Rossum’s great insight is that code is read far more often than it is written, so it is important for the code to be of a somewhat uniform style, so that people can read and understand it with relative ease. PyleoTUPS strives to use fairly consistent notation, including:
 
   * capital letters for matrices, lowercase for vectors
   * Function names use CamelCase convention
 
 
-Contributing your changes to PyTUPS
+Contributing your changes to PyleoTUPS
 ======================================
 
 Committing your code
@@ -196,12 +198,12 @@ Here `origin` is the default name given to your remote repository on GitHub. You
 
 If you added the upstream repository as described above you will see something like::
 
-    origin  git@github.com:yourname/PyTUPS.git (fetch)
-    origin  git@github.com:yourname/PyTUPS.git (push)
-    upstream  git://github.com/LinkedEarth/PyTUPS.git (fetch)
-    upstream  git://github.com/LinkedEarth/PyTUPS.git (push)
+    origin  git@github.com:yourname/PyleoTUPS.git (fetch)
+    origin  git@github.com:yourname/PyleoTUPS.git (push)
+    upstream  git://github.com/LinkedEarth/PyleoTUPS.git (fetch)
+    upstream  git://github.com/LinkedEarth/PyleoTUPS.git (push)
 
-Now your code is on GitHub, but it is not yet a part of the PyTUPS project. For that to happen, a pull request needs to be submitted on GitHub.
+Now your code is on GitHub, but it is not yet a part of the PyleoTUPS project. For that to happen, a pull request needs to be submitted on GitHub.
 
 Filing a Pull Request
 """""""""""""""""""""
@@ -275,11 +277,11 @@ To improve the chances of your pull request being reviewed, you should:
 Documentation
 =============
 
-About the PyTUPS documentation
+About the PyleoTUPS documentation
 """""""""""""""""""""""""""""""""
-PyTUPS's documentation is built automatically from the function and class docstrings, via `Sphinx <https://www.sphinx-doc.org/en/master/>`_ and pushed automatically to  `Read The Docs <https://readthedocs.org>`_. It is therefore especially important for your code to include a docstring, and to modify the docstrings of the functions/classes you modified to make sure the documentation is current.
+PyleoTUPS's documentation is built automatically from the function and class docstrings, via `Sphinx <https://www.sphinx-doc.org/en/master/>`_ and pushed automatically to  `Read The Docs <https://readthedocs.org>`_. It is therefore especially important for your code to include a docstring, and to modify the docstrings of the functions/classes you modified to make sure the documentation is current.
 
-Updating a PyTUPS docstring
+Updating a PyleoTUPS docstring
 """"""""""""""""""""""""""""""
 You may use existing docstrings as examples. A good docstring explains:
 
@@ -293,7 +295,7 @@ For the latter, make sure the example is prefaced by:
 
 and properly indented (look at other docstrings for inspiration).
 
-How to build the PyTUPS documentation
+How to build the PyleoTUPS documentation
 """"""""""""""""""""""""""""""""""""""""
 
 Navigate to the docs folder and type `make html`. This may require installing other packages (sphinx, chardet, numpydoc, nbsphinx, sphinx_search, jupyter-sphinx, sphinx_copybutton, sphinx_rtd_theme).

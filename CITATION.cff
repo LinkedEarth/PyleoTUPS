@@ -1,0 +1,15 @@
+cff-version: 0.0.0.1
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: "Oswal"
+    given-names: "Dhiren"
+  - family-names: "Khider"
+    given-names: "Deborah"
+    orcid: "https://orcid.org/0000-0001-7501-8430"
+  - family-names: "Pujara"
+    given-names: "Jay"
+    orcid: "https://orcid.org/0000-0001-6921-1744"
+title: "PyleoTUPS: Automated Paleoclimate Data Extraction and Processing"
+version: v0.0.1
+date-released: 2025-07-18
+url: "https://github.com/LinkedEarth/PyleoTUPS"

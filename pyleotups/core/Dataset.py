@@ -3,6 +3,7 @@ __all__ = ['Dataset', 'UnsupportedFileTypeError']
 import requests
 import pandas as pd
 import warnings
+import numpy as np
 from ..utils.NOAADataset import NOAADataset
 from ..utils.helpers import assert_list
 from ..utils.Parser.StandardParser import DataFetcher, StandardParser
@@ -28,25 +29,6 @@ class Dataset:
         A mapping from NOAAStudyId to NOAADataset instances.
     data_table_index : dict
         A mapping from dataTableID to associated study, site, and paleo data.
-
-    Methods
-    -------
-    __init__()
-        Initializes the Dataset.
-    search_studies(...)
-        Searches for studies using provided parameters and parses the response.
-    _fetch_api(params)
-        Internal method to make an HTTP GET request to the NOAA API.
-    _parse_response(data)
-        Internal method to parse the JSON response and populate studies.
-    get_summary()
-        Returns a DataFrame summarizing all loaded studies.
-    get_publications()
-        Returns a DataFrame of publications aggregated from studies.
-    get_sites()
-        Returns a DataFrame of sites aggregated from studies.
-    get_data(dataTableIDs, file_urls)
-        Fetches and returns external data based on data table IDs or file URLs.
     """
     BASE_URL = "https://www.ncei.noaa.gov/access/paleo-search/study/search.json"
     _PROPRIETARY_TYPES = {'crn', 'rwl', 'fhx', 'lpd'}
@@ -152,8 +134,7 @@ class Dataset:
         Returns
         -------
         pandas.DataFrame
-            Response DataFrame
-            Fills the internal `studies` attribute with structured NOAA study data.
+            Response DataFrame. Fills the internal `studies` attribute with structured NOAA study data.
         
         Raises
         ------
@@ -165,7 +146,17 @@ class Dataset:
 
         Notes
         -----
-        - At least one parameter must be specified, otherwise the API call will fail.
+        At least one parameter must be specified, otherwise the API call will fail.
+
+        Examples
+        --------
+
+        .. jupyter-execute::
+
+            from pyleotups import Dataset
+            ds=Dataset()
+            ds.search_studies(noaa_id=33213)
+
         """
         
         # Validate input
@@ -285,7 +276,21 @@ class Dataset:
         -------
         pandas.DataFrame
             A DataFrame with a summary of study metadata and components.
+        
+        Examples
+        --------
+
+        Examples
+        --------
+
+        .. jupyter-execute::
+
+            from pyleotups import Dataset
+            ds=Dataset()
+            df = ds.search_studies(noaa_id=33213).get_summary()
+            df.head()
         """
+        
         data = [study.to_dict() for study in self.studies.values()]
         return pd.DataFrame(data)
 
@@ -307,6 +312,18 @@ class Dataset:
         -------
         tuple (pybtex.database.BibliographyData, pandas.DataFrame)
             BibTeX object and DataFrame of publication details.
+        
+        Examples
+        --------
+
+        .. jupyter-execute::
+
+            from pyleotups import Dataset
+            ds=Dataset()
+            dsf = ds.search_studies(noaa_id=33213)
+            bib, df = ds.get_publications() 
+            df.head()
+        
         """
         from pybtex.database import BibliographyData
         
@@ -369,6 +386,17 @@ class Dataset:
         -------
         pandas.DataFrame
             A DataFrame with one row per (Site × PaleoData × File).
+        
+        Examples
+        --------
+
+        .. jupyter-execute::
+
+            from pyleotups import Dataset
+            ds=Dataset()
+            dsf = ds.search_studies(noaa_id=33213)
+            df = ds.get_tables()
+            df.head()
         """
 
         records = []
@@ -425,6 +453,17 @@ class Dataset:
             A DataFrame with one row per site and columns:
             ['StudyID', 'SiteID', 'SiteName', 'LocationName',
             'Latitude', 'Longitude', 'MinElevation', 'MaxElevation', 'DataType']
+        
+        Examples
+        --------
+
+        .. jupyter-execute::
+
+            from pyleotups import Dataset
+            ds=Dataset()
+            dsf = ds.search_studies(noaa_id=33213)
+            df = ds.get_geo()
+            df.head()
         """
         site_records = []
 
@@ -455,6 +494,17 @@ class Dataset:
         pandas.DataFrame
             A DataFrame with columns ['StudyID', 'StudyName', 'FundingAgency', 'FundingGrant'].
             Returns an empty DataFrame if no funding is available.
+        
+        Examples
+        --------
+
+        .. jupyter-execute::
+
+            from pyleotups import Dataset
+            ds=Dataset()
+            dsf = ds.search_studies(noaa_id=33213)
+            df = ds.get_funding()
+            df.head()
         """
         records = []
         for study in self.studies.values():
@@ -487,6 +537,17 @@ class Dataset:
         pandas.DataFrame
             A DataFrame indexed by DataTableID with one row per (file × variable).
             Includes full variable metadata such as cvShortName, cvUnit, etc.
+        
+        Examples
+        --------
+
+        .. jupyter-execute::
+
+            from pyleotups import Dataset
+            ds=Dataset()
+            dsf = ds.search_studies(noaa_id=33213)
+            df_var = ds.get_variables(dataTableIDs="45859")
+            df_var.head()
         """
         dataTableIDs = assert_list(dataTableIDs)
         records = []
@@ -684,6 +745,17 @@ class Dataset:
             For missing parent study mapping, missing file URL, or proprietary/unsupported file types.
         Exception
             Propagates any exceptions raised by the parser.
+        
+        Examples
+        --------
+
+        .. jupyter-execute::
+
+            from pyleotups import Dataset
+            ds=Dataset()
+            dsf = ds.search_studies(noaa_id=33213)
+            df = ds.get_data(dataTableIDs="45859")
+            dfs[0].head()
         """
         dfs = []
 

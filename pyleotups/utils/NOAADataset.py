@@ -24,17 +24,6 @@ class NOAADataset:
         A list of Publication objects associated with the study.
     sites : list of Site
         A list of Site objects associated with the study.
-
-    Methods
-    -------
-    __init__(study_data)
-        Initializes the NOAADataset instance using a dictionary of study data.
-    _load_metadata(study_data)
-        Extracts metadata from the study data.
-    _load_investigators(study_data)
-        Extracts investigator details from the study data.
-    to_dict()
-        Returns a dictionary summary of the study and its components.
     """
     def __init__(self, study_data):
         """

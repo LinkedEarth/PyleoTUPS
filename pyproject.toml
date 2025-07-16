@@ -9,7 +9,7 @@ include = ["pyleotups*"]
 [project]
 name = "pyleotups"
 version = "0.0.1"
-description = "A package to interact with NCEI studies API"
+description = "Automated Paleoclimate Data Extraction and Processing"
 authors = [
   { name = "Dhiren Oswal", email = "linkedearth@gmail.com" },
   { name = "Deborah Khider", email = "linkedearth@gmail.com" },

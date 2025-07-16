@@ -1,0 +1,8 @@
+sphinx>=4.0.0
+sphinx-rtd-theme>=1.0.0
+numpydoc>=1.1.0
+nbsphinx
+jupyter-sphinx
+sphinx-copybutton
+IPython
+matplotlib

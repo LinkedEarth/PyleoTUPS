@@ -1,4 +1,4 @@
-cff-version: 0.0.0.1
+cff-version: 0.0.0.2
 message: "If you use this software, please cite it as below."
 authors:
   - family-names: "Oswal"
@@ -12,4 +12,5 @@ authors:
 title: "PyleoTUPS: Automated Paleoclimate Data Extraction and Processing"
 version: v0.0.1
 date-released: 2025-07-18
+doi: 10.5281/zenodo.16009165
 url: "https://github.com/LinkedEarth/PyleoTUPS"

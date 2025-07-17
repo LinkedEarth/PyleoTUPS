@@ -1,5 +1,8 @@
+[![PyPI version](https://badge.fury.io/py/pyleotups.svg)](https://badge.fury.io/py/pyleotups)
 [![license](https://img.shields.io/github/license/linkedearth/PyleoTUPS.svg)]()
 [![NSF-2411267](https://img.shields.io/badge/NSF-2411267-blue.svg)](https://www.nsf.gov/awardsearch/showAward?AWD_ID=2411267)
+[![DOI](https://zenodo.org/badge/869071109.svg)](https://doi.org/10.5281/zenodo.16009164)
+
 
 <p align="center">
 <img src="https://github.com/LinkedEarth/Logos/blob/master/PyleoTUPS/pyleotups_logo.png?raw=true" width="50%">

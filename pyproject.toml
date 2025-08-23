@@ -18,9 +18,9 @@ authors = [
 license = { text = "Apache License 2.0" }
 requires-python = ">=3.8"
 dependencies = [
-  "pandas==2.1.4",
+  "pandas==2.3.1",
   "requests",
-  "numpy",
+  "numpy==1.26.4",
   "pybtex",
   "setuptools",
   "tqdm",

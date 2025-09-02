@@ -42,10 +42,31 @@ class Dataset:
         self.data_table_index = {}      # dataTableID -> dict with study, site, paleo_data
         self.file_url_to_datatable = {} # file_url -> dataTableID
     
-    def search_studies(self, xml_id=None, noaa_id=None, data_publisher="NOAA", data_type_id=None,
-                       keywords=None, investigators=None, max_lat=None, min_lat=None, max_lon=None,
-                       min_lon=None, location=None, publication=None, search_text=None, earliest_year=None,
-                       latest_year=None, cv_whats=None, recent=False, limit = 100):
+    def search_studies(  
+            self, 
+            xml_id=None,
+            noaa_id=None,
+            data_publisher="NOAA",
+            data_type_id=None,
+            keywords=None,
+            investigators=None,
+            max_lat=None, min_lat=None, max_lon=None, min_lon=None,
+            location=None,
+            publication=None,
+            search_text=None,
+            earliest_year=None, latest_year=None,
+            cv_whats=None,
+            # NEW:
+            headers_only=None,
+            min_elevation=None, max_elevation=None,
+            time_format=None, time_method=None,
+            primary_investigator=None,
+            reconstruction=None,         # 'Y' or 'N' (string) or bool; we normalize below
+            species=None,                 # e.g., 'PIPO' (tree ring only / dataTypeId=18)
+            recent=False,
+            limit=100,
+            display=False,
+            ):
         """
         Search for NOAA studies using the specified parameters.
 
@@ -157,10 +178,16 @@ class Dataset:
             ds.search_studies(noaa_id=33213)
 
         """
-        
+        """@TODO:
+        - Add timeout: 3000ms. Idea: Make use of hooks to update user in real time for study search. 
+        - Manage usage for Param: `skip` 
+        - Manage usage for Param: `investigatorAndOr`, `keywordAndOr`, etc. 
+            - For arguments to above params, shall we manage the usage of AND/& and OR/| internally or expose usage through API?""" 
         # Validate input
         if not any([xml_id, noaa_id, data_type_id, keywords, investigators, max_lat, min_lat, max_lon,
-                    min_lon, location, publication, search_text, earliest_year, latest_year, cv_whats, recent]):
+                min_lon, location, publication, search_text, earliest_year, latest_year,
+                cv_whats, headers_only, min_elevation, max_elevation, time_format, time_method,
+                primary_investigator, reconstruction, species, recent,]):
             raise ValueError(
                 "At least one search parameter must be specified to initiate a query. "
                 "To view available parameters and usage examples, run: help(Dataset.search_studies)"
@@ -182,7 +209,10 @@ class Dataset:
                 'dataPublisher': data_publisher,
                 'dataTypeId': data_type_id,
                 'keywords': keywords,
-                'investigators': investigators,
+                'investigators': investigators , "WAHL {INVESTIGTORANDOR} VOCE" : # TODo: OPTION 1: WAHL AND VOCE, WAHL OR  
+                # Initally: Wahl, E.R.
+                # What if: E.R. Wahl
+                'investigatorsAndOr' : "OR | AND",
                 'minLat': min_lat,
                 'maxLat': max_lat,
                 'minLon': min_lon,
@@ -193,7 +223,17 @@ class Dataset:
                 'earliestYear': earliest_year,
                 'latestYear': latest_year,
                 'recent': recent,
-                'limit': limit
+                'limit': limit, 
+                # NEW:
+                "headersOnly": headers_only,
+                "minElevation": min_elevation, "maxElevation": max_elevation,
+                "timeFormat": time_format, "timeMethod": time_method,
+                "primaryInvestigator": primary_investigator,
+                "reconstruction": (
+                    # normalize bools to 'Y'/'N' if needed; leave strings as-is
+                    ("Y" if reconstruction is True else "N") if isinstance(reconstruction, bool) else reconstruction
+                ),
+                "species": species,
             }
             params = {k: v for k, v in params.items() if v is not None}
 
@@ -201,6 +241,9 @@ class Dataset:
             response = requests.get(self.BASE_URL, params=params)
             response.raise_for_status()
             response_json = response.json()
+            if response.status == "204" and investigators in params:
+                warnings(f"No studies found for investigator: {investigators}. NOAA API excpects the investigator name in [(Last name) Required], [(Initials) Optional]")
+
         except requests.HTTPError as e:
             raise RuntimeError(f"HTTP error from NOAA API: {e}")
         except Exception as e:
@@ -211,7 +254,8 @@ class Dataset:
         
         self._parse_response(response_json)
 
-        return self.get_summary()
+        if display:
+            return self.get_summary()
 
     def _fetch_api(self, params):
         """

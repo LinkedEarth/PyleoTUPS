@@ -7,8 +7,4 @@ dependencies:
   - pip
   - pip:
       - pytest
-      - pandas
-      - requests
-      - pybtex
-      - tqdm
       - '-e .'

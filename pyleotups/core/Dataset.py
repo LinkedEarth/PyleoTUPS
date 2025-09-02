@@ -1,5 +1,7 @@
 __all__ = ['Dataset', 'UnsupportedFileTypeError']
 
+import time
+import logging
 import requests
 import pandas as pd
 import warnings
@@ -7,6 +9,11 @@ from ..utils.NOAADataset import NOAADataset
 from ..utils.helpers import assert_list
 from ..utils.Parser.StandardParser import DataFetcher, StandardParser
 from ..utils.Parser.NonStandardParser import NonStandardParser
+
+
+def _fmt(x):
+    return f"{x:.3f}s" if isinstance(x, (int, float)) else "n/a"
+
 
 class UnsupportedFileTypeError(Exception):
     """Raised when a file type is not supported by the parser."""
@@ -41,6 +48,8 @@ class Dataset:
         self.studies = {}               # NOAAStudyId -> NOAADataset instance
         self.data_table_index = {}      # dataTableID -> dict with study, site, paleo_data
         self.file_url_to_datatable = {} # file_url -> dataTableID
+        self.last_timing = {}
+        self.logger = logging.getLogger("pyleotups.Dataset")
     
     def search_studies(  
             self, 
@@ -187,7 +196,7 @@ class Dataset:
         if not any([xml_id, noaa_id, data_type_id, keywords, investigators, max_lat, min_lat, max_lon,
                 min_lon, location, publication, search_text, earliest_year, latest_year,
                 cv_whats, headers_only, min_elevation, max_elevation, time_format, time_method,
-                primary_investigator, reconstruction, species, recent,]):
+                reconstruction, species, recent,]):
             raise ValueError(
                 "At least one search parameter must be specified to initiate a query. "
                 "To view available parameters and usage examples, run: help(Dataset.search_studies)"
@@ -201,18 +210,18 @@ class Dataset:
             ) 
 
         if noaa_id:
-            params = {'NOAAStudyId': noaa_id}
+            params = {'NOAAStudyId': noaa_id, "limit": limit}
         elif xml_id:
-            params = {'xmlId': xml_id}
+            params = {'xmlId': xml_id, "limit": limit}
         else:
             params = {
                 'dataPublisher': data_publisher,
                 'dataTypeId': data_type_id,
                 'keywords': keywords,
-                'investigators': investigators , "WAHL {INVESTIGTORANDOR} VOCE" : # TODo: OPTION 1: WAHL AND VOCE, WAHL OR  
+                'investigators': investigators , #"WAHL {INVESTIGTORANDOR} VOCE" : # TODo: OPTION 1: WAHL AND VOCE, WAHL OR  
                 # Initally: Wahl, E.R.
                 # What if: E.R. Wahl
-                'investigatorsAndOr' : "OR | AND",
+                # 'investigatorsAndOr' : "OR | AND",
                 'minLat': min_lat,
                 'maxLat': max_lat,
                 'minLon': min_lon,
@@ -228,7 +237,6 @@ class Dataset:
                 "headersOnly": headers_only,
                 "minElevation": min_elevation, "maxElevation": max_elevation,
                 "timeFormat": time_format, "timeMethod": time_method,
-                "primaryInvestigator": primary_investigator,
                 "reconstruction": (
                     # normalize bools to 'Y'/'N' if needed; leave strings as-is
                     ("Y" if reconstruction is True else "N") if isinstance(reconstruction, bool) else reconstruction
@@ -237,26 +245,78 @@ class Dataset:
             }
             params = {k: v for k, v in params.items() if v is not None}
 
+        t_total_start = time.perf_counter()
+
         try:
+            t_api_wall_start = time.perf_counter()
             response = requests.get(self.BASE_URL, params=params)
+            api_wall_time = time.perf_counter() - t_api_wall_start
+            api_rtt = getattr(response, "elapsed", None)
+            api_rtt = api_rtt.total_seconds() if api_rtt is not None else None
+
+            if response.status_code == 204:
+                inv = params.get("investigators")
+                if inv:
+                        warnings.warn(
+                            f"No studies found for investigator: {inv}."
+                            "NOAA API expects investigator as 'LastName, Initials'. Try either of [`LastName, Initials`] or [`LastName`] or [Initials]"
+                        )      
+                # record timings for this path
+                self.last_timing = {
+                    "api_round_trip_seconds": api_rtt,
+                    "api_wall_seconds": api_wall_time,
+                    "json_deserialize_seconds": 0.0,
+                    "parse_seconds": 0.0,
+                    "total_seconds": time.perf_counter() - t_total_start,
+                }
+                if self.logger.isEnabledFor(logging.DEBUG):
+                    self.logger.debug(
+                        "search_studies timings (204): api_rtt=%s api_wall=%s json=%s parse=%s total=%s",
+                        _fmt(self.last_timing["api_round_trip_seconds"]),
+                        _fmt(self.last_timing["api_wall_seconds"]),
+                        _fmt(self.last_timing["json_deserialize_seconds"]),
+                        _fmt(self.last_timing["parse_seconds"]),
+                        _fmt(self.last_timing["total_seconds"]),
+                    )
+                return self.get_summary() if display else None
+                      
             response.raise_for_status()
             response_json = response.json()
-            if response.status == "204" and investigators in params:
-                warnings(f"No studies found for investigator: {investigators}. NOAA API excpects the investigator name in [(Last name) Required], [(Initials) Optional]")
+            
+            t_json_start = time.perf_counter()
+            response_json = response.json()
+            json_deser_time = time.perf_counter() - t_json_start
 
         except requests.HTTPError as e:
             raise RuntimeError(f"HTTP error from NOAA API: {e}")
         except Exception as e:
             raise RuntimeError(f"Failed to fetch or parse response: {e}")
-        
-        self.studies.clear()
-        self.file_url_to_datatable.clear()  
-        
-        self._parse_response(response_json)
+                  
+        t_parse_start = time.perf_counter()
+        self._parse_response(response_json, limit)
+        parse_time = time.perf_counter() - t_parse_start
 
-        if display:
-            return self.get_summary()
+        self.last_timing = {
+            "api_round_trip_seconds": api_rtt,
+            "api_wall_seconds": api_wall_time,
+            "json_deserialize_seconds": json_deser_time,
+            "parse_seconds": parse_time,
+            "total_seconds": time.perf_counter() - t_total_start,
+        }
 
+        # << only logs when DEBUG is enabled
+        if self.logger.isEnabledFor(logging.DEBUG):
+            self.logger.debug(
+                "search_studies timings: api_rtt=%s api_wall=%s json=%s parse=%s total=%s",
+                _fmt(self.last_timing["api_round_trip_seconds"]),
+                _fmt(self.last_timing["api_wall_seconds"]),
+                _fmt(self.last_timing["json_deserialize_seconds"]),
+                _fmt(self.last_timing["parse_seconds"]),
+                _fmt(self.last_timing["total_seconds"]),
+            )
+
+        return self.get_summary() if display else None
+    
     def _fetch_api(self, params):
         """
         Fetch data from the NOAA API using the given parameters.
@@ -283,7 +343,7 @@ class Dataset:
         else:
             raise Exception(f"Error fetching studies: {response.status_code}")
 
-    def _parse_response(self, data):
+    def _parse_response(self, data, limit):
         """
         Parse the JSON response and populate studies and reverse mapping indexes.
         """
@@ -308,7 +368,12 @@ class Dataset:
                         file_url = file_obj.get('fileUrl')
                         if file_url:
                             self.file_url_to_datatable[file_url] = paleo.datatable_id
-
+            
+        if isinstance(limit, int) and len(data.get('study', [])) >= limit:
+            warnings.warn(
+                f"Retrieved {limit} studies, which is the specified limit. "
+                "Consider increasing the limit parameter to fetch more studies."
+            )
 
 
     def get_summary(self):

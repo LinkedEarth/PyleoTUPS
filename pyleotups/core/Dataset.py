@@ -82,58 +82,80 @@ class Dataset:
                 11: PALEOCLIMATIC MODELING, 12: FIRE HISTORY, 13: PALEOLIMNOLOGY, 14: PALEOCEANOGRAPHY,
                 15: PLANT MACROFOSSILS, 16: POLLEN, 17: SPELEOTHEMS, 18: TREE RING,
                 19: OTHER COLLECTIONS, 20: INSTRUMENTAL, 59: SOFTWARE, 60: REPOSITORY
-            Example: '4|18'
+            Example: '4', '4|18'
 
-        keywords : str, optional
-            Use hierarchical terms separated by '>'. Separate multiple values using '|'.
-            Example: 'earth science>paleoclimate>paleocean>biomarkers'
-
-        investigators : str, optional
-            Specify one or more investigator names. Use '|' to separate multiple names.
-            Example: 'Wahl, E.R.|Vose, R.S.'
-
-        max_lat : float, optional
-            Upper bound for latitude. Must be between -90 and 90.
-            Example: 90
-
-        min_lat : float, optional
-            Lower bound for latitude. Must be between -90 and 90.
-            Example: -90
-
-        max_lon : float, optional
-            Upper bound for longitude. Must be between -180 and 180.
-            Example: 180
-
-        min_lon : float, optional
-            Lower bound for longitude. Must be between -180 and 180.
-            Example: -180
-
-        location : str, optional
-            Use region hierarchy separated by '>'.
-            Example: 'Continent>Africa>Eastern Africa>Zambia'
-
-        publication : str, optional
-            Match against publication metadata such as title, author, or citation.
-            Example: 'Khider'
-
-        earliest_year : int, optional
-            Starting year (can be negative for BCE). Used with `timeFormat` and `timeMethod`.
-            Example: -500
-
-        latest_year : int, optional
-            Ending year. Used with `timeFormat` and `timeMethod`.
-            Example: 2020
-
-        cv_whats : str, optional
-            Search using controlled vocabulary terms for measured variables.
-            Format: Hierarchical string using '>'
-            Example: 'chemical composition>compound>inorganic compound>carbon dioxide'
-
-        recent : bool, optional
-            Set to True to only return studies from the last two years. Results are sorted by newest.
-
-        limit : int, optional
-            Set to 100 by default. Limits the number of studies retrieved. 
+        investigators : str or list[str], optional
+            Investigator(s) in the form ``"LastName, Initials"``. Lists are joined with ``|``.
+        
+        investigators_and_or : {"and","or"}, default "or"
+            Logical combiner when multiple investigators are supplied. Only sent when 2+ items.
+        
+        locations : str or list[str], optional
+            Location(s) as hierarchical strings using ``>`` (e.g., ``"Continent>Africa>Kenya"``). Lists joined with ``|``.
+        
+        locations_and_or : {"and","or"}, default "or"
+            Logical combiner for multiple locations. Only sent when 2+ items.
+        
+        keywords : str or list[str], optional
+            Controlled keyword(s); hierarchies with ``>``. Lists joined with ``|``.
+        
+        keywords_and_or : {"and","or"}, default "or"
+            Logical combiner for multiple keywords. Only sent when 2+ items.
+        
+        species : str or list[str], optional
+            Four-letter tree species codes (uppercase enforced). Lists joined with ``|``.
+        
+        species_and_or : {"and","or"}, default "or"
+            Logical combiner for multiple species. Only sent when 2+ items.
+        
+        cv_whats : str or list[str], optional
+            PaST “What” terms (hierarchies with ``>``). Lists joined with ``|``.
+        
+        cv_whats_and_or : {"and","or"}, default "or"
+            Logical combiner for multiple cv_whats. Only sent when 2+ items.
+        
+        cv_materials : str or list[str], optional
+            PaST “Material” terms (hierarchies with ``>``). Lists joined with ``|``.
+        
+        cv_materials_and_or : {"and","or"}, default "or"
+            Logical combiner for multiple cv_materials. Only sent when 2+ items.
+        
+        cv_seasonalities : str or list[str], optional
+            PaST “Seasonality” terms (e.g., ``"annual"`` or ``"3-month>Aug-Oct"``). Lists joined with ``|``.
+        
+        cv_seasonalities_and_or : {"and","or"}, default "or"
+            Logical combiner for multiple cv_seasonalities. Only sent when 2+ items.
+        
+        min_lat, max_lat : int, optional
+            Latitude bounds in whole degrees (–90..90).
+        
+        min_lon, max_lon : int, optional
+            Longitude bounds in whole degrees (–180..180).
+        
+        min_elevation, max_elevation : int, optional
+            Elevation bounds in meters (integers; negative allowed).
+        
+        earliest_year, latest_year : int, optional
+            Year bounds (integers; negative allowed). If provided without time settings, ``time_format`` defaults to ``'CE'``.
+        
+        time_format : {"CE","BP"}, optional
+            Interpretation of years. If omitted with a time window, defaults to ``'CE'``.
+        
+        time_method : {"overAny","entireOver","overEntire"}, optional
+            How to apply the time window (overlap, envelop, or within).
+        
+        reconstruction : bool or str, optional
+            Accepts True/False or strings (case-insensitive) like ``"true"|"yes"|"y"|"1"`` → ``'Y'`` and
+            ``"false"|"no"|"n"|"0"`` → ``'N'``. ``None`` omits the filter.
+        
+        recent : bool, default False
+            If True, restrict to studies from the last ~2 years (newest first).
+        
+        limit : int, default 100
+            Number of studies to return (PyleoTUPS default).
+        
+        display : bool, default False
+            If True, render a small preview after parsing. 
 
         Returns
         -------
@@ -150,24 +172,106 @@ class Dataset:
 
         Notes
         -----
-        At least one parameter must be specified, otherwise the API call will fail.
+        Notes (User Guide)
+        ------------------
+        **Multi-value fields.** For ``investigators``, ``locations``, ``keywords``, ``species``, ``cv_whats``,
+        ``cv_materials``, ``cv_seasonalities``:
+        - Accept a string (already ``|``-separated) **or** a Python list of strings.
+        - Lists are joined with ``|``. The corresponding ``*_and_or`` flag is included only when 2+ items.
+        - Species are validated to **four uppercase letters**.
+
+        **Identifiers short-circuit.** If ``xml_id`` or ``noaa_id`` is set, the request includes only that id (plus
+        publisher), ignoring other filters.
+
+        **Time window defaults.** If either ``earliest_year`` or ``latest_year`` is provided and neither ``time_format``
+        nor ``time_method`` is supplied, ``time_format`` defaults to ``'CE'`` (a note is recorded).
+
+        **Unsupported parameters.** ``headersOnly`` and ``skip`` are not supported by PyleoTUPS and are ignored if passed.
+
+        **Boolean normalization.** Parameters expected as ``'Y'/'N'`` accept: True/False, or strings like
+        ``"true"|"yes"|"y"|"1"`` → ``'Y'`` and ``"false"|"no"|"n"|"0"`` → ``'N'``.
 
         Examples
         --------
 
+        Quick start (identifiers)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
         .. jupyter-execute::
 
-            from pyleotups import Dataset
-            ds=Dataset()
-            ds.search_studies(noaa_id=33213)
+            import pyleotups as pt
+            ds = pt.Dataset()
+            ds.search_studies(noaa_id=13156, display=True)
+            ds.search_studies(xml_id=1840, display=True)
+
+        Full-text search (Oracle syntax)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        .. jupyter-execute::
+
+            # Single phrase
+            ds.search_studies(search_text="younger dryas", limit=20, display=True)
+
+            # Logical operator (AND)
+            ds.search_studies(search_text="loess AND stratigraphy", limit=20, display=True)
+
+            # Wildcards: '_' (single char), '%' (multi-char)
+            ds.search_studies(search_text="f_re", limit=20, display=True)
+            ds.search_studies(search_text="pol%", limit=20, display=True)
+
+            # Escaping special characters (use backslashes)
+            ds.search_studies(search_text=r"noaa\-tree\-19260", limit=20, display=True)
+
+        Investigators, keywords, locations
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        .. jupyter-execute::
+
+            # Multiple investigators (OR by default)
+            ds.search_studies(investigators=["Wahl, E.R.", "Vose, R.S."], display=True)
+
+            # Multiple investigators (OR by default)
+            ds.search_studies(investigators=["Wahl, E.R.", "Vose, R.S."], investigatorsAndOr = "and")
+
+            # Keywords: hierarchy with '>' and multiple via '|'
+            ds.search_studies(keywords="earth science>paleoclimate>paleocean>biomarkers", display=True)
+
+            # Location hierarchy
+            ds.search_studies(locations="Continent>Africa>Eastern Africa>Zambia", display=True)
+
+        Species and types
+        ^^^^^^^^^^^^^^^^^
+        .. jupyter-execute::
+
+            # Species: four-letter codes (uppercase enforced)
+            ds.search_studies(species=["ABAL", "PIPO"], display=True)
+
+            # Data types: one or more IDs separated by '|'
+            ds.search_studies(data_type_id="4|18", display=True)
+        
+
+        Geography and elevation
+        ^^^^^^^^^^^^^^^^^^^^^^^
+        .. jupyter-execute::
+
+            ds.search_studies(min_lat=68, max_lat=69, min_lon=30, max_lon=40, display=True)
+            ds.search_studies(min_elevation=100, max_elevation=110, display=True)
+
+        Time window (defaults to CE if no time settings)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        .. jupyter-execute::
+
+            # Explicit BP with method
+            ds.search_studies(earliest_year=12000, time_format="BP", time_method="overAny", display=True)
+
+            # No time_format/time_method → defaults to CE
+            ds.search_studies(earliest_year=1500, latest_year=0, display=True)
+
+        Reconstructions and recency
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        .. jupyter-execute::
+
+            ds.search_studies(reconstruction=True, display=True)
+            ds.search_studies(recent=True, limit=25, display=True)
 
         """
-        """@TODO:
-        - Add timeout: 3000ms. Idea: Make use of hooks to update user in real time for study search. 
-        - Manage usage for Param: `skip` 
-        - Manage usage for Param: `investigatorAndOr`, `keywordAndOr`, etc. 
-            - For arguments to above params, shall we manage the usage of AND/& and OR/| internally or expose usage through API?""" 
-        # Validate input
 
         for param in ("headerheaders_only", "skip"):
             if param in kwargs:

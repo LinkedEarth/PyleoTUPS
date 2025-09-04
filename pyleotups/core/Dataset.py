@@ -1,20 +1,20 @@
 __all__ = ['Dataset', 'UnsupportedFileTypeError']
 
-import time
-import logging
+import logging, warnings
 import requests
 import pandas as pd
-import warnings
+
 from ..utils.NOAADataset import NOAADataset
 from ..utils.helpers import assert_list
 from ..utils.Parser.StandardParser import DataFetcher, StandardParser
 from ..utils.Parser.NonStandardParser import NonStandardParser
+from ..utils.api.constants import BASE_URL
+from ..utils.api.query_builder import build_payload
+from ..utils.api.http import get
 
 
-def _fmt(x):
-    return f"{x:.3f}s" if isinstance(x, (int, float)) else "n/a"
-
-
+log = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO, format='[%(asctime)s][%(levelname)s] - %(message)s')
 class UnsupportedFileTypeError(Exception):
     """Raised when a file type is not supported by the parser."""
     pass
@@ -36,7 +36,6 @@ class Dataset:
     data_table_index : dict
         A mapping from dataTableID to associated study, site, and paleo data.
     """
-    BASE_URL = "https://www.ncei.noaa.gov/access/paleo-search/study/search.json"
     _PROPRIETARY_TYPES = {'crn', 'rwl', 'fhx', 'lpd'}
 
     def __init__(self):
@@ -51,31 +50,7 @@ class Dataset:
         self.last_timing = {}
         self.logger = logging.getLogger("pyleotups.Dataset")
     
-    def search_studies(  
-            self, 
-            xml_id=None,
-            noaa_id=None,
-            data_publisher="NOAA",
-            data_type_id=None,
-            keywords=None,
-            investigators=None,
-            max_lat=None, min_lat=None, max_lon=None, min_lon=None,
-            location=None,
-            publication=None,
-            search_text=None,
-            earliest_year=None, latest_year=None,
-            cv_whats=None,
-            # NEW:
-            headers_only=None,
-            min_elevation=None, max_elevation=None,
-            time_format=None, time_method=None,
-            primary_investigator=None,
-            reconstruction=None,         # 'Y' or 'N' (string) or bool; we normalize below
-            species=None,                 # e.g., 'PIPO' (tree ring only / dataTypeId=18)
-            recent=False,
-            limit=100,
-            display=False,
-            ):
+    def search_studies(self, **kwargs):
         """
         Search for NOAA studies using the specified parameters.
 
@@ -193,155 +168,74 @@ class Dataset:
         - Manage usage for Param: `investigatorAndOr`, `keywordAndOr`, etc. 
             - For arguments to above params, shall we manage the usage of AND/& and OR/| internally or expose usage through API?""" 
         # Validate input
-        if not any([xml_id, noaa_id, data_type_id, keywords, investigators, max_lat, min_lat, max_lon,
-                min_lon, location, publication, search_text, earliest_year, latest_year,
-                cv_whats, headers_only, min_elevation, max_elevation, time_format, time_method,
-                reconstruction, species, recent,]):
+
+        for param in ("headerheaders_only", "skip"):
+            if param in kwargs:
+                log.warning("%s is not supported and will be ignored.", param)
+                kwargs.pop(param, None)
+
+        if not any([
+        kwargs.get("xml_id"), kwargs.get("noaa_id"),
+        kwargs.get("data_type_id"), kwargs.get("keywords"),
+        kwargs.get("investigators"),
+        kwargs.get("max_lat"), kwargs.get("min_lat"),
+        kwargs.get("max_lon"), kwargs.get("min_lon"),
+        kwargs.get("location") or kwargs.get("locations"),
+        kwargs.get("publication"), kwargs.get("search_text"),
+        kwargs.get("earliest_year"), kwargs.get("latest_year"),
+        kwargs.get("cv_whats"), kwargs.get("min_elevation"),
+        kwargs.get("max_elevation"), kwargs.get("time_format"),
+        kwargs.get("time_method"), kwargs.get("reconstruction"),
+        kwargs.get("species"), kwargs.get("recent"),
+        ]):
             raise ValueError(
                 "At least one search parameter must be specified to initiate a query. "
                 "To view available parameters and usage examples, run: help(Dataset.search_studies)"
             )
         
-        if data_publisher != "NOAA":
+        if kwargs.get("data_publisher") and kwargs["data_publisher"] != "NOAA":
             raise NotImplementedError(
-                f"PyleoTUPS does not support '{data_publisher}' as the data publisher in the current version."
-                "Please retry a search with data_publisher = NOAA "
-                "Please check future versions for support of other publishers."
-            ) 
+            "PyleoTUPS currently supports data_publisher='NOAA' only. "
+            "Please retry with data_publisher='NOAA'."
+        )
 
-        if noaa_id:
-            params = {'NOAAStudyId': noaa_id, "limit": limit}
-        elif xml_id:
-            params = {'xmlId': xml_id, "limit": limit}
-        else:
-            params = {
-                'dataPublisher': data_publisher,
-                'dataTypeId': data_type_id,
-                'keywords': keywords,
-                'investigators': investigators , #"WAHL {INVESTIGTORANDOR} VOCE" : # TODo: OPTION 1: WAHL AND VOCE, WAHL OR  
-                # Initally: Wahl, E.R.
-                # What if: E.R. Wahl
-                # 'investigatorsAndOr' : "OR | AND",
-                'minLat': min_lat,
-                'maxLat': max_lat,
-                'minLon': min_lon,
-                'maxLon': max_lon,
-                'locations': location,
-                'searchText': search_text,
-                'cvWhats': cv_whats,
-                'earliestYear': earliest_year,
-                'latestYear': latest_year,
-                'recent': recent,
-                'limit': limit, 
-                # NEW:
-                "headersOnly": headers_only,
-                "minElevation": min_elevation, "maxElevation": max_elevation,
-                "timeFormat": time_format, "timeMethod": time_method,
-                "reconstruction": (
-                    # normalize bools to 'Y'/'N' if needed; leave strings as-is
-                    ("Y" if reconstruction is True else "N") if isinstance(reconstruction, bool) else reconstruction
-                ),
-                "species": species,
-            }
-            params = {k: v for k, v in params.items() if v is not None}
+        # Build payload using our utils (handles ids short-circuit, list→'|', Y/N coercion, time default)
+        payload, notes = build_payload(**kwargs)
+        for n in notes:
+            log.info("search_studies: %s", n)
+        self.last_search_notes = notes
 
-        t_total_start = time.perf_counter()
+        # --- Make the request with explicit 204 handling ---
+        resp = get(BASE_URL, payload)
+        status = resp.status_code
+
+        # 204 No Content → no studies for given filters
+        if status == 204:
+            inv = payload.get("investigators")
+            if inv:
+                warnings.warn(
+                    "No studies found for investigator(s): "
+                    f"{inv}. NOAA expects 'LastName, Initials'. Try variations like:\n"
+                    "  - 'LastName, Initials'\n  - 'LastName'\n  - 'Initials'"
+                )
+                # Nothing to parse; return display summary (empty) or None
+                return self.get_summary() if kwargs.get("display") else None
+        # Non-204: ensure success and parse JSON
+        try:
+            resp.raise_for_status()
+        except Exception as e:
+            raise RuntimeError(f"HTTP error from NOAA API: {e}")
 
         try:
-            t_api_wall_start = time.perf_counter()
-            response = requests.get(self.BASE_URL, params=params)
-            api_wall_time = time.perf_counter() - t_api_wall_start
-            api_rtt = getattr(response, "elapsed", None)
-            api_rtt = api_rtt.total_seconds() if api_rtt is not None else None
-
-            if response.status_code == 204:
-                inv = params.get("investigators")
-                if inv:
-                        warnings.warn(
-                            f"No studies found for investigator: {inv}."
-                            "NOAA API expects investigator as 'LastName, Initials'. Try either of [`LastName, Initials`] or [`LastName`] or [Initials]"
-                        )      
-                # record timings for this path
-                self.last_timing = {
-                    "api_round_trip_seconds": api_rtt,
-                    "api_wall_seconds": api_wall_time,
-                    "json_deserialize_seconds": 0.0,
-                    "parse_seconds": 0.0,
-                    "total_seconds": time.perf_counter() - t_total_start,
-                }
-                if self.logger.isEnabledFor(logging.DEBUG):
-                    self.logger.debug(
-                        "search_studies timings (204): api_rtt=%s api_wall=%s json=%s parse=%s total=%s",
-                        _fmt(self.last_timing["api_round_trip_seconds"]),
-                        _fmt(self.last_timing["api_wall_seconds"]),
-                        _fmt(self.last_timing["json_deserialize_seconds"]),
-                        _fmt(self.last_timing["parse_seconds"]),
-                        _fmt(self.last_timing["total_seconds"]),
-                    )
-                return self.get_summary() if display else None
-                      
-            response.raise_for_status()
-            response_json = response.json()
-            
-            t_json_start = time.perf_counter()
-            response_json = response.json()
-            json_deser_time = time.perf_counter() - t_json_start
-
-        except requests.HTTPError as e:
-            raise RuntimeError(f"HTTP error from NOAA API: {e}")
+            response_json = resp.json()
         except Exception as e:
-            raise RuntimeError(f"Failed to fetch or parse response: {e}")
-                  
-        t_parse_start = time.perf_counter()
-        self._parse_response(response_json, limit)
-        parse_time = time.perf_counter() - t_parse_start
+            raise RuntimeError(f"Failed to parse NOAA response as JSON: {e}")
 
-        self.last_timing = {
-            "api_round_trip_seconds": api_rtt,
-            "api_wall_seconds": api_wall_time,
-            "json_deserialize_seconds": json_deser_time,
-            "parse_seconds": parse_time,
-            "total_seconds": time.perf_counter() - t_total_start,
-        }
+        # Parse into internal structures (you already have this)
+        self._parse_response(response_json, kwargs.get("limit"))
 
-        # << only logs when DEBUG is enabled
-        if self.logger.isEnabledFor(logging.DEBUG):
-            self.logger.debug(
-                "search_studies timings: api_rtt=%s api_wall=%s json=%s parse=%s total=%s",
-                _fmt(self.last_timing["api_round_trip_seconds"]),
-                _fmt(self.last_timing["api_wall_seconds"]),
-                _fmt(self.last_timing["json_deserialize_seconds"]),
-                _fmt(self.last_timing["parse_seconds"]),
-                _fmt(self.last_timing["total_seconds"]),
-            )
-
-        return self.get_summary() if display else None
-    
-    def _fetch_api(self, params):
-        """
-        Fetch data from the NOAA API using the given parameters.
-
-        Parameters
-        ----------
-        params : dict
-            A dictionary of query parameters.
-
-        Returns
-        -------
-        dict
-            The JSON response from the NOAA API.
-
-        Raises
-        ------
-        Exception
-            If the API response status is not 200.
-        """
+        return self.get_summary() if kwargs.get("display") else log.info(f"Parsed {len(self.studies)} studies.")
         
-        response = requests.get(self.BASE_URL, params=params)
-        if response.status_code == 200:
-            return response.json()
-        else:
-            raise Exception(f"Error fetching studies: {response.status_code}")
 
     def _parse_response(self, data, limit):
         """

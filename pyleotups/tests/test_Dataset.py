@@ -2,8 +2,9 @@
 
 import pytest
 import pandas as pd
+import requests
 from unittest.mock import patch, MagicMock
-from pyleotups.core import Dataset
+from pyleotups.core import Dataset, UnsupportedFileTypeError
 from pyleotups.tests.helpers.mock_study_response import get_mock_study_response
 
 
@@ -26,7 +27,7 @@ class TestDatasetSearchStudiesFunctional:
         mock_response.json.return_value = mock_data
         mock_get.return_value = mock_response
 
-        df = ds.search_studies(keywords="ENSO")
+        df = ds.search_studies(keywords="ENSO", display = True)
         assert isinstance(df, pd.DataFrame)
         assert not df.empty
 
@@ -42,7 +43,7 @@ class TestDatasetSearchStudiesFunctional:
         mock_response.json.return_value = mock_data
         mock_get.return_value = mock_response
 
-        df = ds.search_studies(keywords="ENSO")
+        df = ds.search_studies(keywords="ENSO", display = True)
         expected_cols = {"StudyID", "DataType", "Publications", "Sites", "Funding"}
         assert expected_cols.issubset(df.columns)
 
@@ -58,7 +59,7 @@ class TestDatasetSearchStudiesFunctional:
         mock_response.json.return_value = mock_data
         mock_get.return_value = mock_response
 
-        ds.search_studies(keywords="ENSO")
+        ds.search_studies(keywords="ENSO", display = True)
         assert len(ds.studies) > 0
         assert isinstance(next(iter(ds.studies.values())).metadata, dict)
 
@@ -72,7 +73,7 @@ class TestDatasetSearchStudiesFunctional:
         mock_response.json.return_value = {"study": []}
         mock_get.return_value = mock_response
 
-        df = ds.search_studies(keywords="ENSO")
+        df = ds.search_studies(keywords="ENSO", display = True)
         assert isinstance(df, pd.DataFrame)
         assert df.empty
 
@@ -87,7 +88,7 @@ class TestDatasetSearchStudiesFunctional:
         mock_response.json.return_value = mock_data
         mock_get.return_value = mock_response
 
-        df = ds.search_studies(keywords="ENSO")
+        df = ds.search_studies(keywords="ENSO", display = True)
         assert len(df) == len(mock_data["study"])
 
 
@@ -108,35 +109,36 @@ class TestDatasetSearchStudiesErrorHandling:
         """Raises NotImplementedError for unsupported publisher"""
 
         ds = Dataset()
-        with pytest.raises(NotImplementedError, match="does not support 'PANGAEA'"):
-            ds.search_studies(data_publisher="PANGAEA", keywords="ENSO")
+        with pytest.raises(NotImplementedError, match="supports data_publisher='NOAA' only"):
+            ds.search_studies(data_publisher="PANGAEA", keywords="ENSO", display = True)
 
-    @patch("pyleotups.core.Dataset.requests.get")
+    @patch("pyleotups.core.Dataset.get")
     def test_search_studies_t03_http_error_handled(self, mock_get):
         """Simulates an HTTP error like 503"""
 
         ds = Dataset()
-        mock_get.side_effect = Exception("503 Service Unavailable")
+        mock_get.side_effect = requests.HTTPError("503 Service Unavailable")
 
-        with pytest.raises(RuntimeError, match="Failed to fetch or parse response"):
-            ds.search_studies(keywords="ENSO")
+        with pytest.raises(requests.HTTPError, match="HTTP Request Error from NOAA"):
+            ds.search_studies(keywords="ENSO", display= True)
 
-    @patch("pyleotups.core.Dataset.requests.get")
+    @patch("pyleotups.core.Dataset.get")
     def test_search_studies_t04_invalid_json_handled(self, mock_get):
         """Simulates malformed JSON"""
 
         ds = Dataset()
 
         class FakeResponse:
+            status_code = 200
             def raise_for_status(self): pass
             def json(self): raise ValueError("Invalid JSON")
 
         mock_get.return_value = FakeResponse()
 
-        with pytest.raises(RuntimeError, match="Failed to fetch or parse response"):
-            ds.search_studies(keywords="ENSO")
+        with pytest.raises(RuntimeError, match="Failed to parse NOAA response"):
+            ds.search_studies(keywords="ENSO", display= True)
 
-    @patch("pyleotups.core.Dataset.requests.get")
+    @patch("pyleotups.core.Dataset.get")
     def test_search_studies_t05_missing_study_key_handled(self, mock_get):
         """Simulates missing 'study' key in valid JSON"""
 
@@ -144,26 +146,29 @@ class TestDatasetSearchStudiesErrorHandling:
         bad_response = {"foo": "bar"}
 
         class FakeResponse:
+            status_code = 200
             def raise_for_status(self): pass
             def json(self): return bad_response
 
         mock_get.return_value = FakeResponse()
-        df = ds.search_studies(keywords="ENSO")
+        df = ds.search_studies(keywords="ENSO", display= True)
 
         assert isinstance(df, pd.DataFrame)
         assert df.empty
 
-    @patch("pyleotups.core.Dataset.requests.get")
+    @patch("pyleotups.core.Dataset.get")
     def test_search_studies_t06_keywords_return_no_results(self, mock_get):
         """Simulates valid query returning no results"""
 
         ds = Dataset()
-        mock_response = MagicMock()
-        mock_response.raise_for_status = lambda: None
-        mock_response.json.return_value = {"study": []}
-        mock_get.return_value = mock_response
+        class FakeResponse:
+            status_code = 204
+            def raise_for_status(self): pass
+            def json(self): return {"study": []}
+        
+        mock_get.return_value = FakeResponse()
 
-        df = ds.search_studies(keywords="no_match_expected")
+        df = ds.search_studies(keywords="no_match_expected", display= True)
         assert isinstance(df, pd.DataFrame)
         assert df.empty
 
@@ -177,7 +182,7 @@ class TestDatasetMetadataAccessors:
     def setup_method(self):
         self.ds = Dataset()
         self.mock_data = get_mock_study_response()
-        self.ds._parse_response(self.mock_data)
+        self.ds._parse_response(self.mock_data, limit=100)
 
     def test_get_summary_t01_returns_dataframe(self):
         """get_summary returns non-empty DataFrame with expected columns"""
@@ -230,7 +235,7 @@ class TestDatasetMetadataDetailed:
     def setup_method(self):
         self.ds = Dataset()
         self.mock_data = get_mock_study_response()
-        self.ds._parse_response(self.mock_data)
+        self.ds._parse_response(self.mock_data, limit=100)
 
     # --- get_publications() ---
 
@@ -302,11 +307,6 @@ class TestDatasetMetadataDetailed:
 # get_data() Tests (with mocks)
 # ------------------------
 
-from unittest.mock import patch, MagicMock
-import pandas as pd
-import pytest
-from pyleotups.core import Dataset, UnsupportedFileTypeError
-from pyleotups.tests.helpers.mock_study_response import get_mock_study_response
 
 
 class TestDatasetGetDataMocked:
@@ -314,12 +314,12 @@ class TestDatasetGetDataMocked:
     def setup_method(self):
         self.ds = Dataset()
         self.mock_data = get_mock_study_response()
-        self.ds._parse_response(self.mock_data)
+        self.ds._parse_response(self.mock_data, limit = 100)
         self.valid_dt_id = next(iter(self.ds.data_table_index))
         self.valid_file_url = self.ds.data_table_index[self.valid_dt_id]["paleo_data"].file_url
 
     # --- Test t01: valid DataTableID returns DFs ---
-    @patch("pyleotups.core.Dataset.requests.get")
+    @patch("requests.get")
     @patch("pyleotups.core.Dataset.StandardParser")
     def test_get_data_t01_from_datatable_id_returns_df_list(self, mock_parser, mock_get):
         mock_get.return_value.status_code = 200
@@ -340,7 +340,7 @@ class TestDatasetGetDataMocked:
             self.ds.get_data(dataTableIDs=["invalid-id"])
 
     # --- Test t03: valid file_url with mapping ---
-    @patch("pyleotups.core.Dataset.requests.get")
+    @patch("requests.get")
     @patch("pyleotups.core.Dataset.StandardParser")
     def test_get_data_t03_from_file_url_with_mapping(self, mock_parser, mock_get):
         mock_get.return_value.status_code = 200
@@ -376,7 +376,7 @@ class TestDatasetGetDataMocked:
             self.ds._process_file("https://example.com/data.xlsx")
 
     # --- Test t06: unparsable file structure ---
-    @patch("pyleotups.core.Dataset.requests.get")
+    @patch("requests.get")
     def test_get_data_t06_unparsable_txt_raises_value_error(self, mock_get):
         mock_get.return_value.status_code = 200
         mock_get.return_value.raise_for_status = lambda: None
@@ -386,7 +386,7 @@ class TestDatasetGetDataMocked:
             self.ds.get_data(file_urls=[self.valid_file_url])
 
     # --- Test t07: HTTP error when downloading file ---
-    @patch("pyleotups.core.Dataset.requests.get")
+    @patch("requests.get")
     def test_get_data_t07_http_error_raises_runtime_error(self, mock_get):
         mock_get.side_effect = Exception("connection failed")
         with pytest.raises(RuntimeError, match="Failed to read file"):

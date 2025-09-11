@@ -310,8 +310,12 @@ class Dataset:
         self.last_search_notes = notes
 
         # --- Make the request with explicit 204 handling ---
-        resp = get(BASE_URL, payload)
-        status = resp.status_code
+        try:
+            resp = get(BASE_URL, payload)
+            resp.raise_for_status()
+            status = resp.status_code
+        except Exception as e:
+            raise requests.HTTPError(f"HTTP Request Error from NOAA: {e}")
 
         # 204 No Content → no studies for given filters
         if status == 204:
@@ -325,10 +329,6 @@ class Dataset:
                 # Nothing to parse; return display summary (empty) or None
                 return self.get_summary() if kwargs.get("display") else None
         # Non-204: ensure success and parse JSON
-        try:
-            resp.raise_for_status()
-        except Exception as e:
-            raise RuntimeError(f"HTTP error from NOAA API: {e}")
 
         try:
             response_json = resp.json()

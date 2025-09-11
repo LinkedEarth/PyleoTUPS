@@ -1,13 +1,20 @@
 __all__ = ['Dataset', 'UnsupportedFileTypeError']
 
+import logging, warnings
 import requests
 import pandas as pd
-import warnings
+
 from ..utils.NOAADataset import NOAADataset
 from ..utils.helpers import assert_list
 from ..utils.Parser.StandardParser import DataFetcher, StandardParser
 from ..utils.Parser.NonStandardParser import NonStandardParser
+from ..utils.api.constants import BASE_URL
+from ..utils.api.query_builder import build_payload
+from ..utils.api.http import get
 
+
+log = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO, format='[%(asctime)s][%(levelname)s] - %(message)s')
 class UnsupportedFileTypeError(Exception):
     """Raised when a file type is not supported by the parser."""
     pass
@@ -29,7 +36,6 @@ class Dataset:
     data_table_index : dict
         A mapping from dataTableID to associated study, site, and paleo data.
     """
-    BASE_URL = "https://www.ncei.noaa.gov/access/paleo-search/study/search.json"
     _PROPRIETARY_TYPES = {'crn', 'rwl', 'fhx', 'lpd'}
 
     def __init__(self):
@@ -41,11 +47,10 @@ class Dataset:
         self.studies = {}               # NOAAStudyId -> NOAADataset instance
         self.data_table_index = {}      # dataTableID -> dict with study, site, paleo_data
         self.file_url_to_datatable = {} # file_url -> dataTableID
+        self.last_timing = {}
+        self.logger = logging.getLogger("pyleotups.Dataset")
     
-    def search_studies(self, xml_id=None, noaa_id=None, data_publisher="NOAA", data_type_id=None,
-                       keywords=None, investigators=None, max_lat=None, min_lat=None, max_lon=None,
-                       min_lon=None, location=None, publication=None, search_text=None, earliest_year=None,
-                       latest_year=None, cv_whats=None, recent=False, limit = 100):
+    def search_studies(self, **kwargs):
         """
         Search for NOAA studies using the specified parameters.
 
@@ -77,58 +82,80 @@ class Dataset:
                 11: PALEOCLIMATIC MODELING, 12: FIRE HISTORY, 13: PALEOLIMNOLOGY, 14: PALEOCEANOGRAPHY,
                 15: PLANT MACROFOSSILS, 16: POLLEN, 17: SPELEOTHEMS, 18: TREE RING,
                 19: OTHER COLLECTIONS, 20: INSTRUMENTAL, 59: SOFTWARE, 60: REPOSITORY
-            Example: '4|18'
+            Example: '4', '4|18'
 
-        keywords : str, optional
-            Use hierarchical terms separated by '>'. Separate multiple values using '|'.
-            Example: 'earth science>paleoclimate>paleocean>biomarkers'
-
-        investigators : str, optional
-            Specify one or more investigator names. Use '|' to separate multiple names.
-            Example: 'Wahl, E.R.|Vose, R.S.'
-
-        max_lat : float, optional
-            Upper bound for latitude. Must be between -90 and 90.
-            Example: 90
-
-        min_lat : float, optional
-            Lower bound for latitude. Must be between -90 and 90.
-            Example: -90
-
-        max_lon : float, optional
-            Upper bound for longitude. Must be between -180 and 180.
-            Example: 180
-
-        min_lon : float, optional
-            Lower bound for longitude. Must be between -180 and 180.
-            Example: -180
-
-        location : str, optional
-            Use region hierarchy separated by '>'.
-            Example: 'Continent>Africa>Eastern Africa>Zambia'
-
-        publication : str, optional
-            Match against publication metadata such as title, author, or citation.
-            Example: 'Khider'
-
-        earliest_year : int, optional
-            Starting year (can be negative for BCE). Used with `timeFormat` and `timeMethod`.
-            Example: -500
-
-        latest_year : int, optional
-            Ending year. Used with `timeFormat` and `timeMethod`.
-            Example: 2020
-
-        cv_whats : str, optional
-            Search using controlled vocabulary terms for measured variables.
-            Format: Hierarchical string using '>'
-            Example: 'chemical composition>compound>inorganic compound>carbon dioxide'
-
-        recent : bool, optional
-            Set to True to only return studies from the last two years. Results are sorted by newest.
-
-        limit : int, optional
-            Set to 100 by default. Limits the number of studies retrieved. 
+        investigators : str or list[str], optional
+            Investigator(s) in the form ``"LastName, Initials"``. Lists are joined with ``|``.
+        
+        investigators_and_or : {"and","or"}, default "or"
+            Logical combiner when multiple investigators are supplied. Only sent when 2+ items.
+        
+        locations : str or list[str], optional
+            Location(s) as hierarchical strings using ``>`` (e.g., ``"Continent>Africa>Kenya"``). Lists joined with ``|``.
+        
+        locations_and_or : {"and","or"}, default "or"
+            Logical combiner for multiple locations. Only sent when 2+ items.
+        
+        keywords : str or list[str], optional
+            Controlled keyword(s); hierarchies with ``>``. Lists joined with ``|``.
+        
+        keywords_and_or : {"and","or"}, default "or"
+            Logical combiner for multiple keywords. Only sent when 2+ items.
+        
+        species : str or list[str], optional
+            Four-letter tree species codes (uppercase enforced). Lists joined with ``|``.
+        
+        species_and_or : {"and","or"}, default "or"
+            Logical combiner for multiple species. Only sent when 2+ items.
+        
+        cv_whats : str or list[str], optional
+            PaST “What” terms (hierarchies with ``>``). Lists joined with ``|``.
+        
+        cv_whats_and_or : {"and","or"}, default "or"
+            Logical combiner for multiple cv_whats. Only sent when 2+ items.
+        
+        cv_materials : str or list[str], optional
+            PaST “Material” terms (hierarchies with ``>``). Lists joined with ``|``.
+        
+        cv_materials_and_or : {"and","or"}, default "or"
+            Logical combiner for multiple cv_materials. Only sent when 2+ items.
+        
+        cv_seasonalities : str or list[str], optional
+            PaST “Seasonality” terms (e.g., ``"annual"`` or ``"3-month>Aug-Oct"``). Lists joined with ``|``.
+        
+        cv_seasonalities_and_or : {"and","or"}, default "or"
+            Logical combiner for multiple cv_seasonalities. Only sent when 2+ items.
+        
+        min_lat, max_lat : int, optional
+            Latitude bounds in whole degrees (–90..90).
+        
+        min_lon, max_lon : int, optional
+            Longitude bounds in whole degrees (–180..180).
+        
+        min_elevation, max_elevation : int, optional
+            Elevation bounds in meters (integers; negative allowed).
+        
+        earliest_year, latest_year : int, optional
+            Year bounds (integers; negative allowed). If provided without time settings, ``time_format`` defaults to ``'CE'``.
+        
+        time_format : {"CE","BP"}, optional
+            Interpretation of years. If omitted with a time window, defaults to ``'CE'``.
+        
+        time_method : {"overAny","entireOver","overEntire"}, optional
+            How to apply the time window (overlap, envelop, or within).
+        
+        reconstruction : bool or str, optional
+            Accepts True/False or strings (case-insensitive) like ``"true"|"yes"|"y"|"1"`` → ``'Y'`` and
+            ``"false"|"no"|"n"|"0"`` → ``'N'``. ``None`` omits the filter.
+        
+        recent : bool, default False
+            If True, restrict to studies from the last ~2 years (newest first).
+        
+        limit : int, default 100
+            Number of studies to return (PyleoTUPS default).
+        
+        display : bool, default False
+            If True, render a small preview after parsing. 
 
         Returns
         -------
@@ -145,101 +172,217 @@ class Dataset:
 
         Notes
         -----
-        At least one parameter must be specified, otherwise the API call will fail.
+        User Guide:
+
+        **Multi-value fields.** For ``investigators``, ``locations``, ``keywords``, ``species``, ``cv_whats``,
+        ``cv_materials``, ``cv_seasonalities``:
+        - Accept a string (already ``|``-separated) **or** a Python list of strings.
+        - Lists are joined with ``|``. The corresponding ``*_and_or`` flag is included only when 2+ items.
+        - Species are validated to **four uppercase letters**.
+
+        **Identifiers short-circuit.** If ``xml_id`` or ``noaa_id`` is set, the request includes only that id (plus
+        publisher), ignoring other filters.
+
+        **Time window defaults.** If either ``earliest_year`` or ``latest_year`` is provided and neither ``time_format``
+        nor ``time_method`` is supplied, ``time_format`` defaults to ``'CE'`` (a note is recorded).
+
+        **Unsupported parameters.** ``headersOnly`` and ``skip`` are not supported by PyleoTUPS and are ignored if passed.
+
+        **Boolean normalization.** Parameters expected as ``'Y'/'N'`` accept: True/False, or strings like
+        ``"true"|"yes"|"y"|"1"`` → ``'Y'`` and ``"false"|"no"|"n"|"0"`` → ``'N'``.
 
         Examples
         --------
 
+        Quick start (identifiers)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
         .. jupyter-execute::
 
-            from pyleotups import Dataset
-            ds=Dataset()
-            ds.search_studies(noaa_id=33213)
+            import pyleotups as pt
+            ds = pt.Dataset()
+            df_noaa = ds.search_studies(noaa_id=13156)
+            df_xml = ds.search_studies(xml_id=1840)
+            df_noaa.head()
+            df_xml.head()
 
-        """
+        Full-text search (Oracle syntax)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        .. jupyter-execute::
+
+            # Single phrase
+            df_singlephrase = ds.search_studies(search_text="younger dryas", limit=20)
+            df_singlephrase.head()
+
+        .. jupyter-execute::
+
+            # Logical operator (AND)
+            df_logop = ds.search_studies(search_text="loess AND stratigraphy", limit=20)
+            df_logop.head()
+
+        .. jupyter-execute::
+
+            # Wildcards: '_' (single char), '%' (multi-char)
+            df_wc_1 = ds.search_studies(search_text="f_re", limit=20)
+            df_wc_2 = ds.search_studies(search_text="pol%", limit=20)
+            df_wc_1.head(), df_wc_2.head()
+
+        .. jupyter-execute::
+
+            # Escaping special characters (use backslashes)
+            df_specchar = ds.search_studies(search_text=r"noaa\-tree\-19260", limit=20)
+            df_specchar.head()
+
+        Investigators, keywords, locations
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+        .. jupyter-execute::
+
+            # Multiple investigators (OR by default)
+            df_multinv_default = ds.search_studies(investigators=["Wahl, E.R.", "Vose, R.S."])
+            df_multinv_default.head()
         
-        # Validate input
-        if not any([xml_id, noaa_id, data_type_id, keywords, investigators, max_lat, min_lat, max_lon,
-                    min_lon, location, publication, search_text, earliest_year, latest_year, cv_whats, recent]):
+        .. jupyter-execute::
+
+            # Multiple investigators (AND by default)
+            df_multinv_and = ds.search_studies(investigators=["Wahl, E.R.", "Vose, R.S."], investigatorsAndOr = "and")
+            df_multinv_and.head()
+
+        .. jupyter-execute::
+            
+            # Keywords: hierarchy with '>' and multiple via '|'
+            df_keywords = ds.search_studies(keywords="earth science>paleoclimate>paleocean>biomarkers")
+            df_keywords.head()
+
+        .. jupyter-execute::
+            
+            # Location hierarchy
+            df_loc = ds.search_studies(locations="Continent>Africa>Eastern Africa>Zambia")
+            df_loc.head()
+
+        Species and types
+        ^^^^^^^^^^^^^^^^^
+        .. jupyter-execute::
+
+            # Species: four-letter codes (uppercase enforced)
+            df_species = ds.search_studies(species=["ABAL", "PIPO"])
+            df_species.head()
+
+        .. jupyter-execute::
+        
+            # Data types: one or more IDs separated by '|'
+            df_muldatatypes = ds.search_studies(data_type_id="4|18")
+            df_muldatatypes.head()  
+
+        Geography and elevation
+        ^^^^^^^^^^^^^^^^^^^^^^^
+        .. jupyter-execute::
+
+            df_latlong = ds.search_studies(min_lat=68, max_lat=69, min_lon=30, max_lon=40)
+            df_latlong.head()
+
+        .. jupyter-execute::
+            
+            df_elv = ds.search_studies(min_elevation=100, max_elevation=110)
+            df_elv.head()
+
+        Time window (defaults to CE if no time settings)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        .. jupyter-execute::
+
+            # Explicit BP with method
+            df_timew = ds.search_studies(earliest_year=12000, time_format="BP", time_method="overAny")
+            df_timew.head()
+
+        .. jupyter-execute::
+
+            # No time_format/time_method → defaults to CE
+            df_time_defualt = ds.search_studies(earliest_year=1500, latest_year=0)
+            df_time_defualt.head()
+
+        Reconstructions and recency
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        .. jupyter-execute::
+
+            df_recon = ds.search_studies(reconstruction=True)
+            df_recon.head()
+
+        .. jupyter-execute::
+
+            df_recent = ds.search_studies(recent=True, limit=25)
+            df_recent.head()
+        """
+
+        for param in ("headerheaders_only", "skip"):
+            if param in kwargs:
+                log.warning("%s is not supported and will be ignored.", param)
+                kwargs.pop(param, None)
+
+        if not any([
+        kwargs.get("xml_id"), kwargs.get("noaa_id"),
+        kwargs.get("data_type_id"), kwargs.get("keywords"),
+        kwargs.get("investigators"),
+        kwargs.get("max_lat"), kwargs.get("min_lat"),
+        kwargs.get("max_lon"), kwargs.get("min_lon"),
+        kwargs.get("location") or kwargs.get("locations"),
+        kwargs.get("publication"), kwargs.get("search_text"),
+        kwargs.get("earliest_year"), kwargs.get("latest_year"),
+        kwargs.get("cv_whats"), kwargs.get("min_elevation"),
+        kwargs.get("max_elevation"), kwargs.get("time_format"),
+        kwargs.get("time_method"), kwargs.get("reconstruction"),
+        kwargs.get("species"), kwargs.get("recent"),
+        ]):
             raise ValueError(
                 "At least one search parameter must be specified to initiate a query. "
                 "To view available parameters and usage examples, run: help(Dataset.search_studies)"
             )
         
-        if data_publisher != "NOAA":
+        if kwargs.get("data_publisher") and kwargs["data_publisher"] != "NOAA":
             raise NotImplementedError(
-                f"PyleoTUPS does not support '{data_publisher}' as the data publisher in the current version."
-                "Please retry a search with data_publisher = NOAA "
-                "Please check future versions for support of other publishers."
-            ) 
+            "PyleoTUPS currently supports data_publisher='NOAA' only. "
+            "Please retry with data_publisher='NOAA'."
+        )
 
-        if noaa_id:
-            params = {'NOAAStudyId': noaa_id}
-        elif xml_id:
-            params = {'xmlId': xml_id}
-        else:
-            params = {
-                'dataPublisher': data_publisher,
-                'dataTypeId': data_type_id,
-                'keywords': keywords,
-                'investigators': investigators,
-                'minLat': min_lat,
-                'maxLat': max_lat,
-                'minLon': min_lon,
-                'maxLon': max_lon,
-                'locations': location,
-                'searchText': search_text,
-                'cvWhats': cv_whats,
-                'earliestYear': earliest_year,
-                'latestYear': latest_year,
-                'recent': recent,
-                'limit': limit
-            }
-            params = {k: v for k, v in params.items() if v is not None}
+        # Build payload using our utils (handles ids short-circuit, list→'|', Y/N coercion, time default)
+        payload, notes = build_payload(**kwargs)
+        for n in notes:
+            log.info("search_studies: %s", n)
+        self.last_search_notes = notes
+
+        # --- Make the request with explicit 204 handling ---
+        try:
+            resp = get(BASE_URL, payload)
+            resp.raise_for_status()
+            status = resp.status_code
+        except Exception as e:
+            raise requests.HTTPError(f"HTTP Request Error from NOAA: {e}")
+
+        # 204 No Content → no studies for given filters
+        if status == 204:
+            inv = payload.get("investigators")
+            if inv:
+                warnings.warn(
+                    "No studies found for investigator(s): "
+                    f"{inv}. NOAA expects 'LastName, Initials'. Try variations like:\n"
+                    "  - 'LastName, Initials'\n  - 'LastName'\n  - 'Initials'"
+                )
+                # Nothing to parse; return display summary (empty) or None
+                return self.get_summary() 
+            # if kwargs.get("display") else None
+        # Non-204: ensure success and parse JSON
 
         try:
-            response = requests.get(self.BASE_URL, params=params)
-            response.raise_for_status()
-            response_json = response.json()
-        except requests.HTTPError as e:
-            raise RuntimeError(f"HTTP error from NOAA API: {e}")
+            response_json = resp.json()
         except Exception as e:
-            raise RuntimeError(f"Failed to fetch or parse response: {e}")
+            raise RuntimeError(f"Failed to parse NOAA response as JSON: {e}")
+
+        # Parse into internal structures (you already have this)
+        self._parse_response(response_json, kwargs.get("limit"))
+
+        return self.get_summary() 
+    # if kwargs.get("display") else log.info(f"Parsed {len(self.studies)} studies.")
         
-        self.studies.clear()
-        self.file_url_to_datatable.clear()  
-        
-        self._parse_response(response_json)
 
-        return self.get_summary()
-
-    def _fetch_api(self, params):
-        """
-        Fetch data from the NOAA API using the given parameters.
-
-        Parameters
-        ----------
-        params : dict
-            A dictionary of query parameters.
-
-        Returns
-        -------
-        dict
-            The JSON response from the NOAA API.
-
-        Raises
-        ------
-        Exception
-            If the API response status is not 200.
-        """
-        
-        response = requests.get(self.BASE_URL, params=params)
-        if response.status_code == 200:
-            return response.json()
-        else:
-            raise Exception(f"Error fetching studies: {response.status_code}")
-
-    def _parse_response(self, data):
+    def _parse_response(self, data, limit):
         """
         Parse the JSON response and populate studies and reverse mapping indexes.
         """
@@ -264,7 +407,12 @@ class Dataset:
                         file_url = file_obj.get('fileUrl')
                         if file_url:
                             self.file_url_to_datatable[file_url] = paleo.datatable_id
-
+            
+        if isinstance(limit, int) and len(data.get('study', [])) >= limit:
+            warnings.warn(
+                f"Retrieved {limit} studies, which is the specified limit. "
+                "Consider increasing the limit parameter to fetch more studies."
+            )
 
 
     def get_summary(self):

@@ -172,8 +172,8 @@ class Dataset:
 
         Notes
         -----
-        Notes (User Guide)
-        ------------------
+        User Guide:
+
         **Multi-value fields.** For ``investigators``, ``locations``, ``keywords``, ``species``, ``cv_whats``,
         ``cv_materials``, ``cv_seasonalities``:
         - Accept a string (already ``|``-separated) **or** a Python list of strings.
@@ -200,77 +200,116 @@ class Dataset:
 
             import pyleotups as pt
             ds = pt.Dataset()
-            ds.search_studies(noaa_id=13156, display=True)
-            ds.search_studies(xml_id=1840, display=True)
+            df_noaa = ds.search_studies(noaa_id=13156)
+            df_xml = ds.search_studies(xml_id=1840)
+            df_noaa.head()
+            df_xml.head()
 
         Full-text search (Oracle syntax)
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         .. jupyter-execute::
 
             # Single phrase
-            ds.search_studies(search_text="younger dryas", limit=20, display=True)
+            df_singlephrase = ds.search_studies(search_text="younger dryas", limit=20)
+            df_singlephrase.head()
+
+        .. jupyter-execute::
 
             # Logical operator (AND)
-            ds.search_studies(search_text="loess AND stratigraphy", limit=20, display=True)
+            df_logop = ds.search_studies(search_text="loess AND stratigraphy", limit=20)
+            df_logop.head()
+
+        .. jupyter-execute::
 
             # Wildcards: '_' (single char), '%' (multi-char)
-            ds.search_studies(search_text="f_re", limit=20, display=True)
-            ds.search_studies(search_text="pol%", limit=20, display=True)
+            df_wc_1 = ds.search_studies(search_text="f_re", limit=20)
+            df_wc_2 = ds.search_studies(search_text="pol%", limit=20)
+            df_wc_1.head(), df_wc_2.head()
+
+        .. jupyter-execute::
 
             # Escaping special characters (use backslashes)
-            ds.search_studies(search_text=r"noaa\-tree\-19260", limit=20, display=True)
+            df_specchar = ds.search_studies(search_text=r"noaa\-tree\-19260", limit=20)
+            df_specchar.head()
 
         Investigators, keywords, locations
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
         .. jupyter-execute::
 
             # Multiple investigators (OR by default)
-            ds.search_studies(investigators=["Wahl, E.R.", "Vose, R.S."], display=True)
+            df_multinv_default = ds.search_studies(investigators=["Wahl, E.R.", "Vose, R.S."])
+            df_multinv_default.head()
+        
+        .. jupyter-execute::
 
-            # Multiple investigators (OR by default)
-            ds.search_studies(investigators=["Wahl, E.R.", "Vose, R.S."], investigatorsAndOr = "and")
+            # Multiple investigators (AND by default)
+            df_multinv_and = ds.search_studies(investigators=["Wahl, E.R.", "Vose, R.S."], investigatorsAndOr = "and")
+            df_multinv_and.head()
 
+        .. jupyter-execute::
+            
             # Keywords: hierarchy with '>' and multiple via '|'
-            ds.search_studies(keywords="earth science>paleoclimate>paleocean>biomarkers", display=True)
+            df_keywords = ds.search_studies(keywords="earth science>paleoclimate>paleocean>biomarkers")
+            df_keywords.head()
 
+        .. jupyter-execute::
+            
             # Location hierarchy
-            ds.search_studies(locations="Continent>Africa>Eastern Africa>Zambia", display=True)
+            df_loc = ds.search_studies(locations="Continent>Africa>Eastern Africa>Zambia")
+            df_loc.head()
 
         Species and types
         ^^^^^^^^^^^^^^^^^
         .. jupyter-execute::
 
             # Species: four-letter codes (uppercase enforced)
-            ds.search_studies(species=["ABAL", "PIPO"], display=True)
+            df_species = ds.search_studies(species=["ABAL", "PIPO"])
+            df_species.head()
 
-            # Data types: one or more IDs separated by '|'
-            ds.search_studies(data_type_id="4|18", display=True)
+        .. jupyter-execute::
         
+            # Data types: one or more IDs separated by '|'
+            df_muldatatypes = ds.search_studies(data_type_id="4|18")
+            df_muldatatypes.head()  
 
         Geography and elevation
         ^^^^^^^^^^^^^^^^^^^^^^^
         .. jupyter-execute::
 
-            ds.search_studies(min_lat=68, max_lat=69, min_lon=30, max_lon=40, display=True)
-            ds.search_studies(min_elevation=100, max_elevation=110, display=True)
+            df_latlong = ds.search_studies(min_lat=68, max_lat=69, min_lon=30, max_lon=40)
+            df_latlong.head()
+
+        .. jupyter-execute::
+            
+            df_elv = ds.search_studies(min_elevation=100, max_elevation=110)
+            df_elv.head()
 
         Time window (defaults to CE if no time settings)
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         .. jupyter-execute::
 
             # Explicit BP with method
-            ds.search_studies(earliest_year=12000, time_format="BP", time_method="overAny", display=True)
+            df_timew = ds.search_studies(earliest_year=12000, time_format="BP", time_method="overAny")
+            df_timew.head()
+
+        .. jupyter-execute::
 
             # No time_format/time_method → defaults to CE
-            ds.search_studies(earliest_year=1500, latest_year=0, display=True)
+            df_time_defualt = ds.search_studies(earliest_year=1500, latest_year=0)
+            df_time_defualt.head()
 
         Reconstructions and recency
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
         .. jupyter-execute::
 
-            ds.search_studies(reconstruction=True, display=True)
-            ds.search_studies(recent=True, limit=25, display=True)
+            df_recon = ds.search_studies(reconstruction=True)
+            df_recon.head()
 
+        .. jupyter-execute::
+
+            df_recent = ds.search_studies(recent=True, limit=25)
+            df_recent.head()
         """
 
         for param in ("headerheaders_only", "skip"):
@@ -327,7 +366,8 @@ class Dataset:
                     "  - 'LastName, Initials'\n  - 'LastName'\n  - 'Initials'"
                 )
                 # Nothing to parse; return display summary (empty) or None
-                return self.get_summary() if kwargs.get("display") else None
+                return self.get_summary() 
+            # if kwargs.get("display") else None
         # Non-204: ensure success and parse JSON
 
         try:
@@ -338,7 +378,8 @@ class Dataset:
         # Parse into internal structures (you already have this)
         self._parse_response(response_json, kwargs.get("limit"))
 
-        return self.get_summary() if kwargs.get("display") else log.info(f"Parsed {len(self.studies)} studies.")
+        return self.get_summary() 
+    # if kwargs.get("display") else log.info(f"Parsed {len(self.studies)} studies.")
         
 
     def _parse_response(self, data, limit):

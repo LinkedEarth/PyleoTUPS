@@ -27,7 +27,7 @@ class TestDatasetSearchStudiesFunctional:
         mock_response.json.return_value = mock_data
         mock_get.return_value = mock_response
 
-        df = ds.search_studies(keywords="ENSO", display = True)
+        df = ds.search_studies(keywords="ENSO")
         assert isinstance(df, pd.DataFrame)
         assert not df.empty
 
@@ -43,7 +43,7 @@ class TestDatasetSearchStudiesFunctional:
         mock_response.json.return_value = mock_data
         mock_get.return_value = mock_response
 
-        df = ds.search_studies(keywords="ENSO", display = True)
+        df = ds.search_studies(keywords="ENSO")
         expected_cols = {"StudyID", "DataType", "Publications", "Sites", "Funding"}
         assert expected_cols.issubset(df.columns)
 
@@ -59,7 +59,7 @@ class TestDatasetSearchStudiesFunctional:
         mock_response.json.return_value = mock_data
         mock_get.return_value = mock_response
 
-        ds.search_studies(keywords="ENSO", display = True)
+        ds.search_studies(keywords="ENSO")
         assert len(ds.studies) > 0
         assert isinstance(next(iter(ds.studies.values())).metadata, dict)
 
@@ -73,7 +73,7 @@ class TestDatasetSearchStudiesFunctional:
         mock_response.json.return_value = {"study": []}
         mock_get.return_value = mock_response
 
-        df = ds.search_studies(keywords="ENSO", display = True)
+        df = ds.search_studies(keywords="ENSO")
         assert isinstance(df, pd.DataFrame)
         assert df.empty
 
@@ -88,7 +88,7 @@ class TestDatasetSearchStudiesFunctional:
         mock_response.json.return_value = mock_data
         mock_get.return_value = mock_response
 
-        df = ds.search_studies(keywords="ENSO", display = True)
+        df = ds.search_studies(keywords="ENSO")
         assert len(df) == len(mock_data["study"])
 
 
@@ -110,7 +110,7 @@ class TestDatasetSearchStudiesErrorHandling:
 
         ds = Dataset()
         with pytest.raises(NotImplementedError, match="supports data_publisher='NOAA' only"):
-            ds.search_studies(data_publisher="PANGAEA", keywords="ENSO", display = True)
+            ds.search_studies(data_publisher="PANGAEA", keywords="ENSO")
 
     @patch("pyleotups.core.Dataset.get")
     def test_search_studies_t03_http_error_handled(self, mock_get):
@@ -120,7 +120,7 @@ class TestDatasetSearchStudiesErrorHandling:
         mock_get.side_effect = requests.HTTPError("503 Service Unavailable")
 
         with pytest.raises(requests.HTTPError, match="HTTP Request Error from NOAA"):
-            ds.search_studies(keywords="ENSO", display= True)
+            ds.search_studies(keywords="ENSO")
 
     @patch("pyleotups.core.Dataset.get")
     def test_search_studies_t04_invalid_json_handled(self, mock_get):
@@ -136,7 +136,7 @@ class TestDatasetSearchStudiesErrorHandling:
         mock_get.return_value = FakeResponse()
 
         with pytest.raises(RuntimeError, match="Failed to parse NOAA response"):
-            ds.search_studies(keywords="ENSO", display= True)
+            ds.search_studies(keywords="ENSO")
 
     @patch("pyleotups.core.Dataset.get")
     def test_search_studies_t05_missing_study_key_handled(self, mock_get):
@@ -151,7 +151,7 @@ class TestDatasetSearchStudiesErrorHandling:
             def json(self): return bad_response
 
         mock_get.return_value = FakeResponse()
-        df = ds.search_studies(keywords="ENSO", display= True)
+        df = ds.search_studies(keywords="ENSO")
 
         assert isinstance(df, pd.DataFrame)
         assert df.empty
@@ -168,7 +168,7 @@ class TestDatasetSearchStudiesErrorHandling:
         
         mock_get.return_value = FakeResponse()
 
-        df = ds.search_studies(keywords="no_match_expected", display= True)
+        df = ds.search_studies(keywords="no_match_expected")
         assert isinstance(df, pd.DataFrame)
         assert df.empty
 

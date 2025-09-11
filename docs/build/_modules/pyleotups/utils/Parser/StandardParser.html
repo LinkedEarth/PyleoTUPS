@@ -1,0 +1,1075 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pyleotups.utils.Parser.StandardParser &mdash; PyleoTUPS 0.0.2b0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/jupyter-sphinx.css?v=572af1d6" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/thebelab.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css\rtd_sphinx_search.min.css" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=5e47b899"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/thebelab-helper.js"></script>
+      <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../../../_static/js\rtd_search_config.js"></script>
+      <script src="../../../../_static/js\rtd_sphinx_search.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            PyleoTUPS
+              <img src="../../../../_static/pyleotups_logo_small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Working with PyleoTUPS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installing PyleoTUPS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api.html">PyleoTUPS User APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials.html">Tutorials</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced Functions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../advanced.html">Advanced Functionalities</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Involved</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contribution_guide.html">Contributing to PyleoTUPS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../citation.html">Citing PyleoTUPS</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">PyleoTUPS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">pyleotups.utils.Parser.StandardParser</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pyleotups.utils.Parser.StandardParser</h1><div class="highlight"><pre>
+<span></span><span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;DataFetcher&#39;</span><span class="p">,</span> <span class="s1">&#39;StandardParser&#39;</span><span class="p">,</span> <span class="s1">&#39;ParsingError&#39;</span><span class="p">]</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+
+<span class="nd">@DeprecationWarning</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">DataFetcher</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Standard parser for fetching and parsing external data files.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_detect_line_terminator</span><span class="p">(</span><span class="n">content</span><span class="p">):</span>
+        <span class="n">read_size</span> <span class="o">=</span> <span class="mi">1024</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">read_size</span><span class="p">:</span>
+            <span class="n">last_part</span> <span class="o">=</span> <span class="n">content</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">last_part</span> <span class="o">=</span> <span class="n">content</span><span class="p">[</span><span class="o">-</span><span class="n">read_size</span><span class="p">:]</span>
+        <span class="k">if</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="ow">in</span> <span class="n">last_part</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">r</span><span class="s1">&#39;\r\n&#39;</span>
+        <span class="k">elif</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="ow">in</span> <span class="n">last_part</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">r</span><span class="s1">&#39;\n&#39;</span>
+        <span class="k">elif</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">&#39;</span> <span class="ow">in</span> <span class="n">last_part</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">r</span><span class="s1">&#39;\r&#39;</span>
+        <span class="k">return</span> <span class="sa">r</span><span class="s1">&#39;\n&#39;</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fetch_data</span><span class="p">(</span><span class="n">file_url</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">file_url</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.xls&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">file_url</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.xlsx&quot;</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">excel_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">file_url</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="s1">&#39;#&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">df_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">excel_data</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Extracted </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df_list</span><span class="p">)</span><span class="si">}</span><span class="s2"> DataFrame(s) from </span><span class="si">{</span><span class="n">file_url</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">df_list</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error reading </span><span class="si">{</span><span class="n">file_url</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">file_url</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.txt&quot;</span><span class="p">):</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">file_url</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">terminator</span> <span class="o">=</span> <span class="n">DataFetcher</span><span class="o">.</span><span class="n">_detect_line_terminator</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+                    <span class="n">lines</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">terminator</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+                    <span class="n">data_lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">data_lines</span><span class="p">:</span>
+                        <span class="n">headers</span> <span class="o">=</span> <span class="n">data_lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">data_lines</span><span class="p">[</span><span class="mi">1</span><span class="p">:]]</span>
+                        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error parsing text file </span><span class="si">{</span><span class="n">file_url</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to fetch data from </span><span class="si">{</span><span class="n">file_url</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported file format: </span><span class="si">{</span><span class="n">file_url</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+
+<span class="c1"># Custom exception for parsing errors.</span>
+<div class="viewcode-block" id="ParsingError">
+<a class="viewcode-back" href="../../../../advanced.html#pyleotups.utils.Parser.StandardParser.ParsingError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ParsingError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Exception raised when the StandardParser encounters a parsing error.&quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+
+<div class="viewcode-block" id="StandardParser">
+<a class="viewcode-back" href="../../../../advanced.html#pyleotups.utils.Parser.StandardParser.StandardParser">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">StandardParser</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    StandardParser parses NOAA .txt data files with standard format:</span>
+<span class="sd">    Standard format refers to NOAA Templated file with </span>
+<span class="sd">    metadata -&gt; (# lines), variables -&gt; (## lines), data (tab-deliimited).</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    url : str</span>
+<span class="sd">        URL of the file to parse.</span>
+<span class="sd">    lines : list of str</span>
+<span class="sd">        Fetched lines from file.</span>
+<span class="sd">    meta_start : int</span>
+<span class="sd">        Index where metadata block starts.</span>
+<span class="sd">    meta_end : int</span>
+<span class="sd">        Index where metadata block ends.</span>
+<span class="sd">    variables : list of str</span>
+<span class="sd">        Extracted variable names.</span>
+<span class="sd">    skip_lines : int</span>
+<span class="sd">        Lines to skip after metadata to reach data.</span>
+<span class="sd">    data : list of list of str</span>
+<span class="sd">        Parsed data rows.</span>
+<span class="sd">    df : pandas.DataFrame</span>
+<span class="sd">        Final constructed dataframe.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lines</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta_start</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta_end</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">variables</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">skip_lines</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="StandardParser.parse">
+<a class="viewcode-back" href="../../../../advanced.html#pyleotups.utils.Parser.StandardParser.StandardParser.parse">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Public method to parse the NOAA file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        url : str, optional</span>
+<span class="sd">            URL to override the existing one.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pandas.DataFrame</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">url</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">url</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ParsingError</span><span class="p">(</span><span class="s2">&quot;No URL provided to parse.&quot;</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_fetch_file</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">meta_start</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_identify_metadata</span><span class="p">()</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_start</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_end</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ParsingError</span><span class="p">(</span><span class="s2">&quot;No metadata block detected — not a standard file.&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">skip_lines</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_variables</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_data</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_construct_dataframe</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ParsingError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error parsing file: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ParsingError</span><span class="p">(</span><span class="s2">&quot;DataFrame construction failed.&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span></div>
+
+
+    <span class="c1"># ===== Private Helper Methods =====</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_fetch_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Download a file from the given URL and split its content into lines.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        url : str</span>
+<span class="sd">            The URL of the file to fetch.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list of str</span>
+<span class="sd">            The file content split into individual lines.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        requests.HTTPError</span>
+<span class="sd">            If the HTTP request returned an unsuccessful status code.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lines</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_identify_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Identify the metadata block in the file by finding lines that start with &#39;#&#39;.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        lines : list of str</span>
+<span class="sd">            All lines from the file.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple of (int, int) or (None, None)</span>
+<span class="sd">            A tuple containing the first and last indices of metadata lines.</span>
+<span class="sd">            Returns (None, None) if no metadata lines are found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">metadata_indices</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">)</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="n">metadata_indices</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">metadata_indices</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">metadata_indices</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_extract_variables</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extract variable names (column headers) from a NOAA text file using multiple methods.</span>
+
+<span class="sd">        The function first attempts to extract variables from a metadata block containing an explicit </span>
+<span class="sd">        &quot;Variables&quot; marker. If that fails, it attempts extraction from the first data header line. If that </span>
+<span class="sd">        fails too, it uses a fallback method on the first non-empty data line.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        lines : list of str</span>
+<span class="sd">            All lines from the file.</span>
+<span class="sd">        meta_start : int</span>
+<span class="sd">            The index of the first metadata line.</span>
+<span class="sd">        meta_end : int</span>
+<span class="sd">            The index of the last metadata line.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple of (list of str, str, int)</span>
+<span class="sd">            A tuple (variables, source, header_skip_count) where:</span>
+<span class="sd">            - variables is the list of extracted variable names,</span>
+<span class="sd">            - source is &quot;metadata&quot; if variables were extracted from the metadata block, </span>
+<span class="sd">                or &quot;data&quot; if extracted from the data header,</span>
+<span class="sd">            - header_skip_count indicates how many header lines should be skipped.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">variables</span><span class="p">,</span> <span class="n">header_skip</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_metadata_variables</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">variables</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">variables</span><span class="p">,</span> <span class="s2">&quot;metadata&quot;</span><span class="p">,</span> <span class="n">header_skip</span>
+
+        <span class="n">variables</span><span class="p">,</span> <span class="n">header_skip</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_data_header_variables</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">variables</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">variables</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="n">header_skip</span>
+
+        <span class="n">variables</span><span class="p">,</span> <span class="n">header_skip</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fallback_variable_extraction</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">variables</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">variables</span><span class="p">,</span> <span class="s2">&quot;fallback&quot;</span><span class="p">,</span> <span class="n">header_skip</span>
+
+        <span class="k">return</span> <span class="p">[],</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">0</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_metadata_variables</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extract variable names from a metadata block when an explicit &quot;Variables&quot; block exists.</span>
+
+<span class="sd">        This function attempts to extract variables by looking for a metadata line that starts with </span>
+<span class="sd">        &quot;# variables&quot; (case-insensitive). If found, it first searches for lines starting with &#39;##&#39; </span>
+<span class="sd">        following the marker. If no such lines exist, it falls back to splitting other non-comment lines.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        lines : list of str</span>
+<span class="sd">            All lines from the file.</span>
+<span class="sd">        meta_start : int</span>
+<span class="sd">            Index of the first metadata line.</span>
+<span class="sd">        meta_end : int</span>
+<span class="sd">            Index of the last metadata line.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple of (list of str, int)</span>
+<span class="sd">            A tuple where the first element is a list of extracted variable names and the second element is </span>
+<span class="sd">            the header skip count (usually 1 if variables are successfully extracted).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">variables</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">header_skip_count</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meta_start</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^#\s*variables&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;##&#39;</span><span class="p">):</span>
+                        <span class="n">token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_first_non_digit_token</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">))</span>
+                        <span class="k">if</span> <span class="n">token</span><span class="p">:</span>
+                            <span class="n">variables</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">variables</span><span class="p">:</span>
+                    <span class="n">header_skip_count</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="k">break</span>
+        <span class="k">return</span> <span class="n">variables</span><span class="p">,</span> <span class="n">header_skip_count</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_data_header_variables</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extract variable names from the data header when no explicit metadata &quot;Variables&quot; block exists.</span>
+
+<span class="sd">        It searches from the line immediately after the metadata block until a non-comment line is found </span>
+<span class="sd">        that, when split by either tab or comma, yields at least 9 tokens.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        lines : list of str</span>
+<span class="sd">            All lines from the file.</span>
+<span class="sd">        meta_end : int</span>
+<span class="sd">            The index of the last metadata line.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple of (list of str, int)</span>
+<span class="sd">            A tuple containing the extracted variable names and a header skip count (typically 1).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">variables</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">header_skip_count</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meta_end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">)):</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">line</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">):</span>
+                <span class="n">tokens_tab</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="n">tokens_comma</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+                <span class="n">tokens</span> <span class="o">=</span> <span class="n">tokens_tab</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens_tab</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens_comma</span><span class="p">)</span> <span class="k">else</span> <span class="n">tokens_comma</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">9</span><span class="p">:</span>
+                    <span class="n">variables</span> <span class="o">=</span> <span class="n">tokens</span>
+                    <span class="k">break</span>
+        <span class="k">return</span> <span class="n">variables</span><span class="p">,</span> <span class="n">header_skip_count</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_fallback_variable_extraction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fallback extraction: use the first non-empty line in the data block, split by tabs.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        lines : list of str</span>
+<span class="sd">            All lines from the file.</span>
+<span class="sd">        meta_end : int</span>
+<span class="sd">            The index of the last metadata line.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple of (list of str, int)</span>
+<span class="sd">            A tuple containing variable names (or autogenerated names for empty tokens) and a header skip count.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">variables</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">header_skip_count</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meta_end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">)):</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">line</span><span class="p">:</span>
+                <span class="n">tokens</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">variables</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span> <span class="k">if</span> <span class="n">token</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;Unnamed_</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">token</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tokens</span><span class="p">)]</span>
+                    <span class="k">break</span>
+        <span class="k">return</span> <span class="n">variables</span><span class="p">,</span> <span class="n">header_skip_count</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parse the data block of the file, skipping empty lines and header lines.</span>
+
+<span class="sd">        This function detects the delimiter used in the data block and ensures that all rows are padded </span>
+<span class="sd">        to have a uniform number of columns.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        lines : list of str</span>
+<span class="sd">            All lines from the file.</span>
+<span class="sd">        meta_end : int</span>
+<span class="sd">            The index of the last metadata line.</span>
+<span class="sd">        skip_lines : int, optional</span>
+<span class="sd">            Number of header lines to skip in the data block, by default 0.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple of (list, int) or (None, None)</span>
+<span class="sd">            A tuple (data, row_len) where data is a list of rows (each row is a list of tokens) and row_len </span>
+<span class="sd">            is the uniform number of columns. Returns (None, None) if parsing fails.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_end</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_skip_empty_lines</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="n">index</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">skip_lines</span>
+        <span class="n">remaining_lines</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">[</span><span class="n">index</span><span class="p">:]</span>
+
+        <span class="n">delimiter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detect_delimiter</span><span class="p">(</span><span class="n">remaining_lines</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">remaining_lines</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">delimiter</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">:</span>
+                <span class="n">row</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">row</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\s{2,}&#39;</span><span class="p">,</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+
+        <span class="n">max_len</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">data</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">max_len</span><span class="p">:</span>
+                <span class="n">row</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s1">&#39;&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_len</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)))</span>
+
+        <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">max_len</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_construct_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Construct a pandas DataFrame from parsed data rows and variable names.</span>
+
+<span class="sd">        Handles three cases:</span>
+<span class="sd">        - Exact match: The number of variables equals the number of columns.</span>
+<span class="sd">        - Extra columns: More columns than variables (trims extra columns).</span>
+<span class="sd">        - Missing columns: Fewer columns than variables (pads rows with empty strings).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data : list of list of str</span>
+<span class="sd">            Parsed data rows.</span>
+<span class="sd">        variables : list of str</span>
+<span class="sd">            Column headers.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pandas.DataFrame or None</span>
+<span class="sd">            The constructed DataFrame with an attribute &#39;variables&#39; set, or None if data or variables are missing.</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">row_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">var_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">var_len</span> <span class="o">==</span> <span class="n">row_len</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">var_len</span> <span class="o">&lt;</span> <span class="n">row_len</span><span class="p">:</span>
+            <span class="n">trimmed</span> <span class="o">=</span> <span class="p">[</span><span class="n">row</span><span class="p">[:</span><span class="n">var_len</span><span class="p">]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">]</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">trimmed</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># var_len &gt; row_len</span>
+            <span class="n">padded</span> <span class="o">=</span> <span class="p">[</span><span class="n">row</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">var_len</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">))</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">]</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">padded</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>
+
+        <span class="n">df</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;variables&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">variables</span>
+        <span class="k">return</span> <span class="n">df</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_skip_empty_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Advance the index until a non-empty line is encountered.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        lines : list of str</span>
+<span class="sd">            The file lines.</span>
+<span class="sd">        index : int</span>
+<span class="sd">            The starting index.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        int</span>
+<span class="sd">            The index of the first non-empty line.</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">while</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+            <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">index</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_detect_delimiter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Detect the delimiter used in a set of data lines.</span>
+
+<span class="sd">        It first tries tab-delimitation; if token counts are inconsistent, it falls back to splitting </span>
+<span class="sd">        on two or more spaces.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data_lines : list of str</span>
+<span class="sd">            A list of non-empty data lines.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            The detected delimiter, either the tab character (&#39;\t&#39;) or a regex pattern (r&#39;\s{2,}&#39;).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">non_empty</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">non_empty</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span>
+        <span class="n">tab_counts</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">))</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">non_empty</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">tab_counts</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">tab_counts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span>
+        <span class="n">space_counts</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\s{2,}&#39;</span><span class="p">,</span> <span class="n">line</span><span class="p">))</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">non_empty</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">space_counts</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">space_counts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">r</span><span class="s1">&#39;\s{2,}&#39;</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_extract_first_non_digit_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove any leading comment markers from a line and return the first token that is not purely numeric.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        line : str</span>
+<span class="sd">            A line of text (typically from metadata).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str or None</span>
+<span class="sd">            The first non-digit token, or None if no valid token is found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;^\s*(.*?)(?:\t|\s{2,})(?:[^,\n]*,){0,9}[^,\n]*$&#39;</span>
+        <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">tokens</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[\s,]+&#39;</span><span class="p">,</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+        <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">token</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">token</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+                <span class="k">return</span> <span class="n">token</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<span class="c1"># def fetch_file(url):</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     Download a file from the given URL and split its content into lines.</span>
+
+<span class="c1">#     Parameters</span>
+<span class="c1">#     ----------</span>
+<span class="c1">#     url : str</span>
+<span class="c1">#         The URL of the file to fetch.</span>
+
+<span class="c1">#     Returns</span>
+<span class="c1">#     -------</span>
+<span class="c1">#     list of str</span>
+<span class="c1">#         The file content split into individual lines.</span>
+
+<span class="c1">#     Raises</span>
+<span class="c1">#     ------</span>
+<span class="c1">#     requests.HTTPError</span>
+<span class="c1">#         If the HTTP request returned an unsuccessful status code.</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     response = requests.get(url)</span>
+<span class="c1">#     response.raise_for_status()</span>
+<span class="c1">#     return response.text.splitlines()</span>
+
+
+<span class="c1"># def identify_metadata(lines):</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     Identify the metadata block in the file by finding lines that start with &#39;#&#39;.</span>
+
+<span class="c1">#     Parameters</span>
+<span class="c1">#     ----------</span>
+<span class="c1">#     lines : list of str</span>
+<span class="c1">#         All lines from the file.</span>
+
+<span class="c1">#     Returns</span>
+<span class="c1">#     -------</span>
+<span class="c1">#     tuple of (int, int) or (None, None)</span>
+<span class="c1">#         A tuple containing the first and last indices of metadata lines.</span>
+<span class="c1">#         Returns (None, None) if no metadata lines are found.</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     metadata_indices = [i for i, line in enumerate(lines) if line.lstrip().startswith(&#39;#&#39;)]</span>
+<span class="c1">#     if metadata_indices:</span>
+<span class="c1">#         return metadata_indices[0], metadata_indices[-1]</span>
+<span class="c1">#     return None, None</span>
+
+
+<span class="c1"># def extract_first_non_digit_token(line):</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     Remove any leading comment markers from a line and return the first token that is not purely numeric.</span>
+
+<span class="c1">#     Parameters</span>
+<span class="c1">#     ----------</span>
+<span class="c1">#     line : str</span>
+<span class="c1">#         A line of text (typically from metadata).</span>
+
+<span class="c1">#     Returns</span>
+<span class="c1">#     -------</span>
+<span class="c1">#     str or None</span>
+<span class="c1">#         The first non-digit token, or None if no valid token is found.</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     pattern = r&#39;^\s*(.*?)(?:\t|\s{2,})(?:[^,\n]*,){0,9}[^,\n]*$&#39;</span>
+<span class="c1">#     match = re.match(pattern, line)</span>
+<span class="c1">#     if match:</span>
+<span class="c1">#         return match.group(1).strip()</span>
+<span class="c1">#     tokens = re.split(r&#39;[\s,]+&#39;, line.strip())</span>
+<span class="c1">#     for token in tokens:</span>
+<span class="c1">#         if token and not token.isdigit():</span>
+<span class="c1">#             return token</span>
+<span class="c1">#     return None</span>
+
+
+<span class="c1"># def parse_metadata_variables(lines, meta_start, meta_end):</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     Extract variable names from a metadata block when an explicit &quot;Variables&quot; block exists.</span>
+
+<span class="c1">#     This function attempts to extract variables by looking for a metadata line that starts with </span>
+<span class="c1">#     &quot;# variables&quot; (case-insensitive). If found, it first searches for lines starting with &#39;##&#39; </span>
+<span class="c1">#     following the marker. If no such lines exist, it falls back to splitting other non-comment lines.</span>
+
+<span class="c1">#     Parameters</span>
+<span class="c1">#     ----------</span>
+<span class="c1">#     lines : list of str</span>
+<span class="c1">#         All lines from the file.</span>
+<span class="c1">#     meta_start : int</span>
+<span class="c1">#         Index of the first metadata line.</span>
+<span class="c1">#     meta_end : int</span>
+<span class="c1">#         Index of the last metadata line.</span>
+
+<span class="c1">#     Returns</span>
+<span class="c1">#     -------</span>
+<span class="c1">#     tuple of (list of str, int)</span>
+<span class="c1">#         A tuple where the first element is a list of extracted variable names and the second element is </span>
+<span class="c1">#         the header skip count (usually 1 if variables are successfully extracted).</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     variables = []</span>
+<span class="c1">#     header_skip_count = 0</span>
+<span class="c1">#     variable_block_index = None</span>
+
+<span class="c1">#     for i in range(meta_start, meta_end + 1):</span>
+<span class="c1">#         if re.match(r&#39;^#\s*variables&#39;, lines[i], re.IGNORECASE):</span>
+<span class="c1">#             variable_block_index = i</span>
+<span class="c1">#             break</span>
+
+<span class="c1">#     if variable_block_index is not None:</span>
+<span class="c1">#         # CASE 1A: Look for lines starting with &#39;##&#39;</span>
+<span class="c1">#         for i in range(variable_block_index + 1, meta_end + 1):</span>
+<span class="c1">#             if lines[i].lstrip().startswith(&#39;##&#39;):</span>
+<span class="c1">#                 token = extract_first_non_digit_token(lines[i].lstrip(&#39;#&#39;))</span>
+<span class="c1">#                 if token:</span>
+<span class="c1">#                     variables.append(token)</span>
+<span class="c1">#         # CASE 1B: Fallback if no &#39;##&#39; lines found.</span>
+<span class="c1">#         if not variables:</span>
+<span class="c1">#             for i in range(variable_block_index + 1, meta_end + 1):</span>
+<span class="c1">#                 if lines[i].strip() and not lines[i].startswith(&quot;#&quot;):</span>
+<span class="c1">#                     if len(re.split(r&#39;,&#39;, lines[i].strip())) &gt;= 9:</span>
+<span class="c1">#                         token = extract_first_non_digit_token(lines[i])</span>
+<span class="c1">#                         if token:</span>
+<span class="c1">#                             variables.append(token)</span>
+<span class="c1">#         if variables:</span>
+<span class="c1">#             header_skip_count = 1</span>
+<span class="c1">#     return variables, header_skip_count</span>
+
+
+<span class="c1"># def parse_data_header_variables(lines, meta_end):</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     Extract variable names from the data header when no explicit metadata &quot;Variables&quot; block exists.</span>
+
+<span class="c1">#     It searches from the line immediately after the metadata block until a non-comment line is found </span>
+<span class="c1">#     that, when split by either tab or comma, yields at least 9 tokens.</span>
+
+<span class="c1">#     Parameters</span>
+<span class="c1">#     ----------</span>
+<span class="c1">#     lines : list of str</span>
+<span class="c1">#         All lines from the file.</span>
+<span class="c1">#     meta_end : int</span>
+<span class="c1">#         The index of the last metadata line.</span>
+
+<span class="c1">#     Returns</span>
+<span class="c1">#     -------</span>
+<span class="c1">#     tuple of (list of str, int)</span>
+<span class="c1">#         A tuple containing the extracted variable names and a header skip count (typically 1).</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     variables = []</span>
+<span class="c1">#     header_skip_count = 1</span>
+<span class="c1">#     for i in range(meta_end + 1, len(lines)):</span>
+<span class="c1">#         line = lines[i].strip()</span>
+<span class="c1">#         if line and not line.lstrip().startswith(&#39;#&#39;):</span>
+<span class="c1">#             tokens_tab = re.split(r&#39;\t&#39;, line)</span>
+<span class="c1">#             tokens_comma = re.split(r&#39;,&#39;, line)</span>
+<span class="c1">#             if len(tokens_tab) &gt;= 9 or len(tokens_comma) &gt;= 9:</span>
+<span class="c1">#                 variables = tokens_tab if len(tokens_tab) &gt;= len(tokens_comma) else tokens_comma</span>
+<span class="c1">#                 break</span>
+<span class="c1">#     return variables, header_skip_count</span>
+
+
+<span class="c1"># def fallback_variable_extraction(lines, meta_end):</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     Fallback extraction: use the first non-empty line in the data block, split by tabs.</span>
+
+<span class="c1">#     Parameters</span>
+<span class="c1">#     ----------</span>
+<span class="c1">#     lines : list of str</span>
+<span class="c1">#         All lines from the file.</span>
+<span class="c1">#     meta_end : int</span>
+<span class="c1">#         The index of the last metadata line.</span>
+
+<span class="c1">#     Returns</span>
+<span class="c1">#     -------</span>
+<span class="c1">#     tuple of (list of str, int)</span>
+<span class="c1">#         A tuple containing variable names (or autogenerated names for empty tokens) and a header skip count.</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     variables = []</span>
+<span class="c1">#     header_skip_count = 1</span>
+<span class="c1">#     for i in range(meta_end + 1, len(lines)):</span>
+<span class="c1">#         if lines[i].strip():</span>
+<span class="c1">#             tokens = re.split(r&#39;\t&#39;, lines[i].strip())</span>
+<span class="c1">#             if len(tokens) &gt; 1:</span>
+<span class="c1">#                 variables = [f&quot;Unnamed_{idx}&quot; if not token else token for idx, token in enumerate(tokens)]</span>
+<span class="c1">#                 break</span>
+<span class="c1">#     return variables, header_skip_count</span>
+
+
+<span class="c1"># def variable_parser(lines, meta_start, meta_end):</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     Extract variable names (column headers) from a NOAA text file using multiple methods.</span>
+
+<span class="c1">#     The function first attempts to extract variables from a metadata block containing an explicit </span>
+<span class="c1">#     &quot;Variables&quot; marker. If that fails, it attempts extraction from the first data header line. If that </span>
+<span class="c1">#     fails too, it uses a fallback method on the first non-empty data line.</span>
+
+<span class="c1">#     Parameters</span>
+<span class="c1">#     ----------</span>
+<span class="c1">#     lines : list of str</span>
+<span class="c1">#         All lines from the file.</span>
+<span class="c1">#     meta_start : int</span>
+<span class="c1">#         The index of the first metadata line.</span>
+<span class="c1">#     meta_end : int</span>
+<span class="c1">#         The index of the last metadata line.</span>
+
+<span class="c1">#     Returns</span>
+<span class="c1">#     -------</span>
+<span class="c1">#     tuple of (list of str, str, int)</span>
+<span class="c1">#         A tuple (variables, source, header_skip_count) where:</span>
+<span class="c1">#           - variables is the list of extracted variable names,</span>
+<span class="c1">#           - source is &quot;metadata&quot; if variables were extracted from the metadata block, </span>
+<span class="c1">#             or &quot;data&quot; if extracted from the data header,</span>
+<span class="c1">#           - header_skip_count indicates how many header lines should be skipped.</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     variables, header_skip_count = parse_metadata_variables(lines, meta_start, meta_end)</span>
+<span class="c1">#     if variables:</span>
+<span class="c1">#         return variables, &quot;metadata&quot;, header_skip_count</span>
+
+<span class="c1">#     variables, header_skip_count = parse_data_header_variables(lines, meta_end)</span>
+<span class="c1">#     if variables:</span>
+<span class="c1">#         return variables, &quot;data&quot;, header_skip_count</span>
+
+<span class="c1">#     variables, header_skip_count = fallback_variable_extraction(lines, meta_end)</span>
+<span class="c1">#     if variables:</span>
+<span class="c1">#         return variables, &quot;data&quot;, header_skip_count</span>
+
+<span class="c1">#     return [], None, 0</span>
+
+
+<span class="c1"># def skip_empty_lines(lines, index):</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     Advance the index until a non-empty line is encountered.</span>
+
+<span class="c1">#     Parameters</span>
+<span class="c1">#     ----------</span>
+<span class="c1">#     lines : list of str</span>
+<span class="c1">#         The file lines.</span>
+<span class="c1">#     index : int</span>
+<span class="c1">#         The starting index.</span>
+
+<span class="c1">#     Returns</span>
+<span class="c1">#     -------</span>
+<span class="c1">#     int</span>
+<span class="c1">#         The index of the first non-empty line.</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     while index &lt; len(lines) and not lines[index].strip():</span>
+<span class="c1">#         index += 1</span>
+<span class="c1">#     return index</span>
+
+
+<span class="c1"># def detect_delimiter(data_lines):</span>
+<span class="c1">#     r&quot;&quot;&quot;</span>
+<span class="c1">#     Detect the delimiter used in a set of data lines.</span>
+
+<span class="c1">#     It first tries tab-delimitation; if token counts are inconsistent, it falls back to splitting </span>
+<span class="c1">#     on two or more spaces.</span>
+
+<span class="c1">#     Parameters</span>
+<span class="c1">#     ----------</span>
+<span class="c1">#     data_lines : list of str</span>
+<span class="c1">#         A list of non-empty data lines.</span>
+
+<span class="c1">#     Returns</span>
+<span class="c1">#     -------</span>
+<span class="c1">#     str</span>
+<span class="c1">#         The detected delimiter, either the tab character (&#39;\t&#39;) or a regex pattern (r&#39;\s{2,}&#39;).</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     non_empty = [line.strip() for line in data_lines if line.strip()]</span>
+<span class="c1">#     if not non_empty:</span>
+<span class="c1">#         return &#39;\t&#39;</span>
+<span class="c1">#     tab_counts = [len(line.split(&#39;\t&#39;)) for line in non_empty]</span>
+<span class="c1">#     if len(set(tab_counts)) == 1 and tab_counts[0] &gt; 1:</span>
+<span class="c1">#         return &#39;\t&#39;</span>
+<span class="c1">#     space_counts = [len(re.split(r&#39;\s{2,}&#39;, line)) for line in non_empty]</span>
+<span class="c1">#     if len(set(space_counts)) == 1 and space_counts[0] &gt; 1:</span>
+<span class="c1">#         return r&#39;\s{2,}&#39;</span>
+<span class="c1">#     return &#39;\t&#39;</span>
+
+
+<span class="c1"># def data_parser(lines, meta_end, skip_lines=0):</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     Parse the data block of the file, skipping empty lines and header lines.</span>
+
+<span class="c1">#     This function detects the delimiter used in the data block and ensures that all rows are padded </span>
+<span class="c1">#     to have a uniform number of columns.</span>
+
+<span class="c1">#     Parameters</span>
+<span class="c1">#     ----------</span>
+<span class="c1">#     lines : list of str</span>
+<span class="c1">#         All lines from the file.</span>
+<span class="c1">#     meta_end : int</span>
+<span class="c1">#         The index of the last metadata line.</span>
+<span class="c1">#     skip_lines : int, optional</span>
+<span class="c1">#         Number of header lines to skip in the data block, by default 0.</span>
+
+<span class="c1">#     Returns</span>
+<span class="c1">#     -------</span>
+<span class="c1">#     tuple of (list, int) or (None, None)</span>
+<span class="c1">#         A tuple (data, row_len) where data is a list of rows (each row is a list of tokens) and row_len </span>
+<span class="c1">#         is the uniform number of columns. Returns (None, None) if parsing fails.</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     data = []</span>
+<span class="c1">#     index = meta_end + 1</span>
+<span class="c1">#     index = skip_empty_lines(lines, index)</span>
+<span class="c1">#     index += skip_lines</span>
+<span class="c1">#     remaining_lines = lines[index:]</span>
+<span class="c1">#     delimiter = detect_delimiter(remaining_lines)</span>
+<span class="c1">#     for line in remaining_lines:</span>
+<span class="c1">#         if not line.strip():</span>
+<span class="c1">#             continue</span>
+<span class="c1">#         if delimiter == &#39;\t&#39;:</span>
+<span class="c1">#             row = line.split(&#39;\t&#39;)</span>
+<span class="c1">#         else:</span>
+<span class="c1">#             row = re.split(delimiter, line.strip())</span>
+<span class="c1">#         data.append(row)</span>
+<span class="c1">#     if not data or (data and len(data[0]) &lt; 2):</span>
+<span class="c1">#         return None, None</span>
+<span class="c1">#     max_len = max(len(row) for row in data)</span>
+<span class="c1">#     for i in range(len(data)):</span>
+<span class="c1">#         if len(data[i]) &lt; max_len:</span>
+<span class="c1">#             data[i] = data[i] + [&#39;&#39;] * (max_len - len(data[i]))</span>
+<span class="c1">#     return data, max_len</span>
+
+
+<span class="c1"># def dataframe_constructor(data, variables):</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     Construct a pandas DataFrame from parsed data rows and variable names.</span>
+
+<span class="c1">#     Handles three cases:</span>
+<span class="c1">#       - Exact match: The number of variables equals the number of columns.</span>
+<span class="c1">#       - Extra columns: More columns than variables (trims extra columns).</span>
+<span class="c1">#       - Missing columns: Fewer columns than variables (pads rows with empty strings).</span>
+
+<span class="c1">#     Parameters</span>
+<span class="c1">#     ----------</span>
+<span class="c1">#     data : list of list of str</span>
+<span class="c1">#         Parsed data rows.</span>
+<span class="c1">#     variables : list of str</span>
+<span class="c1">#         Column headers.</span>
+
+<span class="c1">#     Returns</span>
+<span class="c1">#     -------</span>
+<span class="c1">#     pandas.DataFrame or None</span>
+<span class="c1">#         The constructed DataFrame with an attribute &#39;variables&#39; set, or None if data or variables are missing.</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     if not data or not variables:</span>
+<span class="c1">#         return None</span>
+
+<span class="c1">#     row_len = len(data[0])</span>
+<span class="c1">#     var_len = len(variables)</span>
+
+<span class="c1">#     if var_len == row_len:</span>
+<span class="c1">#         df = pd.DataFrame(data, columns=variables)</span>
+<span class="c1">#     elif var_len &lt; row_len:</span>
+<span class="c1">#         data_trimmed = [row[:var_len] for row in data]</span>
+<span class="c1">#         df = pd.DataFrame(data_trimmed, columns=variables)</span>
+<span class="c1">#     elif var_len &gt; row_len:</span>
+<span class="c1">#         data_padded = [row + [&#39;&#39;] * (var_len - len(row)) for row in data]</span>
+<span class="c1">#         df = pd.DataFrame(data_padded, columns=variables)</span>
+
+<span class="c1">#     df.attrs[&#39;variables&#39;] = variables</span>
+<span class="c1">#     return df</span>
+
+<span class="c1"># # ---------------------------------------------------------------------------</span>
+<span class="c1"># # StandardParser Class</span>
+<span class="c1"># # ---------------------------------------------------------------------------</span>
+<span class="c1"># class StandardParser:</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     StandardParser encapsulates the complete workflow for downloading and parsing a NOAA text file.</span>
+    
+<span class="c1">#     The class maintains attributes such as the URL, file lines, metadata boundaries, extracted variable names,</span>
+<span class="c1">#     header skip count, parsed data, and the final DataFrame.</span>
+
+<span class="c1">#     Attributes</span>
+<span class="c1">#     ----------</span>
+<span class="c1">#     url : str</span>
+<span class="c1">#         The URL of the file to parse.</span>
+<span class="c1">#     lines : list of str</span>
+<span class="c1">#         The content of the file split into lines.</span>
+<span class="c1">#     meta_start : int</span>
+<span class="c1">#         The index of the first metadata line.</span>
+<span class="c1">#     meta_end : int</span>
+<span class="c1">#         The index of the last metadata line.</span>
+<span class="c1">#     variables : list of str</span>
+<span class="c1">#         The extracted variable names.</span>
+<span class="c1">#     skip_lines : int</span>
+<span class="c1">#         The number of header lines to skip in the data block.</span>
+<span class="c1">#     data : list of list of str</span>
+<span class="c1">#         The parsed data rows.</span>
+<span class="c1">#     df : pandas.DataFrame</span>
+<span class="c1">#         The constructed DataFrame.</span>
+
+<span class="c1">#     Methods</span>
+<span class="c1">#     -------</span>
+<span class="c1">#     parse(url=None)</span>
+<span class="c1">#         Execute the full parsing workflow and return the constructed DataFrame.</span>
+<span class="c1">#     _fetch_file()</span>
+<span class="c1">#         Fetch the file and set the &#39;lines&#39; attribute.</span>
+<span class="c1">#     _identify_metadata()</span>
+<span class="c1">#         Identify metadata boundaries and set &#39;meta_start&#39; and &#39;meta_end&#39;.</span>
+<span class="c1">#     _extract_variables()</span>
+<span class="c1">#         Extract variable names and header skip count, setting &#39;variables&#39; and &#39;skip_lines&#39;.</span>
+<span class="c1">#     _parse_data()</span>
+<span class="c1">#         Parse the data block from the file and set the &#39;data&#39; attribute.</span>
+<span class="c1">#     _construct_dataframe()</span>
+<span class="c1">#         Construct the final DataFrame from parsed data and variables.</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     def __init__(self, url=None):</span>
+<span class="c1">#         self.url = url</span>
+<span class="c1">#         self.lines = None</span>
+<span class="c1">#         self.meta_start = None</span>
+<span class="c1">#         self.meta_end = None</span>
+<span class="c1">#         self.variables = None</span>
+<span class="c1">#         self.skip_lines = 0</span>
+<span class="c1">#         self.data = None</span>
+<span class="c1">#         self.df = None</span>
+
+<span class="c1">#     def parse(self, url=None):</span>
+<span class="c1">#         &quot;&quot;&quot;</span>
+<span class="c1">#         Orchestrate the full parsing process.</span>
+
+<span class="c1">#         Parameters</span>
+<span class="c1">#         ----------</span>
+<span class="c1">#         url : str, optional</span>
+<span class="c1">#             The URL to parse. If provided, it overrides the existing URL attribute.</span>
+
+<span class="c1">#         Returns</span>
+<span class="c1">#         -------</span>
+<span class="c1">#         pandas.DataFrame</span>
+<span class="c1">#             The constructed DataFrame.</span>
+
+<span class="c1">#         Raises</span>
+<span class="c1">#         ------</span>
+<span class="c1">#         ParsingError</span>
+<span class="c1">#             If any step of the parsing process fails.</span>
+<span class="c1">#         &quot;&quot;&quot;</span>
+<span class="c1">#         if url is not None:</span>
+<span class="c1">#             self.url = url</span>
+<span class="c1">#         if not self.url:</span>
+<span class="c1">#             raise ParsingError(&quot;No URL provided.&quot;)</span>
+<span class="c1">#         try:</span>
+<span class="c1">#             self._fetch_file()</span>
+<span class="c1">#         except Exception as e:</span>
+<span class="c1">#             raise ParsingError(f&quot;Error fetching file: {e}&quot;)</span>
+<span class="c1">#         self.meta_start, self.meta_end = self._identify_metadata()</span>
+<span class="c1">#         if self.meta_start is None:</span>
+<span class="c1">#             raise ParsingError(&quot;Invalid file format.&quot;</span>
+<span class="c1">#             &quot;Wrapper can only parse stndard NOAA template formatted files&quot;)</span>
+<span class="c1">#         self.variables, _, self.skip_lines = self._extract_variables()</span>
+<span class="c1">#         if not self.variables:</span>
+<span class="c1">#             raise ParsingError(&quot;Failed to extract variable names from file.&quot;)</span>
+<span class="c1">#         self.data, _ = self._parse_data()</span>
+<span class="c1">#         if self.data is None:</span>
+<span class="c1">#             raise ParsingError(&quot;No valid data block found.&quot;)</span>
+<span class="c1">#         self.df = self._construct_dataframe()</span>
+<span class="c1">#         if self.df is None:</span>
+<span class="c1">#             raise ParsingError(&quot;DataFrame construction failed.&quot;)</span>
+<span class="c1">#         return self.df</span>
+
+<span class="c1">#     def _fetch_file(self):</span>
+<span class="c1">#         self.lines = fetch_file(self.url)</span>
+
+<span class="c1">#     def _identify_metadata(self):</span>
+<span class="c1">#         return identify_metadata(self.lines)</span>
+
+<span class="c1">#     def _extract_variables(self):</span>
+<span class="c1">#         return variable_parser(self.lines, self.meta_start, self.meta_end)</span>
+
+<span class="c1">#     def _parse_data(self):</span>
+<span class="c1">#         return data_parser(self.lines, self.meta_end, self.skip_lines)</span>
+
+<span class="c1">#     def _construct_dataframe(self):</span>
+<span class="c1">#         return dataframe_constructor(self.data, self.variables)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, LinkedEarth.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

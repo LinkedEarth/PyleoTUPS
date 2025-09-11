@@ -73,7 +73,10 @@ html_theme = 'sphinx_rtd_theme'
 source_suffix = '.rst'
 
 htmlhelp_basename = 'pyleotupsdoc'
-#html_static_path = ['_static']
+html_static_path = ['_static']
+html_css_files = [
+    'css/custom.css',
+]
 
 exclude_patterns = ['build']
 

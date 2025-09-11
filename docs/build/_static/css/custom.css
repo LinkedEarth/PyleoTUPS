@@ -1,0 +1,6 @@
+/* Wrap wide DataFrames with a scroll bar */
+.dataframe {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+}

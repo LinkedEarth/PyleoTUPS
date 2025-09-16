@@ -47,8 +47,81 @@ class Dataset:
         self.studies = {}               # NOAAStudyId -> NOAADataset instance
         self.data_table_index = {}      # dataTableID -> dict with study, site, paleo_data
         self.file_url_to_datatable = {} # file_url -> dataTableID
-        self.last_timing = {}
+        # self.last_timing = {}
         self.logger = logging.getLogger("pyleotups.Dataset")
+
+    def _reindex(self):
+        """Rebuild secondary indexes from `self.studies`."""
+        self.data_table_index.clear()
+        self.file_url_to_datatable.clear()
+
+        for study in self.studies.values():
+            for site in study.sites:
+                for paleo in site.paleo_data:
+                    # map datatable -> study/site/paleo
+                    self.data_table_index[paleo.datatable_id] = {
+                        "study_id": study.study_id,
+                        "site_id": site.site_id,
+                        "paleo_data": paleo,
+                    }
+                    # map file_url -> datatable
+                    for f in paleo.files:
+                        url = f.get("fileUrl")
+                        if url:
+                            self.file_url_to_datatable[url] = paleo.datatable_id
+
+    def __add__(self, other):
+        if not isinstance(other, Dataset):
+            return NotImplemented
+
+        merged = Dataset()
+
+        # Start with a shallow copy of left's studies
+        merged.studies = dict(self.studies)
+
+        # Union by StudyID. If duplicate ID appears, keep left's version
+        # but sanity-check equality and warn if they differ.
+        for sid, study in other.studies.items():
+            if sid in merged.studies:
+                try:
+                    check_same_study_content = (merged.studies[sid].to_dict() == study.to_dict())
+                except Exception:
+                    check_same_study_content = False
+                if not check_same_study_content:
+                    warnings.warn(
+                        f"Dataset union: duplicate StudyID {sid} with differing content. "
+                        "Keeping left-hand version. i.e. if C = A + B is perfomed, contents of A will be kept.", UserWarning
+                    )
+                # else identical content -> do nothing
+            else:
+                merged.studies[sid] = study
+
+
+        # Rebuild indexes so they match the merged studies
+        merged._reindex()
+        return merged
+
+    def __iadd__(self, other):
+        if not isinstance(other, Dataset):
+            return NotImplemented
+
+        for sid, study in other.studies.items():
+            if sid in self.studies:
+                try:
+                    check_same_study_content = (self.studies[sid].to_dict() == study.to_dict())
+                except Exception:
+                    check_same_study_content = False
+                if not check_same_study_content:
+                    warnings.warn(
+                        f"Dataset in-place union: duplicate StudyID {sid} with differing content. "
+                        "Keeping existing version. i.e. IF A = A + B is perfomed, contents of A will be kept", UserWarning
+                    )
+            else:
+                self.studies[sid] = study
+
+        self._reindex()
+        return self
+
     
     def search_studies(self, **kwargs):
         """
@@ -268,7 +341,7 @@ class Dataset:
             df_species.head()
 
         .. jupyter-execute::
-        
+
             # Data types: one or more IDs separated by '|'
             df_muldatatypes = ds.search_studies(data_type_id="4|18")
             df_muldatatypes.head()  

@@ -51,6 +51,8 @@ def build_payload(**kwargs) -> Tuple[dict, List[str]]:
         notes.append(f"Limit set to {payload['limit']}.")
     else:
         notes.append(f"Limit defaulted to {DEFAULT_LIMIT} (PyleoTUPS).")
+    if (v := kwargs.get("skip")) is not None:
+        payload["skip"] = validate_int("skip", v)
 
     # search_text
     st = kwargs.get("search_text")

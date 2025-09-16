@@ -230,6 +230,11 @@ class Dataset:
         display : bool, default False
             If True, render a small preview after parsing. 
 
+         
+        skip : int, optional
+            Number of studies to skip (for pagination). Use with ``limit`` to page through results.
+            Example: ``limit=10, skip=10`` returns items 11–20.
+
         Returns
         -------
         pandas.DataFrame
@@ -383,12 +388,23 @@ class Dataset:
 
             df_recent = ds.search_studies(recent=True, limit=25)
             df_recent.head()
+
+        Limit and Skipping (for pagination)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        .. jupyter-execute::
+
+            # Limit up to first 10 results 
+            df_limit = ds.search_studies(earliest_year=12000, time_format="BP", time_method="overAny", limit=10)
+            df_limit.head()
+
+            # Skip the first 10 results (i.e., get results 11-20)
+            df_skip = ds.search_studies(earliest_year=12000, time_format="BP", time_method="overAny", limit=10, skip=10)
+            df_skip.head()
         """
 
-        for param in ("headerheaders_only", "skip"):
-            if param in kwargs:
-                log.warning("%s is not supported and will be ignored.", param)
-                kwargs.pop(param, None)
+        if "headers_only" in kwargs:
+            log.warning("%s is not supported and will be ignored.", param)
+            kwargs.pop("headers_only", None)
 
         if not any([
         kwargs.get("xml_id"), kwargs.get("noaa_id"),
@@ -402,7 +418,7 @@ class Dataset:
         kwargs.get("cv_whats"), kwargs.get("min_elevation"),
         kwargs.get("max_elevation"), kwargs.get("time_format"),
         kwargs.get("time_method"), kwargs.get("reconstruction"),
-        kwargs.get("species"), kwargs.get("recent"),
+        kwargs.get("species"), kwargs.get("recent"), kwargs.get("skip")
         ]):
             raise ValueError(
                 "At least one search parameter must be specified to initiate a query. "

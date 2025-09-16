@@ -3,6 +3,7 @@
 import pytest
 import pandas as pd
 import requests
+import copy
 from unittest.mock import patch, MagicMock
 from pyleotups.core import Dataset, UnsupportedFileTypeError
 from pyleotups.tests.helpers.mock_study_response import get_mock_study_response
@@ -391,3 +392,177 @@ class TestDatasetGetDataMocked:
         mock_get.side_effect = Exception("connection failed")
         with pytest.raises(RuntimeError, match="Failed to read file"):
             self.ds.get_data(file_urls=[self.valid_file_url])
+
+# ---------------------------------------------------------------------------
+# Helpers (module-level; mirror existing test style)
+# ---------------------------------------------------------------------------
+
+def _single_study_payload(noaa_id: int, mutate=None):
+    """
+    Return a deep-copied mock payload that contains exactly one study with the
+    given NOAAStudyId. Optionally apply `mutate(study_dict)` before parsing.
+    """
+    payload = copy.deepcopy(get_mock_study_response())
+    studies = payload.get("study", []) or payload.get("studies", [])
+    assert studies, "Mock payload has no 'study' array"
+
+    target = None
+    for s in studies:
+        sid = s.get("NOAAStudyId")
+        if str(sid) == str(noaa_id):
+            target = copy.deepcopy(s)
+            break
+    assert target is not None, f"Study with NOAAStudyId={noaa_id} not found in mock payload"
+
+    if mutate is not None:
+        mutate(target)
+
+    single = copy.deepcopy(payload)
+    if "study" in single:
+        single["study"] = [target]
+    elif "studies" in single:
+        single["studies"] = [target]
+    else:
+        raise AssertionError("Unexpected mock payload structure; expected 'study' or 'studies' key")
+    return single
+
+
+def _build_dataset_for_noaa_id(noaa_id: int, mutate=None) -> Dataset:
+    """
+    Build a Dataset containing exactly one study (by NOAAStudyId) using
+    the networkless mock response and the internal parser.
+    """
+    ds = Dataset()
+    payload = _single_study_payload(noaa_id, mutate=mutate)
+    ds._parse_response(payload, limit=5)  # test intentionally uses internal API
+    return ds
+
+
+def _ids(ds: Dataset):
+    """Return the set of NOAAStudyId keys as ints."""
+    return {int(k) for k in ds.studies.keys()}
+
+
+# ---------------------------------------------------------------------------
+# Tests: C = A + B   (binary add creates a new object)
+# ---------------------------------------------------------------------------
+
+class TestDatasetAddBinary:
+    def test_add_t01_different_ids_creates_union(self):
+        """C = A + B with different NOAAStudyIds → union of A and B (no warning)."""
+        # A: 18315, B: 8630
+        A = _build_dataset_for_noaa_id(18315)
+        B = _build_dataset_for_noaa_id(8630)
+
+        # Pre-calc index sizes
+        a_dt, a_fu = len(A.data_table_index), len(A.file_url_to_datatable)
+        b_dt, b_fu = len(B.data_table_index), len(B.file_url_to_datatable)
+
+        # No warning expected
+        C = A + B
+
+        assert C is not A and C is not B
+        assert _ids(C) == {18315, 8630}
+        assert len(C.studies) == 2
+
+        # Indexes should be the union
+        assert len(C.data_table_index) == a_dt + b_dt
+        assert len(C.file_url_to_datatable) == a_fu + b_fu
+
+    def test_add_t02_same_id_identical_keeps_left_no_warning(self):
+        """C = A + B where A and B have same study (identical) → left preserved, no warning."""
+        A = _build_dataset_for_noaa_id(18315)
+        B = _build_dataset_for_noaa_id(18315)
+
+        # No warning expected
+        C = A + B
+
+        assert _ids(C) == {18315}
+        assert len(C.studies) == 1
+        # Left wins (object identity preserved for the shared study)
+        assert C.studies["18315"] is A.studies["18315"]
+
+        # Indexes should match A
+        assert len(C.data_table_index) == len(A.data_table_index)
+        assert len(C.file_url_to_datatable) == len(A.file_url_to_datatable)
+
+    def test_add_t03_same_id_different_warns_and_keeps_left(self):
+        """C = A + B where same NOAAStudyId but different content → warning; C looks like A."""
+        A = _build_dataset_for_noaa_id(18315)
+
+        def _mutate(study_dict):
+            # Deterministic change to force a difference in content
+            study_dict["studyName"] = "Tampered Study"
+
+        B = _build_dataset_for_noaa_id(18315, mutate=_mutate)
+
+        # Expect a UserWarning mentioning duplicate/different study; keep regex loose and case-insensitive
+        with pytest.warns(UserWarning, match=r"(?i)duplicate.*study.*18315"):
+            C = A + B
+
+        assert _ids(C) == {18315}
+        assert len(C.studies) == 1
+        # Left still wins and B's tamper is not present
+        assert C.studies["18315"] is A.studies["18315"]
+        # Indexes remain as A
+        assert len(C.data_table_index) == len(A.data_table_index)
+        assert len(C.file_url_to_datatable) == len(A.file_url_to_datatable)
+
+
+# ---------------------------------------------------------------------------
+# Tests: A = A + B   (rebinding variable name to result of binary add)
+# ---------------------------------------------------------------------------
+
+class TestDatasetAddRebind:
+    def test_add_rebind_t01_different_ids_creates_union(self):
+        """A = A + B with different NOAAStudyIds → union of A and B (no warning)."""
+        A = _build_dataset_for_noaa_id(18315)
+        B = _build_dataset_for_noaa_id(8630)
+
+        a_dt, a_fu = len(A.data_table_index), len(A.file_url_to_datatable)
+        b_dt, b_fu = len(B.data_table_index), len(B.file_url_to_datatable)
+
+        # No warning expected
+        A = A + B  # rebinding name; __add__ creates a new Dataset
+
+        assert _ids(A) == {18315, 8630}
+        assert len(A.studies) == 2
+        assert len(A.data_table_index) == a_dt + b_dt
+        assert len(A.file_url_to_datatable) == a_fu + b_fu
+
+    def test_add_rebind_t02_same_id_identical_no_warning(self):
+        """A = A + B where A and B have same study (identical) → still looks like A (no warning)."""
+        A = _build_dataset_for_noaa_id(18315)
+        B = _build_dataset_for_noaa_id(18315)
+
+        # No warning expected
+        A = A + B
+
+        assert _ids(A) == {18315}
+        assert len(A.studies) == 1
+
+        # Indexes should match canonical single-study A
+        canonical_A = _build_dataset_for_noaa_id(18315)
+        assert len(A.data_table_index) == len(canonical_A.data_table_index)
+        assert len(A.file_url_to_datatable) == len(canonical_A.file_url_to_datatable)
+
+    def test_add_rebind_t03_same_id_different_warns_and_keeps_left(self):
+        """A = A + B where same NOAAStudyId but different content → warning; A still looks like original A."""
+        A = _build_dataset_for_noaa_id(18315)
+
+        def _mutate(study_dict):
+            study_dict["studyName"] = "Tampered Study"
+
+        B = _build_dataset_for_noaa_id(18315, mutate=_mutate)
+
+        with pytest.warns(UserWarning, match=r"(?i)duplicate.*study.*18315"):
+            A = A + B
+
+        assert _ids(A) == {18315}
+        assert len(A.studies) == 1
+
+        # Compare to canonical A to ensure B's tamper did not replace left
+        canonical_A = _build_dataset_for_noaa_id(18315)
+        assert _ids(A) == _ids(canonical_A)
+        assert len(A.data_table_index) == len(canonical_A.data_table_index)
+        assert len(A.file_url_to_datatable) == len(canonical_A.file_url_to_datatable)

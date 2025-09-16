@@ -89,8 +89,8 @@ class Dataset:
                     check_same_study_content = False
                 if not check_same_study_content:
                     warnings.warn(
-                        "Dataset union: duplicate StudyID %s with differing content. "
-                        "Keeping left-hand version. i.e. if C = A + B is perfomed, contents of A will be kept.", sid
+                        f"Dataset union: duplicate StudyID {sid} with differing content. "
+                        "Keeping left-hand version. i.e. if C = A + B is perfomed, contents of A will be kept.", UserWarning
                     )
                 # else identical content -> do nothing
             else:
@@ -113,8 +113,8 @@ class Dataset:
                     check_same_study_content = False
                 if not check_same_study_content:
                     warnings.warn(
-                        "Dataset in-place union: duplicate StudyID %s with differing content. "
-                        "Keeping existing version. i.e. IF A = A + B is perfomed, contents of A will be kept", sid
+                        f"Dataset in-place union: duplicate StudyID {sid} with differing content. "
+                        "Keeping existing version. i.e. IF A = A + B is perfomed, contents of A will be kept", UserWarning
                     )
             else:
                 self.studies[sid] = study

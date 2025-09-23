@@ -1,0 +1,202 @@
+Japan Sea 30KYr Organic and Isotopic Geochemical Data
+-----------------------------------------------------------------------
+               World Data Center for Paleoclimatology, Boulder
+                                  and
+                     NOAA Paleoclimatology Program
+-----------------------------------------------------------------------
+NOTE: PLEASE CITE ORIGINAL REFERENCE WHEN USING THIS DATA!!!!!
+
+
+NAME OF DATA SET: Japan Sea 30KYr Organic and Isotopic Geochemical Data
+LAST UPDATE: 10/2009 (Original receipt by WDC Paleo) 
+CONTRIBUTOR: Ryoshi Ishiwatari, Tokyo Metropolitan University, 
+now at Geotec Inc. 
+IGBP PAGES/WDCA CONTRIBUTION SERIES NUMBER: 2009-120 
+
+
+WDC PALEO CONTRIBUTION SERIES CITATION: 
+Ishiwatari, R., et al. 2009. 
+Japan Sea 30KYr Organic and Isotopic Geochemical Data. 
+IGBP PAGES/World Data Center for Paleoclimatology 
+Data Contribution Series # 2009-120. 
+NOAA/NCDC Paleoclimatology Program, Boulder CO, USA.
+
+
+ORIGINAL REFERENCE: 
+Ishiwatari, R., K. Yamada, K. Matsumoto, M. Houtatsu, 
+and H. Naraoka. 1999. 
+Organic Molecular and Carbon Isotopic Records of the Japan Sea 
+Over the Past 30 kyr. 
+Paleoceanography, 14(2), 260�270. 
+
+ABSTRACT: 
+The organic and isotopic geochemical study of two sediment cores 
+(KH-79-3, L-3, and KH-79-3, C-3) from the Oki Ridge in the Japan Sea 
+has revealed that total organic carbon (TOC) mass accumulation rates 
+are extremely high in the 12-11 ka (calendar age) interval and TOC in 
+the sections in the 24-17 ka interval is depleted in 13C by 3.5 per mil 
+relative to Holocene sediments. Alkenone sea surface temperature (SST) 
+shows a decrease from 18� to 14�C from 17.5 to 11.6 ka and a sharp 
+increase from 14� to 19�C from 11.6 to 11.1 ka. The SST changes are 
+associated with the inflow of cold seawater with the vertical water 
+mixing and the inflow of warm Tsushima Current into the Japan Sea. 
+The d13C values for both 24-methylcholesta-5,22-dien-3B-ol (diatom 
+marker) and dinosterol (dinoflagellate marker), are at their minimum 
+from 24 to 17 ka, while those for long-chain alkenones are not. 
+The theoretical considerations on d13C for biomarkers suggest 
+low photosynthetic carbon demand of diatoms and dinoflagellates 
+from 24 to 17 ka. 
+
+
+GEOGRAPHIC REGION: Japan Sea 
+PERIOD OF RECORD: 30 KYrBP - present
+FUNDING SOURCE: Japan Society for the Promotion of Science
+
+
+DESCRIPTION: 
+Organic geochemistry and carbon isotope data from two cores 
+in the Japan Sea interpreted as photosynthetic activity markers. 
+
+Cores KH-79-3, L3 and KH-79-3, C3: 
+37� 03.5'N, 134� 42.6'E, 935 m water depth, Oki Ridge, Japan Sea
+
+
+
+DATA:  
+1. Table 1, Bulk Geochemical Data for Cores KH-79-3, L-3, and KH-79-3, C-3
+
+Column 1: Depth, cm
+Column 2: Age, Calendar kyr BP, *a
+Column 3: Total Organic Carbon (TOC), mg/g, *b 
+Column 4: C:N wt ratio
+Column 5: d13C of TOC, per mil, *b 
+Column 6: Depth, cm
+Column 7: Age, Calendar kyr BP, *a
+Column 8: Total Organic Carbon (TOC), mg/g
+Column 9: C:N wt ratio
+Column 10: d13C of TOC, per mil
+
+Depth     Age*a   TOC*b     C:N   d13C-TOC     Depth       Age      TOC      C:N    d13C-TOC
+2.5       0.2     18.1      8.4     -21.34     135.0*c     11.7       -        -        -
+7.5       0.7     18.3      8.3     -21.49    [112.0]      11.7       -        -        -
+12.5      1.2     18.4      8.3     -21.55     137.5       12.2     10.7      8.2   -22.34
+17.5      1.6     19.5      8.3     -21.52    [122.0]      12.8      8.9      8.0   -22.75
+[11.5]*d  1.7     20.0      7.4     -21.01     142.5       13.0      9.0      7.8   -22.96
+22.5      2.1     16.7      8.5     -21.43     145.0*c     13.2       -        -        -
+27.5      2.6     21.1      8.6     -21.45    [124.0]      13.2       -        -        -
+32.5      3.0     21.0      8.5     -21.50     147.5       13.9      7.9      8.0   -23.75
+37.5      3.5     20.3      8.7     -21.57     152.5       15.4      7.3      8.8   -24.98
+42.5      4.0     18.1      8.5     -21.59    [132.0]      15.4     10.6      6.8   -23.09
+48.0      4.5     19.1      8.6     -21.45     157.5       16.8     11.0      8.8   -24.80
+[31.5]    4.6     18.3      7.7     -21.12     160.0*c     17.5       -        -    -25.06
+53.0      5.0     18.8      8.7     -21.43    [140.0]      17.5       -        -        -
+57.5      5.4     18.8      8.5     -21.49    [142.0]      17.5     11.8      8.7       -
+62.5      5.9     17.7      8.5     -21.57     162.5       18.0     10.5      9.1   -24.98
+67.5      6.3     16.1      8.4     -21.53     167.5       18.9     10.3      9.2   -25.05
+72.5      6.8     18.7      8.3     -21.59     180.0*c     20.5       -        -        -
+77.5      7.3     17.5      8.4     -21.85    [153.0]      19.1       -        -    -24.38
+78.0*e    7.3       -        -          -      181.0       21.3
+83.0      8.8     20.2      8.5     -21.85    [172.5]      21.4     10.4      7.8   -24.18
+90.0e    10.8       -        -          -     [191.0]      23.6      9.7      7.6   -24.03
+[71.0]   10.8     25.0      7.2     -21.23     199.0*c     24.3       -        -        -
+97.0     10.9     24.6      8.6     -22.03    [198.0]      24.3       -        -        -
+102.5    11.0     22.7      8.8     -22.04     201.5       24.5     12.0      8.9   -24.18
+107.5    11.1     24.8      8.9     -22.87     208.0       25.2      9.5      8.3   -23.31
+[88.5]   11.2                       -22.23     212.0       25.7      7.6      8.1   -23.20
+112.5    11.2     36.4      9.1     -22.77    [212.0]      26.3       -       6.5   -22.52
+115.5*c  11.3       -        -          -      218.0       26.4      5.3      7.6   -23.75
+[90.0]   11.3       -        -          -      224.0*e     27.7       -        -        -
+117.5    11.3     23.1      8.7     -22.56    [224.0]*d,e  27.7       -        -        -
+122.5    11.5     16.5      8.5     -22.22    [265.0]*c,d  31.7       -        -        -
+127.5    11.6     13.2      8.3     -22.10    [270.0]      31.9       -        -        -
+132.5    11.7     12.4      8.3     -22.12    [272.0]      32.0     15.4      7.9   -21.67
+[110.5]  11.7     13.3      8.2     -22.15    [289.0]*c,d  32.3       -        -        -
+
+*a Calendar ages were calculated from radiocarbon ages by using the data set 
+   obtained for Lake Suigetsu [Kitagawa and  van der Plicht, 1998].
+*b Data for KH-79-3, L-3, are quoted from Yamada and Ishiwatari [1998].
+*c Accelerator mass spectrometry (AMS) 14C age [Oba et al., 1995].
+*d Brackets indicate Core KH-79-3, C-3 (quoted from Ishiwatari et al., [1994]).
+*d Volcanic ash layers: Akahoya (K-Ah), 7300 cal years B.P.; Ulreung-Oki (U-Oki), 
+   10,750 cal years B.P. (H. Fukusawa et al., personal communication, 1998); 
+   and Aira Tanzawa (AT), 24.5 14C ka [Oba et al., 1995].
+
+
+
+
+
+2. Table 1A,  Molecular and carbon isotopic data for cores KH-79-3, L-3 and KH-79-3, C-3.
+
+Column 1: Depth, cm
+Column 2: Age, Calendar kyr BP
+Column 3: Linear Sedimentation Rate, cm/ky
+Column 4: Dry Bulk Density, g/cm3
+Column 5: Total Organic Carbon mass Accumulation Rate, mg/cm2/ky
+Column 6: Alkenones, ug/g *b
+Column 7: Alkenone SST, �C, *c
+Column 8: Dinosterol, ug/g *b
+Column 9: C28 sterol, ug/g *d,*b
+Column 10: Phytol, ug/g *b 
+Column 11: d13C of C37:2 alkenone, per mil  
+Column 12: d13C of C38:2 alkenone, per mil
+Column 13: d13C of C28 sterol, per mil *d
+Column 14: d13C of dinosterol, per mil   
+
+Depth    Age     LSR       DBD   TOC-MAR   Alk.       SST     Dino      C28   Phytol   d13C37   d13C38   d13C28    d13Cdin 
+2.5      0.2    10.7      0.38      74        -        -      1.84     4.14     4.27    -25.1    -24.8       -        -
+7.5      0.7    10.7      0.38      74      1.52     19.1     1.74     3.94     3.87       -     -24.1       -        -
+12.5     1.2    10.7      0.40      79        -        -      1.90     3.29     3.56    -21.3    -22.7       -        -
+17.5     1.6    10.7      0.40      84        -        -      1.52     2.99     3.08       -        -        -        -
+[11.5]*a 1.7    10.7      0.40      86        -        -      3.53     5.16     2.05       -        -     -23.9    -23.2
+22.5     2.1    10.7      0.36      64      1.93     18.4     1.21     2.11     2.72       -        -        -        -
+27.5     2.6    10.7      0.36      81        -        -      1.54     2.79     3.42       -        -        -        -
+32.5     3.0    10.7      0.34      76      1.32     17.9     1.70     2.53     3.10       -        -        -        -
+37.5     3.5    10.7      0.34      74        -        -      1.54     2.58     3.02       -        -        -        -
+42.5     4.0    10.7      0.36      70        -        -      1.67     2.56     2.53    -23.5    -23.7       -        -
+48.0     4.5    10.7      0.36      74      2.08     18.3     2.03     3.69     2.31       -        -        -        -
+[31.5]   4.6    10.7      0.36      71        -        -      1.77     2.26     1.83       -        -     -23.1    -23.3
+53.0     5.0    10.7      0.40      81        -        -      1.70     2.76     2.75       -        -        -        -
+57.5     5.4    10.7      0.40      81        -        -      1.61     3.09     2.75       -        -        -        -
+62.5     5.9    10.7      0.38      72        -        -      1.43     2.32     2.63       -        -        -        -
+67.5     6.3    10.7      0.38      66      1.40     18.5     1.54     2.08     2.10       -        -        -        -
+72.5     6.8    10.7      0.38      76        -        -      1.15     1.65     1.59    -23.0    -23.0       -        -
+77.5     7.3    10.7      0.38      71        -        -      1.31     2.11     2.18       -        -        -        -
+83.0     8.8     3.7      0.44      33      1.67     18.1     1.73     3.24     3.66    -23.2    -23.5       -        -
+[71.0]  10.8     3.7      0.44      40        -        -      2.08     4.45     1.77                      -25.2
+97.0    10.9    46.4      0.46     525        -        -      1.93     4.38     5.00    -23.7    -23.3       -     -25.1
+102.5   11.0    46.4      0.44     463        -        -      2.56     5.12     5.68       -        -        -        -
+107.5   11.1    46.4      0.44     506      1.18     19.3     2.53     4.76     5.23       -        -        -        -
+[88.5]  11.2    46.4      0.40       -        -        -      3.77     6.61     4.67       -        -     -26.1       -
+112.5   11.2    46.4      0.40     675        -        -      3.80    10.92    12.19    -23.9    -24.6       -     -24.0
+117.5   11.3    39.0      0.40     360      1.66     17.8     3.18     7.87     6.26       -        -        -        -
+122.5   11.5    39.0      0.82     528      0.76     15.8     1.77     3.65     2.78       -        -        -        -
+127.5   11.6    39.0      0.82     422      0.39     14.4     1.12     2.26     2.03    -25.9    -26.3       -        -
+132.5   11.7    39.0      0.82     397      0.32     14.9     0.76     1.27     1.45    -25.8    -25.8       -        -
+[110.5  11.7    39.0      0.82     425        -        -      0.81     1.54     1.30       -        -     -25.2    -24.5
+137.5   12.2     6.7      0.72      51      0.37     16.0     0.82     1.37     1.12    -24.7    -25.4       -        -
+[122.0  12.8     6.7      0.72      43        -        -      0.68     0.91     0.67       -        -     -25.0    -24.2
+142.5   13.0     6.7      0.72      43        -        -      0.56     0.99     1.05    -24.8    -25.6       -        -
+147.5   13.9     6.7      0.72      38        -        -      0.76     1.57     1.49    -24.6    -24.3       -        -
+[132]   15.4     3.5      0.64      24        -        -      0.26     0.35     0.82       -        -     -26.7    -26.2
+152.5   15.4     3.5      0.64      16      0.10     17.2     1.42     4.25     5.74    -23.0    -24.0       -        -
+157.5   16.8     3.5      0.64      25        -        -      0.86     3.21     5.49    -22.9    -23.5       -        -
+[142.0  17.5     6.7      0.66      52        -        -      0.95     2.39     3.61       -        -     -27.7    -28.2
+162.5   18.0     6.7      0.66      46      0.12     18.6     0.93     3.69     5.96    -22.6    -23.2       -        -
+167.5   18.9     6.7      0.66      45      0.08     17.2     0.83     2.57     3.17       -        -        -        -
+[153.0  19.1     6.7      0.66       -        -        -      0.46     1.77     2.49       -        -     -29.7    -28.8
+[172.5  21.4     5.0      0.66      34        -        -      0.39     1.13     1.19       -        -     -25.4    -24.8
+[191.0  23.6     5.0      0.66      32        -        -      0.32     0.75     1.53       -        -     -28.5    -28.1
+201.5   24.5     9.3      0.58      65                        0.79     2.72     2.02       -        -        -        -
+208.0   25.2     9.3      0.54      48      0.06       -      0.41     1.15     0.67       -        -        -        -
+212.0   25.7     9.3      0.54      38        -        -      0.24     0.60     0.52       -        -        -        -
+[212.0  26.3     9.3      0.54       -        -        -      0.49     0.87     0.30       -        -     -26.0    -26.0
+218.0   26.4     8.6      0.54      25        -        -      0.06     0.11     0.16       -        -        -        -
+[272.0  32.0    14.1      0.54     117        -        -      0.67     1.30     0.61       -        -     -26.0    -25.0
+
+*a core KH-79-3, C-3 
+[   ] core KH-79-3, C-3 
+*b Dry sediment  
+*c Sea Surface Temperature
+*d 24-methylcholesta-5,22-dien-3b-ol
+
+

@@ -1,4 +1,17 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Caches
+.pytest_cache/
+
+# OS/Package Build artifacts
 .venv
 .DS_Store
+*.egg-info/
+
+#IDE
 .idea
 .vscode

@@ -973,15 +973,31 @@ class Dataset:
             return df
 
         results = []
+        to_process = []
+
         if isinstance(parsed_data, list):
-            for df in parsed_data:
-                if mapping:
-                    df = attach_metadata(df, mapping)
-                results.append(df)
-        else:
+            # Handles NonStandardParser (list of objects) AND 
+            # StandardParser (if it returns a list of DataFrames)
+            for item in parsed_data:
+                if isinstance(item, pd.DataFrame):
+                    # Item is already a DataFrame (e.g., from StandardParser)
+                    to_process.append(item)
+                elif hasattr(item, 'df') and isinstance(getattr(item, 'df'), pd.DataFrame):
+                    # Item is an object with a .df attribute (from NonStandardParser)
+                    to_process.append(item.df)
+                # else: item is some other object we don't care about (e.g., metadata block)
+        
+        elif isinstance(parsed_data, pd.DataFrame):
+            # Handles StandardParser if it returns a single DataFrame
+            to_process.append(parsed_data)
+        
+        # else: parsed_data is some other type we can't handle, to_process remains empty.
+
+        # Now `to_process` contains only the DataFrames we want
+        for df in to_process:
             if mapping:
-                parsed_data = attach_metadata(parsed_data, mapping)
-            results.append(parsed_data)
+                df = attach_metadata(df, mapping)
+            results.append(df)
 
         return results
 

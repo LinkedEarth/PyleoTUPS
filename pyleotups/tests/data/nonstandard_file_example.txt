@@ -1,0 +1,229 @@
+Study Title
+-----------------------------------------------------------------------
+               World Data Center for Paleoclimatology, Boulder
+                                  and
+                     NOAA Paleoclimatology Program
+-----------------------------------------------------------------------
+NOTE: PLEASE CITE ORIGINAL REFERENCE WHEN USING THIS DATA!!!!!
+
+
+NAME OF DATA SET: 
+xyz
+
+LAST UPDATE: 12/2009 (Original receipt by WDC Paleo) 
+CONTRIBUTORS: Justin Reuter, Lowell Stott, Deborah Khider, 
+Ashish Sinha, Hai Cheng, and R. Lawrence Edwards
+IGBP PAGES/WDCA CONTRIBUTION SERIES NUMBER: 2009-153   
+
+WDC PALEO CONTRIBUTION SERIES CITATION: 
+Reuter, J., et al. 2009. 
+Cascayunga Cave, Peru 1000 Year Stalagmite Oxygen Isotope Data. 
+IGBP PAGES/World Data Center for Paleoclimatology 
+Data Contribution Series # 2009-153. 
+NOAA/NCDC Paleoclimatology Program, Boulder CO, USA.
+
+
+ORIGINAL REFERENCE: 
+Reuter, J., L. Stott, D. Khider, A. Sinha, H. Cheng, 
+and R.L. Edwards. 2009. 
+A new perspective on the hydroclimate variability 
+in northern South America during the Little Ice Age. 
+Geophys. Res. Lett., 36, L21706, doi:10.1029/2009GL041051 
+
+ABSTRACT: 
+An absolute dated speleothem oxygen isotope (d18O) record 
+from northeastern Peru documents monsoon precipitation 
+variability over northern South America during the past 
+that 1000 years and indicates the annual precipitation 
+in the 15th through the 18th centuries, the so-called 
+Little Ice Age (LIA), was on average ~10% higher than 
+during the 20th century. Over the 20th century recurrent 
+modes of seasonal rainfall variability across northern 
+South America were associated with discrete sea surface 
+temperature anomaly patterns within the Atlantic and 
+Pacific Oceans. Calling upon these SST-rainfall 
+teleconnectivity patterns, and paleo-SST reconstructions 
+that span the past 8 centuries, higher annual rainfall 
+across northern South America during the LIA is attributed 
+to cooler boreal spring SSTs in the tropical North Atlantic.
+Weaker co-variance between north Atlantic SSTs and the 
+South American Monsoon System (SAMS) rainfall during 
+the 20th century suggests that ENSO has become a more
+dominant influence than it was during the LIA.
+
+
+GEOGRAPHIC REGION: Northern South America 
+PERIOD OF RECORD: 1088 - 2005 AD
+
+FUNDING SOURCES: 
+US National Science Foundation (NSF) grants 0502615 (to Stott), 
+0823554 (to Sinha) and 0502535 (to Edwards and Cheng).
+
+DESCRIPTION:  
+Oxygen isotope data (d18O) from stalagmites from Cascayunga Cave, 
+Peru. 
+
+Cascayunga Cave, Peru: ~6�4'S, ~77�11'W, 900 m elev.  
+
+
+
+
+DATA:  
+#case: Narrative
+1. Table S1: Uranium-Thorium Ages for CAS-D
+230Th dating results.  The error is 2sigma.
+#case with numeric headers
+
+
+# case: Header Only (Nummbered Headers, merge tokens vertically)
+
+   1             2          3             4             5              6               7            8              9    
+Sample         238U       232Th      230Th/232Th      d234U*       230Th/238U     230Th Age    230Th AgeBP    230Th Age (AD)
+Number        (ppb)       (ppt)    (atomic x10-6)   (measured)     (activity)    (uncorrected)  (corrected)   (corrected)
+
+# case: Data Only (Completely consistent with cv_multi=0. Borrow headers from previous Block)
+
+CAS-D-10    354.7�0.4      1�10     30000�420000      1163�2     0.00335�0.00007     169�4         112�4       1838�4
+CAS-D-t     331.5�0.6      4�10      12000�34000      1177�6     0.00812�0.00013     407�6         351�6       1599�6
+CAS-D-5     308.7�0.3     50�10       1000�250        1134�2     0.00937�0.00009     478�5         421�5       1529�5
+CAS-D-6     281.8�0.3     10�10       4500�4600       1184�4     0.01106�0.00011     553�5         496�5       1454�5
+CAS-D-2     212.5�0.2     10�10       6000�6000       1190�2     0.01847�0.00014     923�7         866�7       1084�7
+CAS-D-12    286.1�0.3     10�10      11000�14000      1190�2     0.01918�0.00011     958�6         901�6       1049�6
+CAS-D-13    326.3�0.3     20�10       6500�4100       1195�2     0.02168�0.00011    1081�6        1024�6        926�6
+CAS-D-14    269.0�0.3      1�10    120000�1600000     1203�2     0.02468�0.00013    1227�7        1170�7        780�7
+CAS-D-b     424.7�0.8     90�10       2300�250        1209�5     0.02907�0.00016    1439�9        1383�9        567�9
+CAS-A-t     394.5�0.8     390�10        34�2          1166�5     0.00202�0.00007     89�7          33�7        1917�7
+
+# case: Header Only (Merge tokens vertically)
+
+Sample         238U       232Th      230Th/232Th      d234U*       230Th/238U     230Th Age    230Th AgeBP    230Th Age (AD)
+Number        (ppb)       (ppt)    (atomic x10-6)   (measured)     (activity)    (uncorrected)  (corrected)   (corrected)
+
+CAS-D-10    354.7�0.4      1�10     30000�420000      1163�2     0.00335�0.00007     169�4         112�4       1838�4
+CAS-D-t     331.5�0.6      4�10      12000�34000      1177�6     0.00812�0.00013     407�6         351�6       1599�6
+CAS-D-5     308.7�0.3     50�10       1000�250        1134�2     0.00937�0.00009     478�5         421�5       1529�5
+CAS-D-6     281.8�0.3     10�10       4500�4600       1184�4     0.01106�0.00011     553�5         496�5       1454�5
+CAS-D-2     212.5�0.2     10�10       6000�6000       1190�2     0.01847�0.00014     923�7         866�7       1084�7
+CAS-D-12    286.1�0.3     10�10      11000�14000      1190�2     0.01918�0.00011     958�6         901�6       1049�6
+CAS-D-13    326.3�0.3     20�10       6500�4100       1195�2     0.02168�0.00011    1081�6        1024�6        926�6
+CAS-D-14    269.0�0.3      1�10    120000�1600000     1203�2     0.02468�0.00013    1227�7        1170�7        780�7
+CAS-D-b     424.7�0.8     90�10       2300�250        1209�5     0.02907�0.00016    1439�9        1383�9        567�9
+CAS-A-t     394.5�0.8     390�10        34�2          1166�5     0.00202�0.00007     89�7          33�7        1917�7
+
+
+
+2. Cascayunga Cave Speleothem CAS-A
+
+# case: Complete Tabular (Completely consistent with header)
+
+Depth(cm)  YearAD       d18O (per mil PDB)
+0.005     2005.670     -6.102
+0.01      2004.366     -6.987
+0.05      1993.934     -6.938
+0.055     1992.630     -6.728
+0.295     1945.687     -6.808
+0.305     1944.383      -6.77
+0.315     1943.079     -6.828
+0.325     1941.775     -6.905
+0.345     1939.168     -6.805
+0.355     1937.864     -6.768
+0.365     1936.560     -6.875
+0.375     1935.256     -7.112
+0.385     1933.952     -6.877
+0.395     1932.648     -6.907
+0.405     1931.344      -6.94
+0.415     1930.040     -6.875
+0.425     1928.736     -6.805
+0.435     1927.432     -6.725
+0.445     1926.128     -6.754
+0.455     1924.824     -7.199
+0.465     1923.520     -6.991
+0.475     1922.216      -7.06
+0.485     1920.912     -6.891
+0.495     1918.304     -7.016
+0.505     1915.696     -7.019
+0.51      1914.392     -6.591
+0.515     1913.088     -6.284
+0.52      1911.784     -6.868
+0.525     1910.480     -6.885
+0.53      1909.176     -7.159
+0.535     1907.872     -7.053
+0.54      1906.568     -6.978
+0.545     1905.264     -7.054
+0.555     1902.656     -6.961
+
+
+
+#case Tabular (Inconsistent cv_multi, merge headers with intervals, detect headers, and assign tokens by overlap)
+
+Sample Number  Depth to top      238U             232Th               230Th/232Th             d234U*            230Th/238U            Age (yr)            Age (yr)          d234U initial         Age (yr BP)* 
+                   (mm)          (ppb)            (ppt)            (atomic x 10-6)          measured            activity           uncorrected          corrected           corrected            corrected
+D4-4               1402        356   �0.5        62    �5             6700     �600         -26    �1.8       0.06977  �0.00046     8101    �58          8091   �58         -26.6   �1.9          8035    �58
+D4-9 n             1404        388   �0.1        89    �4             5000     �200        -23.9   �1.2       0.07009  �0.00014     8120    �19          8108   �21         -24.5   �1.2          8052    �21
+D4-1               1410       497.2  �0.8        468   �6             1240     �20         -26.3   �1.5       0.07063  �0.00035     8206    �44          8157   �54         -26.9   �1.6          8101    �54
+D4-8 n             1425       493.8  �0.1        191   �5             3020     �80         -28.8   �0.5       0.07065  �0.00016     8232    �20          8212   �24         -29.5   �0.5          8156    �24
+D4-10 n            1447       370.5  �0.1              �5             3100     �100        -13.2   �0.7       0.07259  �0.00017     8326    �21          8306   �25         -13.5   �0.7          8250    �25
+D4-5               1452        333   �0.4        67    �4             6000     �400         -9.8   �2.0       0.07293  �0.00045     8336    �56          8326   �57         -10.1   �2.0          8270    �57
+D4-2               1462       463.5  �0.7        329   �6             1700     �30         -10.7   �1.5       0.07333  �0.00036     8391    �45          8354   �51         -10.9   �1.5          8298    �51
+D4-6               1470       305.1  �0.3        170   �3             2150     �40         -18.9   �1.7       0.07262  �0.00038     8379    �48          8350   �51         -19.3   �1.7          8294    �51
+D4-11 n            1492       359.8  �0.1        96    �4             4600     �200        -10.1   �0.7       0.07382  �0.00016     8444    �20          8430   �22         -10.3   �0.7          8374    �22
+D4-3               1497       434.6  �0.6        232   �6             2280     �60          -8.9   �1.4       0.07389  �0.00035     8443    �43          8416   �47         -9.2    �1.4          8360    �47
+D4-7               1522       359.8  �0.4        199   �6             2220     �70         -12.3   �1.6       0.07444  �0.00043     8539    �53          8510   �56         -12.6   �1.7          8454    �56
+D4-12 n            1545       384.8  �0.1        140   �3             3400     �80         -10.4   �0.6       0.07518  �0.00015     8609    �19          8590   �22         -10.7   �0.6          8534    �22
+
+#case Tabular (Inconsistent because of title, detect title, borrow headers, assign tokens by overlap)
+
+Dongge Cave, China (DA)
+DA5-13            858.5       586.3  �0.8        570   �5             1140     �10         -69.9   �1.7       0.06679  �0.00033     8126    �44          8073   �56         -71.5   �1.7          8018    �56
+DA5-6              859        545.6  �0.7        200   �10            2900     �200        -72.9   �1.1       0.06594  �0.00048     8046    �61          8025   �63         -74.5   �1.2          7970    �63
+DA5-5             865.1       615.3  �0.8        590   �10            1150     �30         -75.3   �1.2       0.06705  �0.00051     8209    �66          8156   �75         -77.1   �1.2          8101    �75
+DA-17 n           865.5       752.3  �0.1        689   �5             1210     �10         -74.8   �0.7       0.06703  �0.00015     8201    �20          8151   �32         -76.5   �0.7          8096    �32
+DA5-4             871.2       516.2  �0.8        340   �10            1710     �60         -75.6   �1.3       0.06747  �0.00071     8265    �91          8229   �94         -77.3   �1.4          8174    �94
+DA5-7             876.5       490.1  �0.6        329   �6             1670     �30          -74    �1.2       0.06797  �0.00039     8314    �50          8277   �56         -75.8   �1.2          8222    �56
+DA5-8             876.5       610.6  �0.7        394   �6             1730     �30          -78    �1.1       0.06756  �0.00041     8300    �53          8264   �58         -79.9   �1.2          8209    �58
+DA-15 n           879.5       690.7  �0.1        538   �5             1440     �10         -73.6   �1.3       0.06816  �0.00015     8334    �22          8291   �31         -75.3   �1.3          8236    �31
+DA5-3             880.5       601.8  �0.8        290   �10            2400     �100        -78.2   �1.2       0.06771  �0.00048     8320    �63          8294   �65         -80.1   �1.2          8239    �65
+DA5-2             881.5       495.7  �0.7        460   �10            1220     �30         -72.1   �1.2       0.06847  �0.00049     8360    �63          8309   �71         -73.9   �1.2          8254    �71
+DA5-1             882.5       563.9  �0.8        470   �10            1350     �40         -79.7   �1.3       0.06795  �0.00052     8365    �68          8319   �74         -81.6   �1.3          8264    �74
+DA5-11            882.5       546.3  �0.6        623   �5             1000     �10          -74    �1.3       0.06881  �0.00037     8420    �48          8357   �63         -75.7   �1.4          8302    �63
+
+
+# Complete tabular, merge Header tokens correctly
+
+                               Sample mid              Sample mid 		// two elements
+Sample      Sample              gas age    delta age    gas age      delta age 
+mid depth   length     ppbv     (default)  (default)   (LD min)     (LD min)
+1108.637      0.15      657       9296.4       89       9269.1       47		// N N N N N 
+1111.752       0.1      659       9634.5      128       9634.5       48
+1113.567      0.13      696       9979.9      132       9979.5       50
+1115.872       0.1      702      10432.5      137      10431.6       54
+1118.327      0.13      668      10940.4      137      10936.7       54
+1118.492       0.1      674      10968.9      143      10968.6       56
+1121.652       0.1      472      11619.8      192        11620       60
+1122.342       0.1      484      11838.5      193        11834       60
+1123.487      0.05      478      12195.7      204      12188.4       67
+1124.022       0.1      444      12373.1      202      12360.9       65
+1124.437      0.05      463      12489.6      222      12490.7       69
+1125.407      0.05      665      12796.9      265      12810.8       71
+1126.287      0.15      658      13194.1      264      13177.6       71
+1127.492       0.1      639        13734      276      13682.6       76
+1127.937      0.05      609      13940.3      277      13873.8       77
+1128.142       0.1      611      14047.3      266      13967.6       72
+1128.407      0.05      604      14163.1      274      14078.8       76
+1128.882       0.1      628      14270.9      391      14290.2       72
+1129.307      0.05      473      14591.2      404      14579.3       76
+1130.222       0.1      451      15304.9      417      15214.1       80
+1131.217      0.05      446      16085.9      440      15913.4       88
+1131.752      0.07      421      16285.1      679      16288.7       99
+1132.672       0.1      373      17464.4      730      17552.7      112
+
+
+#case Tabular : Complete_Tabular + Title. (Title breaks the inconsistency)
+
+Title XYZ
+Depth     Age*a   TOC*b     C:N   d13C-TOC     Depth       Age      TOC      C:N    d13C-TOC
+2.5       0.2     18.1      8.4     -21.34     135.0*c     11.7       -        -        -
+7.5       0.7     18.3      8.3     -21.49    [112.0]      11.7       -        -        -
+12.5      1.2     18.4      8.3     -21.55     137.5       12.2     10.7      8.2   -22.34
+17.5      1.6     19.5      8.3     -21.52    [122.0]      12.8      8.9      8.0   -22.75
+[11.5]*d  1.7     20.0      7.4     -21.01     142.5       13.0      9.0      7.8   -22.96

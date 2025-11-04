@@ -34,8 +34,9 @@ class NonStandardParser:
     blocks : list[Block]
         The final list of processed Block objects.
 
-    Workflow
-    --------
+    Notes
+    -----
+    The parsing workflow is as follows:
     1.  A `NonStandardParser` instance is created with a `file_path`.
     2.  The public `parse()` method is called.
     3.  `_fetch_lines()` reads the file into `self.lines`.

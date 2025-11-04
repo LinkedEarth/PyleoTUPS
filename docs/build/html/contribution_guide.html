@@ -6,30 +6,35 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contributing to PyTUPS &mdash; PyTUPS 0.0.1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+  <title>Contributing to PyleoTUPS &mdash; PyleoTUPS 0.0.2b0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
-      <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
+      <link rel="stylesheet" type="text/css" href="_static/plot_directive.css?v=7f9a90b1" />
+      <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css?v=572af1d6" />
       <link rel="stylesheet" type="text/css" href="_static/thebelab.css" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/css/rtd_sphinx_search.min.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="_static/documentation_options.js?v=5e47b899"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="_static/thebelab-helper.js"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>
       <script src="_static/copybutton.js?v=f281be69"></script>
+      <script src="_static/js/rtd_search_config.js"></script>
+      <script src="_static/js/rtd_sphinx_search.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="PyTUPS User API" href="api.html" /> 
+    <link rel="next" title="Citing PyleoTUPS" href="citation.html" />
+    <link rel="prev" title="Advanced Functionalities" href="advanced.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -41,7 +46,8 @@
           
           
           <a href="index.html" class="icon icon-home">
-            PyTUPS
+            PyleoTUPS
+              <img src="_static/pyleotups_logo_small.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -51,25 +57,27 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Working with PyTUPS</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Working with PyleoTUPS</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installing PyTUPS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">PyTUPS User API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html#core-components">Core Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html#utility-classes">Utility Classes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html#parsers">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installing PyleoTUPS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">PyleoTUPS User APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced Functions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="advanced.html">Advanced Functionalities</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Getting Involved</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Contributing to PyTUPS</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Contributing to PyleoTUPS</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#github-github-github">GitHub, GitHub, GitHub</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#bug-reports-and-enhancement-requests">Bug reports and enhancement requests</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#working-with-the-pytups-codebase">Working with the PyTUPS codebase</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#working-with-the-pyleotups-codebase">Working with the PyleoTUPS codebase</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#version-control-git-and-github">Version control, Git, and GitHub</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#forking">Forking</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#creating-a-development-environment">Creating a development environment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#creating-a-branch">Creating a branch</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#pytups-protocol">PyTUPS Protocol</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pyleotups-protocol">PyleoTUPS Protocol</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#contributing-new-functionalities">Contributing new functionalities</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#updating-existing-functionalities">Updating existing functionalities</a></li>
 </ul>
@@ -78,7 +86,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#stylistic-considerations">Stylistic considerations</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#contributing-your-changes-to-pytups">Contributing your changes to PyTUPS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#contributing-your-changes-to-pyleotups">Contributing your changes to PyleoTUPS</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#committing-your-code">Committing your code</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#pushing-your-changes">Pushing your changes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#filing-a-pull-request">Filing a Pull Request</a></li>
@@ -88,13 +96,14 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#documentation">Documentation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#about-the-pytups-documentation">About the PyTUPS documentation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#updating-a-pytups-docstring">Updating a PyTUPS docstring</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#how-to-build-the-pytups-documentation">How to build the PyTUPS documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#about-the-pyleotups-documentation">About the PyleoTUPS documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#updating-a-pyleotups-docstring">Updating a PyleoTUPS docstring</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#how-to-build-the-pyleotups-documentation">How to build the PyleoTUPS documentation</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="citation.html">Citing PyleoTUPS</a></li>
 </ul>
 
         </div>
@@ -103,7 +112,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">PyTUPS</a>
+          <a href="index.html">PyleoTUPS</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -111,7 +120,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Contributing to PyTUPS</li>
+      <li class="breadcrumb-item active">Contributing to PyleoTUPS</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/contribution_guide.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -121,13 +130,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="contributing-to-pytups">
-<span id="id1"></span><h1>Contributing to PyTUPS<a class="headerlink" href="#contributing-to-pytups" title="Link to this heading"></a></h1>
+  <section id="contributing-to-pyleotups">
+<span id="id1"></span><h1>Contributing to PyleoTUPS<a class="headerlink" href="#contributing-to-pyleotups" title="Link to this heading"></a></h1>
 <section id="github-github-github">
 <h2>GitHub, GitHub, GitHub<a class="headerlink" href="#github-github-github" title="Link to this heading"></a></h2>
 <p>All contributions, bug reports, bug fixes, documentation improvements, enhancements,
-and ideas are welcome, and take place through <a class="reference external" href="https://github.com/LinkedEarth/PyTUPS/issues">GitHub</a></p>
-<p>There are several levels of contributions to an open development software package like PyTUPS, including:</p>
+and ideas are welcome, and take place through <a class="reference external" href="https://github.com/LinkedEarth/PyleoTUPS/issues">GitHub</a></p>
+<p>There are several levels of contributions to an open development software package like PyleoTUPS, including:</p>
 <ol class="arabic simple">
 <li><p>Reporting Bugs</p></li>
 <li><p>Updating the documentation</p></li>
@@ -144,23 +153,29 @@ If, for whatever reason, you are not able to continue working with the issue, pl
 Trying the bug-producing code out on the main branch is often a worthwhile exercise to confirm the bug still exists. It is also worth searching existing bug reports and pull requests to see if the issue has already been reported and/or fixed.</p>
 <p>Bug reports must:</p>
 <ol class="arabic">
-<li><p>Include a minimal working example (a short, self*contained Python snippet reproducing the problem). You can format the code nicely by using GitHub Flavored Markdown:</p></li>
-<li><p>Include the full version string of PyTUPS, which you can obtain through:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pytups</span>
-<span class="n">pytups</span><span class="o">.</span><span class="n">__version__</span>
+<li><p>Include a minimal working example (a short, self*contained Python snippet reproducing the problem). You can format the code nicely by using GitHub Flavored Markdown:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyleotups</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dataset</span>
+<span class="n">ds</span><span class="o">=</span><span class="n">Dataset</span><span class="p">()</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">search_studies</span><span class="p">(</span><span class="n">noaa_id</span><span class="o">=</span><span class="mi">33213</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>Include the full version string of PyleoTUPS, which you can obtain through:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pyleotups</span>
+<span class="n">pyleotups</span><span class="o">.</span><span class="n">__version__</span>
 </pre></div>
 </div>
 </li>
 <li><p>Explain why the current behavior is wrong/not desired and what you expect or would like to see instead.</p></li>
 </ol>
 </section>
-<section id="working-with-the-pytups-codebase">
-<h2>Working with the PyTUPS codebase<a class="headerlink" href="#working-with-the-pytups-codebase" title="Link to this heading"></a></h2>
+<section id="working-with-the-pyleotups-codebase">
+<h2>Working with the PyleoTUPS codebase<a class="headerlink" href="#working-with-the-pyleotups-codebase" title="Link to this heading"></a></h2>
 <section id="version-control-git-and-github">
 <h3>Version control, Git, and GitHub<a class="headerlink" href="#version-control-git-and-github" title="Link to this heading"></a></h3>
 <p>To the neophyte, working with Git is one of the more daunting aspects of contributing to open source projects.
 It can very quickly become overwhelming, but sticking to the guidelines below will help keep the process straightforward and mostly trouble free. As always, if you are having difficulties please feel free to ask for help.
-The code is hosted on <a class="reference external" href="https://github.com/LinkedEarth/pytups">GitHub</a>. To contribute you will need to <a class="reference external" href="https://github.com/signup/free">sign up for a (free) GitHub account</a>. <a class="reference external" href="https://git*scm.com/">Git</a> is the industry standard for version control to allow many people to work together on the project, keep track of issues, manage the project, and much more.</p>
+The code is hosted on <a class="reference external" href="https://github.com/LinkedEarth/PyleoTUPS">GitHub</a>. To contribute you will need to <a class="reference external" href="https://github.com/signup/free">sign up for a (free) GitHub account</a>. <a class="reference external" href="https://git*scm.com/">Git</a> is the industry standard for version control to allow many people to work together on the project, keep track of issues, manage the project, and much more.</p>
 <dl class="simple">
 <dt>Some great resources for learning Git:</dt><dd><ul class="simple">
 <li><p>the <a class="reference external" href="https://help.github.com/">GitHub help pages</a></p></li>
@@ -173,18 +188,18 @@ The code is hosted on <a class="reference external" href="https://github.com/Lin
 </section>
 <section id="forking">
 <h3>Forking<a class="headerlink" href="#forking" title="Link to this heading"></a></h3>
-<p>You will need your own fork to work on the code. Go to the PyTUPS repository and hit the Fork button. You will then want to clone your fork (i.e. download all the code to your local machine so you can edit it locally).
+<p>You will need your own fork to work on the code. Go to the PyleoTUPS repository and hit the Fork button. You will then want to clone your fork (i.e. download all the code to your local machine so you can edit it locally).
 At the command line, this would like something like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">your</span><span class="o">-</span><span class="n">user</span><span class="o">-</span><span class="n">name</span><span class="o">/</span><span class="n">pytups</span><span class="o">.</span><span class="n">git</span> <span class="n">pytups</span><span class="o">-</span><span class="n">yourname</span>
-<span class="n">cd</span> <span class="n">pytups</span><span class="o">-</span><span class="n">yourname</span>
-<span class="n">git</span> <span class="n">remote</span> <span class="n">add</span> <span class="n">upstream</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">LinkedEarth</span><span class="o">/</span><span class="n">pytups</span><span class="o">.</span><span class="n">git</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">your</span><span class="o">-</span><span class="n">user</span><span class="o">-</span><span class="n">name</span><span class="o">/</span><span class="n">PyleoTUPS</span><span class="o">.</span><span class="n">git</span> <span class="n">PyleoTUPS</span><span class="o">-</span><span class="n">yourname</span>
+<span class="n">cd</span> <span class="n">PyleoTUPS</span><span class="o">-</span><span class="n">yourname</span>
+<span class="n">git</span> <span class="n">remote</span> <span class="n">add</span> <span class="n">upstream</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">LinkedEarth</span><span class="o">/</span><span class="n">PyleoTUPS</span><span class="o">.</span><span class="n">git</span>
 </pre></div>
 </div>
-<p>This creates the directory <cite>pytups-yourname</cite> and connects your repository to the upstream (main project) PyTUPS repository.  However, most Git first-timers may find it easier to do so through the Github web interface or desktop app (where there is a proverbial “button for that”).</p>
+<p>This creates the directory <cite>PyleoTUPS-yourname</cite> and connects your repository to the upstream (main project) PyleoTUPS repository.  However, most Git first-timers may find it easier to do so through the Github web interface or desktop app (where there is a proverbial “button for that”).</p>
 </section>
 <section id="creating-a-development-environment">
 <h3>Creating a development environment<a class="headerlink" href="#creating-a-development-environment" title="Link to this heading"></a></h3>
-<p>We recommend developing in the same conda environment in which you installed PyTUPS.</p>
+<p>We recommend developing in the same conda environment in which you installed PyleoTUPS.</p>
 </section>
 <section id="creating-a-branch">
 <h3>Creating a branch<a class="headerlink" href="#creating-a-branch" title="Link to this heading"></a></h3>
@@ -197,7 +212,7 @@ At the command line, this would like something like:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">checkout</span> <span class="o">-</span><span class="n">b</span> <span class="n">shiny</span><span class="o">-</span><span class="n">new</span><span class="o">-</span><span class="n">feature</span>
 </pre></div>
 </div>
-<p>This changes your working directory to the <cite>shiny-new-feature</cite> branch. Keep any changes in this branch specific to one bug or feature so it is clear what the branch brings to PyTUPS. You can have many <cite>shiny-new-features</cite> and switch in between them using the <cite>git checkout</cite> command.
+<p>This changes your working directory to the <cite>shiny-new-feature</cite> branch. Keep any changes in this branch specific to one bug or feature so it is clear what the branch brings to PyleoTUPS. You can have many <cite>shiny-new-features</cite> and switch in between them using the <cite>git checkout</cite> command.
 When creating this branch, make sure your main branch is up to date with the latest upstream main version. To update your local main branch, you can do:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">checkout</span> <span class="n">main</span>
 <span class="n">git</span> <span class="n">pull</span> <span class="n">upstream</span> <span class="n">main</span> <span class="o">--</span><span class="n">ff</span><span class="o">-</span><span class="n">only</span>
@@ -205,14 +220,14 @@ When creating this branch, make sure your main branch is up to date with the lat
 </div>
 <p>When you want to update the feature branch with changes in main after you created the branch, check the section on updating a pull request.</p>
 </section>
-<section id="pytups-protocol">
-<h3>PyTUPS Protocol<a class="headerlink" href="#pytups-protocol" title="Link to this heading"></a></h3>
+<section id="pyleotups-protocol">
+<h3>PyleoTUPS Protocol<a class="headerlink" href="#pyleotups-protocol" title="Link to this heading"></a></h3>
 <section id="contributing-new-functionalities">
 <h4>Contributing new functionalities<a class="headerlink" href="#contributing-new-functionalities" title="Link to this heading"></a></h4>
 <ol class="arabic">
 <li><p>Open an issue on GitHub (See above)</p></li>
-<li><p>Implement outside of PyTUPS</p>
-<p>Before incorporating any code into PyTUPS, make sure you have a solution that works outside PyTUPS. Demonstrate this in a notebook, which can be hosted on GitHub as well so it is easy for the maintainers to check out. The notebook should be organized as follows:</p>
+<li><p>Implement outside of PyleoTUPS</p>
+<p>Before incorporating any code into PyleoTUPS, make sure you have a solution that works outside PyleoTUPS. Demonstrate this in a notebook, which can be hosted on GitHub as well so it is easy for the maintainers to check out. The notebook should be organized as follows:</p>
 <ul class="simple">
 <li><p>dependencies (package names and versions),</p></li>
 <li><p>body of the function</p></li>
@@ -220,22 +235,22 @@ When creating this branch, make sure your main branch is up to date with the lat
 </ul>
 </li>
 <li><p>Integrate the new functionality</p>
-<p>Now you may implement the new functionality inside PyTUPS. In so doing, make sure you:</p>
+<p>Now you may implement the new functionality inside PyleoTUPS. In so doing, make sure you:</p>
 <ul class="simple">
-<li><p>Re-use as many of PyTUPS’s existing utilities as you can, introducing new package  dependencies only as necessary.</p></li>
+<li><p>Re-use as many of PyleoTUPS’s existing utilities as you can, introducing new package  dependencies only as necessary.</p></li>
 <li><p>Create a docstring for your new function, describing arguments and returned variables, and showing an example of use. (Use an existing docstring for inspiration).</p></li>
-<li><p>If possible, also include a unit test for <a class="reference external" href="https://youtu.be/_WvjhrZR01U">continuous integration</a> (PyTUPS uses <cite>pytest</cite>). Feel free to ask for help from the package developers.</p></li>
+<li><p>If possible, also include a unit test for <a class="reference external" href="https://youtu.be/_WvjhrZR01U">continuous integration</a> (PyleoTUPS uses <cite>pytest</cite>). Feel free to ask for help from the package developers.</p></li>
 </ul>
 </li>
-<li><p>Expose the new functionality in the PyTUPS user API.</p></li>
+<li><p>Expose the new functionality in the PyleoTUPS user API.</p></li>
 </ol>
 </section>
 <section id="updating-existing-functionalities">
 <h4>Updating existing functionalities<a class="headerlink" href="#updating-existing-functionalities" title="Link to this heading"></a></h4>
 <ol class="arabic simple">
 <li><p>Open an issue on GitHub (same advice as above)</p></li>
-<li><p>Implement outside of PyTUPS, including a benchmark of how the existing function performs vs the proposed upgrade (e.g. with <cite>timeit</cite>).  Take into consideration memory requirements and describe on what architecture/OS you ran the test.</p></li>
-<li><p>Integrate the new functionality within PyTUPS (same advice as above)</p></li>
+<li><p>Implement outside of PyleoTUPS, including a benchmark of how the existing function performs vs the proposed upgrade (e.g. with <cite>timeit</cite>).  Take into consideration memory requirements and describe on what architecture/OS you ran the test.</p></li>
+<li><p>Integrate the new functionality within PyleoTUPS (same advice as above)</p></li>
 <li><p>Update the unit test(s) to make sure they still pass muster. Depending on the complexity of the feature, there may be more than one test to update.</p></li>
 </ol>
 </section>
@@ -247,12 +262,12 @@ When creating this branch, make sure your main branch is up to date with the lat
 <li><p>class: <cite>Test{filename}{Class}{method}</cite> with appropriate camel case convention</p></li>
 <li><p>function: <cite>test_{method}_t{test_id}</cite></p></li>
 </ol>
-<p>(see e.g. <a class="reference external" href="https://github.com/LinkedEarth/PyTUPS/blob/main/PyTUPS/tests/test_LiPD.py">test_LiPD.py</a> for example)</p>
-<p>Your test should be as minimal as possible; it is aimed to see if the function your wrote/updated works as advertised given a reasonably comprehensive list of possible arguments. As much as possible, please use the datasets shipped with PyTUPS to test your code and only introduce new datasets if absolutely necessary. In general, the simpler the test, the better, as it will run in less time and won’t get the GitHub gods angry with us.</p>
+<p>(see e.g. <a class="reference external" href="https://github.com/LinkedEarth/PyleoTUPS/blob/main/PyleoTUPS/tests/test_Dataset.py">test_Dataset.py</a> for example)</p>
+<p>Your test should be as minimal as possible; it is aimed to see if the function your wrote/updated works as advertised given a reasonably comprehensive list of possible arguments. As much as possible, please use the datasets shipped with PyleoTUPS to test your code and only introduce new datasets if absolutely necessary. In general, the simpler the test, the better, as it will run in less time and won’t get the GitHub gods angry with us.</p>
 <p>To run the test(s):</p>
 <ol class="arabic simple" start="0">
 <li><p>Make sure the <a class="reference external" href="https://docs.pytest.org">pytest package</a> is installed on your system; run <cite>pip install pytest</cite> if not.</p></li>
-<li><p>In your terminal, switch to the “tests” subdirectory of your PyTUPS forked repository. If you wish to test a specific class/method inside a specified file, run <cite>pytest {file_path}::{TestClass}::{test_method}</cite></p></li>
+<li><p>In your terminal, switch to the “tests” subdirectory of your PyleoTUPS forked repository. If you wish to test a specific class/method inside a specified file, run <cite>pytest {file_path}::{TestClass}::{test_method}</cite></p></li>
 <li><p>To run <em>all</em> tests in the specified file, run <cite>pytest {file_path}</cite></p></li>
 <li><p>To perform all tests in all testing files inside the specified directory, execute <cite>pytest {directory_path}</cite></p></li>
 </ol>
@@ -260,7 +275,7 @@ When creating this branch, make sure your main branch is up to date with the lat
 </section>
 <section id="stylistic-considerations">
 <h3>Stylistic considerations<a class="headerlink" href="#stylistic-considerations" title="Link to this heading"></a></h3>
-<p>Guido van Rossum’s great insight is that code is read far more often than it is written, so it is important for the code to be of a somewhat uniform style, so that people can read and understand it with relative ease. PyTUPS strives to use fairly consistent notation, including:</p>
+<p>Guido van Rossum’s great insight is that code is read far more often than it is written, so it is important for the code to be of a somewhat uniform style, so that people can read and understand it with relative ease. PyleoTUPS strives to use fairly consistent notation, including:</p>
 <blockquote>
 <div><ul class="simple">
 <li><p>capital letters for matrices, lowercase for vectors</p></li>
@@ -269,8 +284,8 @@ When creating this branch, make sure your main branch is up to date with the lat
 </div></blockquote>
 </section>
 </section>
-<section id="contributing-your-changes-to-pytups">
-<h2>Contributing your changes to PyTUPS<a class="headerlink" href="#contributing-your-changes-to-pytups" title="Link to this heading"></a></h2>
+<section id="contributing-your-changes-to-pyleotups">
+<h2>Contributing your changes to PyleoTUPS<a class="headerlink" href="#contributing-your-changes-to-pyleotups" title="Link to this heading"></a></h2>
 <section id="committing-your-code">
 <h3>Committing your code<a class="headerlink" href="#committing-your-code" title="Link to this heading"></a></h3>
 <p>Once you’ve made changes, you can see them by typing:</p>
@@ -311,13 +326,13 @@ The  preferred style is:</p>
 </pre></div>
 </div>
 <p>If you added the upstream repository as described above you will see something like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">origin</span>  <span class="n">git</span><span class="nd">@github</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="n">yourname</span><span class="o">/</span><span class="n">PyTUPS</span><span class="o">.</span><span class="n">git</span> <span class="p">(</span><span class="n">fetch</span><span class="p">)</span>
-<span class="n">origin</span>  <span class="n">git</span><span class="nd">@github</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="n">yourname</span><span class="o">/</span><span class="n">PyTUPS</span><span class="o">.</span><span class="n">git</span> <span class="p">(</span><span class="n">push</span><span class="p">)</span>
-<span class="n">upstream</span>  <span class="n">git</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">LinkedEarth</span><span class="o">/</span><span class="n">PyTUPS</span><span class="o">.</span><span class="n">git</span> <span class="p">(</span><span class="n">fetch</span><span class="p">)</span>
-<span class="n">upstream</span>  <span class="n">git</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">LinkedEarth</span><span class="o">/</span><span class="n">PyTUPS</span><span class="o">.</span><span class="n">git</span> <span class="p">(</span><span class="n">push</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">origin</span>  <span class="n">git</span><span class="nd">@github</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="n">yourname</span><span class="o">/</span><span class="n">PyleoTUPS</span><span class="o">.</span><span class="n">git</span> <span class="p">(</span><span class="n">fetch</span><span class="p">)</span>
+<span class="n">origin</span>  <span class="n">git</span><span class="nd">@github</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="n">yourname</span><span class="o">/</span><span class="n">PyleoTUPS</span><span class="o">.</span><span class="n">git</span> <span class="p">(</span><span class="n">push</span><span class="p">)</span>
+<span class="n">upstream</span>  <span class="n">git</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">LinkedEarth</span><span class="o">/</span><span class="n">PyleoTUPS</span><span class="o">.</span><span class="n">git</span> <span class="p">(</span><span class="n">fetch</span><span class="p">)</span>
+<span class="n">upstream</span>  <span class="n">git</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">LinkedEarth</span><span class="o">/</span><span class="n">PyleoTUPS</span><span class="o">.</span><span class="n">git</span> <span class="p">(</span><span class="n">push</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Now your code is on GitHub, but it is not yet a part of the PyTUPS project. For that to happen, a pull request needs to be submitted on GitHub.</p>
+<p>Now your code is on GitHub, but it is not yet a part of the PyleoTUPS project. For that to happen, a pull request needs to be submitted on GitHub.</p>
 </section>
 <section id="filing-a-pull-request">
 <h3>Filing a Pull Request<a class="headerlink" href="#filing-a-pull-request" title="Link to this heading"></a></h3>
@@ -398,12 +413,12 @@ To improve the chances of your pull request being reviewed, you should:</p>
 </section>
 <section id="documentation">
 <h2>Documentation<a class="headerlink" href="#documentation" title="Link to this heading"></a></h2>
-<section id="about-the-pytups-documentation">
-<h3>About the PyTUPS documentation<a class="headerlink" href="#about-the-pytups-documentation" title="Link to this heading"></a></h3>
-<p>PyTUPS’s documentation is built automatically from the function and class docstrings, via <a class="reference external" href="https://www.sphinx-doc.org/en/master/">Sphinx</a> and pushed automatically to  <a class="reference external" href="https://readthedocs.org">Read The Docs</a>. It is therefore especially important for your code to include a docstring, and to modify the docstrings of the functions/classes you modified to make sure the documentation is current.</p>
+<section id="about-the-pyleotups-documentation">
+<h3>About the PyleoTUPS documentation<a class="headerlink" href="#about-the-pyleotups-documentation" title="Link to this heading"></a></h3>
+<p>PyleoTUPS’s documentation is built automatically from the function and class docstrings, via <a class="reference external" href="https://www.sphinx-doc.org/en/master/">Sphinx</a> and pushed automatically to  <a class="reference external" href="https://readthedocs.org">Read The Docs</a>. It is therefore especially important for your code to include a docstring, and to modify the docstrings of the functions/classes you modified to make sure the documentation is current.</p>
 </section>
-<section id="updating-a-pytups-docstring">
-<h3>Updating a PyTUPS docstring<a class="headerlink" href="#updating-a-pytups-docstring" title="Link to this heading"></a></h3>
+<section id="updating-a-pyleotups-docstring">
+<h3>Updating a PyleoTUPS docstring<a class="headerlink" href="#updating-a-pyleotups-docstring" title="Link to this heading"></a></h3>
 <p>You may use existing docstrings as examples. A good docstring explains:</p>
 <blockquote>
 <div><ul class="simple">
@@ -417,8 +432,8 @@ To improve the chances of your pull request being reviewed, you should:</p>
 <div></div></blockquote>
 <p>and properly indented (look at other docstrings for inspiration).</p>
 </section>
-<section id="how-to-build-the-pytups-documentation">
-<h3>How to build the PyTUPS documentation<a class="headerlink" href="#how-to-build-the-pytups-documentation" title="Link to this heading"></a></h3>
+<section id="how-to-build-the-pyleotups-documentation">
+<h3>How to build the PyleoTUPS documentation<a class="headerlink" href="#how-to-build-the-pyleotups-documentation" title="Link to this heading"></a></h3>
 <p>Navigate to the docs folder and type <cite>make html</cite>. This may require installing other packages (sphinx, chardet, numpydoc, nbsphinx, sphinx_search, jupyter-sphinx, sphinx_copybutton, sphinx_rtd_theme).</p>
 <p>You are done! Thanks for playing.</p>
 </section>
@@ -429,13 +444,14 @@ To improve the chances of your pull request being reviewed, you should:</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="api.html" class="btn btn-neutral float-left" title="PyTUPS User API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="advanced.html" class="btn btn-neutral float-left" title="Advanced Functionalities" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="citation.html" class="btn btn-neutral float-right" title="Citing PyleoTUPS" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2025, Dhiren Oswal, Deborah Khider, Jay Pujara.</p>
+    <p>&#169; Copyright 2025, LinkedEarth.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

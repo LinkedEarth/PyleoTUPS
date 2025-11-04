@@ -6,30 +6,34 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PyTUPS documentation &mdash; PyTUPS 0.0.1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+  <title>PyleoTUPS: Automated Paleoclimate Data Extraction and Processing &mdash; PyleoTUPS 0.0.2b0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
-      <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
+      <link rel="stylesheet" type="text/css" href="_static/plot_directive.css?v=7f9a90b1" />
+      <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css?v=572af1d6" />
       <link rel="stylesheet" type="text/css" href="_static/thebelab.css" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/css/rtd_sphinx_search.min.css?v=e72958e9" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="_static/documentation_options.js?v=5e47b899"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="_static/thebelab-helper.js"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>
       <script src="_static/copybutton.js?v=f281be69"></script>
+      <script src="_static/js/rtd_search_config.js?v=b0596c34"></script>
+      <script src="_static/js/rtd_sphinx_search.min.js?v=5e065386"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Installing PyTUPS" href="installation.html" /> 
+    <link rel="next" title="Installing PyleoTUPS" href="installation.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -41,7 +45,8 @@
           
           
           <a href="#" class="icon icon-home">
-            PyTUPS
+            PyleoTUPS
+              <img src="_static/pyleotups_logo_small.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -51,17 +56,20 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Working with PyTUPS</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Working with PyleoTUPS</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installing PyTUPS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">PyTUPS User API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html#core-components">Core Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html#utility-classes">Utility Classes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html#parsers">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installing PyleoTUPS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">PyleoTUPS User APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced Functions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="advanced.html">Advanced Functionalities</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Getting Involved</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="contribution_guide.html">Contributing to PyTUPS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribution_guide.html">Contributing to PyleoTUPS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="citation.html">Citing PyleoTUPS</a></li>
 </ul>
 
         </div>
@@ -70,7 +78,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">PyTUPS</a>
+          <a href="#">PyleoTUPS</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -78,7 +86,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">PyTUPS documentation</li>
+      <li class="breadcrumb-item active">PyleoTUPS: Automated Paleoclimate Data Extraction and Processing</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -88,27 +96,34 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="pytups-documentation">
-<h1>PyTUPS documentation<a class="headerlink" href="#pytups-documentation" title="Link to this heading"></a></h1>
-<p>PyTUPS is a tool built around paleoclimate data.
-It enables interaction with <cite>NOAA Database &lt;https://www.ncei.noaa.gov/access/paleo-search/&gt;</cite>.</p>
-<p>In summary, PyTUPS allows you to:</p>
+  <section id="pyleotups-automated-paleoclimate-data-extraction-and-processing">
+<h1>PyleoTUPS: Automated Paleoclimate Data Extraction and Processing<a class="headerlink" href="#pyleotups-automated-paleoclimate-data-extraction-and-processing" title="Link to this heading"></a></h1>
+<p>PyleoTUPS is a Python package designed to streamline paleoclimate data workflows by automating the extraction and processing of datasets from major paleoclimate repositories. The package addresses a critical bottleneck in paleoclimate research: the time-consuming manual process of accessing, extracting, and formatting data from diverse file formats and repositories.</p>
+<p><strong>Key Features</strong>:</p>
 <ul class="simple">
-<li><p>Search studies through Python</p></li>
-<li><p>Check publications, sites, and datasets related to studies</p></li>
-<li><p>Open dataset files in pandas (currently supports <cite>.txt</cite> files following the NOAA template)</p></li>
+<li><p><strong>Automated Data Extraction</strong>: Leverages table understanding techniques to automatically extract data tables from complex text files, including NOAA Paleoclimate templates that have evolved over decades with varying formats and structures.</p></li>
+<li><p><strong>Multi-Repository Access</strong>: Provides unified access to datasets from two major paleoclimate repositories - NOAA NCEI Paleoclimate and PANGAEA (coming soon!) - through their respective APIs and direct file processing capabilities.</p></li>
+<li><p><strong>Format Flexibility</strong>: Handles multiple input formats including structured text files, CSV, and Excel files, automatically parsing embedded metadata and data tables regardless of template variations.</p></li>
+<li><p><strong>Scientific Python Integration</strong>: Returns extracted data as pandas DataFrames with preserved metadata attributes, ensuring seamless integration with the broader Python scientific ecosystem including NumPy, SciPy, and specialized paleoclimate libraries.</p></li>
+<li><p><strong>Metadata Preservation</strong>: Maintains comprehensive metadata linkage, storing dataset-level information (location, authors, publications) as dictionaries while preserving column-level metadata as DataFrame attributes.</p></li>
+<li><p><strong>FAIR Data Compliance</strong>: Supports community standards for Findable, Accessible, Interoperable, and Reusable (FAIR) data practices, with built-in compatibility with the <a class="reference external" href="http://lipd.net">Linked PaleoData format (LiPD)</a> format and <a class="reference external" href="https://www.ncei.noaa.gov/products/paleoclimatology">NOAA PaST Thesaurus vocabulary</a>.</p></li>
 </ul>
 </section>
 <section id="getting-started">
 <h1>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h1>
 <div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Working with PyTUPS</span></p>
+<p class="caption" role="heading"><span class="caption-text">Working with PyleoTUPS</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installing PyTUPS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">PyTUPS User API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html#core-components">Core Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html#utility-classes">Utility Classes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html#parsers">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installing PyleoTUPS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">PyleoTUPS User APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+</ul>
+</div>
+<p>The <a class="reference internal" href="api.html#api"><span class="std std-ref">PyleoTUPS APIs</span></a> make use of specialized methods which are described in details in advanced functionalities.</p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Advanced Functions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="advanced.html">Advanced Functionalities</a></li>
 </ul>
 </div>
 </section>
@@ -116,6 +131,17 @@ It enables interaction with <cite>NOAA Database &lt;https://www.ncei.noaa.gov/ac
 <h1>Getting Involved<a class="headerlink" href="#getting-involved" title="Link to this heading"></a></h1>
 <div class="toctree-wrapper compound">
 </div>
+<p>PyleoTUPS has been made freely available under the terms of the <a class="reference external" href="https://github.com/LinkedEarth/PyleoTUPS/blob/master/license">Apache 2.0 License</a>, and follows an open development model.
+There are many ways to get <a class="reference internal" href="contribution_guide.html#contributing-to-pyleotups"><span class="std std-ref">involved in the development of PyleoTUPS</span></a>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>If you write a paper making use of PyleoTUPS, please cite it <a class="reference internal" href="citation.html#citing-pyleotups"><span class="std std-ref">thus</span></a>.</p></li>
+<li><p>Report bugs and problems with the code or documentation to our <a class="reference external" href="https://github.com/LinkedEarth/PyleoTUPS/issues">GitHub repository</a>. Please make sure that there is not outstanding issues that cover the problem you’re experiencing.</p></li>
+<li><p>Contribute bug fixes</p></li>
+<li><p>Contribute enhancements and new features</p></li>
+<li><p>Contribute to the code documentation, and share your PyleoTUPS-supported scientific workflow as a (<a class="reference external" href="http://linked.earth/PaleoBooks/">PaleoBook</a>).</p></li>
+</ul>
+</div></blockquote>
 </section>
 <section id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h1>
@@ -130,13 +156,13 @@ It enables interaction with <cite>NOAA Database &lt;https://www.ncei.noaa.gov/ac
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="installation.html" class="btn btn-neutral float-right" title="Installing PyTUPS" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="installation.html" class="btn btn-neutral float-right" title="Installing PyleoTUPS" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2025, Dhiren Oswal, Deborah Khider, Jay Pujara.</p>
+    <p>&#169; Copyright 2025, LinkedEarth.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

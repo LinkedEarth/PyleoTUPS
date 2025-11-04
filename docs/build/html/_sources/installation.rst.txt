@@ -2,13 +2,13 @@
 
 .. note::
 
-   PyTUPS requires the use of Python 3.9 or above
+   PyleoTUPS requires the use of Python 3.11 or above
 
-Installing PyTUPS
-=================
+Installing PyleoTUPS
+====================
 
-Install PyTUPS through PyPI, which contains the most stable version of PyTUPS:
+Install PyleoTUPS through PyPI, which contains the most stable version of PyleoTUPS:
 
 .. code-block:: bash
 
-  pip install pytups
+  pip install pyleotups

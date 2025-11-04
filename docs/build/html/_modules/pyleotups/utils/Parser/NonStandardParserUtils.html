@@ -1,0 +1,659 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pyleotups.utils.Parser.NonStandardParserUtils &mdash; PyleoTUPS 0.0.2b0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/plot_directive.css?v=7f9a90b1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/jupyter-sphinx.css?v=572af1d6" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/thebelab.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/rtd_sphinx_search.min.css?v=e72958e9" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=5e47b899"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/thebelab-helper.js"></script>
+      <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../../../_static/js/rtd_search_config.js?v=b0596c34"></script>
+      <script src="../../../../_static/js/rtd_sphinx_search.min.js?v=5e065386"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            PyleoTUPS
+              <img src="../../../../_static/pyleotups_logo_small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Working with PyleoTUPS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installing PyleoTUPS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api.html">PyleoTUPS User APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials.html">Tutorials</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced Functions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../advanced.html">Advanced Functionalities</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Involved</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contribution_guide.html">Contributing to PyleoTUPS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../citation.html">Citing PyleoTUPS</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">PyleoTUPS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">pyleotups.utils.Parser.NonStandardParserUtils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pyleotups.utils.Parser.NonStandardParserUtils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># NonStandardParserUtils.py</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statistics</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
+
+<span class="c1"># ============================</span>
+<span class="c1">#        DATA MODELS</span>
+<span class="c1"># ============================</span>
+
+<div class="viewcode-block" id="BlockType">
+<a class="viewcode-back" href="../../../../advanced.html#pyleotups.utils.Parser.NonStandardParserUtils.BlockType">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">BlockType</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Enumeration for the different types a Block can be classified as.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">NARRATIVE</span> <span class="o">=</span> <span class="s2">&quot;narrative&quot;</span>
+    <span class="n">HEADER_ONLY</span> <span class="o">=</span> <span class="s2">&quot;header-only&quot;</span>
+    <span class="n">DATA</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
+    <span class="n">TABULAR</span> <span class="o">=</span> <span class="s2">&quot;tabular&quot;</span>
+    <span class="n">COMPLETE_TABULAR</span> <span class="o">=</span> <span class="s2">&quot;complete-tabular&quot;</span>
+    <span class="n">ERROR</span> <span class="o">=</span> <span class="s2">&quot;error&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="LineInfo">
+<a class="viewcode-back" href="../../../../advanced.html#pyleotups.utils.Parser.NonStandardParserUtils.LineInfo">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">LineInfo</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Holds the text and pre-computed statistics for a single line.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    idx : int</span>
+<span class="sd">        The original line number (index) from the source file.</span>
+<span class="sd">    text : str</span>
+<span class="sd">        The raw text of the line.</span>
+<span class="sd">    line_len : int</span>
+<span class="sd">        The character length of the line.</span>
+<span class="sd">    count_single_tokens : int</span>
+<span class="sd">        Token count using a single-space delimiter (r&quot;\s+&quot;).</span>
+<span class="sd">    count_multispace_tokens : int</span>
+<span class="sd">        Token count using a multi-space delimiter (r&quot;(\s{2,})&quot;).</span>
+<span class="sd">    count_tab_tokens : int</span>
+<span class="sd">        Token count using a tab delimiter (r&quot;\t&quot;).</span>
+<span class="sd">    numeric_single_ratio : float</span>
+<span class="sd">        Ratio of numeric tokens (0.0 to 1.0) using r&quot;\s+&quot;.</span>
+<span class="sd">    numeric_multispace_ratio : float</span>
+<span class="sd">        Ratio of numeric tokens (0.0 to 1.0) using r&quot;(\s{2,})&quot;.</span>
+<span class="sd">    numeric_tab_ratio : float</span>
+<span class="sd">        Ratio of numeric tokens (0.0 to 1.0) using r&quot;\t&quot;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">idx</span> <span class="o">=</span> <span class="n">idx</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">text</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">line_len</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">count_single_tokens</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">count_multispace_tokens</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">count_tab_tokens</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">numeric_single_ratio</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">numeric_multispace_ratio</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">numeric_tab_ratio</span> <span class="o">=</span> <span class="mf">0.0</span></div>
+
+
+
+<div class="viewcode-block" id="Block">
+<a class="viewcode-back" href="../../../../advanced.html#pyleotups.utils.Parser.NonStandardParserUtils.Block">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Block</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a contiguous block of non-empty lines from the source file.</span>
+
+<span class="sd">    This is the main data structure used by the parser, holding the lines,</span>
+<span class="sd">    their classified type, and the resulting parsed DataFrame.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    idx : int</span>
+<span class="sd">        The sequential index (0, 1, 2...) of the block in the file.</span>
+<span class="sd">    start : int</span>
+<span class="sd">        The starting line number (index) of this block in the source file.</span>
+<span class="sd">    end : int</span>
+<span class="sd">        The ending line number (index) of this block in the source file.</span>
+<span class="sd">    lines : list[LineInfo]</span>
+<span class="sd">        A list of LineInfo objects contained within this block.</span>
+<span class="sd">    block_type : BlockType</span>
+<span class="sd">        The classified type of the block (e.g., NARRATIVE, TABULAR).</span>
+<span class="sd">    headers : list[dict]</span>
+<span class="sd">        A list of header dictionaries, where each dict contains:</span>
+<span class="sd">        - &quot;name&quot; (str): The parsed header name.</span>
+<span class="sd">        - &quot;interval&quot; (tuple[int, int]): The (start, end) char position.</span>
+<span class="sd">    title : str or None</span>
+<span class="sd">        A potential title line detected above the headers.</span>
+<span class="sd">    stats : dict</span>
+<span class="sd">        Aggregated statistics computed for the entire block.</span>
+<span class="sd">    header_extent : int</span>
+<span class="sd">        The number of lines detected as being part of the header.</span>
+<span class="sd">    delimiter : str or None</span>
+<span class="sd">        The regex string of the delimiter chosen for this block.</span>
+<span class="sd">    df : pd.DataFrame or None</span>
+<span class="sd">        The resulting pandas DataFrame if parsing was successful.</span>
+<span class="sd">    used_as_header_for : list[int]</span>
+<span class="sd">        A list of block indices that successfully borrowed this block&#39;s headers.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">idx</span> <span class="o">=</span> <span class="n">idx</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="n">start</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end</span> <span class="o">=</span> <span class="n">end</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">block_type</span> <span class="o">=</span> <span class="n">BlockType</span><span class="o">.</span><span class="n">NARRATIVE</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stats</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header_extent</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">delimiter</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">used_as_header_for</span> <span class="o">=</span> <span class="p">[]</span></div>
+
+
+
+<span class="c1"># ============================</span>
+<span class="c1">#    NUMERIC/STRING UTILS</span>
+<span class="c1"># ============================</span>
+
+<span class="c1"># Constants used for robust numeric parsing</span>
+<span class="n">_DASHES</span> <span class="o">=</span> <span class="s2">&quot;-</span><span class="se">\u2010\u2011\u2012\u2013\u2014\u2212</span><span class="s2">&quot;</span>
+<span class="n">_TRAILING_MARKS_RE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[†‡*°%‰§#^~+]+$&quot;</span><span class="p">)</span>
+<span class="n">_NUM_RE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;&quot;&quot;^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?$&quot;&quot;&quot;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">ASCII</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="count_tokens">
+<a class="viewcode-back" href="../../../../advanced.html#pyleotups.utils.Parser.NonStandardParserUtils.count_tokens">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">count_tokens</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">delimiter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Counts non-empty tokens in a line given a regex delimiter.&quot;&quot;&quot;</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">delimiter</span><span class="p">,</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">([</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tokens</span> <span class="k">if</span> <span class="n">t</span><span class="p">])</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_strip_wrapping_brackets</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Recursively strips wrapping brackets like &#39;([])&#39; from a string.&quot;&quot;&quot;</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">while</span> <span class="n">s</span> <span class="ow">and</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="s2">&quot;([{&quot;</span> <span class="ow">and</span> <span class="n">s</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="s2">&quot;)]}&quot;</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">s</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_normalize_piece</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Normalizes a string for numeric parsing.&quot;&quot;&quot;</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">_TRAILING_MARKS_RE</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">_DASHES</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">_DASHES</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_is_plain_number</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Checks if a string is a plain ASCII number.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">_NUM_RE</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="is_numeric">
+<a class="viewcode-back" href="../../../../advanced.html#pyleotups.utils.Parser.NonStandardParserUtils.is_numeric">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_numeric</span><span class="p">(</span><span class="n">token</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Robustly checks if a token is numeric.</span>
+
+<span class="sd">    Handles plain numbers, ranges (e.g., &#39;10-20&#39;), values with</span>
+<span class="sd">    uncertainty (e.g., &#39;1.5 ± 0.1&#39; or &#39;1.50.1&#39;), and wrapped</span>
+<span class="sd">    values (e.g., &#39;(10)&#39; or &#39;6.80 (8.98)&#39;).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    token : str</span>
+<span class="sd">        The string token to check.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bool</span>
+<span class="sd">        True if the token is considered numeric, False otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">token</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">_strip_wrapping_brackets</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">token</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">t</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="n">t_norm</span> <span class="o">=</span> <span class="n">_normalize_piece</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">_is_plain_number</span><span class="p">(</span><span class="n">t_norm</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="c1"># Case: value followed by parenthetical, e.g., &quot;6.80 (8.98)&quot;</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^(.*?\S)\s*\(([^()]*)\)\s*$&quot;</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">m</span><span class="p">:</span>
+        <span class="n">left</span><span class="p">,</span> <span class="n">inside</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">left</span> <span class="o">=</span> <span class="n">_normalize_piece</span><span class="p">(</span><span class="n">_strip_wrapping_brackets</span><span class="p">(</span><span class="n">left</span><span class="p">))</span>
+        <span class="n">inside</span> <span class="o">=</span> <span class="n">_normalize_piece</span><span class="p">(</span><span class="n">_strip_wrapping_brackets</span><span class="p">(</span><span class="n">inside</span><span class="p">))</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">_is_plain_number</span><span class="p">(</span><span class="n">left</span><span class="p">)</span> <span class="ow">or</span> <span class="n">is_numeric</span><span class="p">(</span><span class="n">left</span><span class="p">))</span> <span class="ow">and</span> \
+               <span class="p">(</span><span class="n">_is_plain_number</span><span class="p">(</span><span class="n">inside</span><span class="p">)</span> <span class="ow">or</span> <span class="n">is_numeric</span><span class="p">(</span><span class="n">inside</span><span class="p">))</span>
+
+    <span class="c1"># Case: special separator &quot;&quot; (legacy in some files)</span>
+    <span class="k">if</span> <span class="s2">&quot;�&quot;</span> <span class="ow">in</span> <span class="n">t</span><span class="p">:</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;�&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="n">is_numeric</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">)</span>
+
+    <span class="c1"># Case: standard uncertainty &quot;±&quot;</span>
+    <span class="k">if</span> <span class="s2">&quot;±&quot;</span> <span class="ow">in</span> <span class="n">t</span><span class="p">:</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;±&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="n">is_numeric</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">)</span>
+
+    <span class="c1"># Case: numeric ranges with hyphen/en-dash/em-dash/minus</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">d</span> <span class="ow">in</span> <span class="n">t_norm</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">_DASHES</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">t_norm</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">pieces</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">t_norm</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pieces</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="n">is_numeric</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="ow">or</span> 
+                                       <span class="n">_is_plain_number</span><span class="p">(</span><span class="n">_normalize_piece</span><span class="p">(</span><span class="n">p</span><span class="p">))</span> 
+                                       <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pieces</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="c1"># Case: whitespace-separated cluster that are all numeric</span>
+    <span class="n">ws_parts</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\s+&quot;</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span> <span class="k">if</span> <span class="n">p</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ws_parts</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="n">is_numeric</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">ws_parts</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="n">t_final</span> <span class="o">=</span> <span class="n">_normalize_piece</span><span class="p">(</span><span class="n">_strip_wrapping_brackets</span><span class="p">(</span><span class="n">t_norm</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">_is_plain_number</span><span class="p">(</span><span class="n">t_final</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="numeric_ratio">
+<a class="viewcode-back" href="../../../../advanced.html#pyleotups.utils.Parser.NonStandardParserUtils.numeric_ratio">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">numeric_ratio</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">delimiter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates the ratio of numeric tokens in a line.&quot;&quot;&quot;</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">delimiter</span><span class="p">,</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="k">if</span> <span class="n">t</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">tokens</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">0.0</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">is_numeric</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="generate_row_pattern">
+<a class="viewcode-back" href="../../../../advanced.html#pyleotups.utils.Parser.NonStandardParserUtils.generate_row_pattern">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_row_pattern</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generates a string pattern (&#39;N&#39; for numeric, &#39;S&#39; for string) for a list of tokens.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;N&#39;</span> <span class="k">if</span> <span class="n">is_numeric</span><span class="p">(</span><span class="n">tok</span><span class="p">)</span> <span class="k">else</span> <span class="s1">&#39;S&#39;</span> <span class="k">for</span> <span class="n">tok</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># ============================</span>
+<span class="c1">#      STATISTICS UTILS</span>
+<span class="c1"># ============================</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_safe_mean</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates mean, returning 0 for empty list.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">statistics</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_safe_var</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates variance, returning 0 for list with &lt; 2 elements.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">statistics</span><span class="o">.</span><span class="n">variance</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">0</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_safe_cv</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mean</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates coefficient of variation, handling 0 mean/empty list.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">mean</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="n">_safe_var</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span> <span class="o">/</span> <span class="n">mean</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_most_common</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Finds the most common element in a list, breaking ties with the max value.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">lst</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">counts</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">counts</span><span class="p">[</span><span class="n">x</span><span class="p">],</span> <span class="n">x</span><span class="p">))</span>
+
+
+<span class="c1"># ============================</span>
+<span class="c1">#    HEADER &amp; TOKEN UTILS</span>
+<span class="c1"># ============================</span>
+
+<div class="viewcode-block" id="get_token_intervals_multi">
+<a class="viewcode-back" href="../../../../advanced.html#pyleotups.utils.Parser.NonStandardParserUtils.get_token_intervals_multi">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_token_intervals_multi</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">delimiter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Splits a line by a regex delimiter and returns token intervals.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    line : str</span>
+<span class="sd">        The line to parse.</span>
+<span class="sd">    delimiter : str</span>
+<span class="sd">        The regex delimiter string (e.g., r&quot;(\s{2,})&quot;).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list[dict]</span>
+<span class="sd">        A list of token dictionaries, each with:</span>
+<span class="sd">        - &quot;key&quot; (str): A unique key for the token.</span>
+<span class="sd">        - &quot;display&quot; (str): The stripped token text.</span>
+<span class="sd">        - &quot;interval&quot; (tuple[int, int]): The (start, end) char position.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">token_counts</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">parts</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">delimiter</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+    <span class="n">pos</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">delimiter</span><span class="p">,</span> <span class="n">part</span><span class="p">):</span>
+            <span class="n">pos</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">part</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">part</span><span class="p">:</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="n">pos</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">pos</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">part</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">base</span> <span class="o">=</span> <span class="n">part</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="n">token_counts</span><span class="p">[</span><span class="n">base</span><span class="p">]</span> <span class="o">=</span> <span class="n">token_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">base</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">token_counts</span><span class="p">[</span><span class="n">base</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">token_counts</span><span class="p">[</span><span class="n">base</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">base</span><span class="p">,</span>
+                <span class="s2">&quot;display&quot;</span><span class="p">:</span> <span class="n">base</span><span class="p">,</span>
+                <span class="s2">&quot;interval&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+            <span class="p">})</span>
+            <span class="n">pos</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">part</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tokens</span></div>
+
+
+
+<div class="viewcode-block" id="merge_headers_by_overlap">
+<a class="viewcode-back" href="../../../../advanced.html#pyleotups.utils.Parser.NonStandardParserUtils.merge_headers_by_overlap">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">merge_headers_by_overlap</span><span class="p">(</span><span class="n">token_maps</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Merges multiple lines of header tokens into a single header list.</span>
+
+<span class="sd">    Used for multi-line headers, where tokens from subsequent lines are</span>
+<span class="sd">    merged into the first line&#39;s headers based on character overlap.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    token_maps : list[list[dict]]</span>
+<span class="sd">        A list where each item is the output of `get_token_intervals_multi`</span>
+<span class="sd">        for one header line.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list[dict]</span>
+<span class="sd">        A single list of merged header dictionaries.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">token_maps</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+    <span class="n">base_row</span> <span class="o">=</span> <span class="n">token_maps</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">merged_headers</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">tok</span><span class="p">[</span><span class="s2">&quot;display&quot;</span><span class="p">],</span> <span class="s2">&quot;interval&quot;</span><span class="p">:</span> <span class="n">tok</span><span class="p">[</span><span class="s2">&quot;interval&quot;</span><span class="p">]}</span>
+                      <span class="k">for</span> <span class="n">tok</span> <span class="ow">in</span> <span class="n">base_row</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">token_maps</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+        <span class="k">for</span> <span class="n">tok</span> <span class="ow">in</span> <span class="n">row</span><span class="p">:</span>
+            <span class="n">matched</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">for</span> <span class="n">hdr</span> <span class="ow">in</span> <span class="n">merged_headers</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">intervals_overlap</span><span class="p">(</span><span class="n">hdr</span><span class="p">[</span><span class="s2">&quot;interval&quot;</span><span class="p">],</span> <span class="n">tok</span><span class="p">[</span><span class="s2">&quot;interval&quot;</span><span class="p">]):</span>
+                    <span class="n">hdr</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">tok</span><span class="p">[</span><span class="s2">&quot;display&quot;</span><span class="p">]</span>
+                    <span class="n">hdr</span><span class="p">[</span><span class="s2">&quot;interval&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">hdr</span><span class="p">[</span><span class="s2">&quot;interval&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">tok</span><span class="p">[</span><span class="s2">&quot;interval&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span>
+                                       <span class="nb">max</span><span class="p">(</span><span class="n">hdr</span><span class="p">[</span><span class="s2">&quot;interval&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">tok</span><span class="p">[</span><span class="s2">&quot;interval&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">]))</span>
+                    <span class="n">matched</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">break</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">matched</span><span class="p">:</span>
+                <span class="n">merged_headers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">tok</span><span class="p">[</span><span class="s2">&quot;display&quot;</span><span class="p">],</span> <span class="s2">&quot;interval&quot;</span><span class="p">:</span> <span class="n">tok</span><span class="p">[</span><span class="s2">&quot;interval&quot;</span><span class="p">]})</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">merged_headers</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;interval&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span></div>
+
+
+
+<div class="viewcode-block" id="compute_interval_overlap">
+<a class="viewcode-back" href="../../../../advanced.html#pyleotups.utils.Parser.NonStandardParserUtils.compute_interval_overlap">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_interval_overlap</span><span class="p">(</span><span class="n">interval1</span><span class="p">,</span> <span class="n">interval2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates the number of overlapping characters between two intervals.&quot;&quot;&quot;</span>
+    <span class="n">start1</span><span class="p">,</span> <span class="n">end1</span> <span class="o">=</span> <span class="n">interval1</span>
+    <span class="n">start2</span><span class="p">,</span> <span class="n">end2</span> <span class="o">=</span> <span class="n">interval2</span>
+    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">end1</span><span class="p">,</span> <span class="n">end2</span><span class="p">)</span> <span class="o">-</span> <span class="nb">max</span><span class="p">(</span><span class="n">start1</span><span class="p">,</span> <span class="n">start2</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="intervals_overlap">
+<a class="viewcode-back" href="../../../../advanced.html#pyleotups.utils.Parser.NonStandardParserUtils.intervals_overlap">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">intervals_overlap</span><span class="p">(</span><span class="n">interval1</span><span class="p">,</span> <span class="n">interval2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Checks if two intervals overlap at all.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">interval1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">interval2</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&lt;</span> <span class="nb">min</span><span class="p">(</span><span class="n">interval1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">interval2</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_calculate_interval_distance</span><span class="p">(</span><span class="n">tok_interval</span><span class="p">,</span> <span class="n">head_interval</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the minimum character distance between two intervals.</span>
+<span class="sd">    Returns 0 if they overlap.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">t_start</span><span class="p">,</span> <span class="n">t_end</span> <span class="o">=</span> <span class="n">tok_interval</span>
+    <span class="n">h_start</span><span class="p">,</span> <span class="n">h_end</span> <span class="o">=</span> <span class="n">head_interval</span>
+    <span class="k">if</span> <span class="n">t_end</span> <span class="o">&lt;=</span> <span class="n">h_start</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">h_start</span> <span class="o">-</span> <span class="n">t_end</span>  <span class="c1"># Token is to the left</span>
+    <span class="k">elif</span> <span class="n">t_start</span> <span class="o">&gt;=</span> <span class="n">h_end</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">t_start</span> <span class="o">-</span> <span class="n">h_end</span>  <span class="c1"># Token is to the right</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>  <span class="c1"># Intervals overlap</span>
+
+
+<span class="c1"># ============================</span>
+<span class="c1">#      DATAFRAME UTILS</span>
+<span class="c1"># ============================</span>
+
+<div class="viewcode-block" id="generate_df">
+<a class="viewcode-back" href="../../../../advanced.html#pyleotups.utils.Parser.NonStandardParserUtils.generate_df">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_df</span><span class="p">(</span><span class="n">lines_info</span><span class="p">,</span> <span class="n">delimiter</span><span class="p">,</span> <span class="n">headers</span><span class="p">,</span> <span class="n">header_extent</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates a DataFrame using a simple split, assuming columns align.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    lines_info : list[LineInfo]</span>
+<span class="sd">        The list of LineInfo objects to parse.</span>
+<span class="sd">    delimiter : str</span>
+<span class="sd">        The regex delimiter to split lines.</span>
+<span class="sd">    headers : list[dict]</span>
+<span class="sd">        The list of header objects (must contain &quot;name&quot;).</span>
+<span class="sd">    header_extent : int, optional</span>
+<span class="sd">        The number of lines to skip from the start of `lines_info`.</span>
+<span class="sd">        Defaults to 0.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    pd.DataFrame</span>
+<span class="sd">        The parsed DataFrame.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        If `delimiter` or `headers` are missing.</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        If the number of tokens in a data row does not match</span>
+<span class="sd">        the number of headers (and data rows exist).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">delimiter</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;generate_df requires a valid delimiter.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">headers</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;generate_df requires valid headers.&quot;</span><span class="p">)</span>
+
+    <span class="n">data_lines_text</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines_info</span><span class="p">[</span><span class="n">header_extent</span><span class="p">:]]</span>
+    <span class="n">col_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">h</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">headers</span><span class="p">]</span>
+
+    <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">data_lines_text</span><span class="p">:</span>
+        <span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">delimiter</span><span class="p">,</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
+        <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">rows</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">col_names</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Column count (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s2">) &quot;</span>
+                         <span class="sa">f</span><span class="s2">&quot;does not match header count (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">col_names</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">col_names</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="assign_tokens_by_overlap">
+<a class="viewcode-back" href="../../../../advanced.html#pyleotups.utils.Parser.NonStandardParserUtils.assign_tokens_by_overlap">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">assign_tokens_by_overlap</span><span class="p">(</span><span class="n">lines_info</span><span class="p">,</span> <span class="n">delimiter</span><span class="p">,</span> <span class="n">headers</span><span class="p">,</span> <span class="n">header_extent</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates a DataFrame by assigning tokens based on character-level overlap.</span>
+
+<span class="sd">    This is a fallback for misaligned data. It checks two stages:</span>
+<span class="sd">    1. Assigns a token to the header with the *maximum overlap*.</span>
+<span class="sd">    2. If no overlap, assigns to the header with the *minimum distance*</span>
+<span class="sd">       (closest neighbor).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    lines_info : list[LineInfo]</span>
+<span class="sd">        The list of LineInfo objects to parse.</span>
+<span class="sd">    delimiter : str</span>
+<span class="sd">        The regex delimiter to split lines.</span>
+<span class="sd">    headers : list[dict]</span>
+<span class="sd">        The list of header objects (must contain &quot;name&quot; and &quot;interval&quot;).</span>
+<span class="sd">    header_extent : int, optional</span>
+<span class="sd">        The number of lines to skip from the start of `lines_info`.</span>
+<span class="sd">        Defaults to 0.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    pd.DataFrame</span>
+<span class="sd">        The parsed DataFrame.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        If `delimiter` or `headers` are missing or malformed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">delimiter</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;assign_tokens_by_overlap requires a valid delimiter.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">headers</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="s2">&quot;interval&quot;</span> <span class="ow">in</span> <span class="n">h</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">headers</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;assign_tokens_by_overlap requires headers with &#39;interval&#39; data.&quot;</span><span class="p">)</span>
+
+    <span class="n">data_lines_info</span> <span class="o">=</span> <span class="n">lines_info</span><span class="p">[</span><span class="n">header_extent</span><span class="p">:]</span>
+    <span class="n">n_cols</span><span class="p">,</span> <span class="n">n_rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">headers</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_lines_info</span><span class="p">)</span>
+    <span class="n">matrix</span> <span class="o">=</span> <span class="p">[[</span><span class="kc">None</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_cols</span><span class="p">)]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_rows</span><span class="p">)]</span>
+    <span class="n">col_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">h</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">headers</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">line_info</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">data_lines_info</span><span class="p">):</span>
+        <span class="n">tokens</span> <span class="o">=</span> <span class="n">get_token_intervals_multi</span><span class="p">(</span><span class="n">line_info</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">delimiter</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">tok</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+            <span class="c1"># Stage 1: Find best overlap</span>
+            <span class="n">overlaps</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">compute_interval_overlap</span><span class="p">(</span><span class="n">tok</span><span class="p">[</span><span class="s2">&quot;interval&quot;</span><span class="p">],</span> <span class="n">headers</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s2">&quot;interval&quot;</span><span class="p">]))</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_cols</span><span class="p">)</span>
+            <span class="p">]</span>
+            <span class="n">best_match_col</span><span class="p">,</span> <span class="n">max_overlap</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">overlaps</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                              <span class="n">default</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+            <span class="c1"># Stage 2: If no overlap, find nearest neighbor</span>
+            <span class="k">if</span> <span class="n">max_overlap</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">distances</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">_calculate_interval_distance</span><span class="p">(</span><span class="n">tok</span><span class="p">[</span><span class="s2">&quot;interval&quot;</span><span class="p">],</span> <span class="n">headers</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s2">&quot;interval&quot;</span><span class="p">]))</span>
+                    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_cols</span><span class="p">)</span>
+                <span class="p">]</span>
+                <span class="n">best_match_col</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">distances</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                        <span class="n">default</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)))</span>
+
+            <span class="c1"># Assign token if a match was found</span>
+            <span class="k">if</span> <span class="n">best_match_col</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">current_val</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">best_match_col</span><span class="p">]</span>
+                <span class="n">tok_display</span> <span class="o">=</span> <span class="n">tok</span><span class="p">[</span><span class="s2">&quot;display&quot;</span><span class="p">]</span>
+
+                <span class="k">if</span> <span class="n">current_val</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">best_match_col</span><span class="p">]</span> <span class="o">=</span> <span class="n">tok_display</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">best_match_col</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">current_val</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">tok_display</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">col_names</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, LinkedEarth.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

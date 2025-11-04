@@ -1,0 +1,1216 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced Functionalities &mdash; PyleoTUPS 0.0.2b0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/plot_directive.css?v=7f9a90b1" />
+      <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css?v=572af1d6" />
+      <link rel="stylesheet" type="text/css" href="_static/thebelab.css" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/css/rtd_sphinx_search.min.css?v=e72958e9" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5e47b899"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/thebelab-helper.js"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script src="_static/js/rtd_search_config.js?v=b0596c34"></script>
+      <script src="_static/js/rtd_sphinx_search.min.js?v=5e065386"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Contributing to PyleoTUPS" href="contribution_guide.html" />
+    <link rel="prev" title="Tutorials" href="tutorials.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            PyleoTUPS
+              <img src="_static/pyleotups_logo_small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Working with PyleoTUPS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installing PyleoTUPS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">PyleoTUPS User APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced Functions</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Advanced Functionalities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyleotups.utils.NOAADataset">NOAADataset (pyleotups.utils.NOAADataset)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pyleotups.utils.NOAADataset.NOAADataset"><code class="docutils literal notranslate"><span class="pre">NOAADataset</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.NOAADataset.NOAADataset.study_id"><code class="docutils literal notranslate"><span class="pre">NOAADataset.study_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.NOAADataset.NOAADataset.xml_id"><code class="docutils literal notranslate"><span class="pre">NOAADataset.xml_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.NOAADataset.NOAADataset.metadata"><code class="docutils literal notranslate"><span class="pre">NOAADataset.metadata</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.NOAADataset.NOAADataset.investigators"><code class="docutils literal notranslate"><span class="pre">NOAADataset.investigators</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.NOAADataset.NOAADataset.publications"><code class="docutils literal notranslate"><span class="pre">NOAADataset.publications</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.NOAADataset.NOAADataset.sites"><code class="docutils literal notranslate"><span class="pre">NOAADataset.sites</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.NOAADataset.NOAADataset.to_dict"><code class="docutils literal notranslate"><span class="pre">NOAADataset.to_dict()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyleotups.utils.PaleoData">PaleoData (pyleotups.utils.PaleoData)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pyleotups.utils.PaleoData.PaleoData"><code class="docutils literal notranslate"><span class="pre">PaleoData</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.PaleoData.PaleoData.datatable_id"><code class="docutils literal notranslate"><span class="pre">PaleoData.datatable_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.PaleoData.PaleoData.dataTableName"><code class="docutils literal notranslate"><span class="pre">PaleoData.dataTableName</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.PaleoData.PaleoData.timeUnit"><code class="docutils literal notranslate"><span class="pre">PaleoData.timeUnit</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.PaleoData.PaleoData.files"><code class="docutils literal notranslate"><span class="pre">PaleoData.files</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.PaleoData.PaleoData.file_variable_map"><code class="docutils literal notranslate"><span class="pre">PaleoData.file_variable_map</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.PaleoData.PaleoData.file_url"><code class="docutils literal notranslate"><span class="pre">PaleoData.file_url</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.PaleoData.PaleoData.variables"><code class="docutils literal notranslate"><span class="pre">PaleoData.variables</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.PaleoData.PaleoData.to_dict"><code class="docutils literal notranslate"><span class="pre">PaleoData.to_dict()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyleotups.utils.Publication">Publication (pyleotups.utils.Publication)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pyleotups.utils.Publication.Publication"><code class="docutils literal notranslate"><span class="pre">Publication</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.Publication.Publication.author"><code class="docutils literal notranslate"><span class="pre">Publication.author</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.Publication.Publication.title"><code class="docutils literal notranslate"><span class="pre">Publication.title</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.Publication.Publication.journal"><code class="docutils literal notranslate"><span class="pre">Publication.journal</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.Publication.Publication.year"><code class="docutils literal notranslate"><span class="pre">Publication.year</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.Publication.Publication.volume"><code class="docutils literal notranslate"><span class="pre">Publication.volume</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.Publication.Publication.number"><code class="docutils literal notranslate"><span class="pre">Publication.number</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.Publication.Publication.pages"><code class="docutils literal notranslate"><span class="pre">Publication.pages</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.Publication.Publication.pub_type"><code class="docutils literal notranslate"><span class="pre">Publication.pub_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.Publication.Publication.doi"><code class="docutils literal notranslate"><span class="pre">Publication.doi</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.Publication.Publication.url"><code class="docutils literal notranslate"><span class="pre">Publication.url</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.Publication.Publication.study_id"><code class="docutils literal notranslate"><span class="pre">Publication.study_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.Publication.Publication.get_citation_key"><code class="docutils literal notranslate"><span class="pre">Publication.get_citation_key()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.Publication.Publication.to_dict"><code class="docutils literal notranslate"><span class="pre">Publication.to_dict()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyleotups.utils.Site">Site (pyleotups.utils.Site)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pyleotups.utils.Site.Site"><code class="docutils literal notranslate"><span class="pre">Site</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.Site.Site.to_dict"><code class="docutils literal notranslate"><span class="pre">Site.to_dict()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#parsers">Parsers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#standardparser-pyleotups-utils-parser-standardparser">StandardParser (pyleotups.utils.Parser.StandardParser)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.Parser.StandardParser"><code class="docutils literal notranslate"><span class="pre">StandardParser</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#nonstandardparser-pyleotups-utils-parser-nonstandardparser">NonStandardParser (pyleotups.utils.Parser.NonStandardParser)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.Parser.NonStandardParser"><code class="docutils literal notranslate"><span class="pre">NonStandardParser</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-pyleotups.utils.Parser.NonStandardParserUtils">NonStandardParserUtils (pyleotups.utils.Parser.NonStandardParserUtils)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.Parser.NonStandardParserUtils.Block"><code class="docutils literal notranslate"><span class="pre">Block</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.Parser.NonStandardParserUtils.BlockType"><code class="docutils literal notranslate"><span class="pre">BlockType</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.Parser.NonStandardParserUtils.LineInfo"><code class="docutils literal notranslate"><span class="pre">LineInfo</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.Parser.NonStandardParserUtils.assign_tokens_by_overlap"><code class="docutils literal notranslate"><span class="pre">assign_tokens_by_overlap()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.Parser.NonStandardParserUtils.compute_interval_overlap"><code class="docutils literal notranslate"><span class="pre">compute_interval_overlap()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.Parser.NonStandardParserUtils.count_tokens"><code class="docutils literal notranslate"><span class="pre">count_tokens()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.Parser.NonStandardParserUtils.generate_df"><code class="docutils literal notranslate"><span class="pre">generate_df()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.Parser.NonStandardParserUtils.generate_row_pattern"><code class="docutils literal notranslate"><span class="pre">generate_row_pattern()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.Parser.NonStandardParserUtils.get_token_intervals_multi"><code class="docutils literal notranslate"><span class="pre">get_token_intervals_multi()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.Parser.NonStandardParserUtils.intervals_overlap"><code class="docutils literal notranslate"><span class="pre">intervals_overlap()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.Parser.NonStandardParserUtils.is_numeric"><code class="docutils literal notranslate"><span class="pre">is_numeric()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.Parser.NonStandardParserUtils.merge_headers_by_overlap"><code class="docutils literal notranslate"><span class="pre">merge_headers_by_overlap()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyleotups.utils.Parser.NonStandardParserUtils.numeric_ratio"><code class="docutils literal notranslate"><span class="pre">numeric_ratio()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Involved</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contribution_guide.html">Contributing to PyleoTUPS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="citation.html">Citing PyleoTUPS</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PyleoTUPS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Advanced Functionalities</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/advanced.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="advanced-functionalities">
+<span id="advanced"></span><h1>Advanced Functionalities<a class="headerlink" href="#advanced-functionalities" title="Link to this heading"></a></h1>
+<section id="module-pyleotups.utils.NOAADataset">
+<span id="noaadataset-pyleotups-utils-noaadataset"></span><h2>NOAADataset (pyleotups.utils.NOAADataset)<a class="headerlink" href="#module-pyleotups.utils.NOAADataset" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyleotups.utils.NOAADataset.NOAADataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyleotups.utils.NOAADataset.</span></span><span class="sig-name descname"><span class="pre">NOAADataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">study_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyleotups/utils/NOAADataset.html#NOAADataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyleotups.utils.NOAADataset.NOAADataset" title="Link to this definition"></a></dt>
+<dd><p>This class encapsulates study metadata and its related components (e.g. publications,
+sites) retrieved from the NOAA API.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.NOAADataset.NOAADataset.study_id">
+<span class="sig-name descname"><span class="pre">study_id</span></span><a class="headerlink" href="#pyleotups.utils.NOAADataset.NOAADataset.study_id" title="Link to this definition"></a></dt>
+<dd><p>The unique NOAA study identifier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.NOAADataset.NOAADataset.xml_id">
+<span class="sig-name descname"><span class="pre">xml_id</span></span><a class="headerlink" href="#pyleotups.utils.NOAADataset.NOAADataset.xml_id" title="Link to this definition"></a></dt>
+<dd><p>The XML identifier of the study.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.NOAADataset.NOAADataset.metadata">
+<span class="sig-name descname"><span class="pre">metadata</span></span><a class="headerlink" href="#pyleotups.utils.NOAADataset.NOAADataset.metadata" title="Link to this definition"></a></dt>
+<dd><p>A dictionary containing basic metadata such as studyName, dataType, earliestYearBP, etc.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.NOAADataset.NOAADataset.investigators">
+<span class="sig-name descname"><span class="pre">investigators</span></span><a class="headerlink" href="#pyleotups.utils.NOAADataset.NOAADataset.investigators" title="Link to this definition"></a></dt>
+<dd><p>A comma-separated string of investigator names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.NOAADataset.NOAADataset.publications">
+<span class="sig-name descname"><span class="pre">publications</span></span><a class="headerlink" href="#pyleotups.utils.NOAADataset.NOAADataset.publications" title="Link to this definition"></a></dt>
+<dd><p>A list of Publication objects associated with the study.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of <a class="reference internal" href="#pyleotups.utils.Publication.Publication" title="pyleotups.utils.Publication.Publication">Publication</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.NOAADataset.NOAADataset.sites">
+<span class="sig-name descname"><span class="pre">sites</span></span><a class="headerlink" href="#pyleotups.utils.NOAADataset.NOAADataset.sites" title="Link to this definition"></a></dt>
+<dd><p>A list of Site objects associated with the study.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of <a class="reference internal" href="#pyleotups.utils.Site.Site" title="pyleotups.utils.Site.Site">Site</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyleotups.utils.NOAADataset.NOAADataset.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyleotups/utils/NOAADataset.html#NOAADataset.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyleotups.utils.NOAADataset.NOAADataset.to_dict" title="Link to this definition"></a></dt>
+<dd><p>Convert the study data and its components to a dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary representing the study including metadata, investigators,
+publications, and sites.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-pyleotups.utils.PaleoData">
+<span id="paleodata-pyleotups-utils-paleodata"></span><h2>PaleoData (pyleotups.utils.PaleoData)<a class="headerlink" href="#module-pyleotups.utils.PaleoData" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyleotups.utils.PaleoData.PaleoData">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyleotups.utils.PaleoData.</span></span><span class="sig-name descname"><span class="pre">PaleoData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">paleo_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">study_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">site_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyleotups/utils/PaleoData.html#PaleoData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyleotups.utils.PaleoData.PaleoData" title="Link to this definition"></a></dt>
+<dd><p>Represents paleo data associated with a site, including multiple data files and
+full variable metadata per file.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.PaleoData.PaleoData.datatable_id">
+<span class="sig-name descname"><span class="pre">datatable_id</span></span><a class="headerlink" href="#pyleotups.utils.PaleoData.PaleoData.datatable_id" title="Link to this definition"></a></dt>
+<dd><p>Unique NOAA data table identifier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.PaleoData.PaleoData.dataTableName">
+<span class="sig-name descname"><span class="pre">dataTableName</span></span><a class="headerlink" href="#pyleotups.utils.PaleoData.PaleoData.dataTableName" title="Link to this definition"></a></dt>
+<dd><p>Name of the data table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.PaleoData.PaleoData.timeUnit">
+<span class="sig-name descname"><span class="pre">timeUnit</span></span><a class="headerlink" href="#pyleotups.utils.PaleoData.PaleoData.timeUnit" title="Link to this definition"></a></dt>
+<dd><p>Time unit used in the data table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.PaleoData.PaleoData.files">
+<span class="sig-name descname"><span class="pre">files</span></span><a class="headerlink" href="#pyleotups.utils.PaleoData.PaleoData.files" title="Link to this definition"></a></dt>
+<dd><p>List of raw file info dicts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.PaleoData.PaleoData.file_variable_map">
+<span class="sig-name descname"><span class="pre">file_variable_map</span></span><a class="headerlink" href="#pyleotups.utils.PaleoData.PaleoData.file_variable_map" title="Link to this definition"></a></dt>
+<dd><p>Maps fileUrl to a dict of variables and their full metadata.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.PaleoData.PaleoData.file_url">
+<span class="sig-name descname"><span class="pre">file_url</span></span><a class="headerlink" href="#pyleotups.utils.PaleoData.PaleoData.file_url" title="Link to this definition"></a></dt>
+<dd><p>Shortcut to first file URL (for backward compatibility).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str or np.nan</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.PaleoData.PaleoData.variables">
+<span class="sig-name descname"><span class="pre">variables</span></span><a class="headerlink" href="#pyleotups.utils.PaleoData.PaleoData.variables" title="Link to this definition"></a></dt>
+<dd><p>Shortcut to variable names in first file (for backward compatibility).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyleotups.utils.PaleoData.PaleoData.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_obj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyleotups/utils/PaleoData.html#PaleoData.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyleotups.utils.PaleoData.PaleoData.to_dict" title="Link to this definition"></a></dt>
+<dd><p>Convert PaleoData into a dictionary, optionally for a specific file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_obj</strong> (<em>dict</em><em>, </em><em>optional</em>) – Specific file object (default is first file).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary of core metadata for one file.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-pyleotups.utils.Publication">
+<span id="publication-pyleotups-utils-publication"></span><h2>Publication (pyleotups.utils.Publication)<a class="headerlink" href="#module-pyleotups.utils.Publication" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyleotups.utils.Publication.Publication">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyleotups.utils.Publication.</span></span><span class="sig-name descname"><span class="pre">Publication</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pub_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyleotups/utils/Publication.html#Publication"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyleotups.utils.Publication.Publication" title="Link to this definition"></a></dt>
+<dd><p>Represents a publication within a study.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Publication.Publication.author">
+<span class="sig-name descname"><span class="pre">author</span></span><a class="headerlink" href="#pyleotups.utils.Publication.Publication.author" title="Link to this definition"></a></dt>
+<dd><p>The name of the author(s) of the publication.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Publication.Publication.title">
+<span class="sig-name descname"><span class="pre">title</span></span><a class="headerlink" href="#pyleotups.utils.Publication.Publication.title" title="Link to this definition"></a></dt>
+<dd><p>The title of the publication.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Publication.Publication.journal">
+<span class="sig-name descname"><span class="pre">journal</span></span><a class="headerlink" href="#pyleotups.utils.Publication.Publication.journal" title="Link to this definition"></a></dt>
+<dd><p>The journal where the publication appeared.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Publication.Publication.year">
+<span class="sig-name descname"><span class="pre">year</span></span><a class="headerlink" href="#pyleotups.utils.Publication.Publication.year" title="Link to this definition"></a></dt>
+<dd><p>The publication year.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Publication.Publication.volume">
+<span class="sig-name descname"><span class="pre">volume</span></span><a class="headerlink" href="#pyleotups.utils.Publication.Publication.volume" title="Link to this definition"></a></dt>
+<dd><p>The volume number (if applicable).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Publication.Publication.number">
+<span class="sig-name descname"><span class="pre">number</span></span><a class="headerlink" href="#pyleotups.utils.Publication.Publication.number" title="Link to this definition"></a></dt>
+<dd><p>The issue number (if applicable).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Publication.Publication.pages">
+<span class="sig-name descname"><span class="pre">pages</span></span><a class="headerlink" href="#pyleotups.utils.Publication.Publication.pages" title="Link to this definition"></a></dt>
+<dd><p>The page numbers (if applicable).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Publication.Publication.pub_type">
+<span class="sig-name descname"><span class="pre">pub_type</span></span><a class="headerlink" href="#pyleotups.utils.Publication.Publication.pub_type" title="Link to this definition"></a></dt>
+<dd><p>The type of publication.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Publication.Publication.doi">
+<span class="sig-name descname"><span class="pre">doi</span></span><a class="headerlink" href="#pyleotups.utils.Publication.Publication.doi" title="Link to this definition"></a></dt>
+<dd><p>The Digital Object Identifier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Publication.Publication.url">
+<span class="sig-name descname"><span class="pre">url</span></span><a class="headerlink" href="#pyleotups.utils.Publication.Publication.url" title="Link to this definition"></a></dt>
+<dd><p>URL for the publication.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Publication.Publication.study_id">
+<span class="sig-name descname"><span class="pre">study_id</span></span><a class="headerlink" href="#pyleotups.utils.Publication.Publication.study_id" title="Link to this definition"></a></dt>
+<dd><p>The NOAA study ID to which this publication belongs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyleotups.utils.Publication.Publication.get_citation_key">
+<span class="sig-name descname"><span class="pre">get_citation_key</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyleotups/utils/Publication.html#Publication.get_citation_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyleotups.utils.Publication.Publication.get_citation_key" title="Link to this definition"></a></dt>
+<dd><p>Generate a unique citation key for the publication.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A citation key in the format: “&lt;LastName&gt;_&lt;FirstSignificantWord&gt;_&lt;Year&gt;_&lt;StudyID&gt;”.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyleotups.utils.Publication.Publication.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyleotups/utils/Publication.html#Publication.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyleotups.utils.Publication.Publication.to_dict" title="Link to this definition"></a></dt>
+<dd><p>Convert the publication data into a dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary representation of the publication.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-pyleotups.utils.Site">
+<span id="site-pyleotups-utils-site"></span><h2>Site (pyleotups.utils.Site)<a class="headerlink" href="#module-pyleotups.utils.Site" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyleotups.utils.Site.Site">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyleotups.utils.Site.</span></span><span class="sig-name descname"><span class="pre">Site</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">site_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">study_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyleotups/utils/Site.html#Site"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyleotups.utils.Site.Site" title="Link to this definition"></a></dt>
+<dd><p>Represents a site within a study.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyleotups.utils.Site.Site.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyleotups/utils/Site.html#Site.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyleotups.utils.Site.Site.to_dict" title="Link to this definition"></a></dt>
+<dd><p>Convert the site into a list of dictionaries, one per PaleoData file.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="parsers">
+<h2>Parsers<a class="headerlink" href="#parsers" title="Link to this heading"></a></h2>
+<section id="standardparser-pyleotups-utils-parser-standardparser">
+<h3>StandardParser (pyleotups.utils.Parser.StandardParser)<a class="headerlink" href="#standardparser-pyleotups-utils-parser-standardparser" title="Link to this heading"></a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.StandardParser">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyleotups.utils.Parser.</span></span><span class="sig-name descname"><span class="pre">StandardParser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyleotups/utils/Parser/StandardParser.html#StandardParser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyleotups.utils.Parser.StandardParser" title="Link to this definition"></a></dt>
+<dd><p>StandardParser parses NOAA .txt data files with standard format:
+Standard format refers to NOAA Templated file with
+metadata -&gt; (# lines), variables -&gt; (## lines), data (tab-deliimited).</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.StandardParser.url">
+<span class="sig-name descname"><span class="pre">url</span></span><a class="headerlink" href="#pyleotups.utils.Parser.StandardParser.url" title="Link to this definition"></a></dt>
+<dd><p>URL of the file to parse.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.StandardParser.lines">
+<span class="sig-name descname"><span class="pre">lines</span></span><a class="headerlink" href="#pyleotups.utils.Parser.StandardParser.lines" title="Link to this definition"></a></dt>
+<dd><p>Fetched lines from file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.StandardParser.meta_start">
+<span class="sig-name descname"><span class="pre">meta_start</span></span><a class="headerlink" href="#pyleotups.utils.Parser.StandardParser.meta_start" title="Link to this definition"></a></dt>
+<dd><p>Index where metadata block starts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.StandardParser.meta_end">
+<span class="sig-name descname"><span class="pre">meta_end</span></span><a class="headerlink" href="#pyleotups.utils.Parser.StandardParser.meta_end" title="Link to this definition"></a></dt>
+<dd><p>Index where metadata block ends.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.StandardParser.variables">
+<span class="sig-name descname"><span class="pre">variables</span></span><a class="headerlink" href="#pyleotups.utils.Parser.StandardParser.variables" title="Link to this definition"></a></dt>
+<dd><p>Extracted variable names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.StandardParser.skip_lines">
+<span class="sig-name descname"><span class="pre">skip_lines</span></span><a class="headerlink" href="#pyleotups.utils.Parser.StandardParser.skip_lines" title="Link to this definition"></a></dt>
+<dd><p>Lines to skip after metadata to reach data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.StandardParser.data">
+<span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#pyleotups.utils.Parser.StandardParser.data" title="Link to this definition"></a></dt>
+<dd><p>Parsed data rows.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of list of str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.StandardParser.df">
+<span class="sig-name descname"><span class="pre">df</span></span><a class="headerlink" href="#pyleotups.utils.Parser.StandardParser.df" title="Link to this definition"></a></dt>
+<dd><p>Final constructed dataframe.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.StandardParser.parse">
+<span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyleotups/utils/Parser/StandardParser.html#StandardParser.parse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyleotups.utils.Parser.StandardParser.parse" title="Link to this definition"></a></dt>
+<dd><p>Public method to parse the NOAA file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>url</strong> (<em>str</em><em>, </em><em>optional</em>) – URL to override the existing one.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="nonstandardparser-pyleotups-utils-parser-nonstandardparser">
+<h3>NonStandardParser (pyleotups.utils.Parser.NonStandardParser)<a class="headerlink" href="#nonstandardparser-pyleotups-utils-parser-nonstandardparser" title="Link to this heading"></a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParser">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyleotups.utils.Parser.</span></span><span class="sig-name descname"><span class="pre">NonStandardParser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_skip</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyleotups/utils/Parser/NonStandardParser.html#NonStandardParser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParser" title="Link to this definition"></a></dt>
+<dd><p>Parses non-standard, fixed-width, or misaligned text files (like
+those from NOAA) into a structured list of Blocks, each potentially
+containing a pandas DataFrame.</p>
+<p>The parser uses statistical heuristics to classify contiguous blocks
+of text and then applies different parsing strategies based on the
+classification.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParser.file_path">
+<span class="sig-name descname"><span class="pre">file_path</span></span><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParser.file_path" title="Link to this definition"></a></dt>
+<dd><p>The local path or URL to the file being parsed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParser.use_skip">
+<span class="sig-name descname"><span class="pre">use_skip</span></span><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParser.use_skip" title="Link to this definition"></a></dt>
+<dd><p>Whether to skip to the “DATA:” descriptor in the file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParser.lines">
+<span class="sig-name descname"><span class="pre">lines</span></span><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParser.lines" title="Link to this definition"></a></dt>
+<dd><p>A list of all lines read from the file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParser.blocks">
+<span class="sig-name descname"><span class="pre">blocks</span></span><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParser.blocks" title="Link to this definition"></a></dt>
+<dd><p>The final list of processed Block objects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[<a class="reference internal" href="#pyleotups.utils.Parser.NonStandardParserUtils.Block" title="pyleotups.utils.Parser.NonStandardParserUtils.Block">Block</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Notes</p>
+<p>The parsing workflow is as follows:
+1.  A <cite>NonStandardParser</cite> instance is created with a <cite>file_path</cite>.
+2.  The public <cite>parse()</cite> method is called.
+3.  <cite>_fetch_lines()</cite> reads the file into <cite>self.lines</cite>.
+4.  <cite>_segregate_blocks()</cite> splits <cite>self.lines</cite> into <cite>Block</cite> objects</p>
+<blockquote>
+<div><p>(groups of non-empty lines) and saves them to <cite>self.blocks</cite>.</p>
+</div></blockquote>
+<ol class="arabic" start="5">
+<li><p><cite>parse()</cite> iterates through each <cite>block</cite> in <cite>self.blocks</cite>.</p></li>
+<li><p><cite>_process_block()</cite> is called on each block, which:
+a.  Computes statistics for the block.
+b.  Classifies it (e.g., TABULAR, DATA, NARRATIVE).
+c.  Dispatches to a specific parsing method (e.g.,</p>
+<blockquote>
+<div><p><cite>_parse_tabular_block</cite>).</p>
+</div></blockquote>
+</li>
+<li><p>The specific parse methods (e.g., <cite>_parse_data_block</cite>) handle
+logic for header borrowing, DataFrame generation, and error
+handling, modifying the <cite>block</cite> object in place.</p></li>
+<li><p><cite>parse()</cite> returns the fully processed <cite>self.blocks</cite> list.</p></li>
+</ol>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParser.parse">
+<span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyleotups/utils/Parser/NonStandardParser.html#NonStandardParser.parse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParser.parse" title="Link to this definition"></a></dt>
+<dd><p>Executes the full parsing workflow on the file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of processed Block objects. Each block may contain
+a DataFrame (<cite>block.df</cite>) if parsing was successful, or an
+error message (<cite>block.error_message</cite>) if it failed.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[<a class="reference internal" href="#pyleotups.utils.Parser.NonStandardParserUtils.Block" title="pyleotups.utils.Parser.NonStandardParserUtils.Block">Block</a>]</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ValueError</strong> – If <cite>use_skip</cite> is True and no “DATA:” line is found.</p></li>
+<li><p><strong>requests.exceptions.RequestException</strong> – If the <cite>file_path</cite> is a URL and it fails to fetch.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-pyleotups.utils.Parser.NonStandardParserUtils">
+<span id="nonstandardparserutils-pyleotups-utils-parser-nonstandardparserutils"></span><h3>NonStandardParserUtils (pyleotups.utils.Parser.NonStandardParserUtils)<a class="headerlink" href="#module-pyleotups.utils.Parser.NonStandardParserUtils" title="Link to this heading"></a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParserUtils.Block">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyleotups.utils.Parser.NonStandardParserUtils.</span></span><span class="sig-name descname"><span class="pre">Block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyleotups/utils/Parser/NonStandardParserUtils.html#Block"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParserUtils.Block" title="Link to this definition"></a></dt>
+<dd><p>Represents a contiguous block of non-empty lines from the source file.</p>
+<p>This is the main data structure used by the parser, holding the lines,
+their classified type, and the resulting parsed DataFrame.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParserUtils.Block.idx">
+<span class="sig-name descname"><span class="pre">idx</span></span><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParserUtils.Block.idx" title="Link to this definition"></a></dt>
+<dd><p>The sequential index (0, 1, 2…) of the block in the file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParserUtils.Block.start">
+<span class="sig-name descname"><span class="pre">start</span></span><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParserUtils.Block.start" title="Link to this definition"></a></dt>
+<dd><p>The starting line number (index) of this block in the source file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParserUtils.Block.end">
+<span class="sig-name descname"><span class="pre">end</span></span><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParserUtils.Block.end" title="Link to this definition"></a></dt>
+<dd><p>The ending line number (index) of this block in the source file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParserUtils.Block.lines">
+<span class="sig-name descname"><span class="pre">lines</span></span><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParserUtils.Block.lines" title="Link to this definition"></a></dt>
+<dd><p>A list of LineInfo objects contained within this block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[<a class="reference internal" href="#pyleotups.utils.Parser.NonStandardParserUtils.LineInfo" title="pyleotups.utils.Parser.NonStandardParserUtils.LineInfo">LineInfo</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParserUtils.Block.block_type">
+<span class="sig-name descname"><span class="pre">block_type</span></span><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParserUtils.Block.block_type" title="Link to this definition"></a></dt>
+<dd><p>The classified type of the block (e.g., NARRATIVE, TABULAR).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#pyleotups.utils.Parser.NonStandardParserUtils.BlockType" title="pyleotups.utils.Parser.NonStandardParserUtils.BlockType">BlockType</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParserUtils.Block.headers">
+<span class="sig-name descname"><span class="pre">headers</span></span><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParserUtils.Block.headers" title="Link to this definition"></a></dt>
+<dd><p>A list of header dictionaries, where each dict contains:
+- “name” (str): The parsed header name.
+- “interval” (tuple[int, int]): The (start, end) char position.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[dict]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParserUtils.Block.title">
+<span class="sig-name descname"><span class="pre">title</span></span><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParserUtils.Block.title" title="Link to this definition"></a></dt>
+<dd><p>A potential title line detected above the headers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParserUtils.Block.stats">
+<span class="sig-name descname"><span class="pre">stats</span></span><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParserUtils.Block.stats" title="Link to this definition"></a></dt>
+<dd><p>Aggregated statistics computed for the entire block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParserUtils.Block.header_extent">
+<span class="sig-name descname"><span class="pre">header_extent</span></span><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParserUtils.Block.header_extent" title="Link to this definition"></a></dt>
+<dd><p>The number of lines detected as being part of the header.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParserUtils.Block.delimiter">
+<span class="sig-name descname"><span class="pre">delimiter</span></span><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParserUtils.Block.delimiter" title="Link to this definition"></a></dt>
+<dd><p>The regex string of the delimiter chosen for this block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParserUtils.Block.df">
+<span class="sig-name descname"><span class="pre">df</span></span><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParserUtils.Block.df" title="Link to this definition"></a></dt>
+<dd><p>The resulting pandas DataFrame if parsing was successful.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParserUtils.Block.used_as_header_for">
+<span class="sig-name descname"><span class="pre">used_as_header_for</span></span><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParserUtils.Block.used_as_header_for" title="Link to this definition"></a></dt>
+<dd><p>A list of block indices that successfully borrowed this block’s headers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParserUtils.BlockType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyleotups.utils.Parser.NonStandardParserUtils.</span></span><span class="sig-name descname"><span class="pre">BlockType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyleotups/utils/Parser/NonStandardParserUtils.html#BlockType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParserUtils.BlockType" title="Link to this definition"></a></dt>
+<dd><p>Enumeration for the different types a Block can be classified as.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParserUtils.LineInfo">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyleotups.utils.Parser.NonStandardParserUtils.</span></span><span class="sig-name descname"><span class="pre">LineInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyleotups/utils/Parser/NonStandardParserUtils.html#LineInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParserUtils.LineInfo" title="Link to this definition"></a></dt>
+<dd><p>Holds the text and pre-computed statistics for a single line.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParserUtils.LineInfo.idx">
+<span class="sig-name descname"><span class="pre">idx</span></span><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParserUtils.LineInfo.idx" title="Link to this definition"></a></dt>
+<dd><p>The original line number (index) from the source file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParserUtils.LineInfo.text">
+<span class="sig-name descname"><span class="pre">text</span></span><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParserUtils.LineInfo.text" title="Link to this definition"></a></dt>
+<dd><p>The raw text of the line.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParserUtils.LineInfo.line_len">
+<span class="sig-name descname"><span class="pre">line_len</span></span><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParserUtils.LineInfo.line_len" title="Link to this definition"></a></dt>
+<dd><p>The character length of the line.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParserUtils.LineInfo.count_single_tokens">
+<span class="sig-name descname"><span class="pre">count_single_tokens</span></span><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParserUtils.LineInfo.count_single_tokens" title="Link to this definition"></a></dt>
+<dd><p>Token count using a single-space delimiter (r”s+”).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParserUtils.LineInfo.count_multispace_tokens">
+<span class="sig-name descname"><span class="pre">count_multispace_tokens</span></span><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParserUtils.LineInfo.count_multispace_tokens" title="Link to this definition"></a></dt>
+<dd><p>Token count using a multi-space delimiter (r”(s{2,})”).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParserUtils.LineInfo.count_tab_tokens">
+<span class="sig-name descname"><span class="pre">count_tab_tokens</span></span><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParserUtils.LineInfo.count_tab_tokens" title="Link to this definition"></a></dt>
+<dd><p>Token count using a tab delimiter (r”   “).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParserUtils.LineInfo.numeric_single_ratio">
+<span class="sig-name descname"><span class="pre">numeric_single_ratio</span></span><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParserUtils.LineInfo.numeric_single_ratio" title="Link to this definition"></a></dt>
+<dd><p>Ratio of numeric tokens (0.0 to 1.0) using r”s+”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParserUtils.LineInfo.numeric_multispace_ratio">
+<span class="sig-name descname"><span class="pre">numeric_multispace_ratio</span></span><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParserUtils.LineInfo.numeric_multispace_ratio" title="Link to this definition"></a></dt>
+<dd><p>Ratio of numeric tokens (0.0 to 1.0) using r”(s{2,})”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParserUtils.LineInfo.numeric_tab_ratio">
+<span class="sig-name descname"><span class="pre">numeric_tab_ratio</span></span><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParserUtils.LineInfo.numeric_tab_ratio" title="Link to this definition"></a></dt>
+<dd><p>Ratio of numeric tokens (0.0 to 1.0) using r”   “.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParserUtils.assign_tokens_by_overlap">
+<span class="sig-prename descclassname"><span class="pre">pyleotups.utils.Parser.NonStandardParserUtils.</span></span><span class="sig-name descname"><span class="pre">assign_tokens_by_overlap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lines_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delimiter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header_extent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyleotups/utils/Parser/NonStandardParserUtils.html#assign_tokens_by_overlap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParserUtils.assign_tokens_by_overlap" title="Link to this definition"></a></dt>
+<dd><p>Generates a DataFrame by assigning tokens based on character-level overlap.</p>
+<p>This is a fallback for misaligned data. It checks two stages:
+1. Assigns a token to the header with the <em>maximum overlap</em>.
+2. If no overlap, assigns to the header with the <em>minimum distance</em></p>
+<blockquote>
+<div><p>(closest neighbor).</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lines_info</strong> (<em>list</em><em>[</em><a class="reference internal" href="#pyleotups.utils.Parser.NonStandardParserUtils.LineInfo" title="pyleotups.utils.Parser.NonStandardParserUtils.LineInfo"><em>LineInfo</em></a><em>]</em>) – The list of LineInfo objects to parse.</p></li>
+<li><p><strong>delimiter</strong> (<em>str</em>) – The regex delimiter to split lines.</p></li>
+<li><p><strong>headers</strong> (<em>list</em><em>[</em><em>dict</em><em>]</em>) – The list of header objects (must contain “name” and “interval”).</p></li>
+<li><p><strong>header_extent</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of lines to skip from the start of <cite>lines_info</cite>.
+Defaults to 0.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The parsed DataFrame.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <cite>delimiter</cite> or <cite>headers</cite> are missing or malformed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParserUtils.compute_interval_overlap">
+<span class="sig-prename descclassname"><span class="pre">pyleotups.utils.Parser.NonStandardParserUtils.</span></span><span class="sig-name descname"><span class="pre">compute_interval_overlap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyleotups/utils/Parser/NonStandardParserUtils.html#compute_interval_overlap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParserUtils.compute_interval_overlap" title="Link to this definition"></a></dt>
+<dd><p>Calculates the number of overlapping characters between two intervals.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParserUtils.count_tokens">
+<span class="sig-prename descclassname"><span class="pre">pyleotups.utils.Parser.NonStandardParserUtils.</span></span><span class="sig-name descname"><span class="pre">count_tokens</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delimiter</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyleotups/utils/Parser/NonStandardParserUtils.html#count_tokens"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParserUtils.count_tokens" title="Link to this definition"></a></dt>
+<dd><p>Counts non-empty tokens in a line given a regex delimiter.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParserUtils.generate_df">
+<span class="sig-prename descclassname"><span class="pre">pyleotups.utils.Parser.NonStandardParserUtils.</span></span><span class="sig-name descname"><span class="pre">generate_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lines_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delimiter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header_extent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyleotups/utils/Parser/NonStandardParserUtils.html#generate_df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParserUtils.generate_df" title="Link to this definition"></a></dt>
+<dd><p>Generates a DataFrame using a simple split, assuming columns align.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lines_info</strong> (<em>list</em><em>[</em><a class="reference internal" href="#pyleotups.utils.Parser.NonStandardParserUtils.LineInfo" title="pyleotups.utils.Parser.NonStandardParserUtils.LineInfo"><em>LineInfo</em></a><em>]</em>) – The list of LineInfo objects to parse.</p></li>
+<li><p><strong>delimiter</strong> (<em>str</em>) – The regex delimiter to split lines.</p></li>
+<li><p><strong>headers</strong> (<em>list</em><em>[</em><em>dict</em><em>]</em>) – The list of header objects (must contain “name”).</p></li>
+<li><p><strong>header_extent</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of lines to skip from the start of <cite>lines_info</cite>.
+Defaults to 0.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The parsed DataFrame.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – If <cite>delimiter</cite> or <cite>headers</cite> are missing.</p></li>
+<li><p><strong>ValueError</strong> – If the number of tokens in a data row does not match
+the number of headers (and data rows exist).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParserUtils.generate_row_pattern">
+<span class="sig-prename descclassname"><span class="pre">pyleotups.utils.Parser.NonStandardParserUtils.</span></span><span class="sig-name descname"><span class="pre">generate_row_pattern</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyleotups/utils/Parser/NonStandardParserUtils.html#generate_row_pattern"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParserUtils.generate_row_pattern" title="Link to this definition"></a></dt>
+<dd><p>Generates a string pattern (‘N’ for numeric, ‘S’ for string) for a list of tokens.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParserUtils.get_token_intervals_multi">
+<span class="sig-prename descclassname"><span class="pre">pyleotups.utils.Parser.NonStandardParserUtils.</span></span><span class="sig-name descname"><span class="pre">get_token_intervals_multi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delimiter</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyleotups/utils/Parser/NonStandardParserUtils.html#get_token_intervals_multi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParserUtils.get_token_intervals_multi" title="Link to this definition"></a></dt>
+<dd><p>Splits a line by a regex delimiter and returns token intervals.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>line</strong> (<em>str</em>) – The line to parse.</p></li>
+<li><p><strong>delimiter</strong> (<em>str</em>) – The regex delimiter string (e.g., r”(s{2,})”).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of token dictionaries, each with:
+- “key” (str): A unique key for the token.
+- “display” (str): The stripped token text.
+- “interval” (tuple[int, int]): The (start, end) char position.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[dict]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParserUtils.intervals_overlap">
+<span class="sig-prename descclassname"><span class="pre">pyleotups.utils.Parser.NonStandardParserUtils.</span></span><span class="sig-name descname"><span class="pre">intervals_overlap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyleotups/utils/Parser/NonStandardParserUtils.html#intervals_overlap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParserUtils.intervals_overlap" title="Link to this definition"></a></dt>
+<dd><p>Checks if two intervals overlap at all.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParserUtils.is_numeric">
+<span class="sig-prename descclassname"><span class="pre">pyleotups.utils.Parser.NonStandardParserUtils.</span></span><span class="sig-name descname"><span class="pre">is_numeric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyleotups/utils/Parser/NonStandardParserUtils.html#is_numeric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParserUtils.is_numeric" title="Link to this definition"></a></dt>
+<dd><p>Robustly checks if a token is numeric.</p>
+<p>Handles plain numbers, ranges (e.g., ‘10-20’), values with
+uncertainty (e.g., ‘1.5 ± 0.1’ or ‘1.50.1’), and wrapped
+values (e.g., ‘(10)’ or ‘6.80 (8.98)’).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>token</strong> (<em>str</em>) – The string token to check.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the token is considered numeric, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParserUtils.merge_headers_by_overlap">
+<span class="sig-prename descclassname"><span class="pre">pyleotups.utils.Parser.NonStandardParserUtils.</span></span><span class="sig-name descname"><span class="pre">merge_headers_by_overlap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token_maps</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyleotups/utils/Parser/NonStandardParserUtils.html#merge_headers_by_overlap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParserUtils.merge_headers_by_overlap" title="Link to this definition"></a></dt>
+<dd><p>Merges multiple lines of header tokens into a single header list.</p>
+<p>Used for multi-line headers, where tokens from subsequent lines are
+merged into the first line’s headers based on character overlap.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>token_maps</strong> (<em>list</em><em>[</em><em>list</em><em>[</em><em>dict</em><em>]</em><em>]</em>) – A list where each item is the output of <cite>get_token_intervals_multi</cite>
+for one header line.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A single list of merged header dictionaries.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[dict]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParserUtils.numeric_ratio">
+<span class="sig-prename descclassname"><span class="pre">pyleotups.utils.Parser.NonStandardParserUtils.</span></span><span class="sig-name descname"><span class="pre">numeric_ratio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delimiter</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyleotups/utils/Parser/NonStandardParserUtils.html#numeric_ratio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParserUtils.numeric_ratio" title="Link to this definition"></a></dt>
+<dd><p>Calculates the ratio of numeric tokens in a line.</p>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="tutorials.html" class="btn btn-neutral float-left" title="Tutorials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="contribution_guide.html" class="btn btn-neutral float-right" title="Contributing to PyleoTUPS" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, LinkedEarth.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

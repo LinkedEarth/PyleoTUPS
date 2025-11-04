@@ -1,0 +1,652 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pyleotups.utils.Parser.NonStandardParser &mdash; PyleoTUPS 0.0.2b0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/plot_directive.css?v=7f9a90b1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/jupyter-sphinx.css?v=572af1d6" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/thebelab.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/rtd_sphinx_search.min.css?v=e72958e9" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=5e47b899"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/thebelab-helper.js"></script>
+      <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../../../_static/js/rtd_search_config.js?v=b0596c34"></script>
+      <script src="../../../../_static/js/rtd_sphinx_search.min.js?v=5e065386"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            PyleoTUPS
+              <img src="../../../../_static/pyleotups_logo_small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Working with PyleoTUPS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installing PyleoTUPS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api.html">PyleoTUPS User APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials.html">Tutorials</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced Functions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../advanced.html">Advanced Functionalities</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Involved</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contribution_guide.html">Contributing to PyleoTUPS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../citation.html">Citing PyleoTUPS</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">PyleoTUPS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">pyleotups.utils.Parser.NonStandardParser</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pyleotups.utils.Parser.NonStandardParser</h1><div class="highlight"><pre>
+<span></span><span class="c1"># NonStandardParser.py</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+
+<span class="c1"># Import all models and utilities from the utils file</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.NonStandardParserUtils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Block</span><span class="p">,</span> <span class="n">LineInfo</span><span class="p">,</span> <span class="n">BlockType</span><span class="p">,</span>
+    <span class="n">count_tokens</span><span class="p">,</span> <span class="n">numeric_ratio</span><span class="p">,</span> <span class="n">is_numeric</span><span class="p">,</span> <span class="n">generate_row_pattern</span><span class="p">,</span>
+    <span class="n">_safe_mean</span><span class="p">,</span> <span class="n">_safe_var</span><span class="p">,</span> <span class="n">_safe_cv</span><span class="p">,</span> <span class="n">_most_common</span><span class="p">,</span>
+    <span class="n">get_token_intervals_multi</span><span class="p">,</span> <span class="n">merge_headers_by_overlap</span><span class="p">,</span>
+    <span class="n">generate_df</span><span class="p">,</span> <span class="n">assign_tokens_by_overlap</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="NonStandardParser">
+<a class="viewcode-back" href="../../../../advanced.html#pyleotups.utils.Parser.NonStandardParser.NonStandardParser">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">NonStandardParser</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parses non-standard, fixed-width, or misaligned text files (like</span>
+<span class="sd">    those from NOAA) into a structured list of Blocks, each potentially</span>
+<span class="sd">    containing a pandas DataFrame.</span>
+
+<span class="sd">    The parser uses statistical heuristics to classify contiguous blocks</span>
+<span class="sd">    of text and then applies different parsing strategies based on the</span>
+<span class="sd">    classification.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    file_path : str</span>
+<span class="sd">        The local path or URL to the file being parsed.</span>
+<span class="sd">    use_skip : bool</span>
+<span class="sd">        Whether to skip to the &quot;DATA:&quot; descriptor in the file.</span>
+<span class="sd">    lines : list[str]</span>
+<span class="sd">        A list of all lines read from the file.</span>
+<span class="sd">    blocks : list[Block]</span>
+<span class="sd">        The final list of processed Block objects.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The parsing workflow is as follows:</span>
+<span class="sd">    1.  A `NonStandardParser` instance is created with a `file_path`.</span>
+<span class="sd">    2.  The public `parse()` method is called.</span>
+<span class="sd">    3.  `_fetch_lines()` reads the file into `self.lines`.</span>
+<span class="sd">    4.  `_segregate_blocks()` splits `self.lines` into `Block` objects</span>
+<span class="sd">        (groups of non-empty lines) and saves them to `self.blocks`.</span>
+<span class="sd">    5.  `parse()` iterates through each `block` in `self.blocks`.</span>
+<span class="sd">    6.  `_process_block()` is called on each block, which:</span>
+<span class="sd">        a.  Computes statistics for the block.</span>
+<span class="sd">        b.  Classifies it (e.g., TABULAR, DATA, NARRATIVE).</span>
+<span class="sd">        c.  Dispatches to a specific parsing method (e.g.,</span>
+<span class="sd">            `_parse_tabular_block`).</span>
+<span class="sd">    7.  The specific parse methods (e.g., `_parse_data_block`) handle</span>
+<span class="sd">        logic for header borrowing, DataFrame generation, and error</span>
+<span class="sd">        handling, modifying the `block` object in place.</span>
+<span class="sd">    8.  `parse()` returns the fully processed `self.blocks` list.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">use_skip</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the parser.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        file_path : str</span>
+<span class="sd">            The local file path or HTTP/HTTPS URL of the text file to parse.</span>
+<span class="sd">        use_skip : bool, optional</span>
+<span class="sd">            If True (default), the parser will skip all lines until it finds</span>
+<span class="sd">            a line starting with &quot;DATA:&quot;. This is standard for NOAA files.</span>
+<span class="sd">            </span>
+<span class="sd">            **Do&#39;s and Don&#39;ts**:</span>
+<span class="sd">            - **Do** set this to `True` for standard NOAA Paleo files.</span>
+<span class="sd">            - **Don&#39;t** set this to `True` if your file has no &quot;DATA:&quot;</span>
+<span class="sd">              marker, as it will raise a `ValueError`. Set it to `False`</span>
+<span class="sd">              to parse the entire file from the beginning.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_path</span> <span class="o">=</span> <span class="n">file_path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">use_skip</span> <span class="o">=</span> <span class="n">use_skip</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="NonStandardParser.parse">
+<a class="viewcode-back" href="../../../../advanced.html#pyleotups.utils.Parser.NonStandardParser.NonStandardParser.parse">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Executes the full parsing workflow on the file.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list[Block]</span>
+<span class="sd">            A list of processed Block objects. Each block may contain</span>
+<span class="sd">            a DataFrame (`block.df`) if parsing was successful, or an</span>
+<span class="sd">            error message (`block.error_message`) if it failed.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If `use_skip` is True and no &quot;DATA:&quot; line is found.</span>
+<span class="sd">        requests.exceptions.RequestException</span>
+<span class="sd">            If the `file_path` is a URL and it fails to fetch.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fetch_lines</span><span class="p">()</span>
+
+        <span class="n">start_idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_data_descriptor</span><span class="p">()</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_skip</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">if</span> <span class="n">start_idx</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_skip</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No Data Descriptor found in the file.&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_segregate_blocks</span><span class="p">(</span><span class="n">start_idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">block</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">blocks</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_process_block</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_fetch_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fetches file content from path/URL and sets self.lines.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_path</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">):</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file_path</span><span class="p">)</span>
+            <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lines</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">text</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">lines</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_find_data_descriptor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Finds the &#39;DATA:&#39; line index in self.lines.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">next</span><span class="p">((</span><span class="n">j</span> <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">)</span>
+                     <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;data:&quot;</span><span class="p">)),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_segregate_blocks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Segregates self.lines into Blocks and pre-computes line stats.</span>
+<span class="sd">        </span>
+<span class="sd">        Splits the file into blocks based on empty lines. For each line,</span>
+<span class="sd">        it also pre-computes token counts and numeric ratios for all</span>
+<span class="sd">        potential delimiters.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">blocks</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">block</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">block_idx</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">)</span> <span class="k">if</span> <span class="n">end</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">end</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">block</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">block</span> <span class="o">=</span> <span class="n">Block</span><span class="p">(</span><span class="n">idx</span><span class="o">=</span><span class="n">block_idx</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
+                
+                <span class="c1"># Pre-compute stats for the line</span>
+                <span class="n">li</span> <span class="o">=</span> <span class="n">LineInfo</span><span class="p">(</span><span class="n">idx</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">))</span>
+                <span class="n">li</span><span class="o">.</span><span class="n">line_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">li</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+                <span class="n">li</span><span class="o">.</span><span class="n">count_single_tokens</span> <span class="o">=</span> <span class="n">count_tokens</span><span class="p">(</span><span class="n">li</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;\s+&quot;</span><span class="p">)</span>
+                <span class="n">li</span><span class="o">.</span><span class="n">count_multispace_tokens</span> <span class="o">=</span> <span class="n">count_tokens</span><span class="p">(</span><span class="n">li</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;(\s{2,})&quot;</span><span class="p">)</span>
+                <span class="n">li</span><span class="o">.</span><span class="n">count_tab_tokens</span> <span class="o">=</span> <span class="n">count_tokens</span><span class="p">(</span><span class="n">li</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;\t&quot;</span><span class="p">)</span>
+                <span class="n">li</span><span class="o">.</span><span class="n">numeric_single_ratio</span> <span class="o">=</span> <span class="n">numeric_ratio</span><span class="p">(</span><span class="n">li</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;\s+&quot;</span><span class="p">)</span>
+                <span class="n">li</span><span class="o">.</span><span class="n">numeric_multispace_ratio</span> <span class="o">=</span> <span class="n">numeric_ratio</span><span class="p">(</span><span class="n">li</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;(\s{2,})&quot;</span><span class="p">)</span>
+                <span class="n">li</span><span class="o">.</span><span class="n">numeric_tab_ratio</span> <span class="o">=</span> <span class="n">numeric_ratio</span><span class="p">(</span><span class="n">li</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;\t&quot;</span><span class="p">)</span>
+                
+                <span class="n">block</span><span class="o">.</span><span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">li</span><span class="p">)</span>
+                <span class="n">block</span><span class="o">.</span><span class="n">end</span> <span class="o">=</span> <span class="n">i</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">block</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">blocks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+                    <span class="n">block_idx</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">block</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">block</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">blocks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span> <span class="o">=</span> <span class="n">blocks</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_compute_statistics</span><span class="p">(</span><span class="n">block</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Computes and returns aggregate statistics for a block.&quot;&quot;&quot;</span>
+        <span class="n">s</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">ns</span><span class="p">,</span> <span class="n">nm</span><span class="p">,</span> <span class="n">nt</span><span class="p">,</span> <span class="n">lens</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">ln</span> <span class="ow">in</span> <span class="n">block</span><span class="o">.</span><span class="n">lines</span><span class="p">:</span>
+            <span class="n">s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">ln</span><span class="p">,</span> <span class="s2">&quot;count_single_tokens&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">m</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">ln</span><span class="p">,</span> <span class="s2">&quot;count_multispace_tokens&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">t</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">ln</span><span class="p">,</span> <span class="s2">&quot;count_tab_tokens&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">ln</span><span class="p">,</span> <span class="s2">&quot;line_len&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">ns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">ln</span><span class="p">,</span> <span class="s2">&quot;numeric_single_ratio&quot;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span> <span class="ow">or</span> <span class="mf">0.0</span><span class="p">)</span>
+            <span class="n">nm</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">ln</span><span class="p">,</span> <span class="s2">&quot;numeric_multispace_ratio&quot;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span> <span class="ow">or</span> <span class="mf">0.0</span><span class="p">)</span>
+            <span class="n">nt</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">ln</span><span class="p">,</span> <span class="s2">&quot;numeric_tab_ratio&quot;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span> <span class="ow">or</span> <span class="mf">0.0</span><span class="p">)</span>
+            <span class="n">lens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">ln</span><span class="p">,</span> <span class="s2">&quot;line_len&quot;</span><span class="p">,</span>
+                                <span class="nb">len</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">ln</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">)))</span>
+
+        <span class="n">mean_single</span> <span class="o">=</span> <span class="n">_safe_mean</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="n">mean_multi</span> <span class="o">=</span> <span class="n">_safe_mean</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+        <span class="n">mean_tab</span> <span class="o">=</span> <span class="n">_safe_mean</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+        <span class="n">mean_line_len</span> <span class="o">=</span> <span class="n">_safe_mean</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="c1"># Changed from &#39;l&#39;</span>
+
+        <span class="c1"># Bug fix: Corrected last key from &#39;cv_tab&#39; to &#39;cv_line&#39;</span>
+        <span class="n">stats</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;mean_single&quot;</span><span class="p">:</span> <span class="n">mean_single</span><span class="p">,</span>
+            <span class="s2">&quot;cv_single&quot;</span><span class="p">:</span> <span class="n">_safe_cv</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">mean_single</span><span class="p">),</span>
+            <span class="s2">&quot;mode_single&quot;</span><span class="p">:</span> <span class="n">_most_common</span><span class="p">(</span><span class="n">s</span><span class="p">),</span>
+            <span class="s2">&quot;mean_multi&quot;</span><span class="p">:</span> <span class="n">mean_multi</span><span class="p">,</span>
+            <span class="s2">&quot;cv_multi&quot;</span><span class="p">:</span> <span class="n">_safe_cv</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">mean_multi</span><span class="p">),</span>
+            <span class="s2">&quot;mode_multi&quot;</span><span class="p">:</span> <span class="n">_most_common</span><span class="p">(</span><span class="n">m</span><span class="p">),</span>
+            <span class="s2">&quot;mean_tab&quot;</span><span class="p">:</span> <span class="n">mean_tab</span><span class="p">,</span>
+            <span class="s2">&quot;cv_tab&quot;</span><span class="p">:</span> <span class="n">_safe_cv</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">mean_tab</span><span class="p">),</span>
+            <span class="s2">&quot;mode_tab&quot;</span><span class="p">:</span> <span class="n">_most_common</span><span class="p">(</span><span class="n">t</span><span class="p">),</span>
+            <span class="s2">&quot;mean_numeric_single&quot;</span><span class="p">:</span> <span class="n">_safe_mean</span><span class="p">(</span><span class="n">ns</span><span class="p">),</span>
+            <span class="s2">&quot;mean_numeric_multi&quot;</span><span class="p">:</span> <span class="n">_safe_mean</span><span class="p">(</span><span class="n">nm</span><span class="p">),</span>
+            <span class="s2">&quot;mean_numeric_tab&quot;</span><span class="p">:</span> <span class="n">_safe_mean</span><span class="p">(</span><span class="n">nt</span><span class="p">),</span>
+            <span class="s2">&quot;n_lines&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">lines</span><span class="p">),</span>
+            <span class="s2">&quot;n_nonempty&quot;</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">ln</span> <span class="ow">in</span> <span class="n">block</span><span class="o">.</span><span class="n">lines</span> <span class="k">if</span>
+                              <span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">ln</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()),</span>
+            <span class="s2">&quot;mean_line_len&quot;</span><span class="p">:</span> <span class="n">_safe_mean</span><span class="p">(</span><span class="n">lens</span><span class="p">),</span> <span class="c1"># Use &#39;lens&#39; for mean</span>
+            <span class="s2">&quot;cv_line&quot;</span><span class="p">:</span> <span class="n">_safe_cv</span><span class="p">(</span><span class="n">lens</span><span class="p">,</span> <span class="n">_safe_mean</span><span class="p">(</span><span class="n">lens</span><span class="p">)),</span> <span class="c1"># Use &#39;lens&#39;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">stats</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_choose_delimiter</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Chooses the best delimiter for a block based on its stats.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        block : Block</span>
+<span class="sd">            The block to analyze (must have `block.stats` computed).</span>
+<span class="sd">        strict : bool, optional</span>
+<span class="sd">            If True, only returns a delimiter if its token count is</span>
+<span class="sd">            perfectly consistent (CV=0) and it has &gt; 1 token.</span>
+<span class="sd">            If False, returns the &quot;best guess&quot; delimiter (tab or</span>
+<span class="sd">            multi-space) with the lowest CV, even if imperfect.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str or None</span>
+<span class="sd">            The regex string of the best delimiter, or None if no</span>
+<span class="sd">            suitable delimiter is found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">candidates</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;tab&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;\t&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;multi&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;(\s{2,})&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;single&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;\s+&quot;</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="n">strict</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">candidates</span><span class="p">:</span>
+                <span class="n">cv</span> <span class="o">=</span> <span class="n">block</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cv_</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">mode</span> <span class="o">=</span> <span class="n">block</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;mode_</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">cv</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">mode</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">pattern</span>
+            <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># No &quot;perfect&quot; delimiter found</span>
+
+        <span class="c1"># Non-strict mode: find best &quot;imperfect&quot; delimiter</span>
+        <span class="n">best_pattern</span><span class="p">,</span> <span class="n">best_cv</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
+        <span class="c1"># Only check tab and multi-space for non-strict</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">candidates</span><span class="p">[:</span><span class="mi">2</span><span class="p">]:</span>
+            <span class="n">cv</span> <span class="o">=</span> <span class="n">block</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cv_</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">mode</span> <span class="o">=</span> <span class="n">block</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;mode_</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">mode</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">cv</span> <span class="o">&lt;</span> <span class="n">best_cv</span><span class="p">:</span>
+                <span class="n">best_cv</span> <span class="o">=</span> <span class="n">cv</span>
+                <span class="n">best_pattern</span> <span class="o">=</span> <span class="n">pattern</span>
+        <span class="k">return</span> <span class="n">best_pattern</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_detect_header_extent</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">delimiter</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Detects the number of header lines (extent) in a block.&quot;&quot;&quot;</span>
+        <span class="n">patterns</span><span class="p">,</span> <span class="n">title_line</span> <span class="o">=</span> <span class="p">[],</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">lines</span><span class="p">):</span>
+            <span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">delimiter</span><span class="p">,</span> <span class="n">line</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
+            <span class="n">pattern</span> <span class="o">=</span> <span class="n">generate_row_pattern</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+            <span class="n">patterns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">pattern</span> <span class="o">==</span> <span class="s2">&quot;S&quot;</span><span class="p">:</span>  <span class="c1"># Check for title line</span>
+                <span class="n">title_line</span> <span class="o">=</span> <span class="n">i</span>
+
+        <span class="n">start_i</span> <span class="o">=</span> <span class="n">title_line</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">title_line</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="n">extent</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">patterns</span><span class="p">[</span><span class="n">start_i</span><span class="p">:]):</span>
+            <span class="n">is_all_s</span> <span class="o">=</span> <span class="nb">all</span><span class="p">(</span><span class="n">c</span> <span class="o">==</span> <span class="s2">&quot;S&quot;</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">pattern</span><span class="p">)</span>
+            <span class="n">is_all_n</span> <span class="o">=</span> <span class="nb">all</span><span class="p">(</span><span class="n">c</span> <span class="o">==</span> <span class="s2">&quot;N&quot;</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">pattern</span><span class="p">)</span>
+            <span class="n">next_is_all_s</span> <span class="o">=</span> <span class="p">(</span><span class="n">start_i</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">patterns</span><span class="p">))</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span>
+                <span class="n">c</span> <span class="o">==</span> <span class="s2">&quot;S&quot;</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">patterns</span><span class="p">[</span><span class="n">start_i</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="p">)</span>
+            <span class="c1"># A header line is all-string, or all-numeric *if*</span>
+            <span class="c1"># it&#39;s the first line and the next line is all-string.</span>
+            <span class="k">if</span> <span class="n">is_all_s</span> <span class="ow">or</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">is_all_n</span> <span class="ow">and</span> <span class="n">next_is_all_s</span><span class="p">):</span>
+                <span class="n">extent</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">break</span>
+        <span class="k">return</span> <span class="n">extent</span><span class="p">,</span> <span class="n">title_line</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_extract_headers</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">delimiter</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Extracts header names and intervals from a block.&quot;&quot;&quot;</span>
+        <span class="n">extent</span><span class="p">,</span> <span class="n">title_line</span> <span class="o">=</span> <span class="n">NonStandardParser</span><span class="o">.</span><span class="n">_detect_header_extent</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">delimiter</span><span class="p">)</span>
+        <span class="n">block</span><span class="o">.</span><span class="n">header_extent</span> <span class="o">=</span> <span class="n">extent</span>
+        <span class="n">block</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">block</span><span class="o">.</span><span class="n">lines</span><span class="p">[</span><span class="n">title_line</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="k">if</span> <span class="n">title_line</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">extent</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[],</span> <span class="mi">0</span>
+
+        <span class="n">start_idx</span> <span class="o">=</span> <span class="n">title_line</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">title_line</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="n">header_lines</span> <span class="o">=</span> <span class="n">block</span><span class="o">.</span><span class="n">lines</span><span class="p">[</span><span class="n">start_idx</span> <span class="p">:</span> <span class="n">start_idx</span> <span class="o">+</span> <span class="n">extent</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">header_lines</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[],</span> <span class="mi">0</span>
+            
+        <span class="k">if</span> <span class="n">extent</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">token_objs</span> <span class="o">=</span> <span class="n">get_token_intervals_multi</span><span class="p">(</span><span class="n">header_lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">delimiter</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">[{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">t</span><span class="p">[</span><span class="s2">&quot;display&quot;</span><span class="p">],</span> <span class="s2">&quot;interval&quot;</span><span class="p">:</span> <span class="n">t</span><span class="p">[</span><span class="s2">&quot;interval&quot;</span><span class="p">]}</span>
+                    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">token_objs</span><span class="p">],</span> <span class="n">extent</span>
+
+        <span class="n">token_maps</span> <span class="o">=</span> <span class="p">[</span><span class="n">get_token_intervals_multi</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">delimiter</span><span class="p">)</span>
+                      <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">header_lines</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">merge_headers_by_overlap</span><span class="p">(</span><span class="n">token_maps</span><span class="p">),</span> <span class="n">extent</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_classify_block</span><span class="p">(</span><span class="n">block</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Classifies a block into a BlockType based on its stats.&quot;&quot;&quot;</span>
+        <span class="n">stats</span> <span class="o">=</span> <span class="n">block</span><span class="o">.</span><span class="n">stats</span>
+        <span class="k">if</span> <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;mean_numeric_single&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">0.25</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;mode_multi&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">BlockType</span><span class="o">.</span><span class="n">NARRATIVE</span>
+            <span class="k">elif</span> <span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s2">&quot;mode_multi&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;mode_tab&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">and</span> \
+                 <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;n_lines&quot;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">6</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">BlockType</span><span class="o">.</span><span class="n">HEADER_ONLY</span>
+
+        <span class="c1"># Check for a &quot;perfect&quot; (strict) delimiter</span>
+        <span class="n">best_delimiter</span> <span class="o">=</span> <span class="n">NonStandardParser</span><span class="o">.</span><span class="n">_choose_delimiter</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">best_delimiter</span><span class="p">:</span>
+            <span class="c1"># No perfect delimiter, so it&#39;s &quot;imperfect&quot; tabular</span>
+            <span class="k">return</span> <span class="n">BlockType</span><span class="o">.</span><span class="n">TABULAR</span>
+
+        <span class="c1"># A perfect delimiter was found. Check for headers.</span>
+        <span class="n">headers</span><span class="p">,</span> <span class="n">extent</span> <span class="o">=</span> <span class="n">NonStandardParser</span><span class="o">.</span><span class="n">_extract_headers</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">best_delimiter</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">headers</span><span class="p">:</span>
+            <span class="c1"># Save findings to the block</span>
+            <span class="n">block</span><span class="o">.</span><span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span>
+            <span class="n">block</span><span class="o">.</span><span class="n">header_extent</span> <span class="o">=</span> <span class="n">extent</span>
+            <span class="n">block</span><span class="o">.</span><span class="n">delimiter</span> <span class="o">=</span> <span class="n">best_delimiter</span>
+            <span class="k">if</span> <span class="n">extent</span> <span class="o">&lt;</span> <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;n_lines&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="n">BlockType</span><span class="o">.</span><span class="n">COMPLETE_TABULAR</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">BlockType</span><span class="o">.</span><span class="n">HEADER_ONLY</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Perfect delimiter, but no headers found</span>
+            <span class="n">block</span><span class="o">.</span><span class="n">delimiter</span> <span class="o">=</span> <span class="n">best_delimiter</span>
+            <span class="k">return</span> <span class="n">BlockType</span><span class="o">.</span><span class="n">DATA</span>
+
+        <span class="c1"># Fallback</span>
+        <span class="k">return</span> <span class="n">BlockType</span><span class="o">.</span><span class="n">NARRATIVE</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_process_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">current_idx</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Main dispatcher for parsing logic based on block type.&quot;&quot;&quot;</span>
+        <span class="n">block</span><span class="o">.</span><span class="n">stats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_statistics</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+        <span class="n">block_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_classify_block</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+        <span class="n">block</span><span class="o">.</span><span class="n">block_type</span> <span class="o">=</span> <span class="n">block_type</span>
+
+        <span class="c1"># Dispatch to the correct parsing method</span>
+        <span class="k">if</span> <span class="n">block_type</span> <span class="o">==</span> <span class="n">BlockType</span><span class="o">.</span><span class="n">COMPLETE_TABULAR</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parse_complete_tabular_block</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">block_type</span> <span class="o">==</span> <span class="n">BlockType</span><span class="o">.</span><span class="n">TABULAR</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parse_tabular_block</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">current_idx</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">block_type</span> <span class="o">==</span> <span class="n">BlockType</span><span class="o">.</span><span class="n">HEADER_ONLY</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parse_header_block</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">block_type</span> <span class="o">==</span> <span class="n">BlockType</span><span class="o">.</span><span class="n">DATA</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parse_data_block</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">current_idx</span><span class="p">)</span>
+        
+        <span class="c1"># NARRATIVE blocks are left as-is</span>
+        <span class="c1"># ERROR blocks (if classified early) are also left as-is</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_find_previous_header_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current_idx</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Finds the most recent valid header-providing block.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">current_idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">prev_block</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="c1"># Only borrow from &quot;clean&quot; header or table blocks</span>
+            <span class="k">if</span> <span class="n">prev_block</span><span class="o">.</span><span class="n">block_type</span> <span class="ow">in</span> <span class="p">(</span><span class="n">BlockType</span><span class="o">.</span><span class="n">HEADER_ONLY</span><span class="p">,</span>
+                                         <span class="n">BlockType</span><span class="o">.</span><span class="n">COMPLETE_TABULAR</span><span class="p">,</span> <span class="n">BlockType</span><span class="o">.</span><span class="n">TABULAR</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">prev_block</span><span class="o">.</span><span class="n">headers</span> <span class="ow">and</span> <span class="n">prev_block</span><span class="o">.</span><span class="n">delimiter</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">prev_block</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_complete_tabular_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parses a &quot;perfect&quot; (CV=0) tabular block.&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">generate_df</span><span class="p">(</span>
+                <span class="n">block</span><span class="o">.</span><span class="n">lines</span><span class="p">,</span>
+                <span class="n">block</span><span class="o">.</span><span class="n">delimiter</span><span class="p">,</span>
+                <span class="n">block</span><span class="o">.</span><span class="n">headers</span><span class="p">,</span>
+                <span class="n">block</span><span class="o">.</span><span class="n">header_extent</span>
+            <span class="p">)</span>
+            <span class="n">block</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">block</span><span class="o">.</span><span class="n">block_type</span> <span class="o">=</span> <span class="n">BlockType</span><span class="o">.</span><span class="n">ERROR</span>
+            <span class="n">block</span><span class="o">.</span><span class="n">error_message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Failed to parse complete tabular block: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">block</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_tabular_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">current_idx</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parses an &quot;imperfect&quot; (CV &gt; 0) tabular block.&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">block</span><span class="o">.</span><span class="n">delimiter</span><span class="p">:</span>
+                <span class="n">block</span><span class="o">.</span><span class="n">delimiter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_choose_delimiter</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">block</span><span class="o">.</span><span class="n">delimiter</span><span class="p">:</span>
+                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Could not determine a suitable delimiter.&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">block</span><span class="o">.</span><span class="n">headers</span><span class="p">:</span>
+                <span class="n">headers</span><span class="p">,</span> <span class="n">extent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_headers</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">block</span><span class="o">.</span><span class="n">delimiter</span><span class="p">)</span>
+                <span class="n">block</span><span class="o">.</span><span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span>
+                <span class="n">block</span><span class="o">.</span><span class="n">header_extent</span> <span class="o">=</span> <span class="n">extent</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">block</span><span class="o">.</span><span class="n">headers</span><span class="p">:</span>  <span class="c1"># Still no headers, try to borrow</span>
+                <span class="n">prev_header_block</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_previous_header_block</span><span class="p">(</span><span class="n">current_idx</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">prev_header_block</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No headers found in block and no &quot;</span>
+                                     <span class="s2">&quot;preceding headers to borrow.&quot;</span><span class="p">)</span>
+                <span class="n">block</span><span class="o">.</span><span class="n">headers</span> <span class="o">=</span> <span class="n">prev_header_block</span><span class="o">.</span><span class="n">headers</span>
+                <span class="c1"># Use the header&#39;s delimiter for consistency</span>
+                <span class="n">block</span><span class="o">.</span><span class="n">delimiter</span> <span class="o">=</span> <span class="n">prev_header_block</span><span class="o">.</span><span class="n">delimiter</span>
+                <span class="n">block</span><span class="o">.</span><span class="n">header_extent</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Borrowed headers</span>
+                <span class="n">prev_header_block</span><span class="o">.</span><span class="n">used_as_header_for</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">idx</span><span class="p">)</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># First, try a simple parse</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="n">generate_df</span><span class="p">(</span>
+                    <span class="n">block</span><span class="o">.</span><span class="n">lines</span><span class="p">,</span> <span class="n">block</span><span class="o">.</span><span class="n">delimiter</span><span class="p">,</span> <span class="n">block</span><span class="o">.</span><span class="n">headers</span><span class="p">,</span> <span class="n">block</span><span class="o">.</span><span class="n">header_extent</span>
+                <span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="c1"># Fallback for misaligned columns</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="n">assign_tokens_by_overlap</span><span class="p">(</span>
+                    <span class="n">block</span><span class="o">.</span><span class="n">lines</span><span class="p">,</span> <span class="n">block</span><span class="o">.</span><span class="n">delimiter</span><span class="p">,</span> <span class="n">block</span><span class="o">.</span><span class="n">headers</span><span class="p">,</span> <span class="n">block</span><span class="o">.</span><span class="n">header_extent</span>
+                <span class="p">)</span>
+            <span class="n">block</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">block</span><span class="o">.</span><span class="n">block_type</span> <span class="o">=</span> <span class="n">BlockType</span><span class="o">.</span><span class="n">ERROR</span>
+            <span class="n">block</span><span class="o">.</span><span class="n">error_message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Failed to parse tabular block: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">block</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_header_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Ensures headers are extracted for HEADER_ONLY blocks.&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">block</span><span class="o">.</span><span class="n">delimiter</span><span class="p">:</span>
+                <span class="n">block</span><span class="o">.</span><span class="n">delimiter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_choose_delimiter</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">block</span><span class="o">.</span><span class="n">headers</span> <span class="ow">and</span> <span class="n">block</span><span class="o">.</span><span class="n">delimiter</span><span class="p">:</span>
+                <span class="n">headers</span><span class="p">,</span> <span class="n">extent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_headers</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">block</span><span class="o">.</span><span class="n">delimiter</span><span class="p">)</span>
+                <span class="n">block</span><span class="o">.</span><span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span>
+                <span class="n">block</span><span class="o">.</span><span class="n">header_extent</span> <span class="o">=</span> <span class="n">extent</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">block</span><span class="o">.</span><span class="n">headers</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Could not extract headers from header-only block.&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">block</span><span class="o">.</span><span class="n">block_type</span> <span class="o">=</span> <span class="n">BlockType</span><span class="o">.</span><span class="n">ERROR</span>
+            <span class="n">block</span><span class="o">.</span><span class="n">error_message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Failed to parse header block: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_data_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">current_idx</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parses a DATA block by borrowing headers.&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># A DATA block *must* borrow. `block.delimiter` was already</span>
+            <span class="c1"># set by `_classify_block` if it was strict (CV=0).</span>
+            <span class="c1"># If not, we find the header block and use *its* delimiter.</span>
+            <span class="n">prev_header_block</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_previous_header_block</span><span class="p">(</span><span class="n">current_idx</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">prev_header_block</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No preceding headers found for this data block.&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Use the borrowed headers and *their* delimiter</span>
+            <span class="n">borrowed_headers</span> <span class="o">=</span> <span class="n">prev_header_block</span><span class="o">.</span><span class="n">headers</span>
+            <span class="n">borrowed_delimiter</span> <span class="o">=</span> <span class="n">prev_header_block</span><span class="o">.</span><span class="n">delimiter</span>
+            <span class="n">block</span><span class="o">.</span><span class="n">headers</span> <span class="o">=</span> <span class="n">borrowed_headers</span>
+            <span class="n">block</span><span class="o">.</span><span class="n">delimiter</span> <span class="o">=</span> <span class="n">borrowed_delimiter</span>
+            <span class="n">block</span><span class="o">.</span><span class="n">header_extent</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Data starts at line 0</span>
+            
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># First, try a simple parse</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="n">generate_df</span><span class="p">(</span>
+                    <span class="n">block</span><span class="o">.</span><span class="n">lines</span><span class="p">,</span>
+                    <span class="n">borrowed_delimiter</span><span class="p">,</span>
+                    <span class="n">borrowed_headers</span><span class="p">,</span>
+                    <span class="n">header_extent</span><span class="o">=</span><span class="mi">0</span>
+                <span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="c1"># Fallback for misaligned columns</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="n">assign_tokens_by_overlap</span><span class="p">(</span>
+                    <span class="n">block</span><span class="o">.</span><span class="n">lines</span><span class="p">,</span>
+                    <span class="n">borrowed_delimiter</span><span class="p">,</span>
+                    <span class="n">borrowed_headers</span><span class="p">,</span>
+                    <span class="n">header_extent</span><span class="o">=</span><span class="mi">0</span>
+                <span class="p">)</span>
+
+            <span class="n">block</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span>
+            <span class="n">prev_header_block</span><span class="o">.</span><span class="n">used_as_header_for</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">idx</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">block</span><span class="o">.</span><span class="n">block_type</span> <span class="o">=</span> <span class="n">BlockType</span><span class="o">.</span><span class="n">ERROR</span>
+            <span class="n">block</span><span class="o">.</span><span class="n">error_message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Failed to parse data block: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">block</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">file_path</span> <span class="o">=</span> <span class="s2">&quot;test8.txt&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Parsing </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Instantiate the parser and call the parse method</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">NonStandardParser</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">use_skip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">blocks</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">()</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Parsing complete. Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span><span class="si">}</span><span class="s2"> blocks.&quot;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="n">blocks</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">========================================&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Block </span><span class="si">{</span><span class="n">block</span><span class="o">.</span><span class="n">idx</span><span class="si">}</span><span class="s2">: Type=</span><span class="si">{</span><span class="n">block</span><span class="o">.</span><span class="n">block_type</span><span class="si">}</span><span class="s2">, &quot;</span>
+              <span class="sa">f</span><span class="s2">&quot;Lines=</span><span class="si">{</span><span class="n">block</span><span class="o">.</span><span class="n">start</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">block</span><span class="o">.</span><span class="n">end</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">lines</span><span class="p">)</span><span class="si">}</span><span class="s2"> lines)&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">block</span><span class="o">.</span><span class="n">title</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Title: </span><span class="si">{</span><span class="n">block</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">block</span><span class="o">.</span><span class="n">headers</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Headers (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">headers</span><span class="p">)</span><span class="si">}</span><span class="s2">): &quot;</span>
+                  <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="p">[</span><span class="n">h</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">block</span><span class="o">.</span><span class="n">headers</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">block</span><span class="o">.</span><span class="n">delimiter</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Delimiter: </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">delimiter</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">block</span><span class="o">.</span><span class="n">df</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  DataFrame shape: </span><span class="si">{</span><span class="n">block</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+        
+        <span class="k">if</span> <span class="n">block</span><span class="o">.</span><span class="n">block_type</span> <span class="o">==</span> <span class="n">BlockType</span><span class="o">.</span><span class="n">ERROR</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Error: </span><span class="si">{</span><span class="n">block</span><span class="o">.</span><span class="n">error_message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">block</span><span class="o">.</span><span class="n">used_as_header_for</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Used as header for blocks: </span><span class="si">{</span><span class="n">block</span><span class="o">.</span><span class="n">used_as_header_for</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, LinkedEarth.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

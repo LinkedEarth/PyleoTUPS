@@ -1,0 +1,1197 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pyleotups.core.Dataset &mdash; PyleoTUPS 0.0.2b0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css?v=7f9a90b1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/jupyter-sphinx.css?v=572af1d6" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/thebelab.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/rtd_sphinx_search.min.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=5e47b899"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/thebelab-helper.js"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../../_static/js/rtd_search_config.js"></script>
+      <script src="../../../_static/js/rtd_sphinx_search.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            PyleoTUPS
+              <img src="../../../_static/pyleotups_logo_small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Working with PyleoTUPS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installing PyleoTUPS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">PyleoTUPS User APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Tutorials</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced Functions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced.html">Advanced Functionalities</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Involved</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../contribution_guide.html">Contributing to PyleoTUPS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../citation.html">Citing PyleoTUPS</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">PyleoTUPS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">pyleotups.core.Dataset</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pyleotups.core.Dataset</h1><div class="highlight"><pre>
+<span></span><span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Dataset&#39;</span><span class="p">,</span> <span class="s1">&#39;UnsupportedFileTypeError&#39;</span><span class="p">]</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span><span class="o">,</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">..utils.NOAADataset</span><span class="w"> </span><span class="kn">import</span> <span class="n">NOAADataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..utils.helpers</span><span class="w"> </span><span class="kn">import</span> <span class="n">assert_list</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..utils.Parser.StandardParser</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataFetcher</span><span class="p">,</span> <span class="n">StandardParser</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..utils.Parser.NonStandardParser</span><span class="w"> </span><span class="kn">import</span> <span class="n">NonStandardParser</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..utils.api.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">BASE_URL</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..utils.api.query_builder</span><span class="w"> </span><span class="kn">import</span> <span class="n">build_payload</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..utils.api.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">get</span>
+
+
+<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;[</span><span class="si">%(asctime)s</span><span class="s1">][</span><span class="si">%(levelname)s</span><span class="s1">] - </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">UnsupportedFileTypeError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Raised when a file type is not supported by the parser.&quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+
+
+<div class="viewcode-block" id="Dataset">
+<a class="viewcode-back" href="../../../api.html#pyleotups.core.Dataset.Dataset">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Dataset</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A wrapper class for interacting with the NOAA Studies API.</span>
+
+<span class="sd">    Manages the retrieval, parsing, and aggregation of NOAA study data,</span>
+<span class="sd">    and provides methods to access summaries, publications, sites, and external data files.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    BASE_URL : str</span>
+<span class="sd">        The NOAA API endpoint URL.</span>
+<span class="sd">    studies : dict</span>
+<span class="sd">        A mapping from NOAAStudyId to NOAADataset instances.</span>
+<span class="sd">    data_table_index : dict</span>
+<span class="sd">        A mapping from dataTableID to associated study, site, and paleo data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_PROPRIETARY_TYPES</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;crn&#39;</span><span class="p">,</span> <span class="s1">&#39;rwl&#39;</span><span class="p">,</span> <span class="s1">&#39;fhx&#39;</span><span class="p">,</span> <span class="s1">&#39;lpd&#39;</span><span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the Dataset instance.</span>
+
+<span class="sd">        Attributes are set to their default empty values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">studies</span> <span class="o">=</span> <span class="p">{}</span>               <span class="c1"># NOAAStudyId -&gt; NOAADataset instance</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_table_index</span> <span class="o">=</span> <span class="p">{}</span>      <span class="c1"># dataTableID -&gt; dict with study, site, paleo_data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_url_to_datatable</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1"># file_url -&gt; dataTableID</span>
+        <span class="c1"># self.last_timing = {}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;pyleotups.Dataset&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_reindex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Rebuild secondary indexes from `self.studies`.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_table_index</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_url_to_datatable</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">study</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">studies</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">site</span> <span class="ow">in</span> <span class="n">study</span><span class="o">.</span><span class="n">sites</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">paleo</span> <span class="ow">in</span> <span class="n">site</span><span class="o">.</span><span class="n">paleo_data</span><span class="p">:</span>
+                    <span class="c1"># map datatable -&gt; study/site/paleo</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">data_table_index</span><span class="p">[</span><span class="n">paleo</span><span class="o">.</span><span class="n">datatable_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="s2">&quot;study_id&quot;</span><span class="p">:</span> <span class="n">study</span><span class="o">.</span><span class="n">study_id</span><span class="p">,</span>
+                        <span class="s2">&quot;site_id&quot;</span><span class="p">:</span> <span class="n">site</span><span class="o">.</span><span class="n">site_id</span><span class="p">,</span>
+                        <span class="s2">&quot;paleo_data&quot;</span><span class="p">:</span> <span class="n">paleo</span><span class="p">,</span>
+                    <span class="p">}</span>
+                    <span class="c1"># map file_url -&gt; datatable</span>
+                    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">paleo</span><span class="o">.</span><span class="n">files</span><span class="p">:</span>
+                        <span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;fileUrl&quot;</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">url</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">file_url_to_datatable</span><span class="p">[</span><span class="n">url</span><span class="p">]</span> <span class="o">=</span> <span class="n">paleo</span><span class="o">.</span><span class="n">datatable_id</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Dataset</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">NotImplemented</span>
+
+        <span class="n">merged</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">()</span>
+
+        <span class="c1"># Start with a shallow copy of left&#39;s studies</span>
+        <span class="n">merged</span><span class="o">.</span><span class="n">studies</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">studies</span><span class="p">)</span>
+
+        <span class="c1"># Union by StudyID. If duplicate ID appears, keep left&#39;s version</span>
+        <span class="c1"># but sanity-check equality and warn if they differ.</span>
+        <span class="k">for</span> <span class="n">sid</span><span class="p">,</span> <span class="n">study</span> <span class="ow">in</span> <span class="n">other</span><span class="o">.</span><span class="n">studies</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">sid</span> <span class="ow">in</span> <span class="n">merged</span><span class="o">.</span><span class="n">studies</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">check_same_study_content</span> <span class="o">=</span> <span class="p">(</span><span class="n">merged</span><span class="o">.</span><span class="n">studies</span><span class="p">[</span><span class="n">sid</span><span class="p">]</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="o">==</span> <span class="n">study</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="n">check_same_study_content</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">check_same_study_content</span><span class="p">:</span>
+                    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Dataset union: duplicate StudyID </span><span class="si">{</span><span class="n">sid</span><span class="si">}</span><span class="s2"> with differing content. &quot;</span>
+                        <span class="s2">&quot;Keeping left-hand version. i.e. if C = A + B is perfomed, contents of A will be kept.&quot;</span><span class="p">,</span> <span class="ne">UserWarning</span>
+                    <span class="p">)</span>
+                <span class="c1"># else identical content -&gt; do nothing</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">merged</span><span class="o">.</span><span class="n">studies</span><span class="p">[</span><span class="n">sid</span><span class="p">]</span> <span class="o">=</span> <span class="n">study</span>
+
+
+        <span class="c1"># Rebuild indexes so they match the merged studies</span>
+        <span class="n">merged</span><span class="o">.</span><span class="n">_reindex</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">merged</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__iadd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Dataset</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">NotImplemented</span>
+
+        <span class="k">for</span> <span class="n">sid</span><span class="p">,</span> <span class="n">study</span> <span class="ow">in</span> <span class="n">other</span><span class="o">.</span><span class="n">studies</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">sid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">studies</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">check_same_study_content</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">studies</span><span class="p">[</span><span class="n">sid</span><span class="p">]</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="o">==</span> <span class="n">study</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="n">check_same_study_content</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">check_same_study_content</span><span class="p">:</span>
+                    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Dataset in-place union: duplicate StudyID </span><span class="si">{</span><span class="n">sid</span><span class="si">}</span><span class="s2"> with differing content. &quot;</span>
+                        <span class="s2">&quot;Keeping existing version. i.e. IF A = A + B is perfomed, contents of A will be kept&quot;</span><span class="p">,</span> <span class="ne">UserWarning</span>
+                    <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">studies</span><span class="p">[</span><span class="n">sid</span><span class="p">]</span> <span class="o">=</span> <span class="n">study</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reindex</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    
+<div class="viewcode-block" id="Dataset.search_studies">
+<a class="viewcode-back" href="../../../api.html#pyleotups.core.Dataset.Dataset.search_studies">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">search_studies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Search for NOAA studies using the specified parameters.</span>
+
+<span class="sd">        At least one parameter must be provided to perform a search. This method interfaces with</span>
+<span class="sd">        the NOAA NCEI Paleo Study Search API. Use it to filter studies based on location,</span>
+<span class="sd">        investigators, time range, keywords, and more.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        xml_id : str, optional</span>
+<span class="sd">            Specify the internal XML document ID. Must be an exact match (e.g., &#39;1840&#39;).</span>
+
+<span class="sd">        noaa_id : str, optional</span>
+<span class="sd">            Provide the unique NOAA Study ID as a number (e.g., &#39;13156&#39;).</span>
+
+<span class="sd">        search_text : str, optional</span>
+<span class="sd">            General text search across study content. Supports wildcards (%) and logical operators (AND, OR).</span>
+<span class="sd">            Examples: &#39;younger dryas&#39;, &#39;loess AND stratigraphy&#39;</span>
+
+<span class="sd">        data_publisher : by default &#39;NOAA&#39;</span>
+<span class="sd">            Choose from: &#39;NOAA&#39;, &#39;NEOTOMA&#39;, or &#39;PANGAEA&#39;.</span>
+<span class="sd">            Example: &#39;NOAA&#39;</span>
+
+<span class="sd">        data_type_id : str, optional</span>
+<span class="sd">            Filter by data type. Use one or more type IDs separated by &#39;|&#39;.</span>
+<span class="sd">            Available IDs:</span>
+<span class="sd">                1: BOREHOLE, 2: CLIMATE FORCING, 3: CLIMATE RECONSTRUCTIONS, 4: CORALS AND SCLEROSPONGES,</span>
+<span class="sd">                6: HISTORICAL, 7: ICE CORES, 8: INSECT, 9: LAKE LEVELS, 10: LOESS,</span>
+<span class="sd">                11: PALEOCLIMATIC MODELING, 12: FIRE HISTORY, 13: PALEOLIMNOLOGY, 14: PALEOCEANOGRAPHY,</span>
+<span class="sd">                15: PLANT MACROFOSSILS, 16: POLLEN, 17: SPELEOTHEMS, 18: TREE RING,</span>
+<span class="sd">                19: OTHER COLLECTIONS, 20: INSTRUMENTAL, 59: SOFTWARE, 60: REPOSITORY</span>
+<span class="sd">            Example: &#39;4&#39;, &#39;4|18&#39;</span>
+
+<span class="sd">        investigators : str or list[str], optional</span>
+<span class="sd">            Investigator(s) in the form ``&quot;LastName, Initials&quot;``. Lists are joined with ``|``.</span>
+<span class="sd">        </span>
+<span class="sd">        investigators_and_or : {&quot;and&quot;,&quot;or&quot;}, default &quot;or&quot;</span>
+<span class="sd">            Logical combiner when multiple investigators are supplied. Only sent when 2+ items.</span>
+<span class="sd">        </span>
+<span class="sd">        locations : str or list[str], optional</span>
+<span class="sd">            Location(s) as hierarchical strings using ``&gt;`` (e.g., ``&quot;Continent&gt;Africa&gt;Kenya&quot;``). Lists joined with ``|``.</span>
+<span class="sd">        </span>
+<span class="sd">        locations_and_or : {&quot;and&quot;,&quot;or&quot;}, default &quot;or&quot;</span>
+<span class="sd">            Logical combiner for multiple locations. Only sent when 2+ items.</span>
+<span class="sd">        </span>
+<span class="sd">        keywords : str or list[str], optional</span>
+<span class="sd">            Controlled keyword(s); hierarchies with ``&gt;``. Lists joined with ``|``.</span>
+<span class="sd">        </span>
+<span class="sd">        keywords_and_or : {&quot;and&quot;,&quot;or&quot;}, default &quot;or&quot;</span>
+<span class="sd">            Logical combiner for multiple keywords. Only sent when 2+ items.</span>
+<span class="sd">        </span>
+<span class="sd">        species : str or list[str], optional</span>
+<span class="sd">            Four-letter tree species codes (uppercase enforced). Lists joined with ``|``.</span>
+<span class="sd">        </span>
+<span class="sd">        species_and_or : {&quot;and&quot;,&quot;or&quot;}, default &quot;or&quot;</span>
+<span class="sd">            Logical combiner for multiple species. Only sent when 2+ items.</span>
+<span class="sd">        </span>
+<span class="sd">        cv_whats : str or list[str], optional</span>
+<span class="sd">            PaST “What” terms (hierarchies with ``&gt;``). Lists joined with ``|``.</span>
+<span class="sd">        </span>
+<span class="sd">        cv_whats_and_or : {&quot;and&quot;,&quot;or&quot;}, default &quot;or&quot;</span>
+<span class="sd">            Logical combiner for multiple cv_whats. Only sent when 2+ items.</span>
+<span class="sd">        </span>
+<span class="sd">        cv_materials : str or list[str], optional</span>
+<span class="sd">            PaST “Material” terms (hierarchies with ``&gt;``). Lists joined with ``|``.</span>
+<span class="sd">        </span>
+<span class="sd">        cv_materials_and_or : {&quot;and&quot;,&quot;or&quot;}, default &quot;or&quot;</span>
+<span class="sd">            Logical combiner for multiple cv_materials. Only sent when 2+ items.</span>
+<span class="sd">        </span>
+<span class="sd">        cv_seasonalities : str or list[str], optional</span>
+<span class="sd">            PaST “Seasonality” terms (e.g., ``&quot;annual&quot;`` or ``&quot;3-month&gt;Aug-Oct&quot;``). Lists joined with ``|``.</span>
+<span class="sd">        </span>
+<span class="sd">        cv_seasonalities_and_or : {&quot;and&quot;,&quot;or&quot;}, default &quot;or&quot;</span>
+<span class="sd">            Logical combiner for multiple cv_seasonalities. Only sent when 2+ items.</span>
+<span class="sd">        </span>
+<span class="sd">        min_lat, max_lat : int, optional</span>
+<span class="sd">            Latitude bounds in whole degrees (–90..90).</span>
+<span class="sd">        </span>
+<span class="sd">        min_lon, max_lon : int, optional</span>
+<span class="sd">            Longitude bounds in whole degrees (–180..180).</span>
+<span class="sd">        </span>
+<span class="sd">        min_elevation, max_elevation : int, optional</span>
+<span class="sd">            Elevation bounds in meters (integers; negative allowed).</span>
+<span class="sd">        </span>
+<span class="sd">        earliest_year, latest_year : int, optional</span>
+<span class="sd">            Year bounds (integers; negative allowed). If provided without time settings, ``time_format`` defaults to ``&#39;CE&#39;``.</span>
+<span class="sd">        </span>
+<span class="sd">        time_format : {&quot;CE&quot;,&quot;BP&quot;}, optional</span>
+<span class="sd">            Interpretation of years. If omitted with a time window, defaults to ``&#39;CE&#39;``.</span>
+<span class="sd">        </span>
+<span class="sd">        time_method : {&quot;overAny&quot;,&quot;entireOver&quot;,&quot;overEntire&quot;}, optional</span>
+<span class="sd">            How to apply the time window (overlap, envelop, or within).</span>
+<span class="sd">        </span>
+<span class="sd">        reconstruction : bool or str, optional</span>
+<span class="sd">            Accepts True/False or strings (case-insensitive) like ``&quot;true&quot;|&quot;yes&quot;|&quot;y&quot;|&quot;1&quot;`` → ``&#39;Y&#39;`` and</span>
+<span class="sd">            ``&quot;false&quot;|&quot;no&quot;|&quot;n&quot;|&quot;0&quot;`` → ``&#39;N&#39;``. ``None`` omits the filter.</span>
+<span class="sd">        </span>
+<span class="sd">        recent : bool, default False</span>
+<span class="sd">            If True, restrict to studies from the last ~2 years (newest first).</span>
+<span class="sd">        </span>
+<span class="sd">        limit : int, default 100</span>
+<span class="sd">            Number of studies to return (PyleoTUPS default).</span>
+<span class="sd">        </span>
+<span class="sd">        display : bool, default False</span>
+<span class="sd">            If True, render a small preview after parsing. </span>
+
+<span class="sd">         </span>
+<span class="sd">        skip : int, optional</span>
+<span class="sd">            Number of studies to skip (for pagination). Use with ``limit`` to page through results.</span>
+<span class="sd">            Example: ``limit=10, skip=10`` returns items 11–20.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pandas.DataFrame</span>
+<span class="sd">            Response DataFrame. Fills the internal `studies` attribute with structured NOAA study data.</span>
+<span class="sd">        </span>
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If no inputs are passed.</span>
+
+<span class="sd">        requests.HTTPError</span>
+<span class="sd">            If the HTTP request returned an unsuccessful status code.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        User Guide:</span>
+
+<span class="sd">        **Multi-value fields.** For ``investigators``, ``locations``, ``keywords``, ``species``, ``cv_whats``,</span>
+<span class="sd">        ``cv_materials``, ``cv_seasonalities``:</span>
+<span class="sd">        - Accept a string (already ``|``-separated) **or** a Python list of strings.</span>
+<span class="sd">        - Lists are joined with ``|``. The corresponding ``*_and_or`` flag is included only when 2+ items.</span>
+<span class="sd">        - Species are validated to **four uppercase letters**.</span>
+
+<span class="sd">        **Identifiers short-circuit.** If ``xml_id`` or ``noaa_id`` is set, the request includes only that id (plus</span>
+<span class="sd">        publisher), ignoring other filters.</span>
+
+<span class="sd">        **Time window defaults.** If either ``earliest_year`` or ``latest_year`` is provided and neither ``time_format``</span>
+<span class="sd">        nor ``time_method`` is supplied, ``time_format`` defaults to ``&#39;CE&#39;`` (a note is recorded).</span>
+
+<span class="sd">        **Unsupported parameters.** ``headersOnly`` and ``skip`` are not supported by PyleoTUPS and are ignored if passed.</span>
+
+<span class="sd">        **Boolean normalization.** Parameters expected as ``&#39;Y&#39;/&#39;N&#39;`` accept: True/False, or strings like</span>
+<span class="sd">        ``&quot;true&quot;|&quot;yes&quot;|&quot;y&quot;|&quot;1&quot;`` → ``&#39;Y&#39;`` and ``&quot;false&quot;|&quot;no&quot;|&quot;n&quot;|&quot;0&quot;`` → ``&#39;N&#39;``.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+
+<span class="sd">        Quick start (identifiers)</span>
+<span class="sd">        ^^^^^^^^^^^^^^^^^^^^^^^^^</span>
+<span class="sd">        .. jupyter-execute::</span>
+
+<span class="sd">            import pyleotups as pt</span>
+<span class="sd">            ds = pt.Dataset()</span>
+<span class="sd">            df_noaa = ds.search_studies(noaa_id=13156)</span>
+<span class="sd">            df_xml = ds.search_studies(xml_id=1840)</span>
+<span class="sd">            df_noaa.head()</span>
+<span class="sd">            df_xml.head()</span>
+
+<span class="sd">        Full-text search (Oracle syntax)</span>
+<span class="sd">        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>
+<span class="sd">        .. jupyter-execute::</span>
+
+<span class="sd">            # Single phrase</span>
+<span class="sd">            df_singlephrase = ds.search_studies(search_text=&quot;younger dryas&quot;, limit=20)</span>
+<span class="sd">            df_singlephrase.head()</span>
+
+<span class="sd">        .. jupyter-execute::</span>
+
+<span class="sd">            # Logical operator (AND)</span>
+<span class="sd">            df_logop = ds.search_studies(search_text=&quot;loess AND stratigraphy&quot;, limit=20)</span>
+<span class="sd">            df_logop.head()</span>
+
+<span class="sd">        .. jupyter-execute::</span>
+
+<span class="sd">            # Wildcards: &#39;_&#39; (single char), &#39;%&#39; (multi-char)</span>
+<span class="sd">            df_wc_1 = ds.search_studies(search_text=&quot;f_re&quot;, limit=20)</span>
+<span class="sd">            df_wc_2 = ds.search_studies(search_text=&quot;pol%&quot;, limit=20)</span>
+<span class="sd">            df_wc_1.head(), df_wc_2.head()</span>
+
+<span class="sd">        .. jupyter-execute::</span>
+
+<span class="sd">            # Escaping special characters (use backslashes)</span>
+<span class="sd">            df_specchar = ds.search_studies(search_text=r&quot;noaa\-tree\-19260&quot;, limit=20)</span>
+<span class="sd">            df_specchar.head()</span>
+
+<span class="sd">        Investigators, keywords, locations</span>
+<span class="sd">        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>
+
+<span class="sd">        .. jupyter-execute::</span>
+
+<span class="sd">            # Multiple investigators (OR by default)</span>
+<span class="sd">            df_multinv_default = ds.search_studies(investigators=[&quot;Wahl, E.R.&quot;, &quot;Vose, R.S.&quot;])</span>
+<span class="sd">            df_multinv_default.head()</span>
+<span class="sd">        </span>
+<span class="sd">        .. jupyter-execute::</span>
+
+<span class="sd">            # Multiple investigators (AND by default)</span>
+<span class="sd">            df_multinv_and = ds.search_studies(investigators=[&quot;Wahl, E.R.&quot;, &quot;Vose, R.S.&quot;], investigatorsAndOr = &quot;and&quot;)</span>
+<span class="sd">            df_multinv_and.head()</span>
+
+<span class="sd">        .. jupyter-execute::</span>
+<span class="sd">            </span>
+<span class="sd">            # Keywords: hierarchy with &#39;&gt;&#39; and multiple via &#39;|&#39;</span>
+<span class="sd">            df_keywords = ds.search_studies(keywords=&quot;earth science&gt;paleoclimate&gt;paleocean&gt;biomarkers&quot;)</span>
+<span class="sd">            df_keywords.head()</span>
+
+<span class="sd">        .. jupyter-execute::</span>
+<span class="sd">            </span>
+<span class="sd">            # Location hierarchy</span>
+<span class="sd">            df_loc = ds.search_studies(locations=&quot;Continent&gt;Africa&gt;Eastern Africa&gt;Zambia&quot;)</span>
+<span class="sd">            df_loc.head()</span>
+
+<span class="sd">        Species and types</span>
+<span class="sd">        ^^^^^^^^^^^^^^^^^</span>
+<span class="sd">        .. jupyter-execute::</span>
+
+<span class="sd">            # Species: four-letter codes (uppercase enforced)</span>
+<span class="sd">            df_species = ds.search_studies(species=[&quot;ABAL&quot;, &quot;PIPO&quot;])</span>
+<span class="sd">            df_species.head()</span>
+
+<span class="sd">        .. jupyter-execute::</span>
+
+<span class="sd">            # Data types: one or more IDs separated by &#39;|&#39;</span>
+<span class="sd">            df_muldatatypes = ds.search_studies(data_type_id=&quot;4|18&quot;)</span>
+<span class="sd">            df_muldatatypes.head()  </span>
+
+<span class="sd">        Geography and elevation</span>
+<span class="sd">        ^^^^^^^^^^^^^^^^^^^^^^^</span>
+<span class="sd">        .. jupyter-execute::</span>
+
+<span class="sd">            df_latlong = ds.search_studies(min_lat=68, max_lat=69, min_lon=30, max_lon=40)</span>
+<span class="sd">            df_latlong.head()</span>
+
+<span class="sd">        .. jupyter-execute::</span>
+<span class="sd">            </span>
+<span class="sd">            df_elv = ds.search_studies(min_elevation=100, max_elevation=110)</span>
+<span class="sd">            df_elv.head()</span>
+
+<span class="sd">        Time window (defaults to CE if no time settings)</span>
+<span class="sd">        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>
+<span class="sd">        .. jupyter-execute::</span>
+
+<span class="sd">            # Explicit BP with method</span>
+<span class="sd">            df_timew = ds.search_studies(earliest_year=12000, time_format=&quot;BP&quot;, time_method=&quot;overAny&quot;)</span>
+<span class="sd">            df_timew.head()</span>
+
+<span class="sd">        .. jupyter-execute::</span>
+
+<span class="sd">            # No time_format/time_method → defaults to CE</span>
+<span class="sd">            df_time_defualt = ds.search_studies(earliest_year=1500, latest_year=0)</span>
+<span class="sd">            df_time_defualt.head()</span>
+
+<span class="sd">        Reconstructions and recency</span>
+<span class="sd">        ^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>
+<span class="sd">        .. jupyter-execute::</span>
+
+<span class="sd">            df_recon = ds.search_studies(reconstruction=True)</span>
+<span class="sd">            df_recon.head()</span>
+
+<span class="sd">        .. jupyter-execute::</span>
+
+<span class="sd">            df_recent = ds.search_studies(recent=True, limit=25)</span>
+<span class="sd">            df_recent.head()</span>
+
+<span class="sd">        Limit and Skipping (for pagination)</span>
+<span class="sd">        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>
+<span class="sd">        .. jupyter-execute::</span>
+
+<span class="sd">            # Limit up to first 10 results </span>
+<span class="sd">            df_limit = ds.search_studies(earliest_year=12000, time_format=&quot;BP&quot;, time_method=&quot;overAny&quot;, limit=10)</span>
+<span class="sd">            df_limit.head()</span>
+
+<span class="sd">            # Skip the first 10 results (i.e., get results 11-20)</span>
+<span class="sd">            df_skip = ds.search_studies(earliest_year=12000, time_format=&quot;BP&quot;, time_method=&quot;overAny&quot;, limit=10, skip=10)</span>
+<span class="sd">            df_skip.head()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="s2">&quot;headers_only&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> is not supported and will be ignored.&quot;</span><span class="p">,</span> <span class="n">param</span><span class="p">)</span>
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;headers_only&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">([</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;xml_id&quot;</span><span class="p">),</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;noaa_id&quot;</span><span class="p">),</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;data_type_id&quot;</span><span class="p">),</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;keywords&quot;</span><span class="p">),</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;investigators&quot;</span><span class="p">),</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;max_lat&quot;</span><span class="p">),</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;min_lat&quot;</span><span class="p">),</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;max_lon&quot;</span><span class="p">),</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;min_lon&quot;</span><span class="p">),</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;location&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;locations&quot;</span><span class="p">),</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;publication&quot;</span><span class="p">),</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;search_text&quot;</span><span class="p">),</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;earliest_year&quot;</span><span class="p">),</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;latest_year&quot;</span><span class="p">),</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;cv_whats&quot;</span><span class="p">),</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;min_elevation&quot;</span><span class="p">),</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;max_elevation&quot;</span><span class="p">),</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;time_format&quot;</span><span class="p">),</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;time_method&quot;</span><span class="p">),</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;reconstruction&quot;</span><span class="p">),</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;species&quot;</span><span class="p">),</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;recent&quot;</span><span class="p">),</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;skip&quot;</span><span class="p">)</span>
+        <span class="p">]):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;At least one search parameter must be specified to initiate a query. &quot;</span>
+                <span class="s2">&quot;To view available parameters and usage examples, run: help(Dataset.search_studies)&quot;</span>
+            <span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;data_publisher&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;data_publisher&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;NOAA&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s2">&quot;PyleoTUPS currently supports data_publisher=&#39;NOAA&#39; only. &quot;</span>
+            <span class="s2">&quot;Please retry with data_publisher=&#39;NOAA&#39;.&quot;</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Build payload using our utils (handles ids short-circuit, list→&#39;|&#39;, Y/N coercion, time default)</span>
+        <span class="n">payload</span><span class="p">,</span> <span class="n">notes</span> <span class="o">=</span> <span class="n">build_payload</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">notes</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;search_studies: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_search_notes</span> <span class="o">=</span> <span class="n">notes</span>
+
+        <span class="c1"># --- Make the request with explicit 204 handling ---</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">resp</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">BASE_URL</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+            <span class="n">resp</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">requests</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;HTTP Request Error from NOAA: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># 204 No Content → no studies for given filters</span>
+        <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="mi">204</span><span class="p">:</span>
+            <span class="n">inv</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;investigators&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">inv</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                    <span class="s2">&quot;No studies found for investigator(s): &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">inv</span><span class="si">}</span><span class="s2">. NOAA expects &#39;LastName, Initials&#39;. Try variations like:</span><span class="se">\n</span><span class="s2">&quot;</span>
+                    <span class="s2">&quot;  - &#39;LastName, Initials&#39;</span><span class="se">\n</span><span class="s2">  - &#39;LastName&#39;</span><span class="se">\n</span><span class="s2">  - &#39;Initials&#39;&quot;</span>
+                <span class="p">)</span>
+                <span class="c1"># Nothing to parse; return display summary (empty) or None</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_summary</span><span class="p">()</span> 
+            <span class="c1"># if kwargs.get(&quot;display&quot;) else None</span>
+        <span class="c1"># Non-204: ensure success and parse JSON</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">response_json</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to parse NOAA response as JSON: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Parse into internal structures (you already have this)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parse_response</span><span class="p">(</span><span class="n">response_json</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_summary</span><span class="p">()</span> </div>
+
+    <span class="c1"># if kwargs.get(&quot;display&quot;) else log.info(f&quot;Parsed {len(self.studies)} studies.&quot;)</span>
+        
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">limit</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parse the JSON response and populate studies and reverse mapping indexes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">studies</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_table_index</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_url_to_datatable</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">study_data</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;study&#39;</span><span class="p">,</span> <span class="p">[]),</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Parsing NOAA studies&quot;</span><span class="p">):</span>
+            <span class="n">study_obj</span> <span class="o">=</span> <span class="n">NOAADataset</span><span class="p">(</span><span class="n">study_data</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">studies</span><span class="p">[</span><span class="n">study_obj</span><span class="o">.</span><span class="n">study_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">study_obj</span>
+
+            <span class="k">for</span> <span class="n">site</span> <span class="ow">in</span> <span class="n">study_obj</span><span class="o">.</span><span class="n">sites</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">paleo</span> <span class="ow">in</span> <span class="n">site</span><span class="o">.</span><span class="n">paleo_data</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">data_table_index</span><span class="p">[</span><span class="n">paleo</span><span class="o">.</span><span class="n">datatable_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="s1">&#39;study_id&#39;</span><span class="p">:</span> <span class="n">study_obj</span><span class="o">.</span><span class="n">study_id</span><span class="p">,</span>
+                        <span class="s1">&#39;site_id&#39;</span><span class="p">:</span> <span class="n">site</span><span class="o">.</span><span class="n">site_id</span><span class="p">,</span>
+                        <span class="s1">&#39;paleo_data&#39;</span><span class="p">:</span> <span class="n">paleo</span>
+                    <span class="p">}</span>
+                    <span class="k">for</span> <span class="n">file_obj</span> <span class="ow">in</span> <span class="n">paleo</span><span class="o">.</span><span class="n">files</span><span class="p">:</span>
+                        <span class="n">file_url</span> <span class="o">=</span> <span class="n">file_obj</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;fileUrl&#39;</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">file_url</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">file_url_to_datatable</span><span class="p">[</span><span class="n">file_url</span><span class="p">]</span> <span class="o">=</span> <span class="n">paleo</span><span class="o">.</span><span class="n">datatable_id</span>
+            
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">limit</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;study&#39;</span><span class="p">,</span> <span class="p">[]))</span> <span class="o">&gt;=</span> <span class="n">limit</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Retrieved </span><span class="si">{</span><span class="n">limit</span><span class="si">}</span><span class="s2"> studies, which is the specified limit. &quot;</span>
+                <span class="s2">&quot;Consider increasing the limit parameter to fetch more studies.&quot;</span>
+            <span class="p">)</span>
+
+
+<div class="viewcode-block" id="Dataset.get_summary">
+<a class="viewcode-back" href="../../../api.html#pyleotups.core.Dataset.Dataset.get_summary">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get a DataFrame summarizing all loaded studies.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pandas.DataFrame</span>
+<span class="sd">            A DataFrame with a summary of study metadata and components.</span>
+<span class="sd">        </span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+
+<span class="sd">        .. jupyter-execute::</span>
+
+<span class="sd">            from pyleotups import Dataset</span>
+<span class="sd">            ds=Dataset()</span>
+<span class="sd">            df = ds.search_studies(noaa_id=33213)</span>
+<span class="sd">            df.head()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">study</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">study</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">studies</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Dataset.get_publications">
+<a class="viewcode-back" href="../../../api.html#pyleotups.core.Dataset.Dataset.get_publications">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_publications</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get all publications in both BibTeX and DataFrame formats.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        save : bool, default=False</span>
+<span class="sd">            If True, save the BibTeX to a .bib file.</span>
+<span class="sd">        path : str or None, optional</span>
+<span class="sd">            Path to save the .bib file. If None and save=True,</span>
+<span class="sd">            saves to &#39;bibtex_&lt;timestamp&gt;.bib&#39;.</span>
+<span class="sd">        verbose : bool, default=False</span>
+<span class="sd">            If True, print the BibTeX content to console.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple (pybtex.database.BibliographyData, pandas.DataFrame)</span>
+<span class="sd">            BibTeX object and DataFrame of publication details.</span>
+<span class="sd">        </span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+
+<span class="sd">        .. jupyter-execute::</span>
+
+<span class="sd">            from pyleotups import Dataset</span>
+<span class="sd">            ds=Dataset()</span>
+<span class="sd">            dsf = ds.search_studies(noaa_id=33213)</span>
+<span class="sd">            bib, df = ds.get_publications() </span>
+<span class="sd">            df.head()</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">pybtex.database</span><span class="w"> </span><span class="kn">import</span> <span class="n">BibliographyData</span>
+        
+        <span class="n">publications_data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">bib_entries</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># Collect publication metadata and BibTeX entries</span>
+        <span class="k">for</span> <span class="n">study</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">studies</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">pub</span> <span class="ow">in</span> <span class="n">study</span><span class="o">.</span><span class="n">publications</span><span class="p">:</span>
+                <span class="n">pub_dict</span> <span class="o">=</span> <span class="n">pub</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+                <span class="n">pub_dict</span><span class="p">[</span><span class="s1">&#39;StudyID&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">study_id</span>
+                <span class="n">pub_dict</span><span class="p">[</span><span class="s1">&#39;StudyName&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;studyName&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">&quot;Unknown Study&quot;</span>
+                <span class="n">publications_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pub_dict</span><span class="p">)</span>
+
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">citation_key</span> <span class="o">=</span> <span class="n">pub</span><span class="o">.</span><span class="n">get_citation_key</span><span class="p">()</span>
+                    <span class="n">bib_entries</span><span class="p">[</span><span class="n">citation_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">pub</span><span class="o">.</span><span class="n">to_bibtex_entry</span><span class="p">()</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Failed to convert a publication in study </span><span class="si">{</span><span class="n">study</span><span class="o">.</span><span class="n">study_id</span><span class="si">}</span><span class="s2"> to BibTeX. &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;Original error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">publications_data</span><span class="p">)</span>
+        <span class="n">bibs</span> <span class="o">=</span> <span class="n">BibliographyData</span><span class="p">(</span><span class="n">entries</span><span class="o">=</span><span class="n">bib_entries</span><span class="p">)</span>
+
+        <span class="c1"># Save to file if requested</span>
+        <span class="k">if</span> <span class="n">save</span><span class="p">:</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">datetime</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">pybtex.database.output.bibtex</span><span class="w"> </span><span class="kn">import</span> <span class="n">Writer</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="p">:</span>
+                <span class="n">timestamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">_%H%M&quot;</span><span class="p">)</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;bibtex_</span><span class="si">{</span><span class="n">timestamp</span><span class="si">}</span><span class="s2">.bib&quot;</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No path specified. Saving BibTeX to: </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">writer</span> <span class="o">=</span> <span class="n">Writer</span><span class="p">()</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">writer</span><span class="o">.</span><span class="n">write_stream</span><span class="p">(</span><span class="n">bibs</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to write BibTeX file to &#39;</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Print if verbose</span>
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">pybtex.database.output.bibtex</span><span class="w"> </span><span class="kn">import</span> <span class="n">Writer</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">io</span><span class="w"> </span><span class="kn">import</span> <span class="n">StringIO</span>
+            <span class="n">buffer</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+            <span class="n">Writer</span><span class="p">()</span><span class="o">.</span><span class="n">write_stream</span><span class="p">(</span><span class="n">bibs</span><span class="p">,</span> <span class="n">buffer</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">buffer</span><span class="o">.</span><span class="n">getvalue</span><span class="p">())</span>
+
+        <span class="k">return</span> <span class="n">bibs</span><span class="p">,</span> <span class="n">df</span></div>
+
+    
+<div class="viewcode-block" id="Dataset.get_tables">
+<a class="viewcode-back" href="../../../api.html#pyleotups.core.Dataset.Dataset.get_tables">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_tables</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get a DataFrame of all sites expanded to paleo data files.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pandas.DataFrame</span>
+<span class="sd">            A DataFrame with one row per (Site × PaleoData × File).</span>
+<span class="sd">        </span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+
+<span class="sd">        .. jupyter-execute::</span>
+
+<span class="sd">            from pyleotups import Dataset</span>
+<span class="sd">            ds=Dataset()</span>
+<span class="sd">            dsf = ds.search_studies(noaa_id=33213)</span>
+<span class="sd">            df = ds.get_tables()</span>
+<span class="sd">            df.head()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">records</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">study</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">studies</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">study_id</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">study_id</span>
+            <span class="n">study_name</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;studyName&quot;</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">site</span> <span class="ow">in</span> <span class="n">study</span><span class="o">.</span><span class="n">sites</span><span class="p">:</span>
+                <span class="n">paleo_data_records</span> <span class="o">=</span> <span class="n">site</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>  <span class="c1"># Already flattened per file</span>
+                <span class="k">for</span> <span class="n">paleo_record</span> <span class="ow">in</span> <span class="n">paleo_data_records</span><span class="p">:</span>
+                    <span class="n">paleo_record</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+                        <span class="s2">&quot;StudyID&quot;</span><span class="p">:</span> <span class="n">study_id</span><span class="p">,</span>
+                        <span class="s2">&quot;StudyName&quot;</span><span class="p">:</span> <span class="n">study_name</span>
+                    <span class="p">})</span>
+                    <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">paleo_record</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">records</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Dataset.get_sites">
+<a class="viewcode-back" href="../../../api.html#pyleotups.core.Dataset.Dataset.get_sites">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_sites</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get a DataFrame of all sites expanded to paleo data files.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pandas.DataFrame</span>
+<span class="sd">            A DataFrame with one row per (Site × PaleoData × File).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">records</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">study</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">studies</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">study_id</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">study_id</span>
+            <span class="n">study_name</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;studyName&quot;</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">site</span> <span class="ow">in</span> <span class="n">study</span><span class="o">.</span><span class="n">sites</span><span class="p">:</span>
+                <span class="n">paleo_data_records</span> <span class="o">=</span> <span class="n">site</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>  <span class="c1"># Already flattened per file</span>
+                <span class="k">for</span> <span class="n">paleo_record</span> <span class="ow">in</span> <span class="n">paleo_data_records</span><span class="p">:</span>
+                    <span class="n">paleo_record</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+                        <span class="s2">&quot;StudyID&quot;</span><span class="p">:</span> <span class="n">study_id</span><span class="p">,</span>
+                        <span class="s2">&quot;StudyName&quot;</span><span class="p">:</span> <span class="n">study_name</span>
+                    <span class="p">})</span>
+                    <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">paleo_record</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">records</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="Dataset.get_geo">
+<a class="viewcode-back" href="../../../api.html#pyleotups.core.Dataset.Dataset.get_geo">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_geo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get a DataFrame of site-level geospatial metadata and associated data types</span>
+<span class="sd">        from all studies loaded into the Dataset.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pandas.DataFrame</span>
+<span class="sd">            A DataFrame with one row per site and columns:</span>
+<span class="sd">            [&#39;StudyID&#39;, &#39;SiteID&#39;, &#39;SiteName&#39;, &#39;LocationName&#39;,</span>
+<span class="sd">            &#39;Latitude&#39;, &#39;Longitude&#39;, &#39;MinElevation&#39;, &#39;MaxElevation&#39;, &#39;DataType&#39;]</span>
+<span class="sd">        </span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+
+<span class="sd">        .. jupyter-execute::</span>
+
+<span class="sd">            from pyleotups import Dataset</span>
+<span class="sd">            ds=Dataset()</span>
+<span class="sd">            dsf = ds.search_studies(noaa_id=33213)</span>
+<span class="sd">            df = ds.get_geo()</span>
+<span class="sd">            df.head()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">site_records</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">study</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">studies</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">study_id</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">study_id</span>
+            <span class="n">data_type</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;dataType&quot;</span><span class="p">,</span> <span class="s2">&quot;Unknown&quot;</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">site</span> <span class="ow">in</span> <span class="n">study</span><span class="o">.</span><span class="n">sites</span><span class="p">:</span>
+                <span class="n">site_dict</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">&quot;StudyID&quot;</span><span class="p">:</span> <span class="n">study_id</span><span class="p">,</span>
+                    <span class="s2">&quot;DataType&quot;</span><span class="p">:</span> <span class="n">data_type</span><span class="p">,</span>
+                    <span class="o">**</span><span class="p">{</span>
+                        <span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">site</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>  <span class="c1"># site.to_dict() returns list of dicts (1 per file)</span>
+                        <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;SiteID&quot;</span><span class="p">,</span> <span class="s2">&quot;SiteName&quot;</span><span class="p">,</span> <span class="s2">&quot;LocationName&quot;</span><span class="p">,</span> <span class="s2">&quot;Latitude&quot;</span><span class="p">,</span> <span class="s2">&quot;Longitude&quot;</span><span class="p">,</span> <span class="s2">&quot;MinElevation&quot;</span><span class="p">,</span> <span class="s2">&quot;MaxElevation&quot;</span><span class="p">]</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+                <span class="n">site_records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">site_dict</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">site_records</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="Dataset.get_funding">
+<a class="viewcode-back" href="../../../api.html#pyleotups.core.Dataset.Dataset.get_funding">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_funding</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get a DataFrame of all funding records across loaded studies.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pandas.DataFrame</span>
+<span class="sd">            A DataFrame with columns [&#39;StudyID&#39;, &#39;StudyName&#39;, &#39;FundingAgency&#39;, &#39;FundingGrant&#39;].</span>
+<span class="sd">            Returns an empty DataFrame if no funding is available.</span>
+<span class="sd">        </span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+
+<span class="sd">        .. jupyter-execute::</span>
+
+<span class="sd">            from pyleotups import Dataset</span>
+<span class="sd">            ds=Dataset()</span>
+<span class="sd">            dsf = ds.search_studies(noaa_id=33213)</span>
+<span class="sd">            df = ds.get_funding()</span>
+<span class="sd">            df.head()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">records</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">study</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">studies</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">study_id</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">study_id</span>
+            <span class="n">study_name</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;studyName&quot;</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">fund</span> <span class="ow">in</span> <span class="n">study</span><span class="o">.</span><span class="n">funding</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fund</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                    <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                        <span class="s2">&quot;StudyID&quot;</span><span class="p">:</span> <span class="n">study_id</span><span class="p">,</span>
+                        <span class="s2">&quot;StudyName&quot;</span><span class="p">:</span> <span class="n">study_name</span><span class="p">,</span>
+                        <span class="s2">&quot;FundingAgency&quot;</span><span class="p">:</span> <span class="n">fund</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;fundingAgency&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+                        <span class="s2">&quot;FundingGrant&quot;</span><span class="p">:</span> <span class="n">fund</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;fundingGrant&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                    <span class="p">})</span>
+
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">records</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;StudyID&quot;</span><span class="p">,</span> <span class="s2">&quot;StudyName&quot;</span><span class="p">,</span> <span class="s2">&quot;FundingAgency&quot;</span><span class="p">,</span> <span class="s2">&quot;FundingGrant&quot;</span><span class="p">])</span></div>
+
+    
+
+<div class="viewcode-block" id="Dataset.get_variables">
+<a class="viewcode-back" href="../../../api.html#pyleotups.core.Dataset.Dataset.get_variables">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_variables</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataTableIDs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve variable metadata for specified dataTableIDs.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        dataTableIDs : list or str</span>
+<span class="sd">            One or more NOAA dataTableIDs.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pandas.DataFrame</span>
+<span class="sd">            A DataFrame indexed by DataTableID with one row per (file × variable).</span>
+<span class="sd">            Includes full variable metadata such as cvShortName, cvUnit, etc.</span>
+<span class="sd">        </span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+
+<span class="sd">        .. jupyter-execute::</span>
+
+<span class="sd">            from pyleotups import Dataset</span>
+<span class="sd">            ds=Dataset()</span>
+<span class="sd">            dsf = ds.search_studies(noaa_id=33213)</span>
+<span class="sd">            df_var = ds.get_variables(dataTableIDs=&quot;45859&quot;)</span>
+<span class="sd">            df_var.head()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dataTableIDs</span> <span class="o">=</span> <span class="n">assert_list</span><span class="p">(</span><span class="n">dataTableIDs</span><span class="p">)</span>
+        <span class="n">records</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">dt_id</span> <span class="ow">in</span> <span class="n">dataTableIDs</span><span class="p">:</span>
+            <span class="n">mapping</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_table_index</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dt_id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">mapping</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;DataTableID &#39;</span><span class="si">{</span><span class="n">dt_id</span><span class="si">}</span><span class="s2">&#39; not found. Please run `search_studies` first.&quot;</span><span class="p">)</span>
+
+            <span class="n">paleo</span> <span class="o">=</span> <span class="n">mapping</span><span class="p">[</span><span class="s2">&quot;paleo_data&quot;</span><span class="p">]</span>
+            <span class="n">study_id</span> <span class="o">=</span> <span class="n">paleo</span><span class="o">.</span><span class="n">study_id</span>
+            <span class="n">site_id</span> <span class="o">=</span> <span class="n">paleo</span><span class="o">.</span><span class="n">site_id</span>
+
+            <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">paleo</span><span class="o">.</span><span class="n">files</span><span class="p">:</span>
+                <span class="n">file_url</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;fileUrl&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">file_url</span><span class="p">:</span>
+                    <span class="k">continue</span>
+
+                <span class="n">var_map</span> <span class="o">=</span> <span class="n">paleo</span><span class="o">.</span><span class="n">file_variable_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">file_url</span><span class="p">,</span> <span class="p">{})</span>
+                <span class="k">for</span> <span class="n">var_name</span><span class="p">,</span> <span class="n">var_meta</span> <span class="ow">in</span> <span class="n">var_map</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                        <span class="s2">&quot;DataTableID&quot;</span><span class="p">:</span> <span class="n">dt_id</span><span class="p">,</span>
+                        <span class="s2">&quot;StudyID&quot;</span><span class="p">:</span> <span class="n">study_id</span><span class="p">,</span>
+                        <span class="s2">&quot;SiteID&quot;</span><span class="p">:</span> <span class="n">site_id</span><span class="p">,</span>
+                        <span class="s2">&quot;FileURL&quot;</span><span class="p">:</span> <span class="n">file_url</span><span class="p">,</span>
+                        <span class="s2">&quot;VariableName&quot;</span><span class="p">:</span> <span class="n">var_name</span><span class="p">,</span>
+                        <span class="o">**</span><span class="n">var_meta</span>  <span class="c1"># includes all cv* fields</span>
+                    <span class="p">})</span>
+
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">records</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;StudyID&quot;</span><span class="p">,</span> <span class="s2">&quot;SiteID&quot;</span><span class="p">,</span> <span class="s2">&quot;FileURL&quot;</span><span class="p">,</span> <span class="s2">&quot;VariableName&quot;</span><span class="p">])</span>  <span class="c1"># fallback for no data</span>
+
+        <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;DataTableID&quot;</span><span class="p">)</span></div>
+
+
+    <span class="nd">@DeprecationWarning</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_data_deprecated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataTableIDs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">file_urls</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fetch external data for given dataTableIDs or file URLs and attach study/site metadata.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        dataTableIDs : list or str, optional</span>
+<span class="sd">            One or more NOAA data table IDs.</span>
+<span class="sd">        file_urls : list or str, optional</span>
+<span class="sd">            One or more file URLs.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list of pandas.DataFrame</span>
+<span class="sd">            A list of DataFrames, each corresponding to fetched data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">dataTableIDs</span><span class="p">:</span>
+            <span class="n">dataTableIDs</span> <span class="o">=</span> <span class="n">assert_list</span><span class="p">(</span><span class="n">dataTableIDs</span><span class="p">)</span>
+            <span class="n">dfs</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">dt_id</span> <span class="ow">in</span> <span class="n">dataTableIDs</span><span class="p">:</span>
+                <span class="n">mapping</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_table_index</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dt_id</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">mapping</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Data Table ID </span><span class="si">{</span><span class="n">dt_id</span><span class="si">}</span><span class="s2"> not found or no associated file URL.&quot;</span><span class="p">)</span>
+                    <span class="k">continue</span>
+                <span class="n">file_url</span> <span class="o">=</span> <span class="n">mapping</span><span class="p">[</span><span class="s1">&#39;paleo_data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">file_url</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">file_url</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No file URL for Data Table ID </span><span class="si">{</span><span class="n">dt_id</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+                    <span class="k">continue</span>
+                <span class="n">fetched_data</span> <span class="o">=</span> <span class="n">DataFetcher</span><span class="o">.</span><span class="n">fetch_data</span><span class="p">(</span><span class="n">file_url</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fetched_data</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                    <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">fetched_data</span><span class="p">:</span>
+                        <span class="n">df</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;NOAAStudyId&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapping</span><span class="p">[</span><span class="s1">&#39;study_id&#39;</span><span class="p">]</span>
+                        <span class="n">df</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;SiteID&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapping</span><span class="p">[</span><span class="s1">&#39;site_id&#39;</span><span class="p">]</span>
+                        <span class="n">study_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">studies</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">mapping</span><span class="p">[</span><span class="s1">&#39;study_id&#39;</span><span class="p">],</span> <span class="p">{})</span>
+                        <span class="n">df</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;StudyName&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">study_obj</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;studyName&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">study_obj</span><span class="p">,</span> <span class="s1">&#39;metadata&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+                        <span class="n">publications</span> <span class="o">=</span> <span class="n">study_obj</span><span class="o">.</span><span class="n">publications</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">study_obj</span><span class="p">,</span> <span class="s1">&#39;publications&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">publications</span><span class="p">))</span>
+                        <span class="k">for</span> <span class="n">pub</span> <span class="ow">in</span> <span class="n">publications</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">pub</span><span class="p">,</span> <span class="s2">&quot;doi&quot;</span><span class="p">):</span>
+                                <span class="n">doi</span> <span class="o">=</span> <span class="n">pub</span><span class="o">.</span><span class="n">doi</span> <span class="k">if</span> <span class="n">pub</span><span class="o">.</span><span class="n">doi</span> <span class="k">else</span> <span class="kc">None</span>
+                                <span class="n">df</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;PublicationDOI&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">doi</span><span class="p">)</span>                                
+                        <span class="n">dfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">fetched_data</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;NOAAStudyId&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapping</span><span class="p">[</span><span class="s1">&#39;study_id&#39;</span><span class="p">]</span>
+                    <span class="n">fetched_data</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;SiteID&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapping</span><span class="p">[</span><span class="s1">&#39;site_id&#39;</span><span class="p">]</span>
+                    <span class="n">study_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">studies</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">mapping</span><span class="p">[</span><span class="s1">&#39;study_id&#39;</span><span class="p">],</span> <span class="p">{})</span>
+                    <span class="n">fetched_data</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;StudyName&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">study_obj</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;studyName&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">study_obj</span><span class="p">,</span> <span class="s1">&#39;metadata&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+                    <span class="n">dfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fetched_data</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">dfs</span>
+        <span class="k">if</span> <span class="n">file_urls</span><span class="p">:</span>
+            <span class="n">file_urls</span> <span class="o">=</span> <span class="n">assert_list</span><span class="p">(</span><span class="n">file_urls</span><span class="p">)</span>
+            <span class="n">dfs</span> <span class="o">=</span> <span class="p">[</span><span class="n">DataFetcher</span><span class="o">.</span><span class="n">fetch_data</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">file_urls</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">dfs</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No dataTableID or file URL provided.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+    
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_url</span><span class="p">,</span> <span class="n">mapping</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Process a single file URL: detect parser, parse the file, and attach metadata.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">file_url</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;File URL is missing.&quot;</span><span class="p">)</span>
+
+        <span class="n">file_type</span> <span class="o">=</span> <span class="n">file_url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">file_type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_PROPRIETARY_TYPES</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UnsupportedFileTypeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;pyleotups works with .txt files only. File type &#39;</span><span class="si">{</span><span class="n">file_type</span><span class="si">}</span><span class="s2">&#39; is proprietary.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">file_type</span> <span class="o">!=</span> <span class="s1">&#39;txt&#39;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UnsupportedFileTypeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Invalid file type &#39;</span><span class="si">{</span><span class="n">file_type</span><span class="si">}</span><span class="s2">&#39;. Only .txt files are supported.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Step 1: Detect parser type by reading initial lines</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">detect_parser_type</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
+            <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[:</span><span class="mi">5</span><span class="p">]):</span>
+                <span class="k">return</span> <span class="s2">&quot;standard&quot;</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span> <span class="o">-</span> <span class="mi">4</span><span class="p">):</span>
+                <span class="n">line_normalized</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+                <span class="k">if</span> <span class="p">(</span>
+                    <span class="p">((</span><span class="s2">&quot;world data center for paleoclimatology&quot;</span> <span class="ow">in</span> <span class="n">line_normalized</span>
+                    <span class="ow">and</span> <span class="s2">&quot;noaa&quot;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span> <span class="ow">or</span> 
+                    <span class="p">(</span><span class="s2">&quot;noaa&quot;</span> <span class="ow">in</span> <span class="n">line_normalized</span>
+                    <span class="ow">and</span> <span class="s2">&quot;world data center for paleoclimatology&quot;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()))</span>
+                    <span class="ow">and</span> <span class="s2">&quot;-&quot;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">and</span> <span class="s2">&quot;-&quot;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">4</span><span class="p">]</span>
+                <span class="p">):</span>
+                    <span class="k">return</span> <span class="s2">&quot;nonstandard&quot;</span>
+            <span class="k">return</span> <span class="s2">&quot;unparsable&quot;</span>
+        
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">file_url</span><span class="p">)</span>
+            <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+            <span class="n">parser_type</span> <span class="o">=</span> <span class="n">detect_parser_type</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to read file from &#39;</span><span class="si">{</span><span class="n">file_url</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Step 2: Use the appropriate parser</span>
+        <span class="k">if</span> <span class="n">parser_type</span> <span class="o">==</span> <span class="s2">&quot;standard&quot;</span><span class="p">:</span>
+            <span class="n">parser</span> <span class="o">=</span> <span class="n">StandardParser</span><span class="p">(</span><span class="n">file_url</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">parser_type</span> <span class="o">==</span> <span class="s2">&quot;nonstandard&quot;</span><span class="p">:</span>
+            <span class="n">parser</span> <span class="o">=</span> <span class="n">NonStandardParser</span><span class="p">(</span><span class="n">file_url</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Unable to determine parser for file: </span><span class="si">{</span><span class="n">file_url</span><span class="si">}</span><span class="s2">. &quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">parsed_data</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error while parsing file </span><span class="si">{</span><span class="n">file_url</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Step 3: Attach metadata</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">attach_metadata</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">mapping</span><span class="p">):</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;NOAAStudyId&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;study_id&#39;</span><span class="p">)</span>
+            <span class="n">study_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">studies</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;study_id&#39;</span><span class="p">),</span> <span class="p">{})</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;StudyName&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">study_obj</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;studyName&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">study_obj</span><span class="p">,</span> <span class="s1">&#39;metadata&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="k">return</span> <span class="n">df</span>
+
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parsed_data</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">parsed_data</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">mapping</span><span class="p">:</span>
+                    <span class="n">df</span> <span class="o">=</span> <span class="n">attach_metadata</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">mapping</span><span class="p">)</span>
+                <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">mapping</span><span class="p">:</span>
+                <span class="n">parsed_data</span> <span class="o">=</span> <span class="n">attach_metadata</span><span class="p">(</span><span class="n">parsed_data</span><span class="p">,</span> <span class="n">mapping</span><span class="p">)</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parsed_data</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">results</span>
+
+
+
+<div class="viewcode-block" id="Dataset.get_data">
+<a class="viewcode-back" href="../../../api.html#pyleotups.core.Dataset.Dataset.get_data">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataTableIDs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">file_urls</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fetch external data for given dataTableIDs or file URLs, perform validations,</span>
+<span class="sd">        and attach study and site metadata.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        dataTableIDs : list or str, optional</span>
+<span class="sd">            One or more NOAA data table IDs.</span>
+<span class="sd">        file_urls : list or str, optional</span>
+<span class="sd">            One or more file URLs.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list of pandas.DataFrame</span>
+<span class="sd">            A list of DataFrames corresponding to the fetched data.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            For missing parent study mapping, missing file URL, or proprietary/unsupported file types.</span>
+<span class="sd">        Exception</span>
+<span class="sd">            Propagates any exceptions raised by the parser.</span>
+<span class="sd">        </span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+
+<span class="sd">        .. jupyter-execute::</span>
+
+<span class="sd">            from pyleotups import Dataset</span>
+<span class="sd">            ds=Dataset()</span>
+<span class="sd">            df = ds.search_studies(noaa_id=33213)</span>
+<span class="sd">            dfs = ds.get_data(dataTableIDs=&quot;45859&quot;)</span>
+<span class="sd">            dfs[0].head()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dfs</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># Process based on dataTableIDs.</span>
+        <span class="k">if</span> <span class="n">dataTableIDs</span><span class="p">:</span>
+            <span class="n">dataTableIDs</span> <span class="o">=</span> <span class="n">assert_list</span><span class="p">(</span><span class="n">dataTableIDs</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">dt_id</span> <span class="ow">in</span> <span class="n">dataTableIDs</span><span class="p">:</span>
+
+                <span class="c1"># print(self.data_table_index, type(self.data_table_index.values()))</span>
+                <span class="c1"># for id, value in self.data_table_index.items():</span>
+                    <span class="c1"># print(type(id))</span>
+                    <span class="c1"># print(value, type(value))</span>
+                <span class="n">mapping</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_table_index</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dt_id</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">mapping</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No parent study mapping found for Data Table ID &#39;</span><span class="si">{</span><span class="n">dt_id</span><span class="si">}</span><span class="s2">&#39;. &quot;</span>
+                                     <span class="s2">&quot;Please perform a search using this DataTableID or provide a specific file URL.&quot;</span><span class="p">)</span>
+                <span class="n">file_url</span> <span class="o">=</span> <span class="n">mapping</span><span class="p">[</span><span class="s1">&#39;paleo_data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">file_url</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">file_url</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;File URL for Data Table ID &#39;</span><span class="si">{</span><span class="n">dt_id</span><span class="si">}</span><span class="s2">&#39; is missing. Cannot fetch data.&quot;</span><span class="p">)</span>
+                <span class="n">dfs</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_process_file</span><span class="p">(</span><span class="n">file_url</span><span class="p">,</span> <span class="n">mapping</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">dfs</span>
+
+        <span class="c1"># Process based on file_urls provided directly.</span>
+        <span class="k">if</span> <span class="n">file_urls</span><span class="p">:</span>
+            <span class="n">file_urls</span> <span class="o">=</span> <span class="n">assert_list</span><span class="p">(</span><span class="n">file_urls</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">file_urls</span><span class="p">:</span>
+                <span class="n">mapping</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_url_to_datatable</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">mapping</span><span class="p">:</span>
+                    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Attached &#39;</span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">&#39; is not linked to any parent study; can not add metadata.&quot;</span><span class="p">,</span>
+                        <span class="ne">UserWarning</span>
+                    <span class="p">)</span>
+                    <span class="n">dfs</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_process_file</span><span class="p">(</span><span class="n">url</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">mapping_details</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_table_index</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">mapping</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">mapping_details</span><span class="p">:</span>
+                        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;Mapping details for file URL &#39;</span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">&#39; (Data Table ID &#39;</span><span class="si">{</span><span class="n">mapping</span><span class="si">}</span><span class="s2">&#39;) not found; can not add metadata.&quot;</span><span class="p">,</span>
+                            <span class="ne">UserWarning</span>
+                        <span class="p">)</span>
+                        <span class="n">dfs</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_process_file</span><span class="p">(</span><span class="n">url</span><span class="p">))</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">dfs</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_process_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">mapping_details</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">dfs</span>
+
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No dataTableID or file URL provided. Cannot fetch data.&quot;</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, LinkedEarth.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

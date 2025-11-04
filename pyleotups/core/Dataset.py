@@ -896,21 +896,50 @@ class Dataset:
             )
 
         # Step 1: Detect parser type by reading initial lines
-        import requests
         def detect_parser_type(lines):
+            # 1. Clean lines: strip whitespace and remove empty lines
             lines = [line.strip() for line in lines if line.strip()]
-            if all(line.startswith("#") for line in lines[:5]):
+            
+            if not lines:
+                return "unparsable" # Handle empty file
+
+            # 2. Check for "standard" parser (all comment lines at start)
+            # This checks the first 5 non-empty lines
+            if all(line.startswith("#") for line in lines[:10]):
                 return "standard"
-            for i in range(len(lines) - 4):
-                line_normalized = lines[i+1].lower()
-                if (
-                    (("world data center for paleoclimatology" in line_normalized
-                    and "noaa" in lines[i+3].lower()) or 
-                    ("noaa" in line_normalized
-                    and "world data center for paleoclimatology" in lines[i+3].lower()))
-                    and "-" in lines[i] and "-" in lines[i+4]
-                ):
+
+            # 3. Check for "nonstandard" parser (NOAA/WDC header block)
+            
+            # Find the first line that looks like a separator
+            start_sep_idx = -1
+            for i, line in enumerate(lines):
+                # A line with many dashes is a good separator candidate
+                if line.count('-') > 10: 
+                    start_sep_idx = i
+                    break
+
+            # Find the second separator line (must be after the first)
+            end_sep_idx = -1
+            if start_sep_idx != -1:
+                # Look for the *next* separator line
+                for j in range(start_sep_idx + 1, min(start_sep_idx + 10, len(lines))): # Limit search to 10 lines
+                    if lines[j].count('-') > 10:
+                        end_sep_idx = j
+                        break
+            
+            # If we found a valid block (start and end separators)...
+            if start_sep_idx != -1 and end_sep_idx != -1 and end_sep_idx > start_sep_idx + 1:
+                # ...join all lines *between* the separators into one string
+                header_block = " ".join(lines[start_sep_idx + 1 : end_sep_idx]).lower()
+                
+                # Check for the key phrases.
+                has_noaa = "noaa" in header_block
+                has_wdc = "world data center" in header_block # More general than the original
+                
+                if has_noaa or has_wdc:
                     return "nonstandard"
+
+            # 4. If neither format is detected, return "unparsable"
             return "unparsable"
         
         try:

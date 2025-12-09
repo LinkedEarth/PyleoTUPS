@@ -491,3 +491,142 @@ def assign_tokens_by_overlap(lines_info, delimiter, headers, header_extent=0):
                     matrix[i][best_match_col] = f"{current_val} {tok_display}"
 
     return pd.DataFrame(matrix, columns=col_names)
+
+def refine_headers_by_correspondence(header_lines, data_lines, delimiter, broadcast_identical=False):
+    """
+    Refines headers by analyzing the physical layout (vertical alignment) of the data lines.
+
+    It creates a density mask (histogram) of the data to find physical columns, then maps
+    the header tokens to these physical columns. If multiple distinct header tokens map to a single
+    wide data column, it forces a split (preserving granular headers). If adjacent data columns share
+    the exact same header identity, it merges them (unless broadcast_identical is True).
+
+    Parameters
+    ----------
+    header_lines : list[LineInfo]
+        The lines identified as headers.
+    data_lines : list[LineInfo]
+        The lines identified as data.
+    delimiter : str
+        The regex delimiter used to tokenize the lines.
+    broadcast_identical : bool, optional
+        If True, adjacent columns with identical headers are kept separate (suffixed).
+        If False (default), they are merged into one column.
+
+    Returns
+    -------
+    list[dict] or None
+        A list of refined header dictionaries containing "name" and "interval".
+        Returns None if refinement is not possible (e.g., no data lines).
+    """
+    if not data_lines:
+        return None
+
+    # --- Step 1: Identify Physical Data Columns (The Histogram) ---
+    mask_len = max((len(line.text) for line in data_lines), default=0)
+    if mask_len == 0:
+        return None
+        
+    density_mask = [0] * mask_len
+    for line in data_lines:
+        text = line.text.ljust(mask_len)
+        for i, char in enumerate(text):
+            if not char.isspace():
+                density_mask[i] = 1
+
+    # Find continuous segments (Physical Intervals)
+    physical_intervals = []
+    in_segment = False
+    start = 0
+    
+    for i, is_data in enumerate(density_mask):
+        if is_data and not in_segment:
+            start = i
+            in_segment = True
+        elif not is_data and in_segment:
+            physical_intervals.append((start, i))
+            in_segment = False
+            
+    if in_segment:
+        physical_intervals.append((start, len(density_mask)))
+
+    if not physical_intervals:
+        return None
+
+    # --- Step 2: Map Headers & Apply Granularity Logic ---
+    refined_headers = []
+    
+    # Tokenize all header lines to check overlaps
+    all_header_tokens = [
+        get_token_intervals_multi(h_line.text, delimiter) 
+        for h_line in header_lines
+    ]
+    
+    # Track identity for merging logic
+    last_token_identity = None 
+
+    for p_start, p_end in physical_intervals:
+        # Convert 0-based index to 1-based to match token intervals from get_token_intervals_multi
+        p_interval_1based = (p_start + 1, p_end + 1)
+        
+        # --- GRANULARITY LOGIC UPDATE ---
+        # Previous logic forced a split if multiple tokens overlapped.
+        # This caused "Depth (cm)" to split into "Depth" and "(cm)" if they both fit the data width.
+        # We now treat the physical data interval as the source of truth:
+        # One physical data column -> One resulting column.
+        
+        current_name_parts = []
+        current_token_identity = set()
+
+        for row_tokens in all_header_tokens:
+            overlapping_tokens = [
+                tok for tok in row_tokens 
+                if compute_interval_overlap(tok['interval'], p_interval_1based) > 0
+            ]
+            if overlapping_tokens:
+                part_text = " ".join(t['display'] for t in overlapping_tokens)
+                current_name_parts.append(part_text)
+                for t in overlapping_tokens:
+                    current_token_identity.add(t['key'])
+
+        full_name = " ".join(current_name_parts).strip()
+
+        # --- Merge Logic (Scenario A) ---
+        # Check if this column has the exact same header identity as the previous one
+        is_identical = (
+            refined_headers and 
+            last_token_identity is not None and 
+            current_token_identity == last_token_identity and 
+            bool(current_token_identity)
+        )
+
+        if is_identical and not broadcast_identical:
+            # Extend previous header to cover this new segment
+            last_header = refined_headers[-1]
+            new_int = (last_header['interval'][0], p_end)
+            last_header['interval'] = new_int
+            continue
+
+        # --- Naming Logic (Scenario B) ---
+        if not full_name:
+            # Handle orphans (data columns with no header overlap)
+            if refined_headers:
+                full_name = f"{refined_headers[-1]['name']}_sub"
+            else:
+                full_name = f"Column_{p_start}"
+        
+        # Handle duplicate names by suffixing
+        original_name = full_name
+        counter = 1
+        while any(h['name'] == full_name for h in refined_headers):
+            full_name = f"{original_name}_{counter}"
+            counter += 1
+
+        refined_headers.append({
+            "name": full_name, 
+            "interval": (p_start, p_end)
+        })
+        
+        last_token_identity = current_token_identity
+        
+    return refined_headers

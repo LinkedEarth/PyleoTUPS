@@ -9,7 +9,8 @@ from .NonStandardParserUtils import (
     count_tokens, numeric_ratio, is_numeric, generate_row_pattern,
     _safe_mean, _safe_var, _safe_cv, _most_common,
     get_token_intervals_multi, merge_headers_by_overlap,
-    generate_df, assign_tokens_by_overlap
+    generate_df, assign_tokens_by_overlap,
+    refine_headers_by_correspondence
 )
 
 
@@ -54,7 +55,7 @@ class NonStandardParser:
     8.  `parse()` returns the fully processed `self.blocks` list.
     """
 
-    def __init__(self, file_path, use_skip=True):
+    def __init__(self, file_path, use_skip=True, use_refinement=True):
         """
         Initializes the parser.
 
@@ -65,6 +66,9 @@ class NonStandardParser:
         use_skip : bool, optional
             If True (default), the parser will skip all lines until it finds
             a line starting with "DATA:". This is standard for NOAA files.
+        use_refinement : bool, optional
+            If True (default), attempts to refine column headers by analyzing the
+            vertical alignment of data columns (histogramming).
             
             **Do's and Don'ts**:
             - **Do** set this to `True` for standard NOAA Paleo files.
@@ -76,6 +80,7 @@ class NonStandardParser:
         self.use_skip = use_skip
         self.lines = []
         self.blocks = []
+        self.use_refinement = use_refinement
 
     def parse(self):
         """
@@ -107,6 +112,13 @@ class NonStandardParser:
             self._process_block(block, idx)
 
         return self.blocks
+
+    def _get_cv_for_delimiter(self, block, delimiter):
+        """Returns the Coefficient of Variation for the given delimiter."""
+        if not delimiter: return 1.0
+        if "2," in delimiter: return block.stats.get("cv_multi", 1.0)
+        if "\\t" in delimiter: return block.stats.get("cv_tab", 1.0)
+        return block.stats.get("cv_single", 1.0)
 
     def _fetch_lines(self):
         """Fetches file content from path/URL and sets self.lines."""
@@ -194,6 +206,7 @@ class NonStandardParser:
             "mean_multi": mean_multi,
             "cv_multi": _safe_cv(m, mean_multi),
             "mode_multi": _most_common(m),
+            "max_multi": max(m) if m else 0,
             "mean_tab": mean_tab,
             "cv_tab": _safe_cv(t, mean_tab),
             "mode_tab": _most_common(t),
@@ -277,52 +290,142 @@ class NonStandardParser:
         return extent, title_line
 
     @staticmethod
-    def _extract_headers(block, delimiter):
-        """Extracts header names and intervals from a block."""
-        extent, title_line = NonStandardParser._detect_header_extent(block, delimiter)
-        block.header_extent = extent
-        block.title = block.lines[title_line].text if title_line is not None else None
+    def _detect_header_indices(block, delimiter):
+        """
+        Scans the block to identify the indices of the Title and Header lines.
+        
+        Returns
+        -------
+        title_idx : int
+            The index of the title line, or -1 if not found.
+        header_start : int
+            The inclusive start index of the header rows.
+        header_end : int
+            The exclusive end index of the header rows.
+        """
+        patterns = []
+        for line in block.lines:
+            tokens = [t for t in re.split(delimiter, line.text.strip()) if t.strip()]
+            patterns.append(generate_row_pattern(tokens))
 
-        if extent == 0:
-            return [], 0
-
-        start_idx = title_line + 1 if title_line is not None else 0
-        header_lines = block.lines[start_idx : start_idx + extent]
-
-        if not header_lines:
-            return [], 0
+        # 1. Scan for the "Candidate Block" (consecutive String or Unit lines)
+        candidate_end = 0
+        for i, pattern in enumerate(patterns):
+            curr_idx = i
+            is_all_s = all(c == "S" for c in pattern)
             
-        if extent == 1:
-            token_objs = get_token_intervals_multi(header_lines[0].text, delimiter)
-            return [{"name": t["display"], "interval": t["interval"]}
-                    for t in token_objs], extent
+            # Check for Unit Line (current is string, next is mostly numeric)
+            is_unit_line = False
+            if curr_idx + 1 < len(patterns):
+                next_pattern = patterns[curr_idx + 1]
+                if len(next_pattern) > 0:
+                    next_numeric_ratio = next_pattern.count("N") / len(next_pattern)
+                    curr_numeric_ratio = pattern.count("N") / len(pattern) if pattern else 0
+                    if next_numeric_ratio > 0.5 and curr_numeric_ratio < 0.5:
+                        is_unit_line = True
 
+            # Special case: Numeric Year as Title (e.g. "2023")
+            is_first_numeric_title = (
+                i == 0 and all(c == "N" for c in pattern) and 
+                (curr_idx + 1 < len(patterns) and all(c == "S" for c in patterns[curr_idx + 1]))
+            )
+
+            if is_all_s or is_unit_line or is_first_numeric_title:
+                candidate_end += 1
+            else:
+                break
+        
+        # 2. Resolve Title vs. Headers based on Geometry
+        title_idx = -1
+        header_start = 0
+        header_end = candidate_end
+
+        if candidate_end == 0:
+            return -1, 0, 0
+
+        def get_token_count(idx):
+            if idx < 0 or idx >= len(block.lines): return 0
+            return len([t for t in re.split(delimiter, block.lines[idx].text.strip()) if t.strip()])
+
+        # Check A: Interposed Title (Title at the BOTTOM of header block)
+        if candidate_end > 1:
+            last_idx = candidate_end - 1
+            prev_idx = last_idx - 1
+            if get_token_count(last_idx) == 1 and get_token_count(prev_idx) > 1:
+                title_idx = last_idx
+                header_end = last_idx # Exclude last line from headers
+                return title_idx, header_start, header_end
+
+        # Check B: Top Title (Title at the TOP)
+        if candidate_end > 0:
+            if get_token_count(0) == 1:
+                if candidate_end > 1 and get_token_count(1) > 1:
+                     title_idx = 0
+                     header_start = 1
+                elif candidate_end == 1:
+                    # Single line title, no headers
+                    title_idx = 0
+                    header_start = 1
+                    header_end = 1
+        
+        return title_idx, header_start, header_end
+
+    
+    @staticmethod
+    def _extract_headers(block, delimiter):
+        """Extracts header names and intervals using normalized indices."""
+        title_idx, h_start, h_end = NonStandardParser._detect_header_indices(block, delimiter)
+
+        # 1. Handle Title
+        if title_idx != -1:
+            block.title = block.lines[title_idx].text
+            
+        # 2. Slice Headers
+        header_lines = block.lines[h_start : h_end]
+        
+        # 3. Calculate Data Offset (header_extent)
+        # Data starts after the MAX of header_end or (Title + 1)
+        structure_end = h_end
+        if title_idx != -1:
+            structure_end = max(structure_end, title_idx + 1)
+        block.header_extent = structure_end
+
+        # 4. Process Headers
+        if not header_lines:
+            return [], block.header_extent
+            
         token_maps = [get_token_intervals_multi(line.text, delimiter)
                       for line in header_lines]
-        return merge_headers_by_overlap(token_maps), extent
+        
+        if len(header_lines) == 1:
+            token_objs = get_token_intervals_multi(header_lines[0].text, delimiter)
+            return [{"name": t["display"], "interval": t["interval"]}
+                    for t in token_objs], block.header_extent
+
+        return merge_headers_by_overlap(token_maps), block.header_extent
 
     @staticmethod
     def _classify_block(block):
         """Classifies a block into a BlockType based on its stats."""
         stats = block.stats
+        if stats["n_lines"] < 2:
+            return BlockType.NARRATIVE
+            
         if stats["mean_numeric_single"] < 0.25:
-            if stats["mode_multi"] == 1:
+            # Stricter Narrative Check 2: Max tokens is 1 (Pure Narrative)
+            if stats["max_multi"] == 1: 
                 return BlockType.NARRATIVE
-            elif (stats["mode_multi"] > 1 or stats["mode_tab"] > 1) and \
-                 stats["n_lines"] <= 6:
+            elif (stats["mode_multi"] > 1 or stats["mode_tab"] > 1) and stats["n_lines"] <= 6:
                 return BlockType.HEADER_ONLY
 
-        # Check for a "perfect" (strict) delimiter
         best_delimiter = NonStandardParser._choose_delimiter(block, strict=True)
         if not best_delimiter:
-            # No perfect delimiter, so it's "imperfect" tabular
-            return BlockType.TABULAR
+            # Fallback only if block is substantial, else Narrative
+            return BlockType.TABULAR if len(block.lines) > 2 else BlockType.NARRATIVE
 
-        # A perfect delimiter was found. Check for headers.
         headers, extent = NonStandardParser._extract_headers(block, best_delimiter)
 
         if headers:
-            # Save findings to the block
             block.headers = headers
             block.header_extent = extent
             block.delimiter = best_delimiter
@@ -331,12 +434,8 @@ class NonStandardParser:
             else:
                 return BlockType.HEADER_ONLY
         else:
-            # Perfect delimiter, but no headers found
             block.delimiter = best_delimiter
             return BlockType.DATA
-
-        # Fallback
-        return BlockType.NARRATIVE
 
     def _process_block(self, block, current_idx):
         """Main dispatcher for parsing logic based on block type."""
@@ -384,41 +483,67 @@ class NonStandardParser:
             block.df = None
 
     def _parse_tabular_block(self, block, current_idx):
-        """Parses an "imperfect" (CV > 0) tabular block."""
+        """Parses an imperfect tabular block, attempting refinement."""
         try:
             if not block.delimiter:
                 block.delimiter = self._choose_delimiter(block, strict=False)
-            
-            if not block.delimiter:
-                 raise ValueError("Could not determine a suitable delimiter.")
+            if not block.delimiter: 
+                raise ValueError("Could not determine a suitable delimiter.")
 
             if not block.headers:
                 headers, extent = self._extract_headers(block, block.delimiter)
                 block.headers = headers
-                block.header_extent = extent
+                # header_extent is updated inside _extract_headers
 
-            if not block.headers:  # Still no headers, try to borrow
-                prev_header_block = self._find_previous_header_block(current_idx)
-                if not prev_header_block:
-                    raise ValueError("No headers found in block and no "
-                                     "preceding headers to borrow.")
-                block.headers = prev_header_block.headers
-                # Use the header's delimiter for consistency
-                block.delimiter = prev_header_block.delimiter
-                block.header_extent = 0  # Borrowed headers
-                prev_header_block.used_as_header_for.append(block.idx)
+            # --- Refinement Step ---
+            if self.use_refinement and block.header_extent > 0:
+                # Re-detect indices to get clean header lines (excluding Title)
+                title_idx, h_start, h_end = self._detect_header_indices(block, block.delimiter)
+                if h_end > h_start:
+                    header_lines_subset = block.lines[h_start:h_end]
+                    data_lines = block.lines[block.header_extent:]
+                    
+                    refined = refine_headers_by_correspondence(
+                        header_lines_subset, data_lines, block.delimiter
+                    )
+                    if refined:
+                        block.headers = refined
 
+            if not block.headers:
+                prev = self._find_previous_header_block(current_idx)
+                if not prev: 
+                    raise ValueError("No headers found in block or preceding blocks.")
+                
+                borrowed = prev.headers
+                if self.use_refinement and prev.header_extent > 0:
+                    p_title, p_start, p_end = self._detect_header_indices(prev, prev.delimiter)
+                    if p_end > p_start:
+                        header_lines_subset = prev.lines[p_start:p_end]
+                        data_lines = block.lines # Use CURRENT data for refinement
+                        refined = refine_headers_by_correspondence(
+                            header_lines_subset, data_lines, prev.delimiter
+                        )
+                        if refined:
+                            borrowed = refined
+                
+                block.headers = borrowed
+                block.delimiter = prev.delimiter
+                # Ensure extent is set if it wasn't already (e.g. if we had a Title but no headers)
+                if block.header_extent is None:
+                    block.header_extent = 0
+                prev.used_as_header_for.append(block.idx)
+
+            cv = self._get_cv_for_delimiter(block, block.delimiter)
+            
             try:
-                # First, try a simple parse
-                df = generate_df(
-                    block.lines, block.delimiter, block.headers, block.header_extent
-                )
+                if cv > 0:
+                    raise ValueError("Detected jagged columns (CV > 0).")    
+                df = generate_df(block.lines, block.delimiter, block.headers, block.header_extent)
             except ValueError:
-                # Fallback for misaligned columns
-                df = assign_tokens_by_overlap(
-                    block.lines, block.delimiter, block.headers, block.header_extent
-                )
+                df = assign_tokens_by_overlap(block.lines, block.delimiter, block.headers, block.header_extent)
+            
             block.df = df
+
         except Exception as e:
             block.block_type = BlockType.ERROR
             block.error_message = f"Failed to parse tabular block: {e}"
@@ -442,78 +567,39 @@ class NonStandardParser:
             block.error_message = f"Failed to parse header block: {e}"
 
     def _parse_data_block(self, block, current_idx):
-        """Parses a DATA block by borrowing headers."""
+        """Parses a DATA block by borrowing headers, respecting local Titles."""
         try:
-            # A DATA block *must* borrow. `block.delimiter` was already
-            # set by `_classify_block` if it was strict (CV=0).
-            # If not, we find the header block and use *its* delimiter.
-            prev_header_block = self._find_previous_header_block(current_idx)
-            
-            if not prev_header_block:
+            prev = self._find_previous_header_block(current_idx)
+            if not prev: 
                 raise ValueError("No preceding headers found for this data block.")
+            
+            borrowed = prev.headers
+            
+            # --- Refinement Step ---
+            if self.use_refinement and prev.header_extent > 0:
+                p_title, p_start, p_end = self._detect_header_indices(prev, prev.delimiter)
+                if p_end > p_start:
+                    header_lines_subset = prev.lines[p_start:p_end]
+                    data_lines = block.lines 
+                    refined = refine_headers_by_correspondence(
+                        header_lines_subset, data_lines, prev.delimiter
+                    )
+                    if refined:
+                        borrowed = refined
 
-            # Use the borrowed headers and *their* delimiter
-            borrowed_headers = prev_header_block.headers
-            borrowed_delimiter = prev_header_block.delimiter
-            block.headers = borrowed_headers
-            block.delimiter = borrowed_delimiter
-            block.header_extent = 0  # Data starts at line 0
+            block.headers = borrowed
+            block.delimiter = prev.delimiter
+
             
             try:
-                # First, try a simple parse
-                df = generate_df(
-                    block.lines,
-                    borrowed_delimiter,
-                    borrowed_headers,
-                    header_extent=0
-                )
+                df = generate_df(block.lines, block.delimiter, block.headers, block.header_extent)
             except ValueError:
-                # Fallback for misaligned columns
-                df = assign_tokens_by_overlap(
-                    block.lines,
-                    borrowed_delimiter,
-                    borrowed_headers,
-                    header_extent=0
-                )
-
+                df = assign_tokens_by_overlap(block.lines, block.delimiter, block.headers, block.header_extent)
+            
             block.df = df
-            prev_header_block.used_as_header_for.append(block.idx)
+            prev.used_as_header_for.append(block.idx)
 
         except Exception as e:
             block.block_type = BlockType.ERROR
             block.error_message = f"Failed to parse data block: {e}"
             block.df = None
-
-
-if __name__ == "__main__":
-    file_path = "test8.txt"
-    print(f"Parsing {file_path}...")
-    
-    # Instantiate the parser and call the parse method
-    parser = NonStandardParser(file_path, use_skip=True)
-    blocks = parser.parse()
-    
-    print(f"Parsing complete. Found {len(blocks)} blocks.")
-
-    for block in blocks:
-        print("\n========================================")
-        print(f"Block {block.idx}: Type={block.block_type}, "
-              f"Lines={block.start}-{block.end} ({len(block.lines)} lines)")
-
-        if block.title:
-            print(f"  Title: {block.title.strip()}")
-        if block.headers:
-            print(f"  Headers ({len(block.headers)}): "
-                  f"{[h['name'] for h in block.headers]}")
-        if block.delimiter:
-            print(f"  Delimiter: {repr(block.delimiter)}")
-        
-        if block.df is not None:
-            print(f"  DataFrame shape: {block.df.shape}")
-            print(block.df.head())
-        
-        if block.block_type == BlockType.ERROR:
-            print(f"  Error: {block.error_message}")
-        
-        if block.used_as_header_for:
-            print(f"  Used as header for blocks: {block.used_as_header_for}")

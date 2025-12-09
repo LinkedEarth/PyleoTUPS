@@ -329,3 +329,109 @@ def test_detect_header_extent_and_title(mock_block):
     extent, title_line = NonStandardParser._detect_header_extent(mock_block, delimiter)
     assert extent == 2
     assert title_line is None
+
+# pyleotups/tests/test_NonStandardParserUtils.py
+
+from pyleotups.utils.Parser.NonStandardParserUtils import (
+    LineInfo, 
+    refine_headers_by_correspondence
+)
+
+class TestRefinementLogic:
+    """
+    Unit tests for the header refinement logic (histogramming).
+    Tests the function in isolation using mocked LineInfo objects.
+    """
+
+    def _mock_lines(self, texts, start_idx=0):
+        """Helper to create LineInfo objects from a list of strings."""
+        return [LineInfo(start_idx + i, t) for i, t in enumerate(texts)]
+
+    def test_ragged_text_bridge(self):
+        """
+        Test that staggered spaces in text columns don't cause splits.
+        The histogram should 'fill' the gaps.
+        """
+        # Data has spaces in different places
+        data = self._mock_lines([
+            "Alpha beta      ", 
+            "Alpha     beta  "
+        ])
+        # Header covers the whole area
+        headers = self._mock_lines(["Species Name    "])
+        
+        refined = refine_headers_by_correspondence(headers, data, r"(\s{2,})")
+        
+        assert len(refined) == 1
+        assert refined[0]['name'] == "Species Name"
+
+    def test_merge_identical_headers(self):
+        """
+        Test 'Scenario A': Two data columns share the EXACT same header identity.
+        They should be merged into one.
+        """
+        # Header is one wide token
+        headers = self._mock_lines(["     Value       "])
+        # Data is two distinct columns
+        data = self._mock_lines([
+            "   1.0   2.0     ", 
+            "   3.0   4.0     "
+        ])
+        
+        refined = refine_headers_by_correspondence(headers, data, r"(\s{2,})")
+        
+        # Expectation: MERGED into 1 column
+        assert len(refined) == 1
+        assert refined[0]['name'] == "Value"
+        # Interval should be wide (covering both 1.0 and 2.0)
+        start, end = refined[0]['interval']
+        rng = end - start
+        assert rng > 8
+
+    def test_no_split_granularity(self):
+        """
+        Test the fix: A single data column should NOT be split just because
+        the header above it has multiple tokens (e.g. 'Depth' and '(cm)').
+        """
+        # Header has 2 tokens: "Depth" and "(cm)"
+        headers = self._mock_lines(["   Depth (cm)   "])
+        # Data is a single narrow column
+        data = self._mock_lines([
+            "      10.5104      ",
+            "      20.1207      "
+        ])
+        
+        # Use a delimiter that splits the header into 2 tokens
+        # (Assuming space delimiter for this specific test case behavior)
+        refined = refine_headers_by_correspondence(headers, data, r"(\s+)")
+        
+        # Expectation: 1 column named "Depth (cm)"
+        assert len(refined) == 1
+        assert refined[0]['name'] == "Depth (cm)"
+
+    def test_vertical_stacking(self):
+        """Test joining multi-line headers."""
+        headers = self._mock_lines([
+            "  Temp  ",
+            "  (C)   "
+        ])
+        data = self._mock_lines(["  23.5  "])
+        
+        refined = refine_headers_by_correspondence(headers, data, r"(\s+)")
+        
+        assert len(refined) == 1
+        assert refined[0]['name'] == "Temp (C)"
+
+    def test_orphan_handling(self):
+        """Test generation of names for data columns with no header."""
+        headers = self._mock_lines(["A              B"])
+        # Middle column "2" has no header above it
+        data = self._mock_lines(["1      2       3"])
+        
+        refined = refine_headers_by_correspondence(headers, data, r"(\s+)")
+        
+        assert len(refined) == 3
+        assert refined[0]['name'] == "A"
+        assert refined[2]['name'] == "B"
+        # Middle column should have a generated name (suffixed from previous)
+        assert refined[1]['name'] == "A_sub"

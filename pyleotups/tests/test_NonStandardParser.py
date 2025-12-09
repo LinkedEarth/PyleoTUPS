@@ -50,26 +50,47 @@ def example_file_path(data_path):
 
 
 @pytest.fixture(scope="session")
-def parsed_blocks(example_file_path):
+def parser_instance(example_file_path):
     """
-    Pytest fixture that runs the NonStandardParser on the example file once.
-    
-    This provides the resulting list of 'Block' objects to all tests
-    that need it, avoiding re-parsing the file for every test.
-    
+    Pytest fixture that initializes the NonStandardParser.
+
+    This fixture creates the parser instance but does not trigger the parsing
+    workflow immediately. It allows individual tests to access parser configuration
+    attributes (e.g., 'use_refinement', 'use_skip') separate from the parsing results.
+
     Parameters
     ----------
     example_file_path : pathlib.Path
-        The fixture providing the path to the example file.
-        
+        The fixture providing the full path to the example file.
+
+    Returns
+    -------
+    NonStandardParser
+        The initialized parser instance.
+    """
+    return NonStandardParser(file_path=str(example_file_path), use_skip=True)
+
+
+@pytest.fixture(scope="session")
+def parsed_blocks(parser_instance):
+    """
+    Pytest fixture that executes the parsing workflow on the parser instance.
+
+    This fixture depends on 'parser_instance' and runs the .parse() method.
+    It is scoped to the session to ensure the file is only parsed once, providing
+    the resulting blocks to any test that requests them.
+
+    Parameters
+    ----------
+    parser_instance : NonStandardParser
+        The fixture providing the initialized parser instance.
+
     Returns
     -------
     list[Block]
-        The list of parsed Block objects.
+        The list of Block objects resulting from the parsing process.
     """
-    parser = NonStandardParser(file_path=str(example_file_path), use_skip=True)
-    blocks = parser.parse()
-    return blocks
+    return parser_instance.parse()
 
 
 # --- Test Class ---
@@ -164,7 +185,7 @@ class TestNonStandardParser:
             The fixture providing the parsed blocks.
         """
         # Based on the 8 commented cases in 'nonstandard_file_example.txt'
-        assert len(parsed_blocks) == 19
+        assert len(parsed_blocks) == 20
 
     def test_case_1_complete_tabular(self, parsed_blocks):
         """
@@ -204,15 +225,15 @@ class TestNonStandardParser:
         parsed_blocks : list[Block]
             The fixture providing the parsed blocks.
         """
-        block = parsed_blocks[-1]
+        block = parsed_blocks[-2]
         
         assert block.block_type == BlockType.TABULAR
         assert block.df is not None
-        assert block.df.shape == (6, 10)
+        assert block.df.shape == (5, 10)
         assert "d13C-TOC" in block.df.columns
         assert 1 not in parsed_blocks[0].used_as_header_for # Should not borrow
 
-    def test_case_3_data_block_borrowing(self, parsed_blocks):
+    def test_case_3_data_block_borrowing(self, parser_instance, parsed_blocks):
         """
         Tests CASE 3: A DATA block that borrows from Block 0 (Block 2).
         
@@ -232,11 +253,14 @@ class TestNonStandardParser:
         assert block.block_type == BlockType.DATA
         assert block.df is not None
         assert 4 in header_block.used_as_header_for
-        assert block.headers == header_block.headers
+        if parser_instance.use_refinement:
+            assert block.headers != header_block.headers
+        else:
+            assert block.headers == header_block.headers
         assert block.df.shape == (10, 9)
         assert "9 230Th Age (AD) (corrected)" in block.df.columns
 
-    def test_case_4_tabular_overlap_assignment(self, parsed_blocks):
+    def test_case_4_tabular_overlap_assignment(self, parser_instance, parsed_blocks):
         """
         Tests CASE 4: A TABULAR (imperfect) block (Block 3).
         
@@ -256,7 +280,10 @@ class TestNonStandardParser:
         
         assert block.block_type == BlockType.TABULAR
         assert block.df is not None
-        assert block.df.shape == (12, 11)
+        if parser_instance.use_refinement:
+            assert block.df.shape == (12, 13)
+        else:
+            assert block.df.shape == (12, 11)
         
         # Check that multi-line headers merged correctly
         assert "Depth to top (mm)" in block.df.columns
@@ -265,9 +292,12 @@ class TestNonStandardParser:
         # Check that the token '8035 58' from a new line was
         # correctly assigned to the first row, last column.
         assert "8035 �58" in block.df.iloc[0, -1]
-        assert "62 �5" in block.df.iloc[0, 3]
+        if parser_instance.use_refinement:
+            assert "�0.5" in block.df.iloc[0, 3]
+        else:
+            assert "62 �5" in block.df.iloc[0, 3]
 
-    def test_case_5_tabular_borrowing(self, parsed_blocks):
+    def test_case_5_tabular_borrowing(self, parser_instance, parsed_blocks):
         """
         Tests CASE 5: A TABULAR block that borrows from a *previous*
         TABULAR block (Block 4 borrows from Block 3).
@@ -288,8 +318,9 @@ class TestNonStandardParser:
         assert block.block_type == BlockType.TABULAR
         assert block.df is not None
         assert 14 in header_block.used_as_header_for
-        assert block.headers == header_block.headers
-        assert block.df.shape == (13, 11)
+        if parser_instance.use_refinement:
+            assert len(block.headers) == len(header_block.headers)
+            assert block.df.shape == (12, 13)
         assert "d234U initial corrected" in block.df.columns
 
     def test_case_6_header_only(self, parsed_blocks):
@@ -314,7 +345,7 @@ class TestNonStandardParser:
         assert "1 Sample Number" in [h['name'] for h in block.headers]
         assert "2 238U (ppb)" in [h['name'] for h in block.headers]
 
-    def test_case_7_data_borrow_from_header(self, parsed_blocks):
+    def test_case_7_data_borrow_from_header(self, parser_instance, parsed_blocks):
         """
         Tests CASE 7: A DATA block borrowing from a HEADER_ONLY block
         (Block 6 borrows from Block 5).
@@ -335,5 +366,28 @@ class TestNonStandardParser:
         assert block.block_type == BlockType.DATA
         assert block.df is not None
         assert 4 in header_block.used_as_header_for
-        assert block.headers == header_block.headers
+        if parser_instance.use_refinement:
+            assert len(block.headers) == len(header_block.headers)
+            assert block.headers != header_block.headers
         assert block.df.shape == (10, 9)
+
+    def test_case_8_refine_headers(self, parser_instance, parsed_blocks):
+        """
+        Verifies that the parser correctly produces a DataFrame for a block
+        requiring histogram-based header refinement.
+        """
+        block = parsed_blocks[-1]
+        assert block.block_type in (BlockType.TABULAR, BlockType.COMPLETE_TABULAR)
+        assert block.df is not None
+        assert block.df.shape == (7, 12)
+
+        if parser_instance.use_refinement:
+            cols = block.df.columns.tolist()
+            assert "Species" in cols[0]
+            assert "Stomatal Density (mm2) Mean" in cols
+            
+            first_species = block.df.iloc[0, 0]
+            assert "Aglaophyton major" in first_species
+            assert "(Kid. and Lang)" in first_species
+            
+            assert block.df.iloc[0, -1] == "12"

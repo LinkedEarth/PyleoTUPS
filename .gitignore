@@ -26,3 +26,5 @@ test-pyleotups/
 nonstd-parser/
 ./docs/build/**
 .venv/
+
+.gitattributes

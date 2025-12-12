@@ -905,7 +905,7 @@ class Dataset:
 
             # 2. Check for "standard" parser (all comment lines at start)
             # This checks the first 5 non-empty lines
-            if all(line.startswith("#") for line in lines[:10]):
+            if all(line.startswith("#") or line.startswith("ï»¿#") for line in lines[:10]):
                 return "standard"
 
             # 3. Check for "nonstandard" parser (NOAA/WDC header block)

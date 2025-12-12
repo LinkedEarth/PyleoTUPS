@@ -992,7 +992,6 @@ class Dataset:
             to_process.append(parsed_data)
         
         # else: parsed_data is some other type we can't handle, to_process remains empty.
-
         # Now `to_process` contains only the DataFrames we want
         for df in to_process:
             if mapping:

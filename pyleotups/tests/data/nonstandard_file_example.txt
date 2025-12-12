@@ -157,7 +157,7 @@ Depth(cm)  YearAD       d18O (per mil PDB)
 #case Tabular (Inconsistent cv_multi, merge headers with intervals, detect headers, and assign tokens by overlap)
 
 Sample Number  Depth to top      238U             232Th               230Th/232Th             d234U*            230Th/238U            Age (yr)            Age (yr)          d234U initial         Age (yr BP)* 
-                   (mm)          (ppb)            (ppt)            (atomic x 10-6)          measured            activity           uncorrected          corrected           corrected            corrected
+                   (mm)           (ppb)            (ppt)            (atomic x 10-6)          measured            activity           uncorrected          corrected           corrected            corrected
 D4-4               1402        356   �0.5        62    �5             6700     �600         -26    �1.8       0.06977  �0.00046     8101    �58          8091   �58         -26.6   �1.9          8035    �58
 D4-9 n             1404        388   �0.1        89    �4             5000     �200        -23.9   �1.2       0.07009  �0.00014     8120    �19          8108   �21         -24.5   �1.2          8052    �21
 D4-1               1410       497.2  �0.8        468   �6             1240     �20         -26.3   �1.5       0.07063  �0.00035     8206    �44          8157   �54         -26.9   �1.6          8101    �54
@@ -227,3 +227,13 @@ Depth     Age*a   TOC*b     C:N   d13C-TOC     Depth       Age      TOC      C:N
 12.5      1.2     18.4      8.3     -21.55     137.5       12.2     10.7      8.2   -22.34
 17.5      1.6     19.5      8.3     -21.52    [122.0]      12.8      8.9      8.0   -22.75
 [11.5]*d  1.7     20.0      7.4     -21.01     142.5       13.0      9.0      7.8   -22.96
+
+                                                                   Stomatal Density (mm2)           Stomatal Dens.    Stomatal Index
+Species                                           Age            Mean      s.d.    n       s.e.     (by vol., mm3)    Mean    s.d.   n     s.e.    RCO2
+Aglaophyton major (Kid. and Lang)            Lower Devonian       4.5      3.9    n=23     0.82         3.0            2.26   1.1   n=19   0.25    12
+Sawdonia ornata (Daws.) Hueber               Lower Devonian       4.3      1.9    n=38     0.32         3.6            3.05   1.0   n=13   0.28    12
+Juncus effusus L.                               Recent          309.1     72.8    n=50    10.3        416.2           12.4    2.3   n=50   0.4      1
+Psilotum nudum (L.) Beauv.                      Recent           40.1     16.8   n=145     1.4         89.7           15.5    5.6   n=92   0.6      1
+Swillingtonia denticulata Scott and Chal.    Carboniferous      787.8    158.9    n=18    37.5          n/a           19.7    4.3   n=14   1.16     1.5
+Lebachia frondosa (Renault) Florin           Early Permian      309.0     56.5    n=20    12.64         n/a           14.6    2.0   n=20   0.45     1.5
+Araucaria heterophylla (Salis.) Franco.         Recent          140.7     26.7    n=50     3.78         n/a           11.5    4.2   n=20   0.93     1

@@ -9,7 +9,7 @@ from enum import Enum
 
 
 NUMERIC_THRESHOLD_HEADER = 0.25
-MAX_TABLE_COLUMN_LEN = 2
+MIN_TABLE_COLUMN_LEN = 2
 MIN_REGION_AREA = 1
 
 
@@ -21,6 +21,7 @@ class BlockType(str, Enum):
     COMPLETE_TABULAR = "complete-tabular"
     METADATA = "metadata"
     EMPTY = "empty"
+    MERGED = "merged"
 
 
 @dataclass
@@ -120,6 +121,7 @@ class Block:
     
     # Internal usage for parser logic
     delimiter: str = "excel" 
+    merged_into: Optional[int] = None
 
 
 # ---------------------------------------------------------------------
@@ -163,6 +165,7 @@ class ExcelParser:
         self.sheets: List[SheetGrid] = []
         self.blocks: List[Block] = []
         self._header_registry: Dict[str, List[Block]] = {}
+        self.warnings: List[str] = []
 
     def parse(self) -> List[Block]:
         """
@@ -178,6 +181,12 @@ class ExcelParser:
 
         for idx, block in enumerate(self.blocks):
             self._process_block(block, idx)
+        
+        self._merge_compatible_blocks()
+
+        self._decompose_fused_blocks()
+
+        self._attach_metadata()
 
         return self.blocks
 
@@ -374,7 +383,7 @@ class ExcelParser:
 
         # 0. Gate: Minimum distinct columns check
         col_len = self._block_column_len(block, grid)
-        if col_len < MAX_TABLE_COLUMN_LEN:
+        if col_len < MIN_TABLE_COLUMN_LEN:
             block.block_type = BlockType.NARRATIVE
             return
 
@@ -412,6 +421,16 @@ class ExcelParser:
                 hdr_info_borrow = dict(hdr_info)
                 hdr_info_borrow["header_extent"] = 0 
                 block.df = self._generate_df(block, grid, borrowed, hdr_info_borrow)
+            elif block.stats.get("mean_row_numeric_ratio", 0) > 0.25:
+                width = block.right - block.left + 1
+                # Generate generic headers (e.g. Column_1, Column_2)
+                default_headers = [f"Column_{i+1}" for i in range(width)]
+                block.headers = default_headers
+                block.block_type = BlockType.COMPLETE_TABULAR
+                
+                # Generate DF (header extent is 0 as we fabricated them)
+                hdr_info_default = {"title_row": None, "header_extent": 0}
+                block.df = self._generate_df(block, grid, default_headers, hdr_info_default)
             else:
                 block.df = None
         
@@ -764,20 +783,393 @@ class ExcelParser:
                 seen[base] += 1
                 out.append(f"{base}_{seen[base]}")
         return out
+    
+    def _merge_compatible_blocks(self):
+        """
+        Post-processing step to stitch together blocks that are likely 
+        parts of the same table (split by empty columns).
+        
+        Criteria:
+        1. Same Sheet
+        2. Same Vertical Span (Top/Bottom rows)
+        3. Same Header Extent (Structure matches)
+        """
+        # 1. Group blocks by unique vertical footprint
+        # Key: (sheet_idx, top, bottom)
+        groups = {}
+        for block in self.blocks:
+            # Skip if block failed to produce data or is not relevant
+            if block.df is None or block.df.empty:
+                continue
+            
+            key = (block.sheet_idx, block.top, block.bottom)
+            groups.setdefault(key, []).append(block)
+
+        # 2. Iterate through groups and merge horizontally
+        for key, group in groups.items():
+            if len(group) < 2:
+                continue
+
+            # Sort by visual reading order (left to right)
+            group.sort(key=lambda b: b.left)
+
+            # Iterative Merge (Greedy)
+            # 'current_main' is the block collecting the data
+            current_main = group[0]
+
+            for i in range(1, len(group)):
+                next_block = group[i]
+
+                # Check Compatibility: Headers must align structurally
+                if current_main.header_extent == next_block.header_extent:
+                    self._execute_merge(current_main, next_block)
+                else:
+                    # If mismatch, this block becomes the new potential 'main'
+                    current_main = next_block
+
+    def _execute_merge(self, main: Block, victim: Block):
+        """
+        Merges 'victim' into 'main' and updates metadata.
+        """
+        # 1. Concatenate DataFrames (Horizontal)
+        try:
+            # Reset index to ensure alignment (just in case)
+            df_main = main.df.reset_index(drop=True)
+            df_victim = victim.df.reset_index(drop=True)
+            
+            merged_df = pd.concat([df_main, df_victim], axis=1)
+            main.df = merged_df
+        except Exception as e:
+            self.warnings.append(f"Failed to merge Block {main.idx} and {victim.idx}: {e}")
+            return
+
+        # 2. Update Metadata
+        if victim.headers:
+            main.headers = (main.headers or []) + victim.headers
+        
+        # Visually expand the main block boundaries
+        main.right = max(main.right, victim.right)
+        
+        # 3. Mark Victim
+        victim.block_type = BlockType.MERGED
+        victim.merged_into = main.idx
+        victim.df = None # Release memory
+        
+        # 4. Log
+        msg = (f"Merged Block {victim.idx} into {main.idx} "
+               f"(Sheet: {main.sheet_name}, Rows: {main.top}-{main.bottom})")
+        self.warnings.append(msg)
+
+    def _attach_metadata(self):
+        """
+        Iterates through blocks on each sheet to identify and attach
+        narrative context to dataframes.
+        
+        Rules:
+        1. Text before the first table -> 'master_metadata' (applies to all tables in sheet).
+        2. Text between Table A and Table B -> 'table_metadata' for Table B.
+        """
+        # Group by sheet to process sequentially
+        by_sheet = {}
+        for b in self.blocks:
+            # Respect the merge logic: ignore victims
+            if b.block_type == BlockType.MERGED:
+                continue
+            by_sheet.setdefault(b.sheet_idx, []).append(b)
+
+        for _, sheet_blocks in by_sheet.items():
+            # Sort strictly by vertical position (top row)
+            # If tops are equal, left comes first (reading order)
+            sheet_blocks.sort(key=lambda b: (b.top, b.left))
+
+            master_accumulator: List[str] = []
+            local_accumulator: List[str] = []
+            first_table_found = False
+
+            for block in sheet_blocks:
+                is_table = (block.block_type == BlockType.COMPLETE_TABULAR and 
+                            block.df is not None and not block.df.empty)
+
+                if is_table:
+                    first_table_found = True
+                    
+                    # Attach collected metadata
+                    block.df.attrs["master_metadata"] = "\n".join(master_accumulator)
+                    block.df.attrs["table_metadata"] = "\n".join(local_accumulator)
+                    
+                    # Reset local accumulator (consumed by this table)
+                    local_accumulator = []
+                
+                else:
+                    # It's a narrative/text block
+                    text = self._get_block_text(block)
+                    if not text:
+                        continue
+                        
+                    if not first_table_found:
+                        # Before first table -> Master
+                        master_accumulator.append(text)
+                    else:
+                        # After first table -> Local (for the NEXT table)
+                        local_accumulator.append(text)
+
+    def _get_block_text(self, block: Block) -> str:
+        """Helper to extract and join all text content from a block."""
+        grid = self._get_sheet_by_name(block.sheet_name)
+        if not grid:
+            return ""
+
+        lines = []
+        for r in range(block.top, block.bottom + 1):
+            row_text = []
+            for c in range(block.left, block.right + 1):
+                val = grid.get_value(r, c)
+                if not self._is_val_empty(val):
+                    row_text.append(str(val).strip())
+            
+            if row_text:
+                lines.append(" ".join(row_text))
+        
+        return "\n".join(lines)
+
+    def _decompose_fused_blocks(self):
+        """
+        Detects and splits 'fused' blocks based on Column Length Continuity
+        and Header Repetition.
+        """
+        new_blocks = []
+        
+        # Operate on a copy to allow safe modification/appending
+        for block in list(self.blocks):
+            if block.block_type != BlockType.COMPLETE_TABULAR or block.df is None or block.df.empty:
+                continue
+            if block.block_type == BlockType.MERGED:
+                continue
+
+            # 1. Calculate profile: (Valid Length) for each column
+            col_lengths = self._get_column_lengths(block.df)
+            
+            # 2. Group columns into contiguous spans of similar length
+            # Spans are tuples: (start_col_idx, end_col_idx, median_length)
+            spans = self._group_columns_by_length(col_lengths)
+            
+            if len(spans) <= 1:
+                # No structural discontinuity found -> Keep as is
+                continue
+
+            # 3. Analyze Spans for Repetition
+            valid_sub_blocks = []
+            current_span_group = [spans[0]] # Accumulator for the current block
+            
+            # Identify the headers of the *very first* span in this block 
+            # to serve as the reference for pattern matching.
+            ref_start, ref_end, _ = spans[0]
+            ref_headers = list(block.df.columns[ref_start : ref_end + 1])
+            
+            for i in range(1, len(spans)):
+                curr_span = spans[i]
+                start_curr, end_curr, _ = curr_span
+                curr_headers = list(block.df.columns[start_curr : end_curr + 1])
+                
+                # Compare current headers against the reference (first span of current group)
+                # Note: We compare against the START of the current accumulation group.
+                group_start, group_end, _ = current_span_group[0]
+                group_headers = list(block.df.columns[group_start : group_end + 1])
+                
+                if self._headers_match(group_headers, curr_headers):
+                    # REPETITION DETECTED -> Split!
+                    # 1. Flush the current accumulator as a block
+                    valid_sub_blocks.append(self._create_sub_block(block, current_span_group))
+                    # 2. Start new accumulator
+                    current_span_group = [curr_span]
+                else:
+                    # NO REPETITION -> Appendage (e.g. Notes column with different length)
+                    current_span_group.append(curr_span)
+            
+            # Flush the final group
+            if current_span_group:
+                valid_sub_blocks.append(self._create_sub_block(block, current_span_group))
+            
+            # 4. Apply Updates
+            if len(valid_sub_blocks) > 0:
+                # The first sub-block replaces the original block
+                first_b = valid_sub_blocks[0]
+                block.df = first_b.df
+                block.headers = first_b.headers
+                block.right = first_b.right # Update geometry
+                # Note: 'top'/'bottom' of original block remain to preserve vertical sorting order
+
+                # Append the rest as new blocks
+                for b in valid_sub_blocks[1:]:
+                    # Ensure unique ID
+                    b.idx = len(self.blocks) + len(new_blocks) + 5000 
+                    new_blocks.append(b)
+
+        self.blocks.extend(new_blocks)
+
+    def _get_column_lengths(self, df: pd.DataFrame) -> List[int]:
+        """Returns the row index of the last non-empty value for each column."""
+        lengths = []
+        for col in df.columns:
+            # Find last valid index. 
+            non_na = df[col].notna() & (df[col].astype(str).str.strip() != "")
+            if not non_na.any():
+                lengths.append(0)
+            else:
+                # Get integer location of last True
+                # iloc/idxmax trick for last true value
+                last_idx = non_na[::-1].idxmax() 
+                if isinstance(last_idx, int):
+                    lengths.append(last_idx + 1)
+                else:
+                    lengths.append(len(df)) 
+        return lengths
+
+    def _group_columns_by_length(self, lengths: List[int]) -> List[Tuple[int, int, int]]:
+        """
+        Groups contiguous columns into spans based on length continuity.
+        Skips/Breaks on length 0 (Gaps).
+        Returns: [(start, end, max_len), ...]
+        """
+        spans = []
+        if not lengths:
+            return spans
+
+        start = 0
+        current_len = lengths[0]
+        
+        for i in range(1, len(lengths)):
+            l = lengths[i]
+            
+            is_gap = (l == 0)
+            was_gap = (current_len == 0)
+            
+            # Tolerance: allow small variance (e.g. +/- 2 rows)
+            diff = abs(l - current_len)
+            is_same_len = diff <= 2
+            
+            if is_gap:
+                if not was_gap:
+                    # Close previous span
+                    spans.append((start, i - 1, max(lengths[start:i])))
+                start = i
+                current_len = 0
+            elif was_gap:
+                # Start new span from gap
+                start = i
+                current_len = l
+            elif not is_same_len:
+                # Length Jump -> Break
+                spans.append((start, i - 1, max(lengths[start:i])))
+                start = i
+                current_len = l
+            # Else: Continue span
+            
+        # Close final span
+        if lengths[start] > 0: 
+            spans.append((start, len(lengths) - 1, max(lengths[start:])))
+            
+        return spans
+
+    def _headers_match(self, h1: List[str], h2: List[str]) -> bool:
+        """Checks if two header lists imply repetition."""
+        if not h1 or not h2:
+            return False
+            
+        def clean(h):
+            s = str(h).lower().strip()
+            # Remove '.1', '.2' suffixes
+            if "." in s and s.rsplit(".", 1)[1].isdigit():
+                s = s.rsplit(".", 1)[0]
+            return s
+
+        c1 = [clean(x) for x in h1 if "unnamed" not in str(x).lower()]
+        c2 = [clean(x) for x in h2 if "unnamed" not in str(x).lower()]
+        
+        if not c1 or not c2:
+            return False
+
+        # Compare first valid header (e.g. 'Depth')
+        return c1[0] == c2[0]
+
+    def _create_sub_block(self, parent: Block, span_group: List[Tuple[int, int, int]]) -> Block:
+        """Creates a new block from a list of column spans, cropping rows vertically."""
+        # 1. Determine Horizontal Boundaries
+        first_span = span_group[0]
+        last_span = span_group[-1]
+        
+        start_col_idx = first_span[0]
+        end_col_idx = last_span[1]
+        
+        # 2. Slice DataFrame Columns
+        # Note: This slice inherently includes any "Gap" columns that existed between spans 
+        # within this group (e.g. Data | Gap | Notes). This is usually desired if they are grouped.
+        sub_df = parent.df.iloc[:, start_col_idx : end_col_idx + 1]
+        
+        # 3. Determine Vertical Boundary (Crop)
+        # Use the max length of the spans to crop empty rows at bottom
+        max_h = max(s[2] for s in span_group)
+        if max_h < len(sub_df):
+            sub_df = sub_df.iloc[:max_h, :]
+            
+        # 4. Clean boundaries (remove the gaps if we included them by range slicing)
+        sub_df = self._clean_boundary_columns(sub_df)
+
+        return Block(
+            sheet_name=parent.sheet_name,
+            sheet_idx=parent.sheet_idx,
+            top=parent.top,
+            bottom=parent.top + max_h, # Adjusted bottom
+            left=parent.left + start_col_idx, # Relative offset
+            right=parent.left + end_col_idx,
+            block_type=BlockType.COMPLETE_TABULAR,
+            df=sub_df,
+            headers=list(sub_df.columns),
+            stats=parent.stats,
+            title=parent.title
+        )
+
+    def _clean_boundary_columns(self, df: pd.DataFrame) -> pd.DataFrame:
+        """Removes unnamed/empty columns from the start/end of a split chunk."""
+        if df.empty: return df
+        df = df.dropna(axis=1, how='all')
+        to_drop = []
+        for col in df.columns:
+            c_str = str(col).lower()
+            if "unnamed" in c_str or c_str == "":
+                 if df[col].count() == 0:
+                     to_drop.append(col)
+        return df.drop(columns=to_drop)
+
 
 if __name__ == "__main__":
     # Example usage
     # parser = ExcelParser("/Users/dhirenoswal/Desktop/TU corpus/NonStandardParser/Correspondence/notebook/frank1999.xls")
     # parser = ExcelParser("/Users/dhirenoswal/Desktop/TU corpus/ExcelParser/Data/orig-ocean99-xls/Clemens/Clemens1996/clemens1996.xls")
     # parser = ExcelParser("/Users/dhirenoswal/Desktop/TU corpus/ExcelParser/Data/orig-ocean99-xls/Ishiwatari/ishiwatari1999.xls")
-    parser = ExcelParser("/Users/dhirenoswal/Desktop/TU corpus/ExcelParser/Data/orig-ocean99-xls/Overpeck1996/overpeck1996.xls")
+    # parser = ExcelParser("/Users/dhirenoswal/Desktop/TU corpus/ExcelParser/Data/orig-ocean99-xls/Overpeck1996/overpeck1996.xls")
     # parser = ExcelParser("/Users/dhirenoswal/Desktop/TU corpus/ExcelParser/Data/orig-ocean99-xls/Bond/bond1992.xls")
     # parser = ExcelParser("/Users/dhirenoswal/Desktop/TU corpus/ExcelParser/Data/orig-ocean99-xls/Charles/charles1996.xls")
-    
+    # parser = ExcelParser("/Users/dhirenoswal/Desktop/TU corpus/NonStandardParser/Correspondence/notebook/marinduque2004.xls")
+    # parser = ExcelParser("/Users/dhirenoswal/Desktop/TU corpus/ExcelParser/Data/orig-coral99-xls/Linsley/Rarotonga/Rarotonga2006/rarotonga2006.xls")
+    # parser = ExcelParser("/Users/dhirenoswal/Desktop/TU corpus/ExcelParser/Data/orig-coral99-xls/DeLong/Delong2007/amedee2007.xls")
+    # parser = ExcelParser("/Users/dhirenoswal/Desktop/TU corpus/ExcelParser/Data/orig-ice99-xls/Schaefer/Pakitsoq2009/pakitsoq2009.xls")
+    # parser = ExcelParser("/Users/dhirenoswal/Desktop/TU corpus/ExcelParser/Data/orig-ice99-xls/Thompson/Dasuopu/dasuopu2000.xls")
+    # parser = ExcelParser("/Users/dhirenoswal/Desktop/TU corpus/SST_Indian_Ocean_Bard1997.xlsx")
     blocks = parser.parse()
 
     for block in blocks:
         print(f"Block ID: {block.idx}, Type: {block.block_type}, Sheet: {block.sheet_name}")
-        if block.df is not None:
-            print(block.df.head())
-            print(block.df.shape)
+        if block.df is not None and not block.df.empty:
+            # if block.sheet == "":
+                print(block.df.head())
+                print(block.df.shape)
+                print(block.df.attrs)
+
+    # block = blocks[3]
+    # print(f"Block ID: {block.idx}, Type: {block.block_type}, Sheet: {block.sheet_name}, Header Extent:{block.header_extent}, Title: {block.title}")
+    # block = blocks[17]
+    # print(f"Block ID: {block.idx}, Type: {block.block_type}, Sheet: {block.sheet_name}, Header Extent:{block.header_extent}, Title: {block.title}")
+
+    # block = blocks[18]
+    # print(f"Block ID: {block.idx}, Type: {block.block_type}, Sheet: {block.sheet_name}, Header Extent:{block.header_extent}, Title: {block.title}")

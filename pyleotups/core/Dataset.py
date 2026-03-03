@@ -4,7 +4,7 @@ import logging, warnings
 import requests
 import pandas as pd
 
-from ..utils.NOAADataset import NOAADataset
+from ..utils.NOAAStudy import NOAAStudy
 from ..utils.helpers import assert_list
 from ..utils.Parser.StandardParser import DataFetcher, StandardParser
 from ..utils.Parser.NonStandardParser import NonStandardParser
@@ -15,6 +15,7 @@ from ..utils.api.http import get
 
 log = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s][%(levelname)s] - %(message)s')
+
 class UnsupportedFileTypeError(Exception):
     """Raised when a file type is not supported by the parser."""
     pass
@@ -32,7 +33,7 @@ class Dataset:
     BASE_URL : str
         The NOAA API endpoint URL.
     studies : dict
-        A mapping from NOAAStudyId to NOAADataset instances.
+        A mapping from NOAAStudyId to NOAAStudy instances.
     data_table_index : dict
         A mapping from dataTableID to associated study, site, and paleo data.
     """
@@ -44,11 +45,12 @@ class Dataset:
 
         Attributes are set to their default empty values.
         """
-        self.studies = {}               # NOAAStudyId -> NOAADataset instance
+        self.studies = {}               # NOAAStudyId -> NOAAStudy instance
         self.data_table_index = {}      # dataTableID -> dict with study, site, paleo_data
         self.file_url_to_datatable = {} # file_url -> dataTableID
         # self.last_timing = {}
         self.logger = logging.getLogger("pyleotups.Dataset")
+
 
     def _reindex(self):
         """Rebuild secondary indexes from `self.studies`."""
@@ -482,7 +484,7 @@ class Dataset:
         self.file_url_to_datatable.clear()
 
         for study_data in tqdm(data.get('study', []), desc="Parsing NOAA studies"):
-            study_obj = NOAADataset(study_data)
+            study_obj = NOAAStudy(study_data)
             self.studies[study_obj.study_id] = study_obj
 
             for site in study_obj.sites:
@@ -529,6 +531,7 @@ class Dataset:
         
         data = [study.to_dict() for study in self.studies.values()]
         return pd.DataFrame(data)
+
 
     def get_publications(self, save=False, path=None, verbose=False):
         """
@@ -614,6 +617,7 @@ class Dataset:
 
         return bibs, df
     
+
     def get_tables(self):
         """
         Get a DataFrame of all sites expanded to paleo data files.
@@ -650,6 +654,7 @@ class Dataset:
                     records.append(paleo_record)
 
         return pd.DataFrame(records)
+
 
     def get_sites(self):
         """
@@ -999,7 +1004,6 @@ class Dataset:
             results.append(df)
 
         return results
-
 
 
     def get_data(self, dataTableIDs=None, file_urls=None):

@@ -1,11 +1,11 @@
-__all__ = ['NOAADataset']
+__all__ = ['NOAAStudy']
 
 from .Publication import Publication
 from .Site import Site
 from .PaleoData import PaleoData
 import numpy as np
 
-class NOAADataset:
+class NOAAStudy:
     """
     This class encapsulates study metadata and its related components (e.g. publications,
     sites) retrieved from the NOAA API.

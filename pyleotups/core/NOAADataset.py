@@ -1,8 +1,10 @@
-__all__ = ['Dataset', 'UnsupportedFileTypeError']
+__all__ = ['NOAADataset', 'UnsupportedFileTypeError']
 
 import logging, warnings
 import requests
 import pandas as pd
+
+from .BaseDataset import BaseDataset
 
 from ..utils.NOAAStudy import NOAAStudy
 from ..utils.helpers import assert_list
@@ -21,7 +23,7 @@ class UnsupportedFileTypeError(Exception):
     pass
 
 
-class Dataset:
+class NOAADataset(BaseDataset):
     """
     A wrapper class for interacting with the NOAA Studies API.
 
@@ -73,10 +75,10 @@ class Dataset:
                             self.file_url_to_datatable[url] = paleo.datatable_id
 
     def __add__(self, other):
-        if not isinstance(other, Dataset):
+        if not isinstance(other, NOAADataset):
             return NotImplemented
 
-        merged = Dataset()
+        merged = NOAADataset()
 
         # Start with a shallow copy of left's studies
         merged.studies = dict(self.studies)
@@ -91,7 +93,7 @@ class Dataset:
                     check_same_study_content = False
                 if not check_same_study_content:
                     warnings.warn(
-                        f"Dataset union: duplicate StudyID {sid} with differing content. "
+                        f"NOAADataset union: duplicate StudyID {sid} with differing content. "
                         "Keeping left-hand version. i.e. if C = A + B is perfomed, contents of A will be kept.", UserWarning
                     )
                 # else identical content -> do nothing
@@ -104,7 +106,7 @@ class Dataset:
         return merged
 
     def __iadd__(self, other):
-        if not isinstance(other, Dataset):
+        if not isinstance(other, NOAADataset):
             return NotImplemented
 
         for sid, study in other.studies.items():
@@ -126,7 +128,7 @@ class Dataset:
 
     
     def search_studies(self, **kwargs):
-        """
+        r"""
         Search for NOAA studies using the specified parameters.
 
         At least one parameter must be provided to perform a search. This method interfaces with
@@ -405,7 +407,7 @@ class Dataset:
         """
 
         if "headers_only" in kwargs:
-            log.warning("%s is not supported and will be ignored.", param)
+            log.warning("Keyword Argument Pair : 'headers_only' is not supported and will be ignored while making requests.")
             kwargs.pop("headers_only", None)
 
         if not any([

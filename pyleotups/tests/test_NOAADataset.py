@@ -5,7 +5,7 @@ import pandas as pd
 import requests
 import copy
 from unittest.mock import patch, MagicMock
-from pyleotups.core import Dataset, UnsupportedFileTypeError
+from pyleotups.core import NOAADataset, UnsupportedFileTypeError
 from pyleotups.tests.helpers.mock_study_response import get_mock_study_response
 
 
@@ -13,13 +13,13 @@ from pyleotups.tests.helpers.mock_study_response import get_mock_study_response
 # Functional Tests
 # ------------------------
 
-class TestDatasetSearchStudiesFunctional:
+class TestNOAADatasetSearchStudiesFunctional:
 
-    @patch("pyleotups.core.Dataset.requests.get")
+    @patch("pyleotups.core.NOAADataset.requests.get")
     def test_search_studies_t01_parse_response(self, mock_get):
         """Parses mock NOAA study response correctly"""
 
-        ds = Dataset()
+        ds = NOAADataset()
         mock_data = get_mock_study_response()
 
         mock_response = MagicMock()
@@ -32,11 +32,11 @@ class TestDatasetSearchStudiesFunctional:
         assert isinstance(df, pd.DataFrame)
         assert not df.empty
 
-    @patch("pyleotups.core.Dataset.requests.get")
+    @patch("pyleotups.core.NOAADataset.requests.get")
     def test_search_studies_t02_output_structure(self, mock_get):
         """DataFrame has expected columns"""
 
-        ds = Dataset()
+        ds = NOAADataset()
         mock_data = get_mock_study_response()
 
         mock_response = MagicMock()
@@ -48,11 +48,11 @@ class TestDatasetSearchStudiesFunctional:
         expected_cols = {"StudyID", "DataType", "Publications", "Sites", "Funding"}
         assert expected_cols.issubset(df.columns)
 
-    @patch("pyleotups.core.Dataset.requests.get")
+    @patch("pyleotups.core.NOAADataset.requests.get")
     def test_search_studies_t04_internal_object_population(self, mock_get):
-        """Dataset internal study objects are populated"""
+        """NOAADataset internal study objects are populated"""
 
-        ds = Dataset()
+        ds = NOAADataset()
         mock_data = get_mock_study_response()
 
         mock_response = MagicMock()
@@ -64,11 +64,11 @@ class TestDatasetSearchStudiesFunctional:
         assert len(ds.studies) > 0
         assert isinstance(next(iter(ds.studies.values())).metadata, dict)
 
-    @patch("pyleotups.core.Dataset.requests.get")
+    @patch("pyleotups.core.NOAADataset.requests.get")
     def test_search_studies_t05_handles_empty_study_list(self, mock_get):
         """Handles 'study': [] case without error"""
 
-        ds = Dataset()
+        ds = NOAADataset()
         mock_response = MagicMock()
         mock_response.raise_for_status = lambda: None
         mock_response.json.return_value = {"study": []}
@@ -78,11 +78,11 @@ class TestDatasetSearchStudiesFunctional:
         assert isinstance(df, pd.DataFrame)
         assert df.empty
 
-    @patch("pyleotups.core.Dataset.requests.get")
+    @patch("pyleotups.core.NOAADataset.requests.get")
     def test_search_studies_t07_dataframe_matches_expected_length(self, mock_get):
         """DataFrame row count matches number of studies in mock JSON"""
 
-        ds = Dataset()
+        ds = NOAADataset()
         mock_data = get_mock_study_response()
         mock_response = MagicMock()
         mock_response.raise_for_status = lambda: None
@@ -97,37 +97,37 @@ class TestDatasetSearchStudiesFunctional:
 # Error Handling Tests
 # ------------------------
 
-class TestDatasetSearchStudiesErrorHandling:
+class TestNOAADatasetSearchStudiesErrorHandling:
 
     def test_search_studies_t01_empty_params_raises(self):
         """Raises ValueError when no parameters are passed"""
 
-        ds = Dataset()
+        ds = NOAADataset()
         with pytest.raises(ValueError, match="At least one search parameter must be specified"):
             ds.search_studies()
 
     def test_search_studies_t02_invalid_publisher_raises(self):
         """Raises NotImplementedError for unsupported publisher"""
 
-        ds = Dataset()
+        ds = NOAADataset()
         with pytest.raises(NotImplementedError, match="supports data_publisher='NOAA' only"):
             ds.search_studies(data_publisher="PANGAEA", keywords="ENSO")
 
-    @patch("pyleotups.core.Dataset.get")
+    @patch("pyleotups.core.NOAADataset.get")
     def test_search_studies_t03_http_error_handled(self, mock_get):
         """Simulates an HTTP error like 503"""
 
-        ds = Dataset()
+        ds = NOAADataset()
         mock_get.side_effect = requests.HTTPError("503 Service Unavailable")
 
         with pytest.raises(requests.HTTPError, match="HTTP Request Error from NOAA"):
             ds.search_studies(keywords="ENSO")
 
-    @patch("pyleotups.core.Dataset.get")
+    @patch("pyleotups.core.NOAADataset.get")
     def test_search_studies_t04_invalid_json_handled(self, mock_get):
         """Simulates malformed JSON"""
 
-        ds = Dataset()
+        ds = NOAADataset()
 
         class FakeResponse:
             status_code = 200
@@ -139,11 +139,11 @@ class TestDatasetSearchStudiesErrorHandling:
         with pytest.raises(RuntimeError, match="Failed to parse NOAA response"):
             ds.search_studies(keywords="ENSO")
 
-    @patch("pyleotups.core.Dataset.get")
+    @patch("pyleotups.core.NOAADataset.get")
     def test_search_studies_t05_missing_study_key_handled(self, mock_get):
         """Simulates missing 'study' key in valid JSON"""
 
-        ds = Dataset()
+        ds = NOAADataset()
         bad_response = {"foo": "bar"}
 
         class FakeResponse:
@@ -157,11 +157,11 @@ class TestDatasetSearchStudiesErrorHandling:
         assert isinstance(df, pd.DataFrame)
         assert df.empty
 
-    @patch("pyleotups.core.Dataset.get")
+    @patch("pyleotups.core.NOAADataset.get")
     def test_search_studies_t06_keywords_return_no_results(self, mock_get):
         """Simulates valid query returning no results"""
 
-        ds = Dataset()
+        ds = NOAADataset()
         class FakeResponse:
             status_code = 204
             def raise_for_status(self): pass
@@ -178,10 +178,10 @@ class TestDatasetSearchStudiesErrorHandling:
 # Metadata Accessor Tests (with length checks + multi-funding support)
 # ------------------------
 
-class TestDatasetMetadataAccessors:
+class TestNOAADatasetMetadataAccessors:
 
     def setup_method(self):
-        self.ds = Dataset()
+        self.ds = NOAADataset()
         self.mock_data = get_mock_study_response()
         self.ds._parse_response(self.mock_data, limit=100)
 
@@ -231,10 +231,10 @@ class TestDatasetMetadataAccessors:
 # Metadata Detailed Field Tests
 # ------------------------
 
-class TestDatasetMetadataDetailed:
+class TestNOAADatasetMetadataDetailed:
 
     def setup_method(self):
-        self.ds = Dataset()
+        self.ds = NOAADataset()
         self.mock_data = get_mock_study_response()
         self.ds._parse_response(self.mock_data, limit=100)
 
@@ -281,7 +281,7 @@ class TestDatasetMetadataDetailed:
 
     def test_get_tables_t05_handles_empty_mapping(self):
         """Returns empty DataFrame if no studies"""
-        empty_ds = Dataset()
+        empty_ds = NOAADataset()
         df = empty_ds.get_tables()
         assert isinstance(df, pd.DataFrame)
         assert df.empty
@@ -310,10 +310,10 @@ class TestDatasetMetadataDetailed:
 
 
 
-class TestDatasetGetDataMocked:
+class TestNOAADatasetGetDataMocked:
 
     def setup_method(self):
-        self.ds = Dataset()
+        self.ds = NOAADataset()
         self.mock_data = get_mock_study_response()
         self.ds._parse_response(self.mock_data, limit = 100)
         self.valid_dt_id = next(iter(self.ds.data_table_index))
@@ -321,7 +321,7 @@ class TestDatasetGetDataMocked:
 
     # --- Test t01: valid DataTableID returns DFs ---
     @patch("requests.get")
-    @patch("pyleotups.core.Dataset.StandardParser")
+    @patch("pyleotups.core.NOAADataset.StandardParser")
     def test_get_data_t01_from_datatable_id_returns_df_list(self, mock_parser, mock_get):
         mock_get.return_value.status_code = 200
         mock_get.return_value.raise_for_status = lambda: None
@@ -342,7 +342,7 @@ class TestDatasetGetDataMocked:
 
     # --- Test t03: valid file_url with mapping ---
     @patch("requests.get")
-    @patch("pyleotups.core.Dataset.StandardParser")
+    @patch("pyleotups.core.NOAADataset.StandardParser")
     def test_get_data_t03_from_file_url_with_mapping(self, mock_parser, mock_get):
         mock_get.return_value.status_code = 200
         mock_get.return_value.raise_for_status = lambda: None
@@ -356,8 +356,8 @@ class TestDatasetGetDataMocked:
         assert result[0].equals(dummy_df)
 
     # --- Test t04: file_url not in mapping, should still parse ---
-    @patch("pyleotups.core.Dataset.requests.get")
-    @patch("pyleotups.core.Dataset.StandardParser")
+    @patch("pyleotups.core.NOAADataset.requests.get")
+    @patch("pyleotups.core.NOAADataset.StandardParser")
     def test_get_data_t04_unmapped_file_url_warns_and_parses(self, mock_parser, mock_get):
         unmapped_url = "https://example.com/fake.txt"
         mock_get.return_value.status_code = 200
@@ -427,18 +427,18 @@ def _single_study_payload(noaa_id: int, mutate=None):
     return single
 
 
-def _build_dataset_for_noaa_id(noaa_id: int, mutate=None) -> Dataset:
+def _build_NOAAdataset_for_noaa_id(noaa_id: int, mutate=None) -> NOAADataset:
     """
-    Build a Dataset containing exactly one study (by NOAAStudyId) using
+    Build a NOAADataset containing exactly one study (by NOAAStudyId) using
     the networkless mock response and the internal parser.
     """
-    ds = Dataset()
+    ds = NOAADataset()
     payload = _single_study_payload(noaa_id, mutate=mutate)
     ds._parse_response(payload, limit=5)  # test intentionally uses internal API
     return ds
 
 
-def _ids(ds: Dataset):
+def _ids(ds: NOAADataset):
     """Return the set of NOAAStudyId keys as ints."""
     return {int(k) for k in ds.studies.keys()}
 
@@ -447,12 +447,12 @@ def _ids(ds: Dataset):
 # Tests: C = A + B   (binary add creates a new object)
 # ---------------------------------------------------------------------------
 
-class TestDatasetAddBinary:
+class TestNOAADatasetAddBinary:
     def test_add_t01_different_ids_creates_union(self):
         """C = A + B with different NOAAStudyIds → union of A and B (no warning)."""
         # A: 18315, B: 8630
-        A = _build_dataset_for_noaa_id(18315)
-        B = _build_dataset_for_noaa_id(8630)
+        A = _build_NOAAdataset_for_noaa_id(18315)
+        B = _build_NOAAdataset_for_noaa_id(8630)
 
         # Pre-calc index sizes
         a_dt, a_fu = len(A.data_table_index), len(A.file_url_to_datatable)
@@ -471,8 +471,8 @@ class TestDatasetAddBinary:
 
     def test_add_t02_same_id_identical_keeps_left_no_warning(self):
         """C = A + B where A and B have same study (identical) → left preserved, no warning."""
-        A = _build_dataset_for_noaa_id(18315)
-        B = _build_dataset_for_noaa_id(18315)
+        A = _build_NOAAdataset_for_noaa_id(18315)
+        B = _build_NOAAdataset_for_noaa_id(18315)
 
         # No warning expected
         C = A + B
@@ -488,13 +488,13 @@ class TestDatasetAddBinary:
 
     def test_add_t03_same_id_different_warns_and_keeps_left(self):
         """C = A + B where same NOAAStudyId but different content → warning; C looks like A."""
-        A = _build_dataset_for_noaa_id(18315)
+        A = _build_NOAAdataset_for_noaa_id(18315)
 
         def _mutate(study_dict):
             # Deterministic change to force a difference in content
             study_dict["studyName"] = "Tampered Study"
 
-        B = _build_dataset_for_noaa_id(18315, mutate=_mutate)
+        B = _build_NOAAdataset_for_noaa_id(18315, mutate=_mutate)
 
         # Expect a UserWarning mentioning duplicate/different study; keep regex loose and case-insensitive
         with pytest.warns(UserWarning, match=r"(?i)duplicate.*study.*18315"):
@@ -513,11 +513,11 @@ class TestDatasetAddBinary:
 # Tests: A = A + B   (rebinding variable name to result of binary add)
 # ---------------------------------------------------------------------------
 
-class TestDatasetAddRebind:
+class TestNOAADatasetAddRebind:
     def test_add_rebind_t01_different_ids_creates_union(self):
         """A = A + B with different NOAAStudyIds → union of A and B (no warning)."""
-        A = _build_dataset_for_noaa_id(18315)
-        B = _build_dataset_for_noaa_id(8630)
+        A = _build_NOAAdataset_for_noaa_id(18315)
+        B = _build_NOAAdataset_for_noaa_id(8630)
 
         a_dt, a_fu = len(A.data_table_index), len(A.file_url_to_datatable)
         b_dt, b_fu = len(B.data_table_index), len(B.file_url_to_datatable)
@@ -532,8 +532,8 @@ class TestDatasetAddRebind:
 
     def test_add_rebind_t02_same_id_identical_no_warning(self):
         """A = A + B where A and B have same study (identical) → still looks like A (no warning)."""
-        A = _build_dataset_for_noaa_id(18315)
-        B = _build_dataset_for_noaa_id(18315)
+        A = _build_NOAAdataset_for_noaa_id(18315)
+        B = _build_NOAAdataset_for_noaa_id(18315)
 
         # No warning expected
         A = A + B
@@ -542,18 +542,18 @@ class TestDatasetAddRebind:
         assert len(A.studies) == 1
 
         # Indexes should match canonical single-study A
-        canonical_A = _build_dataset_for_noaa_id(18315)
+        canonical_A = _build_NOAAdataset_for_noaa_id(18315)
         assert len(A.data_table_index) == len(canonical_A.data_table_index)
         assert len(A.file_url_to_datatable) == len(canonical_A.file_url_to_datatable)
 
     def test_add_rebind_t03_same_id_different_warns_and_keeps_left(self):
         """A = A + B where same NOAAStudyId but different content → warning; A still looks like original A."""
-        A = _build_dataset_for_noaa_id(18315)
+        A = _build_NOAAdataset_for_noaa_id(18315)
 
         def _mutate(study_dict):
             study_dict["studyName"] = "Tampered Study"
 
-        B = _build_dataset_for_noaa_id(18315, mutate=_mutate)
+        B = _build_NOAAdataset_for_noaa_id(18315, mutate=_mutate)
 
         with pytest.warns(UserWarning, match=r"(?i)duplicate.*study.*18315"):
             A = A + B
@@ -562,7 +562,7 @@ class TestDatasetAddRebind:
         assert len(A.studies) == 1
 
         # Compare to canonical A to ensure B's tamper did not replace left
-        canonical_A = _build_dataset_for_noaa_id(18315)
+        canonical_A = _build_NOAAdataset_for_noaa_id(18315)
         assert _ids(A) == _ids(canonical_A)
         assert len(A.data_table_index) == len(canonical_A.data_table_index)
         assert len(A.file_url_to_datatable) == len(canonical_A.file_url_to_datatable)

@@ -27,3 +27,4 @@ nonstd-parser/
 ./docs/build/**
 .venv/
 .gitattributes
+.ipynb_checkpoints/

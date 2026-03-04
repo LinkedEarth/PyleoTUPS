@@ -26,7 +26,8 @@ dependencies = [
   "tqdm",
   "nbstripout",
   "xlrd",
-  "openpyxl"
+  "openpyxl", 
+  "pangaeapy"
 ]
 keywords = ["pyleotups", "Table Understanding", "Data Analysis"]
 urls = { Homepage = "https://github.com/LinkedEarth/pyleotups/pyleotups" }

@@ -13,6 +13,8 @@ import datetime
 from pybtex.database import BibliographyData, Entry, Person
 from pybtex.database.output.bibtex import Writer
 
+from pangaeapy.pandataset import PanDataSet, PanEvent
+
 
 logger = logging.getLogger(__name__)
 
@@ -150,11 +152,11 @@ class PangaeaDataset(BaseDataset):
                 # events may be an iterable of dicts with lat/lon
                 for ev in events:
                     sites.append({
-                        "SiteID": ev.get("id"),
-                        "LocationName": ev.get("location"),
-                        "Latitude": ev.get("latitude") or ev.get("lat") or None,
-                        "Longitude": ev.get("longitude") or ev.get("lon") or None,
-                        "Elevation": ev.get("elevation") or ev.get("elev") or None,
+                        "SiteID": ev.id,
+                        "LocationName": ev.location,
+                        "Latitude": ev.latitude,
+                        "Longitude": ev.longitude,
+                        "Elevation": ev.elevation,
                     })
         except Exception:
             sites = sites or []
@@ -361,36 +363,20 @@ class PangaeaDataset(BaseDataset):
             # attempt to extract geometry/events
             sites = []
             try:
-                if hasattr(panobj, "getGeometry"):
-                    geom = panobj.getGeometry()
-                    if geom:
-                        coords = geom.get("coordinates", None)
-                        lat = coords[1] if coords and len(coords) > 1 else None
-                        lon = coords[0] if coords and len(coords) > 0 else None
-                        sites.append({
-                            "SiteID": None,
-                            "SiteName": None,
-                            "LocationName": None,
-                            "Latitude": lat,
-                            "Longitude": lon,
-                            "MinElevation": None,
-                            "MaxElevation": None
-                        })
                 events = getattr(panobj, "events", None)
                 if events:
                     for ev in events:
-                        lat = ev.get("latitude") or ev.get("lat") or None
-                        lon = ev.get("longitude") or ev.get("lon") or None
                         sites.append({
-                            "SiteID": ev.get("id") if isinstance(ev, dict) else None,
-                            "SiteName": ev.get("name") if isinstance(ev, dict) else None,
-                            "LocationName": ev.get("place") if isinstance(ev, dict) else None,
-                            "Latitude": lat,
-                            "Longitude": lon,
+                            "SiteID": ev.id,
+                            "SiteName": ev.label,
+                            "LocationName": ev.location,
+                            "Latitude": ev.latitude,
+                            "Longitude": ev.longitude,
                             "MinElevation": None,
                             "MaxElevation": None
                         })
-            except Exception:
+            except Exception as e:
+                print(f"Warning: Failed to extract geometry/events for StudyID {sid}: {e}")
                 sites = sites or []
 
             for s in sites:
@@ -403,7 +389,6 @@ class PangaeaDataset(BaseDataset):
                     "Longitude": s.get("Longitude"),
                     "MinElevation": s.get("MinElevation"),
                     "MaxElevation": s.get("MaxElevation"),
-                    "DataType": None
                 }
                 rows.append(row)
 
@@ -689,26 +674,19 @@ class PangaeaDataset(BaseDataset):
                 projects = getattr(panobj, "projects", None)
                 if projects:
                     for p in projects if isinstance(projects, (list, tuple)) else [projects]:
-                        title = p.get("title") if isinstance(p, dict) else None
+                        grant = ""
+                        if p.label:    
+                            grant += p.label
+                        if p.id:
+                            grant += f" / {p.id}" 
                         rows.append({
                             "StudyID": sid,
                             "StudyName": getattr(panobj, "title", None),
                             "FundingAgency": getattr(p, "URL", None) or getattr(p, "url", None),
-                            "FundingGrant": getattr(p, "label", None),
+                            "FundingGrant": grant if grant else None,
                         })
-                else:
-                    # fallback: attempt params
-                    params = getattr(panobj, "params", None)
-                    if params and isinstance(params, dict):
-                        fund = params.get("funding") or params.get("project")
-                        if fund:
-                            rows.append({
-                                "StudyID": sid,
-                                "StudyName": getattr(panobj, "title", None),
-                                "FundingAgency": None,
-                                "FundingGrant": fund
-                            })
-            except Exception:
+            except Exception as e:
+                print(f"Error occurred while processing funding for study {sid}: {e}")
                 continue
 
         if not rows:

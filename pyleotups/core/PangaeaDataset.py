@@ -328,6 +328,75 @@ class PangaeaDataset(BaseDataset):
         """
         return {}
 
+    def get_variables(self, study_ids=None) -> pd.DataFrame:
+        """
+        Retrieve variable metadata for specified studies.
+
+        Parameters
+        ----------
+        study_ids : int, str, list, or None
+            One or more StudyIDs. Can be numeric or DOI string.
+            If None, variables for all registered studies are returned.
+
+        Returns
+        -------
+        pandas.DataFrame
+            One row per (study × variable).
+
+        Raises
+        ------
+        KeyError
+            If a requested StudyID is not registered and not found
+            among collection members.
+        """
+
+        if study_ids is None:
+            selected = list(self.studies.values())
+        else:
+            if not isinstance(study_ids, (list, tuple)):
+                study_ids = [study_ids]
+
+            selected = []
+
+            for sid in study_ids:
+                normalized_id = self._normalize_id(sid)
+
+                # Directly registered
+                if normalized_id in self.studies:
+                    selected.append(self.studies[normalized_id])
+                    continue
+
+                # Check collection members
+                found = False
+                for parent in self.studies.values():
+                    members = parent._panobj.collection_members
+                    if members:
+                        normalized_members = [
+                            PangaeaStudy.normalize_id(m) for m in members
+                        ]
+                        if normalized_id in normalized_members:
+                            # Auto-load and register
+                            self.studies[normalized_id] = PangaeaStudy(
+                                study_id=normalized_id,
+                                cache_dir=self.cache_dir,
+                                auth_token=self.auth_token,
+                            )
+                            selected.append(self.studies[normalized_id])
+                            found = True
+                            break
+
+                if not found:
+                    raise KeyError(
+                        f"Study '{sid}' not found. "
+                        f"Run search_studies() first."
+                    )
+
+        frames = [study.get_variables() for study in selected]
+
+        if not frames:
+            return pd.DataFrame()
+
+        return pd.concat(frames, ignore_index=True)
 
 
 if __name__ == "__main__":

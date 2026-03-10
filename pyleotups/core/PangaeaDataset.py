@@ -253,28 +253,70 @@ class PangaeaDataset(BaseDataset):
     # -------------------------
     # get_data(identifier): DOI or file URL -> pandas.DataFrame parsed table and set df.attrs["source"]
     # -------------------------
-    def get_data(self, study_id) -> pd.DataFrame:
+    def get_data(self, study_id: int) -> pd.DataFrame:
         """
-        Fetch the data table for the given identifier (DOI/URI or direct file URL).
-        Always returns a pandas.DataFrame (parsed). On failure raises ValueError / requests exceptions.
+        Retrieve dataset for a specific study.
 
-        Sets df.attrs["source"] = {'publisher':'PANGAEA','id':identifier, ...}
-        Also registers PanDataSet instance in self.studies[identifier]['panobj'] for reuse.
+        If the study is a collection, a warning is logged
+        suggesting access to its collection members.
+
+        If the study is not registered but exists as a
+        collection member of a registered study, it will
+        be automatically loaded and registered.
 
         Parameters
         ----------
-        study_id : str
-            Identifier of the study.
+        study_id : int
+            Numeric PANGAEA StudyID.
 
         Returns
         -------
         pandas.DataFrame
             Dataset table.
         """
-        
-        if study_id not in self.studies:
-            raise KeyError(f"Study '{study_id}' not found.")
-        return self.studies[study_id].get_data()
+
+        # --------------------------------------------------
+        # Case 1: Directly registered
+        # --------------------------------------------------
+        if study_id in self.studies:
+            study = self.studies[study_id]
+
+            if study._panobj.isCollection:
+                logger.warning(
+                    f"Study {study_id} is a collection dataset. "
+                    f"Use one of its CollectionMembers instead."
+                )
+                return pd.DataFrame()
+
+            return study.get_data()
+
+        # --------------------------------------------------
+        # Case 2: Not registered — check collection members
+        # --------------------------------------------------
+        for parent_study in self.studies.values():
+            members = parent_study._panobj.collection_members
+
+            if members:
+                normalized_members = [
+                    self._normalize_id(m) for m in members
+                ]
+                print(normalized_members)
+                if study_id in normalized_members:
+                # Register it dynamically
+                    self.studies[study_id] = PangaeaStudy(
+                        study_id=study_id,
+                        cache_dir=self.cache_dir,
+                        auth_token=self.auth_token,
+                    )
+                    return self.studies[study_id].get_data()
+
+        # --------------------------------------------------
+        # Case 3: Not found anywhere
+        # --------------------------------------------------
+        raise KeyError(
+            f"Study '{study_id}' not found. "
+            f"Run search_studies() first."
+        )
 
 
     # -------------------------

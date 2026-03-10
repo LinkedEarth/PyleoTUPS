@@ -5,6 +5,8 @@ import pandas as pd
 from pangaeapy import PanDataSet
 from pybtex.database import Entry, Person
 
+import logging
+logger = logging.getLogger(__name__)
 
 _DOI_RE = re.compile(r"(10\.\d{4,9}/\S+)", re.IGNORECASE)
 _YEAR_RE = re.compile(r"\b(19|20)\d{2}\b")
@@ -262,6 +264,11 @@ class PangaeaStudy:
                 {"name": p.name, "url": p.URL, "award": p.awardURI}
                 for p in ds.projects
             ],
+            "CollectionMembers": (
+                self._panobj.collection_members
+                if self._panobj.isCollection
+                else None
+            ),
         }
 
     # ------------------------------------------------------------------

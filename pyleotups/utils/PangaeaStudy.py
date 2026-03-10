@@ -450,3 +450,53 @@ class PangaeaStudy:
         rows,
         columns=["StudyID", "StudyName", "FundingAgency", "FundingGrant"],
     )
+
+    def get_variables(self) -> pd.DataFrame:
+        """
+        Retrieve variable (parameter) metadata for this study.
+
+        Returns
+        -------
+        pandas.DataFrame
+            One row per parameter with the following columns:
+
+            - StudyID
+            - VariableName
+            - ShortName
+            - Unit
+            - OntologyTerms
+
+        Notes
+        -----
+        For collection datasets, this returns an empty DataFrame.
+        """
+
+        ds = self._panobj
+
+        # Collections do not contain parameters
+        if ds.isCollection:
+            return pd.DataFrame(
+                columns=[
+                    "StudyID",
+                    "VariableName",
+                    "ShortName",
+                    "Unit",
+                    "OntologyTerms",
+                ]
+            )
+
+        rows = []
+
+        for col_name, param in ds.params.items():
+
+            rows.append(
+                {
+                    "StudyID": self.study_id,
+                    "VariableName": param.name,
+                    "ShortName": param.shortName,
+                    "Unit": param.unit,
+                    "OntologyTerms": param.terms,
+                }
+            )
+
+        return pd.DataFrame(rows)

@@ -1,10 +1,12 @@
-__all__ = ['Dataset', 'UnsupportedFileTypeError']
+__all__ = ['NOAADataset', 'UnsupportedFileTypeError']
 
 import logging, warnings
 import requests
 import pandas as pd
 
-from ..utils.NOAADataset import NOAADataset
+from .BaseDataset import BaseDataset
+
+from ..utils.NOAAStudy import NOAAStudy
 from ..utils.helpers import assert_list
 from ..utils.Parser.StandardParser import DataFetcher, StandardParser
 from ..utils.Parser.NonStandardParser import NonStandardParser
@@ -15,12 +17,13 @@ from ..utils.api.http import get
 
 log = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s][%(levelname)s] - %(message)s')
+
 class UnsupportedFileTypeError(Exception):
     """Raised when a file type is not supported by the parser."""
     pass
 
 
-class Dataset:
+class NOAADataset(BaseDataset):
     """
     A wrapper class for interacting with the NOAA Studies API.
 
@@ -32,7 +35,7 @@ class Dataset:
     BASE_URL : str
         The NOAA API endpoint URL.
     studies : dict
-        A mapping from NOAAStudyId to NOAADataset instances.
+        A mapping from NOAAStudyId to NOAAStudy instances.
     data_table_index : dict
         A mapping from dataTableID to associated study, site, and paleo data.
     """
@@ -44,11 +47,12 @@ class Dataset:
 
         Attributes are set to their default empty values.
         """
-        self.studies = {}               # NOAAStudyId -> NOAADataset instance
+        self.studies = {}               # NOAAStudyId -> NOAAStudy instance
         self.data_table_index = {}      # dataTableID -> dict with study, site, paleo_data
         self.file_url_to_datatable = {} # file_url -> dataTableID
         # self.last_timing = {}
         self.logger = logging.getLogger("pyleotups.Dataset")
+
 
     def _reindex(self):
         """Rebuild secondary indexes from `self.studies`."""
@@ -71,10 +75,10 @@ class Dataset:
                             self.file_url_to_datatable[url] = paleo.datatable_id
 
     def __add__(self, other):
-        if not isinstance(other, Dataset):
+        if not isinstance(other, NOAADataset):
             return NotImplemented
 
-        merged = Dataset()
+        merged = NOAADataset()
 
         # Start with a shallow copy of left's studies
         merged.studies = dict(self.studies)
@@ -89,7 +93,7 @@ class Dataset:
                     check_same_study_content = False
                 if not check_same_study_content:
                     warnings.warn(
-                        f"Dataset union: duplicate StudyID {sid} with differing content. "
+                        f"NOAADataset union: duplicate StudyID {sid} with differing content. "
                         "Keeping left-hand version. i.e. if C = A + B is perfomed, contents of A will be kept.", UserWarning
                     )
                 # else identical content -> do nothing
@@ -102,7 +106,7 @@ class Dataset:
         return merged
 
     def __iadd__(self, other):
-        if not isinstance(other, Dataset):
+        if not isinstance(other, NOAADataset):
             return NotImplemented
 
         for sid, study in other.studies.items():
@@ -124,7 +128,7 @@ class Dataset:
 
     
     def search_studies(self, **kwargs):
-        """
+        r"""
         Search for NOAA studies using the specified parameters.
 
         At least one parameter must be provided to perform a search. This method interfaces with
@@ -403,7 +407,7 @@ class Dataset:
         """
 
         if "headers_only" in kwargs:
-            log.warning("%s is not supported and will be ignored.", param)
+            log.warning("Keyword Argument Pair : 'headers_only' is not supported and will be ignored while making requests.")
             kwargs.pop("headers_only", None)
 
         if not any([
@@ -482,7 +486,7 @@ class Dataset:
         self.file_url_to_datatable.clear()
 
         for study_data in tqdm(data.get('study', []), desc="Parsing NOAA studies"):
-            study_obj = NOAADataset(study_data)
+            study_obj = NOAAStudy(study_data)
             self.studies[study_obj.study_id] = study_obj
 
             for site in study_obj.sites:
@@ -529,6 +533,7 @@ class Dataset:
         
         data = [study.to_dict() for study in self.studies.values()]
         return pd.DataFrame(data)
+
 
     def get_publications(self, save=False, path=None, verbose=False):
         """
@@ -614,6 +619,7 @@ class Dataset:
 
         return bibs, df
     
+
     def get_tables(self):
         """
         Get a DataFrame of all sites expanded to paleo data files.
@@ -650,6 +656,7 @@ class Dataset:
                     records.append(paleo_record)
 
         return pd.DataFrame(records)
+
 
     def get_sites(self):
         """
@@ -999,7 +1006,6 @@ class Dataset:
             results.append(df)
 
         return results
-
 
 
     def get_data(self, dataTableIDs=None, file_urls=None):

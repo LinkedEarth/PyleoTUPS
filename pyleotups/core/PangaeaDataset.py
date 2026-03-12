@@ -157,7 +157,7 @@ class PangaeaDataset(BaseDataset):
 
         if collection_found:
             logger.warning(
-                f"The search contains dataset(s) [{', '.join(collection_found)}] marked as collection. "
+                f"The search contains dataset(s) [{', '.join(map(str, collection_found))}] marked as collection. "
                 "Refer to the 'CollectionMembers' column to"
                 "identify respective child datasets."
             )
@@ -301,8 +301,8 @@ class PangaeaDataset(BaseDataset):
         # --------------------------------------------------
         # Case 1: Directly registered
         # --------------------------------------------------
-        if study_id in self.studies:
-            study = self.studies[study_id]
+        if self._normalize_id(study_id) in self.studies:
+            study = self.studies[self._normalize_id(study_id)]
 
             if study._panobj.isCollection:
                 logger.warning(
@@ -323,7 +323,7 @@ class PangaeaDataset(BaseDataset):
                 normalized_members = [
                     self._normalize_id(m) for m in members
                 ]
-                print(normalized_members)
+                # print(normalized_members)
                 if study_id in normalized_members:
                 # Register it dynamically
                     self.studies[study_id] = PangaeaStudy(
@@ -395,7 +395,7 @@ class PangaeaDataset(BaseDataset):
                     members = parent._panobj.collection_members
                     if members:
                         normalized_members = [
-                            PangaeaStudy.normalize_id(m) for m in members
+                            self._normalize_id(m) for m in members
                         ]
                         if normalized_id in normalized_members:
                             # Auto-load and register

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?><md:MetaData xmlns:md="http://www.pangaea.de/MetaData" version="2024-07-19">
+<md:citation id="dataset830589">
+<md:author id="dataset.author51083">
+<md:lastName>Khider</md:lastName>
+<md:firstName>D</md:firstName>
+<md:orcid>0000-0001-7501-8430</md:orcid>
+</md:author>
+<md:author id="dataset.author22620">
+<md:lastName>Stott</md:lastName>
+<md:firstName>Lowell D</md:firstName>
+<md:eMail>stott@usc.edu</md:eMail>
+<md:orcid>0000-0002-2025-0731</md:orcid>
+</md:author>
+<md:author id="dataset.author51084">
+<md:lastName>Emile-Geay</md:lastName>
+<md:firstName>J</md:firstName>
+<md:orcid>0000-0001-5920-4751</md:orcid>
+</md:author>
+<md:author id="dataset.author796">
+<md:lastName>Thunell</md:lastName>
+<md:firstName>Robert C</md:firstName>
+<md:URI>https://en.wikipedia.org/wiki/Robert_Thunell</md:URI>
+</md:author>
+<md:author id="dataset.author10664">
+<md:lastName>Hammond</md:lastName>
+<md:firstName>Douglas E</md:firstName>
+<md:eMail>dhammond@usc.edu</md:eMail>
+</md:author>
+<md:year>2011</md:year>
+<md:title>Stable isotope record of sediment core MD98-2177</md:title>
+<md:type id="dataset.reftype10" includeInCitation="true">dataset publication series</md:type>
+<md:URI>https://doi.org/10.1594/PANGAEA.830589</md:URI>
+<md:supplementTo id="ref63525">
+<md:author id="ref63525.author51083">
+<md:lastName>Khider</md:lastName>
+<md:firstName>D</md:firstName>
+<md:orcid>0000-0001-7501-8430</md:orcid>
+</md:author>
+<md:author id="ref63525.author22620">
+<md:lastName>Stott</md:lastName>
+<md:firstName>Lowell D</md:firstName>
+<md:eMail>stott@usc.edu</md:eMail>
+<md:orcid>0000-0002-2025-0731</md:orcid>
+</md:author>
+<md:author id="ref63525.author51084">
+<md:lastName>Emile-Geay</md:lastName>
+<md:firstName>J</md:firstName>
+<md:orcid>0000-0001-5920-4751</md:orcid>
+</md:author>
+<md:author id="ref63525.author796">
+<md:lastName>Thunell</md:lastName>
+<md:firstName>Robert C</md:firstName>
+<md:URI>https://en.wikipedia.org/wiki/Robert_Thunell</md:URI>
+</md:author>
+<md:author id="ref63525.author10664">
+<md:lastName>Hammond</md:lastName>
+<md:firstName>Douglas E</md:firstName>
+<md:eMail>dhammond@usc.edu</md:eMail>
+</md:author>
+<md:year>2011</md:year>
+<md:title>Assessing El Niño Southern Oscillation variability during the past millennium</md:title>
+<md:type id="ref63525.reftype1">journal article</md:type>
+<md:source id="ref63525.journal12511" relatedTermIds="33974,34022,34030" type="journal">Paleoceanography</md:source>
+<md:volume>26(3)</md:volume>
+<md:URI>https://doi.org/10.1029/2011PA002139</md:URI>
+<md:pages>PA3222</md:pages>
+</md:supplementTo>
+</md:citation>
+<md:abstract>We present a reconstruction of El Niño Southern Oscillation (ENSO) variability spanning the Medieval Climate Anomaly (MCA, A.D. 800-1300) and the Little Ice Age (LIA, A.D. 1500-1850). Changes in ENSO are estimated by comparing the spread and symmetry of d18O values of individual specimens of the thermocline-dwelling planktonic foraminifer Pulleniatina obliquiloculata extracted from discrete time horizons of a sediment core collected in the Sulawesi Sea, at the edge of the western tropical Pacific warm pool. The spread of individual d18O values is interpreted to be a measure of the strength of both phases of ENSO while the symmetry of the d18O distributions is used to evaluate the relative strength/frequency of El Niño and La Niña events. In contrast to previous studies, we use robust and resistant statistics to quantify the spread and symmetry of the d18O distributions; an approach motivated by the relatively small sample size and the presence of outliers. Furthermore, we use a pseudo-proxy approach to investigate the effects of the different paleo-environmental factors on the statistics of the d18O distributions, which could bias the paleo-ENSO reconstruction. We find no systematic difference in the magnitude/strength of ENSO during the Northern Hemisphere MCA or LIA. However, our results suggest that ENSO during the MCA was skewed toward stronger/more frequent La Niña than El Niño, an observation consistent with the medieval megadroughts documented from sites in western North America.</md:abstract>
+<md:extent>
+<md:geographic>
+<md:westBoundLongitude>119.07999999999997</md:westBoundLongitude>
+<md:eastBoundLongitude>119.07999999999997</md:eastBoundLongitude>
+<md:southBoundLatitude>1.3999999999999997</md:southBoundLatitude>
+<md:northBoundLatitude>1.3999999999999997</md:northBoundLatitude>
+<md:meanLongitude>119.07999999999997</md:meanLongitude>
+<md:meanLatitude>1.3999999999999997</md:meanLatitude>
+</md:geographic>
+<md:topoType id="topotype1">not specified</md:topoType>
+</md:extent>
+<md:event id="event2013989">
+<md:label>MD98-2177</md:label>
+<md:optionalLabel>MD982177</md:optionalLabel>
+<md:latitude>1.4</md:latitude>
+<md:longitude>119.08</md:longitude>
+<md:elevation>-968.0</md:elevation>
+<md:attribute attid="19163" name="Recovery">32.14 m</md:attribute>
+<md:campaign id="event2013989.campaign3003">
+<md:name>MD111</md:name>
+<md:optionalName>IMAGES IV-IPHIS III</md:optionalName>
+<md:chiefScientist>Bassinot, Franck C</md:chiefScientist>
+<md:start>1998-06-18</md:start>
+<md:end>1998-08-01</md:end>
+</md:campaign>
+<md:basis id="event2013989.basis94">
+<md:name>Marion Dufresne (1995)</md:name>
+<md:URI>https://en.wikipedia.org/wiki/Marion_Dufresne_(1994)</md:URI>
+<md:callSign>FNIN</md:callSign>
+<md:IMOnumber>9050814</md:IMOnumber>
+</md:basis>
+<md:method id="event2013989.method10861">
+<md:name>Calypso Corer</md:name>
+<md:optionalName>CALYPSO</md:optionalName>
+</md:method>
+</md:event>
+<md:size unit="datasets">3</md:size>
+<md:license id="license101">
+<md:label>CC-BY-3.0</md:label>
+<md:name>Creative Commons Attribution 3.0 Unported</md:name>
+<md:URI>https://creativecommons.org/licenses/by/3.0/</md:URI>
+</md:license>
+<md:additionalSearchableContent>Depth, top/min | Depth top | Depth, bottom/max | Depth bot | maximum | Age | minimum | Pulleniatina obliquiloculata, δ13C | P. obliquiloculata δ13C | Pulleniatina obliquiloculata, δ18O | P. obliquiloculata δ18O | per individual | Mass | Laboratory | Lab | Laboratory code/label | Lab label | Age, dated | Age dated | Age, 14C AMS | Age, dated standard deviation | Age dated std dev | Age, 14C calibrated | a AD | Age, error | Age e | Age, comment | Comm | Layer thickness | Thickness | Lead-214 | 214Pb | 1 sigma | Lead-214, standard deviation | 214Pb std dev | Lead-210 | 210Pb | Lead-210, standard deviation | 210Pb std dev | Lead-210 excess | 210Pb xs | Lead-210 excess, standard deviation | 210Pb xs std dev</md:additionalSearchableContent>
+<md:keywords>
+<md:techKeyword type="autoGenerated">supplement</md:techKeyword>
+<md:techKeyword type="autoGenerated">citable</md:techKeyword>
+<md:techKeyword type="autoGenerated">method415</md:techKeyword>
+<md:techKeyword type="autoGenerated">method58</md:techKeyword>
+<md:techKeyword type="autoGenerated">param108</md:techKeyword>
+<md:techKeyword type="autoGenerated">param132179</md:techKeyword>
+<md:techKeyword type="autoGenerated">param135317</md:techKeyword>
+<md:techKeyword type="autoGenerated">param135318</md:techKeyword>
+<md:techKeyword type="autoGenerated">param135319</md:techKeyword>
+<md:techKeyword type="autoGenerated">param1568</md:techKeyword>
+<md:techKeyword type="autoGenerated">param1680</md:techKeyword>
+<md:techKeyword type="autoGenerated">param1681</md:techKeyword>
+<md:techKeyword type="autoGenerated">param20622</md:techKeyword>
+<md:techKeyword type="autoGenerated">param25483</md:techKeyword>
+<md:techKeyword type="autoGenerated">param2936</md:techKeyword>
+<md:techKeyword type="autoGenerated">param3</md:techKeyword>
+<md:techKeyword type="autoGenerated">param31370</md:techKeyword>
+<md:techKeyword type="autoGenerated">param31371</md:techKeyword>
+<md:techKeyword type="autoGenerated">param4</md:techKeyword>
+<md:techKeyword type="autoGenerated">param5506</md:techKeyword>
+<md:techKeyword type="autoGenerated">param6165</md:techKeyword>
+<md:techKeyword type="autoGenerated">param643</md:techKeyword>
+<md:techKeyword type="autoGenerated">param8097</md:techKeyword>
+<md:techKeyword type="autoGenerated">pi51083</md:techKeyword>
+<md:techKeyword type="autoGenerated">author10664</md:techKeyword>
+<md:techKeyword type="autoGenerated">author22620</md:techKeyword>
+<md:techKeyword type="autoGenerated">author51083</md:techKeyword>
+<md:techKeyword type="autoGenerated">author51084</md:techKeyword>
+<md:techKeyword type="autoGenerated">author796</md:techKeyword>
+<md:techKeyword type="autoGenerated">basis94</md:techKeyword>
+<md:techKeyword type="autoGenerated">campaign3003</md:techKeyword>
+<md:techKeyword type="autoGenerated">event2013989</md:techKeyword>
+<md:techKeyword type="autoGenerated">geocode1600</md:techKeyword>
+<md:techKeyword type="autoGenerated">geocode1601</md:techKeyword>
+<md:techKeyword type="autoGenerated">geocode8128</md:techKeyword>
+<md:techKeyword type="autoGenerated">journal12511</md:techKeyword>
+<md:techKeyword type="autoGenerated">license101</md:techKeyword>
+<md:techKeyword type="autoGenerated">method10861</md:techKeyword>
+<md:techKeyword type="autoGenerated">ref63525</md:techKeyword>
+<md:techKeyword type="autoGenerated">topotype1</md:techKeyword>
+</md:keywords>
+<md:technicalInfo>
+<md:entry key="xmlLastModified" value="2024-07-22T10:46:47Z"/>
+<md:entry key="lastModified" value="2017-08-08T07:08:57"/>
+<md:entry key="filename" value="Khider_2011"/>
+<md:entry key="mimeType" value="application/zip"/>
+<md:entry key="status" value="published"/>
+<md:entry key="status_num" value="4"/>
+<md:entry key="DOIRegistryStatus" value="registered"/>
+<md:entry key="DOIRegistryStatus_num" value="4"/>
+<md:entry key="DOIRegistrationDate" value="2014-04-10T03:03:14"/>
+<md:entry key="hierarchyLevel" value="parent"/>
+<md:entry key="collectionType" value="publication series"/>
+<md:entry key="collectionType_num" value="4"/>
+<md:entry key="collectionChilds" value="D830586,D830587,D830588"/>
+<md:entry key="loginOption" value="unrestricted"/>
+<md:entry key="loginOption_num" value="1"/>
+</md:technicalInfo>
+</md:MetaData>

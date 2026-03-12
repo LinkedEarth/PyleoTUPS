@@ -1,0 +1,25 @@
+/* DATA DESCRIPTION:
+Citation:	Khider, D; Stott, Lowell D; Emile-Geay, J; Thunell, Robert C; Hammond, Douglas E (2011): (Table 3) Lead 214 and Lead 210 concentration of sediment core MD98-2177 [dataset]. PANGAEA, https://doi.org/10.1594/PANGAEA.830588, 
+	In supplement to: Khider, D et al. (2011): Assessing El Niño Southern Oscillation variability during the past millennium. Paleoceanography, 26(3), PA3222, https://doi.org/10.1029/2011PA002139
+Coverage:	LATITUDE: 1.400000 * LONGITUDE: 119.080000
+	MINIMUM DEPTH, sediment/rock: 0.025 m * MAXIMUM DEPTH, sediment/rock: 0.125 m
+Event(s):	MD98-2177 (MD982177) * LATITUDE: 1.400000 * LONGITUDE: 119.080000 * ELEVATION: -968.0 m * Recovery: 32.14 m * CAMPAIGN: MD111 (IMAGES IV-IPHIS III) * BASIS: Marion Dufresne (1995) (URI: https://en.wikipedia.org/wiki/Marion_Dufresne_(1994)) * METHOD/DEVICE: Calypso Corer (CALYPSO)
+Parameter(s):	DEPTH, sediment/rock [m] (Depth sed) * GEOCODE
+	Layer thickness [m] (Thickness) * PI: Khider, D (https://orcid.org/0000-0001-7501-8430)
+	Lead-214 [Bq/kg] (214Pb) * PI: Khider, D (https://orcid.org/0000-0001-7501-8430)
+	Lead-214, standard deviation [±] (214Pb std dev) * PI: Khider, D (https://orcid.org/0000-0001-7501-8430) * COMMENT: 1 sigma
+	Lead-210 [Bq/kg] (210Pb) * PI: Khider, D (https://orcid.org/0000-0001-7501-8430)
+	Lead-210, standard deviation [±] (210Pb std dev) * PI: Khider, D (https://orcid.org/0000-0001-7501-8430) * COMMENT: 1 sigma
+	Lead-210 excess [Bq/kg] (210Pb xs) * PI: Khider, D (https://orcid.org/0000-0001-7501-8430)
+	Lead-210 excess, standard deviation [±] (210Pb xs std dev) * PI: Khider, D (https://orcid.org/0000-0001-7501-8430) * COMMENT: 1 sigma
+License:	Creative Commons Attribution 3.0 Unported (CC-BY-3.0) (URI: https://creativecommons.org/licenses/by/3.0/)
+Size:	43 data points
+*/
+Depth sed [m]	Thickness [m]	214Pb [Bq/kg]	214Pb std dev [±]	210Pb [Bq/kg]	210Pb std dev [±]	210Pb xs [Bq/kg]	210Pb xs std dev [±]
+0.025	0.008	68	11	0	115		
+0.033	0.004	84	12	0	150		
+0.037	0.004	69	12	0	172		
+0.115	0.010	24	4	53	43	29	43
+0.115	0.010	29	6	82	68	53	68
+0.125	0.010	33	3	84	28	51	28
+0.125	0.010	28	4	61	41	33	41

@@ -1,0 +1,24 @@
+/* DATA DESCRIPTION:
+Citation:	Khider, D; Stott, Lowell D; Emile-Geay, J; Thunell, Robert C; Hammond, Douglas E (2011): (Table 2) Age determination of sediment core MD98-2177 [dataset]. PANGAEA, https://doi.org/10.1594/PANGAEA.830587, 
+	In supplement to: Khider, D et al. (2011): Assessing El Niño Southern Oscillation variability during the past millennium. Paleoceanography, 26(3), PA3222, https://doi.org/10.1029/2011PA002139
+Coverage:	LATITUDE: 1.400000 * LONGITUDE: 119.080000
+	MINIMUM DEPTH, sediment/rock: 0.00 m * MAXIMUM DEPTH, sediment/rock: 1.30 m
+Event(s):	MD98-2177 (MD982177) * LATITUDE: 1.400000 * LONGITUDE: 119.080000 * ELEVATION: -968.0 m * Recovery: 32.14 m * CAMPAIGN: MD111 (IMAGES IV-IPHIS III) * BASIS: Marion Dufresne (1995) (URI: https://en.wikipedia.org/wiki/Marion_Dufresne_(1994)) * METHOD/DEVICE: Calypso Corer (CALYPSO)
+Parameter(s):	DEPTH, sediment/rock [m] (Depth sed) * GEOCODE
+	Laboratory (Lab) * PI: Khider, D (https://orcid.org/0000-0001-7501-8430)
+	Laboratory code/label (Lab label) * PI: Khider, D (https://orcid.org/0000-0001-7501-8430)
+	Age, dated [ka] (Age dated) * PI: Khider, D (https://orcid.org/0000-0001-7501-8430) * METHOD/DEVICE: Age, 14C AMS (URI: https://doi.org/10.1146/annurev.ns.30.120180.002253)
+	Age, dated, standard deviation [±] (Age dated std dev) * PI: Khider, D (https://orcid.org/0000-0001-7501-8430) * METHOD/DEVICE: Age, 14C AMS (URI: https://doi.org/10.1146/annurev.ns.30.120180.002253)
+	Age [a AD/CE] (Age) * PI: Khider, D (https://orcid.org/0000-0001-7501-8430) * METHOD/DEVICE: Age, 14C calibrated
+	Age, error [±] (Age e) * PI: Khider, D (https://orcid.org/0000-0001-7501-8430) * METHOD/DEVICE: Age, 14C calibrated * COMMENT: a AD
+	Age, comment (Comm) * PI: Khider, D (https://orcid.org/0000-0001-7501-8430)
+License:	Creative Commons Attribution 3.0 Unported (CC-BY-3.0) (URI: https://creativecommons.org/licenses/by/3.0/)
+Size:	37 data points
+*/
+Depth sed [m]	Lab	Lab label	Age dated [ka]	Age dated std dev [±]	Age [a AD/CE]	Age e [±]	Comm
+0.00	Lawrence Livermore National Laboratory	95299	0.580	0.045	1852	51	
+0.12	University of California, Irvine	OS-38302	0.395	0.090	0	0	>modern
+0.50	Lawrence Livermore National Laboratory	100234	1.110	0.060	1350	70	
+0.94	Lawrence Livermore National Laboratory	100235	1.745	0.045	730	82	
+1.09	University of California, Irvine	OS-38335	1.870	0.110	584	136	
+1.30	Lawrence Livermore National Laboratory	100236	2.260	0.045	168	100	

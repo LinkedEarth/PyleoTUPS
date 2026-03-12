@@ -4,7 +4,7 @@ from pyleotups.utils.Parser.ExcelParser import ExcelParser, BlockType
 
 @pytest.fixture(scope="session")
 def local_datapath():
-    return Path(__file__).parent / "data"
+    return Path(__file__).parent / "data"/"noaa"
 
 def get_file_path(datapath, filename):
     path = datapath / filename

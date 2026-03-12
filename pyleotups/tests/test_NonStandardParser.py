@@ -12,7 +12,7 @@ from unittest import mock
 # Get the directory of the current test file
 TEST_DIR = Path(__file__).parent
 # Define the path to the test data directory
-DATA_DIR = TEST_DIR / "data"
+DATA_DIR = TEST_DIR / "data"/ "noaa"
 
 
 @pytest.fixture(scope="session")

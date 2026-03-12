@@ -1,0 +1,1008 @@
+<?xml version="1.0" encoding="UTF-8"?><md:MetaData xmlns:md="http://www.pangaea.de/MetaData" version="2024-07-19">
+<md:citation id="dataset940553">
+<md:author id="dataset.author60225">
+<md:lastName>Sigl</md:lastName>
+<md:firstName>Michael</md:firstName>
+<md:eMail>michael.sigl@unibe.ch</md:eMail>
+<md:orcid>0000-0002-9028-9703</md:orcid>
+</md:author>
+<md:author id="dataset.author10524">
+<md:lastName>McConnell</md:lastName>
+<md:firstName>Joseph R</md:firstName>
+<md:eMail>Joe.McConnell@dri.edu</md:eMail>
+<md:orcid>0000-0001-9051-5240</md:orcid>
+</md:author>
+<md:year>2022</md:year>
+<md:title>NEEM-2011-S1 ice-core aerosol record (conductivity, NH4, NO3, BC, acidity, Na, Mg, S, Ca, Mn, Sr, Ce) in NW-Greenland at 2 cm resolution from 86-1997 CE on the annual-layer counted NS1-2011 chronology</md:title>
+<md:type id="dataset.reftype10" includeInCitation="true">dataset</md:type>
+<md:URI>https://doi.org/10.1594/PANGAEA.940553</md:URI>
+<md:dateTime>2022-02-01T09:32:05</md:dateTime>
+</md:citation>
+<md:abstract>A continuous ice core analytical system was used to analyze the ~410 m NEEM-2011-S1 ice core collected in summer 2011 near the NEEM deep drilling site in NW Greenland. The core was analyzed for a broad range of elements and chemical species using a coupled continuous flow analysis system with two inductively coupled plasma mass spectrometers and single-particle soot photometer. The aerosol records are provided at 2 cm depth resolution to account for signal dispersion in the online analytical system. All records are on the NS1-2011 ice-core chronology: Between 1258 and 1997 CE, this chronology is based on mannual annual-layer counting based on multi-parameter aerosol records constrained by historic volcanic age markers (i.e. Krakatao 1883; Tambora 1815; Laki 1783; Mount Parker 1641; Huaynaputina 1600; Veidivötn 1477; Samalas 1257). Between 86 CE and 1258 CE, this chronology is based on automated annual-layer counting using the StratiCounter program, an automated, objective, annual-layer detection method based on Hidden Markov Model algorithms based on multi-parameter aerosol records and constrained by a solar proton events in 775 and 993 CE, and documentary evidence of volcanic dust veils in 536, 626 and 939 CE.</md:abstract>
+<md:reference dataciteRelType="References" group="210" id="ref107995" relationType="Related to" relationTypeId="12">
+<md:author id="ref107995.author10524">
+<md:lastName>McConnell</md:lastName>
+<md:firstName>Joseph R</md:firstName>
+<md:eMail>Joe.McConnell@dri.edu</md:eMail>
+<md:orcid>0000-0001-9051-5240</md:orcid>
+</md:author>
+<md:author id="ref107995.author32285">
+<md:lastName>Burke</md:lastName>
+<md:firstName>Andrea</md:firstName>
+<md:eMail>ab276@st-andrews.ac.uk</md:eMail>
+<md:orcid>0000-0002-3754-1498</md:orcid>
+</md:author>
+<md:author id="ref107995.author39501">
+<md:lastName>Dunbar</md:lastName>
+<md:firstName>Nelia W</md:firstName>
+<md:orcid>0000-0002-5181-937X</md:orcid>
+</md:author>
+<md:author id="ref107995.author35455">
+<md:lastName>Köhler</md:lastName>
+<md:firstName>Peter</md:firstName>
+<md:eMail>Peter.Koehler@awi.de</md:eMail>
+<md:URI>https://www.awi.de/en/about-us/organisation/staff/single-view/peter-koehler-glaz.html</md:URI>
+<md:orcid>0000-0003-0904-8484</md:orcid>
+</md:author>
+<md:author id="ref107995.author81218">
+<md:lastName>Thomas</md:lastName>
+<md:firstName>Jennie L</md:firstName>
+</md:author>
+<md:author id="ref107995.author81219">
+<md:lastName>Arienzo</md:lastName>
+<md:firstName>Monica M</md:firstName>
+</md:author>
+<md:author id="ref107995.author60195">
+<md:lastName>Chellman</md:lastName>
+<md:firstName>Nathan J</md:firstName>
+<md:eMail>Nathan.Chellman@dri.edu</md:eMail>
+</md:author>
+<md:author id="ref107995.author53748">
+<md:lastName>Maselli</md:lastName>
+<md:firstName>Olivia J</md:firstName>
+</md:author>
+<md:author id="ref107995.author60225">
+<md:lastName>Sigl</md:lastName>
+<md:firstName>Michael</md:firstName>
+<md:eMail>michael.sigl@unibe.ch</md:eMail>
+<md:orcid>0000-0002-9028-9703</md:orcid>
+</md:author>
+<md:author id="ref107995.author20000">
+<md:lastName>Adkins</md:lastName>
+<md:firstName>Jess F</md:firstName>
+<md:eMail>jess@gps.caltech.edu</md:eMail>
+<md:orcid>0000-0002-3174-5190</md:orcid>
+</md:author>
+<md:author id="ref107995.author60192">
+<md:lastName>Baggenstos</md:lastName>
+<md:firstName>Daniel</md:firstName>
+<md:orcid>0000-0001-9756-6884</md:orcid>
+</md:author>
+<md:author id="ref107995.author44588">
+<md:lastName>Burkhart</md:lastName>
+<md:firstName>John F</md:firstName>
+<md:eMail>john.burkhart@geo.uio.no</md:eMail>
+<md:orcid>0000-0002-5587-1693</md:orcid>
+</md:author>
+<md:author id="ref107995.author10471">
+<md:lastName>Brook</md:lastName>
+<md:firstName>Edward J</md:firstName>
+<md:eMail>edward.brook@oregonstate.edu</md:eMail>
+</md:author>
+<md:author id="ref107995.author41187">
+<md:lastName>Buizert</md:lastName>
+<md:firstName>Christo</md:firstName>
+<md:eMail>christo.buizert@oregonstate.edu</md:eMail>
+<md:orcid>0000-0002-2227-1747</md:orcid>
+</md:author>
+<md:author id="ref107995.author44924">
+<md:lastName>Cole-Dai</md:lastName>
+<md:firstName>Jihong</md:firstName>
+</md:author>
+<md:author id="ref107995.author60188">
+<md:lastName>Fudge</md:lastName>
+<md:firstName>Tyler J</md:firstName>
+<md:orcid>0000-0002-6818-7479</md:orcid>
+</md:author>
+<md:author id="ref107995.author27064">
+<md:lastName>Knorr</md:lastName>
+<md:firstName>Gregor</md:firstName>
+<md:eMail>gregor.knorr@awi.de</md:eMail>
+<md:URI>https://www.awi.de/en/about-us/organisation/staff/single-view/gregor-knorr.html</md:URI>
+<md:orcid>0000-0002-8317-5046</md:orcid>
+</md:author>
+<md:author id="ref107995.author10345">
+<md:lastName>Graf</md:lastName>
+<md:firstName>Hans-Friedrich</md:firstName>
+</md:author>
+<md:author id="ref107995.author81220">
+<md:lastName>Grieman</md:lastName>
+<md:firstName>Mackenzie M</md:firstName>
+<md:orcid>0000-0001-9610-7141</md:orcid>
+</md:author>
+<md:author id="ref107995.author60204">
+<md:lastName>Iverson</md:lastName>
+<md:firstName>Nels</md:firstName>
+<md:orcid>0000-0002-7110-5040</md:orcid>
+</md:author>
+<md:author id="ref107995.author41083">
+<md:lastName>McGwire</md:lastName>
+<md:firstName>Kenneth C</md:firstName>
+<md:eMail>kenm@dri.edu</md:eMail>
+</md:author>
+<md:author id="ref107995.author10434">
+<md:lastName>Mulvaney</md:lastName>
+<md:firstName>Robert</md:firstName>
+<md:eMail>rmu@bas.ac.uk</md:eMail>
+<md:orcid>0000-0002-5372-8148</md:orcid>
+</md:author>
+<md:author id="ref107995.author65677">
+<md:lastName>Paris</md:lastName>
+<md:firstName>Guillaume</md:firstName>
+<md:orcid>0000-0001-8368-1224</md:orcid>
+</md:author>
+<md:author id="ref107995.author60219">
+<md:lastName>Rhodes</md:lastName>
+<md:firstName>Rachael H</md:firstName>
+<md:eMail>rhr34@cam.ac.uk</md:eMail>
+<md:orcid>0000-0001-7511-1969</md:orcid>
+</md:author>
+<md:author id="ref107995.author10535">
+<md:lastName>Saltzman</md:lastName>
+<md:firstName>Eric S</md:firstName>
+</md:author>
+<md:author id="ref107995.author23183">
+<md:lastName>Severinghaus</md:lastName>
+<md:firstName>Jeffrey P</md:firstName>
+<md:eMail>jseveringhaus@ucsd.edu</md:eMail>
+<md:orcid>0000-0001-8883-3119</md:orcid>
+</md:author>
+<md:author id="ref107995.author10545">
+<md:lastName>Steffensen</md:lastName>
+<md:firstName>Jørgen Peder</md:firstName>
+<md:eMail>jps@nbi.ku.dk</md:eMail>
+<md:orcid>0000-0002-5516-1093</md:orcid>
+</md:author>
+<md:author id="ref107995.author10549">
+<md:lastName>Taylor</md:lastName>
+<md:firstName>Kendrick C</md:firstName>
+<md:orcid>0000-0001-8535-1261</md:orcid>
+</md:author>
+<md:author id="ref107995.author36417">
+<md:lastName>Winckler</md:lastName>
+<md:firstName>Gisela</md:firstName>
+<md:eMail>winckler@ldeo.columbia.edu</md:eMail>
+</md:author>
+<md:year>2017</md:year>
+<md:title>Synchronous volcanic eruptions and abrupt climate change ∼17.7 ka plausibly linked by stratospheric ozone depletion</md:title>
+<md:type id="ref107995.reftype1">journal article</md:type>
+<md:source id="ref107995.journal16730" relatedTermIds="34013" type="journal">Proceedings of the National Academy of Sciences</md:source>
+<md:volume>114(38)</md:volume>
+<md:URI>https://doi.org/10.1073/pnas.1705595114</md:URI>
+<md:pages>10035-10040</md:pages>
+</md:reference>
+<md:reference dataciteRelType="References" group="210" id="ref111298" relationType="Related to" relationTypeId="12">
+<md:author id="ref111298.author60225">
+<md:lastName>Sigl</md:lastName>
+<md:firstName>Michael</md:firstName>
+<md:eMail>michael.sigl@unibe.ch</md:eMail>
+<md:orcid>0000-0002-9028-9703</md:orcid>
+</md:author>
+<md:author id="ref111298.author10524">
+<md:lastName>McConnell</md:lastName>
+<md:firstName>Joseph R</md:firstName>
+<md:eMail>Joe.McConnell@dri.edu</md:eMail>
+<md:orcid>0000-0001-9051-5240</md:orcid>
+</md:author>
+<md:author id="ref111298.author60235">
+<md:lastName>Layman</md:lastName>
+<md:firstName>Lawrence</md:firstName>
+</md:author>
+<md:author id="ref111298.author53748">
+<md:lastName>Maselli</md:lastName>
+<md:firstName>Olivia J</md:firstName>
+</md:author>
+<md:author id="ref111298.author86162">
+<md:lastName>McGwire</md:lastName>
+<md:firstName>Ken</md:firstName>
+</md:author>
+<md:author id="ref111298.author44392">
+<md:lastName>Pasteris</md:lastName>
+<md:firstName>Daniel R</md:firstName>
+</md:author>
+<md:author id="ref111298.author10484">
+<md:lastName>Dahl-Jensen</md:lastName>
+<md:firstName>Dorthe</md:firstName>
+<md:eMail>ddj@nbi.ku.dk</md:eMail>
+<md:orcid>0000-0002-1474-1948</md:orcid>
+</md:author>
+<md:author id="ref111298.author10545">
+<md:lastName>Steffensen</md:lastName>
+<md:firstName>Jørgen Peder</md:firstName>
+<md:eMail>jps@nbi.ku.dk</md:eMail>
+<md:orcid>0000-0002-5516-1093</md:orcid>
+</md:author>
+<md:author id="ref111298.author30653">
+<md:lastName>Vinther</md:lastName>
+<md:firstName>Bo Møllesøe</md:firstName>
+<md:eMail>bvinther@nbi.ku.dk</md:eMail>
+<md:orcid>0000-0002-6078-771X</md:orcid>
+</md:author>
+<md:author id="ref111298.author73859">
+<md:lastName>Edwards</md:lastName>
+<md:firstName>Ross</md:firstName>
+<md:eMail>diskoisland@gmail.com</md:eMail>
+<md:orcid>0000-0002-9233-8775</md:orcid>
+</md:author>
+<md:author id="ref111298.author10434">
+<md:lastName>Mulvaney</md:lastName>
+<md:firstName>Robert</md:firstName>
+<md:eMail>rmu@bas.ac.uk</md:eMail>
+<md:orcid>0000-0002-5372-8148</md:orcid>
+</md:author>
+<md:author id="ref111298.author968">
+<md:lastName>Kipfstuhl</md:lastName>
+<md:firstName>Sepp</md:firstName>
+<md:eMail>sepp.kipfstuhl@awi.de</md:eMail>
+<md:URI>https://www.awi.de/en/about-us/organisation/staff/single-view/sepp-kipfstuhl.html</md:URI>
+<md:orcid>0000-0003-1495-5273</md:orcid>
+</md:author>
+<md:year>2013</md:year>
+<md:title>A new bipolar ice core record of volcanism from WAIS Divide and NEEM and implications for climate forcing of the last 2000 years</md:title>
+<md:type id="ref111298.reftype1">journal article</md:type>
+<md:source id="ref111298.journal8819" type="journal">Journal of Geophysical Research: Atmospheres</md:source>
+<md:volume>118(3)</md:volume>
+<md:URI>https://doi.org/10.1029/2012JD018603</md:URI>
+<md:pages>1151-1169</md:pages>
+</md:reference>
+<md:reference dataciteRelType="References" group="210" id="ref98818" relationType="Related to" relationTypeId="12">
+<md:author id="ref98818.author60225">
+<md:lastName>Sigl</md:lastName>
+<md:firstName>Michael</md:firstName>
+<md:eMail>michael.sigl@unibe.ch</md:eMail>
+<md:orcid>0000-0002-9028-9703</md:orcid>
+</md:author>
+<md:author id="ref98818.author51341">
+<md:lastName>Winstrup</md:lastName>
+<md:firstName>Mai</md:firstName>
+<md:eMail>maiwin@dtu.dk</md:eMail>
+<md:orcid>0000-0002-4794-4004</md:orcid>
+</md:author>
+<md:author id="ref98818.author10524">
+<md:lastName>McConnell</md:lastName>
+<md:firstName>Joseph R</md:firstName>
+<md:eMail>Joe.McConnell@dri.edu</md:eMail>
+<md:orcid>0000-0001-9051-5240</md:orcid>
+</md:author>
+<md:author id="ref98818.author60229">
+<md:lastName>Welten</md:lastName>
+<md:firstName>Kees C</md:firstName>
+<md:orcid>0000-0001-8577-6753</md:orcid>
+</md:author>
+<md:author id="ref98818.author64390">
+<md:lastName>Plunkett</md:lastName>
+<md:firstName>Gill</md:firstName>
+<md:eMail>G.Plunkett@qub.ac.uk</md:eMail>
+<md:orcid>0000-0003-1014-3454</md:orcid>
+</md:author>
+<md:author id="ref98818.author68260">
+<md:lastName>Ludlow</md:lastName>
+<md:firstName>F</md:firstName>
+<md:orcid>0000-0003-0008-0314</md:orcid>
+</md:author>
+<md:author id="ref98818.author47115">
+<md:lastName>Büntgen</md:lastName>
+<md:firstName>Ulf</md:firstName>
+</md:author>
+<md:author id="ref98818.author23094">
+<md:lastName>Caffee</md:lastName>
+<md:firstName>Marc W</md:firstName>
+<md:eMail>mcaffee@purdue.edu</md:eMail>
+<md:orcid>0000-0002-6846-8967</md:orcid>
+</md:author>
+<md:author id="ref98818.author60195">
+<md:lastName>Chellman</md:lastName>
+<md:firstName>Nathan J</md:firstName>
+<md:eMail>Nathan.Chellman@dri.edu</md:eMail>
+</md:author>
+<md:author id="ref98818.author10484">
+<md:lastName>Dahl-Jensen</md:lastName>
+<md:firstName>Dorthe</md:firstName>
+<md:eMail>ddj@nbi.ku.dk</md:eMail>
+<md:orcid>0000-0002-1474-1948</md:orcid>
+</md:author>
+<md:author id="ref98818.author53731">
+<md:lastName>Fischer</md:lastName>
+<md:firstName>H</md:firstName>
+<md:orcid>0000-0002-2787-4221</md:orcid>
+</md:author>
+<md:author id="ref98818.author968">
+<md:lastName>Kipfstuhl</md:lastName>
+<md:firstName>Sepp</md:firstName>
+<md:eMail>sepp.kipfstuhl@awi.de</md:eMail>
+<md:URI>https://www.awi.de/en/about-us/organisation/staff/single-view/sepp-kipfstuhl.html</md:URI>
+<md:orcid>0000-0003-1495-5273</md:orcid>
+</md:author>
+<md:author id="ref98818.author68261">
+<md:lastName>Kostick</md:lastName>
+<md:firstName>C</md:firstName>
+<md:orcid>0000-0002-4767-7380</md:orcid>
+</md:author>
+<md:author id="ref98818.author53748">
+<md:lastName>Maselli</md:lastName>
+<md:firstName>Olivia J</md:firstName>
+</md:author>
+<md:author id="ref98818.author65534">
+<md:lastName>Mekhaldi</md:lastName>
+<md:firstName>Florian</md:firstName>
+<md:eMail>florian.mekhaldi@geol.lu.se</md:eMail>
+<md:orcid>0000-0001-8323-2955</md:orcid>
+</md:author>
+<md:author id="ref98818.author10434">
+<md:lastName>Mulvaney</md:lastName>
+<md:firstName>Robert</md:firstName>
+<md:eMail>rmu@bas.ac.uk</md:eMail>
+<md:orcid>0000-0002-5372-8148</md:orcid>
+</md:author>
+<md:author id="ref98818.author26605">
+<md:lastName>Muscheler</md:lastName>
+<md:firstName>Raimund</md:firstName>
+<md:eMail>raimund.muscheler@geol.lu.se</md:eMail>
+<md:orcid>0000-0003-2772-3631</md:orcid>
+</md:author>
+<md:author id="ref98818.author44392">
+<md:lastName>Pasteris</md:lastName>
+<md:firstName>Daniel R</md:firstName>
+</md:author>
+<md:author id="ref98818.author34068">
+<md:lastName>Pilcher</md:lastName>
+<md:firstName>John R</md:firstName>
+</md:author>
+<md:author id="ref98818.author62453">
+<md:lastName>Salzer</md:lastName>
+<md:firstName>Matthew W</md:firstName>
+<md:eMail>msalzer@ltrr.arizona.edu</md:eMail>
+<md:orcid>0000-0001-5353-7459</md:orcid>
+</md:author>
+<md:author id="ref98818.author46617">
+<md:lastName>Schüpbach</md:lastName>
+<md:firstName>Simon</md:firstName>
+<md:eMail>simon.schuepbach@sbb.ch</md:eMail>
+<md:orcid>0000-0003-3188-2635</md:orcid>
+</md:author>
+<md:author id="ref98818.author67560">
+<md:lastName>Steffensen</md:lastName>
+<md:firstName>J P</md:firstName>
+<md:orcid>0000-0002-5516-1093</md:orcid>
+</md:author>
+<md:author id="ref98818.author30653">
+<md:lastName>Vinther</md:lastName>
+<md:firstName>Bo Møllesøe</md:firstName>
+<md:eMail>bvinther@nbi.ku.dk</md:eMail>
+<md:orcid>0000-0002-6078-771X</md:orcid>
+</md:author>
+<md:author id="ref98818.author60232">
+<md:lastName>Woodruff</md:lastName>
+<md:firstName>Thomas E</md:firstName>
+</md:author>
+<md:year>2015</md:year>
+<md:title>Timing and climate forcing of volcanic eruptions for the past 2,500 years</md:title>
+<md:type id="ref98818.reftype1">journal article</md:type>
+<md:source id="ref98818.journal11658" relatedTermIds="34013" type="journal">Nature</md:source>
+<md:volume>523(7562)</md:volume>
+<md:URI>https://doi.org/10.1038/nature14565</md:URI>
+<md:pages>543-549</md:pages>
+</md:reference>
+<md:extent>
+<md:geographic>
+<md:westBoundLongitude>-51.06</md:westBoundLongitude>
+<md:eastBoundLongitude>-51.06</md:eastBoundLongitude>
+<md:southBoundLatitude>77.45</md:southBoundLatitude>
+<md:northBoundLatitude>77.45</md:northBoundLatitude>
+<md:meanLongitude>-51.06</md:meanLongitude>
+<md:meanLatitude>77.45</md:meanLatitude>
+</md:geographic>
+<md:elevation geocodeId="geocode5059" name="DEPTH, ice/snow" unit="m">
+<md:min>0.01</md:min>
+<md:max>410.89</md:max>
+</md:elevation>
+<md:topoType id="topotype1">not specified</md:topoType>
+</md:extent>
+<md:award id="award1028">
+<md:funder id="award1028.funder20211" semanticURI="http://doi.org/10.13039/100000001">
+<md:name>National Science Foundation</md:name>
+<md:optionalName>NSF</md:optionalName>
+<md:crossrefFunderId>https://doi.org/10.13039/100000001</md:crossrefFunderId>
+</md:funder>
+<md:number>0909541</md:number>
+<md:title>Biomass Burning, Dust, Sea Salt, Volcanic &amp; Pollution Aerosols in the Arctic during the Last 2 Millennia: High Resolution Aerosol Records from NEEM &amp; an Aray of Archived Ic</md:title>
+<md:URI>https://www.nsf.gov/awardsearch/show-award/?AWD_ID=0909541</md:URI>
+</md:award>
+<md:award id="award1026">
+<md:funder id="award1026.funder20211" semanticURI="http://doi.org/10.13039/100000001">
+<md:name>National Science Foundation</md:name>
+<md:optionalName>NSF</md:optionalName>
+<md:crossrefFunderId>https://doi.org/10.13039/100000001</md:crossrefFunderId>
+</md:funder>
+<md:number>1023672</md:number>
+<md:title>Collaborative Proposal: Aerosol Concentrations, Sources and Transport Pathways within the Arctic Polar Dome during Recent Millennia</md:title>
+<md:URI>https://www.nsf.gov/awardsearch/show-award/?AWD_ID=1023672</md:URI>
+</md:award>
+<md:award id="award1027">
+<md:funder id="award1027.funder20211" semanticURI="http://doi.org/10.13039/100000001">
+<md:name>National Science Foundation</md:name>
+<md:optionalName>NSF</md:optionalName>
+<md:crossrefFunderId>https://doi.org/10.13039/100000001</md:crossrefFunderId>
+</md:funder>
+<md:number>1204176</md:number>
+<md:title>Collaborative Research: Continuous Records of Greenhouse Gases and Aerosol Deposition During the Holocene: Testing the Fidelity of New Methods for Reconstructing Atmospheric Change</md:title>
+<md:URI>https://www.nsf.gov/awardsearch/show-award/?AWD_ID=1204176</md:URI>
+</md:award>
+<md:event id="event2902433">
+<md:label>NEEM-2011-S1</md:label>
+<md:optionalLabel>NEEMS1</md:optionalLabel>
+<md:latitude>77.45</md:latitude>
+<md:longitude>-51.06</md:longitude>
+<md:elevation>2545.0</md:elevation>
+<md:attribute attid="19162" name="Penetration">410 m</md:attribute>
+<md:location id="event2902433.term20851">
+<md:name>Greenland</md:name>
+</md:location>
+<md:method id="event2902433.method11164">
+<md:name>Ice drill</md:name>
+<md:optionalName>ICEDRILL</md:optionalName>
+</md:method>
+<md:comment>Drilled in 2011, 200 m from the main NEEM borehole</md:comment>
+</md:event>
+<md:size unit="data points">249799</md:size>
+<md:license id="license21">
+<md:label>CC-BY-4.0</md:label>
+<md:name>Creative Commons Attribution 4.0 International</md:name>
+<md:URI>https://creativecommons.org/licenses/by/4.0/</md:URI>
+</md:license>
+<md:matrixColumn behaviour="1" col="0" format="###0.00" id="col0.ds14281605" source="geocode" type="numeric">
+<md:parameter id="col0.ds14281605.geocode5059">
+<md:name>DEPTH, ice/snow</md:name>
+<md:shortName>Depth ice/snow</md:shortName>
+<md:unit>m</md:unit>
+<md:term endOffset="5" fragment="1" id="col0.ds14281605.geocode5059.term1073131" semanticURI="urn:obo:pato:term:0001595" startOffset="0" terminologyId="14" terminologyLabel="PATO">
+<md:name>depth</md:name>
+<md:URI>http://purl.obolibrary.org/obo/PATO_0001595</md:URI>
+</md:term>
+<md:term endOffset="10" fragment="2" id="col0.ds14281605.geocode5059.term1073200" semanticURI="http://purl.obolibrary.org/obo/ENVO_01000277" startOffset="7" terminologyId="15" terminologyLabel="ENVO">
+<md:name>ice</md:name>
+<md:URI>http://purl.obolibrary.org/obo/ENVO_01000277</md:URI>
+</md:term>
+<md:term endOffset="15" fragment="3" id="col0.ds14281605.geocode5059.term44363" startOffset="11" terminologyId="18" terminologyLabel="PAN-MicroBio">
+<md:name>snow</md:name>
+</md:term>
+<md:term id="col0.ds14281605.geocode5059.term43863" semanticURI="http://qudt.org/1.1/vocab/quantity#Length" terminologyId="13" terminologyLabel="PAN-Quantity">
+<md:name>Length</md:name>
+<md:optionalName>L</md:optionalName>
+<md:URI>http://dbpedia.org/resource/Length</md:URI>
+</md:term>
+</md:parameter>
+<md:PI id="col0.ds14281605.pi60225">
+<md:lastName>Sigl</md:lastName>
+<md:firstName>Michael</md:firstName>
+<md:eMail>michael.sigl@unibe.ch</md:eMail>
+<md:orcid>0000-0002-9028-9703</md:orcid>
+</md:PI>
+<md:caption>Depth ice/snow [m]</md:caption>
+</md:matrixColumn>
+<md:matrixColumn col="1" format="####0.000" id="col1.ds14281606" source="data" type="numeric">
+<md:parameter id="col1.ds14281606.param2936">
+<md:name>Age</md:name>
+<md:shortName>Age</md:shortName>
+<md:unit>a AD/CE</md:unit>
+<md:term endOffset="3" fragment="1" id="col1.ds14281606.param2936.term1073135" semanticURI="urn:obo:pato:term:0000011" startOffset="0" terminologyId="14" terminologyLabel="PATO">
+<md:name>age</md:name>
+<md:URI>http://purl.obolibrary.org/obo/PATO_0000011</md:URI>
+</md:term>
+<md:term id="col1.ds14281606.param2936.term43975" semanticURI="http://qudt.org/1.1/vocab/quantity#Time" terminologyId="13" terminologyLabel="PAN-Quantity">
+<md:name>Time</md:name>
+<md:optionalName>T</md:optionalName>
+<md:URI>http://dbpedia.org/resource/Time</md:URI>
+</md:term>
+</md:parameter>
+<md:PI id="col1.ds14281606.pi60225">
+<md:lastName>Sigl</md:lastName>
+<md:firstName>Michael</md:firstName>
+<md:eMail>michael.sigl@unibe.ch</md:eMail>
+<md:orcid>0000-0002-9028-9703</md:orcid>
+</md:PI>
+<md:comment>NS1-2011 is the middle year (C.E.) and is the recommended timescale consistent with Sigl et al., Nature, 2015</md:comment>
+<md:caption>Age [a AD/CE]</md:caption>
+</md:matrixColumn>
+<md:matrixColumn col="2" format="####0.000" id="col2.ds14281608" source="data" type="numeric">
+<md:parameter id="col2.ds14281608.param4918">
+<md:name>Conductivity, specific</md:name>
+<md:shortName>Cond</md:shortName>
+<md:unit>µS/m</md:unit>
+<md:term endOffset="12" fragment="1" id="col2.ds14281608.param4918.term1073162" semanticURI="urn:obo:pato:term:0001585" startOffset="0" terminologyId="14" terminologyLabel="PATO">
+<md:name>conductivity</md:name>
+<md:URI>http://purl.obolibrary.org/obo/PATO_0001585</md:URI>
+</md:term>
+<md:term endOffset="22" fragment="2" id="col2.ds14281608.param4918.term42085" startOffset="14" terminologyId="18" terminologyLabel="PAN-MicroBio">
+<md:name>specific</md:name>
+<md:URI>https://dictionary.cambridge.org/de/worterbuch/englisch/specific</md:URI>
+</md:term>
+</md:parameter>
+<md:PI id="col2.ds14281608.pi60225">
+<md:lastName>Sigl</md:lastName>
+<md:firstName>Michael</md:firstName>
+<md:eMail>michael.sigl@unibe.ch</md:eMail>
+<md:orcid>0000-0002-9028-9703</md:orcid>
+</md:PI>
+<md:caption>Cond [µS/m]</md:caption>
+</md:matrixColumn>
+<md:matrixColumn col="3" format="##0.000" id="col3.ds14281609" source="data" type="numeric">
+<md:parameter id="col3.ds14281609.param52">
+<md:name>Ammonium</md:name>
+<md:shortName>[NH4]+</md:shortName>
+<md:unit>µmol/l</md:unit>
+<md:term endOffset="8" fragment="1" id="col3.ds14281609.param52.term1073173" semanticURI="http://purl.obolibrary.org/obo/CHEBI_28938" startOffset="0" terminologyId="16" terminologyLabel="ChEBI">
+<md:name>ammonium</md:name>
+<md:URI>http://purl.obolibrary.org/obo/CHEBI_28938</md:URI>
+</md:term>
+<md:term id="col3.ds14281609.param52.term44030" terminologyId="13" terminologyLabel="PAN-Quantity">
+<md:name>Molar Concentration</md:name>
+</md:term>
+</md:parameter>
+<md:PI id="col3.ds14281609.pi60225">
+<md:lastName>Sigl</md:lastName>
+<md:firstName>Michael</md:firstName>
+<md:eMail>michael.sigl@unibe.ch</md:eMail>
+<md:orcid>0000-0002-9028-9703</md:orcid>
+</md:PI>
+<md:caption>[NH4]+ [µmol/l]</md:caption>
+</md:matrixColumn>
+<md:matrixColumn col="4" format="##0.000" id="col4.ds14281610" source="data" type="numeric">
+<md:parameter id="col4.ds14281610.param756">
+<md:name>Nitrate</md:name>
+<md:shortName>[NO3]-</md:shortName>
+<md:unit>µmol/l</md:unit>
+<md:term endOffset="7" fragment="1" id="col4.ds14281610.param756.term1073482" semanticURI="http://purl.obolibrary.org/obo/CHEBI_17632" startOffset="0" terminologyId="16" terminologyLabel="ChEBI">
+<md:name>nitrate</md:name>
+<md:URI>http://purl.obolibrary.org/obo/CHEBI_17632</md:URI>
+</md:term>
+<md:term id="col4.ds14281610.param756.term44030" terminologyId="13" terminologyLabel="PAN-Quantity">
+<md:name>Molar Concentration</md:name>
+</md:term>
+</md:parameter>
+<md:PI id="col4.ds14281610.pi60225">
+<md:lastName>Sigl</md:lastName>
+<md:firstName>Michael</md:firstName>
+<md:eMail>michael.sigl@unibe.ch</md:eMail>
+<md:orcid>0000-0002-9028-9703</md:orcid>
+</md:PI>
+<md:caption>[NO3]- [µmol/l]</md:caption>
+</md:matrixColumn>
+<md:matrixColumn col="5" format="###0.000" id="col5.ds14281611" source="data" type="numeric">
+<md:parameter id="col5.ds14281611.param167165">
+<md:name>Black carbon</md:name>
+<md:shortName>BC</md:shortName>
+<md:unit>µg/kg</md:unit>
+<md:term endOffset="12" fragment="1" id="col5.ds14281611.param167165.term40462" startOffset="0" terminologyId="18" terminologyLabel="PAN-MicroBio">
+<md:name>black carbon</md:name>
+<md:URI>https://en.wikipedia.org/wiki/Black_carbon</md:URI>
+</md:term>
+</md:parameter>
+<md:PI id="col5.ds14281611.pi60225">
+<md:lastName>Sigl</md:lastName>
+<md:firstName>Michael</md:firstName>
+<md:eMail>michael.sigl@unibe.ch</md:eMail>
+<md:orcid>0000-0002-9028-9703</md:orcid>
+</md:PI>
+<md:caption>BC [µg/kg]</md:caption>
+</md:matrixColumn>
+<md:matrixColumn col="6" format="##0.000" id="col6.ds14281612" source="data" type="numeric">
+<md:parameter id="col6.ds14281612.param508322">
+<md:name>Acidity</md:name>
+<md:shortName>Acidity</md:shortName>
+<md:unit>µeq/l</md:unit>
+<md:term endOffset="7" fragment="1" id="col6.ds14281612.param508322.term1074560" semanticURI="urn:obo:pato:term:0001842" startOffset="0" terminologyId="14" terminologyLabel="PATO">
+<md:name>acidity</md:name>
+<md:URI>http://purl.obolibrary.org/obo/PATO_0001842</md:URI>
+</md:term>
+</md:parameter>
+<md:PI id="col6.ds14281612.pi60225">
+<md:lastName>Sigl</md:lastName>
+<md:firstName>Michael</md:firstName>
+<md:eMail>michael.sigl@unibe.ch</md:eMail>
+<md:orcid>0000-0002-9028-9703</md:orcid>
+</md:PI>
+<md:caption>Acidity [µeq/l]</md:caption>
+</md:matrixColumn>
+<md:matrixColumn col="7" format="###0.000" id="col7.ds14281613" source="data" type="numeric">
+<md:parameter id="col7.ds14281613.param508589">
+<md:name>Sodium</md:name>
+<md:shortName>Na</md:shortName>
+<md:unit>µg/kg</md:unit>
+<md:term endOffset="6" fragment="1" id="col7.ds14281613.param508589.term41048" startOffset="0" terminologyId="18" terminologyLabel="PAN-MicroBio">
+<md:name>sodium</md:name>
+</md:term>
+</md:parameter>
+<md:method id="col7.ds14281613.method9570">
+<md:name>ICP-MS</md:name>
+<md:term id="col7.ds14281613.method9570.term68027" terminologyId="3" terminologyLabel="PAN-M&amp;D">
+<md:name>Chromatographs &amp; spectrometers</md:name>
+</md:term>
+<md:term id="col7.ds14281613.method9570.term2299496" semanticURI="SDN:L05::LAB15" terminologyId="21" terminologyLabel="NERC-L05-L22">
+<md:name>inductively-coupled plasma mass spectrometers</md:name>
+<md:URI>http://vocab.nerc.ac.uk/collection/L05/current/LAB15/</md:URI>
+</md:term>
+</md:method>
+<md:PI id="col7.ds14281613.pi60225">
+<md:lastName>Sigl</md:lastName>
+<md:firstName>Michael</md:firstName>
+<md:eMail>michael.sigl@unibe.ch</md:eMail>
+<md:orcid>0000-0002-9028-9703</md:orcid>
+</md:PI>
+<md:caption>Na [µg/kg]</md:caption>
+</md:matrixColumn>
+<md:matrixColumn col="8" format="##0.000" id="col8.ds14281614" source="data" type="numeric">
+<md:parameter id="col8.ds14281614.param508590">
+<md:name>Magnesium</md:name>
+<md:shortName>Mg</md:shortName>
+<md:unit>µg/kg</md:unit>
+<md:term endOffset="9" fragment="1" id="col8.ds14281614.param508590.term40665" startOffset="0" terminologyId="18" terminologyLabel="PAN-MicroBio">
+<md:name>magnesium</md:name>
+</md:term>
+</md:parameter>
+<md:method id="col8.ds14281614.method9570">
+<md:name>ICP-MS</md:name>
+<md:term id="col8.ds14281614.method9570.term68027" terminologyId="3" terminologyLabel="PAN-M&amp;D">
+<md:name>Chromatographs &amp; spectrometers</md:name>
+</md:term>
+<md:term id="col8.ds14281614.method9570.term2299496" semanticURI="SDN:L05::LAB15" terminologyId="21" terminologyLabel="NERC-L05-L22">
+<md:name>inductively-coupled plasma mass spectrometers</md:name>
+<md:URI>http://vocab.nerc.ac.uk/collection/L05/current/LAB15/</md:URI>
+</md:term>
+</md:method>
+<md:PI id="col8.ds14281614.pi60225">
+<md:lastName>Sigl</md:lastName>
+<md:firstName>Michael</md:firstName>
+<md:eMail>michael.sigl@unibe.ch</md:eMail>
+<md:orcid>0000-0002-9028-9703</md:orcid>
+</md:PI>
+<md:caption>Mg [µg/kg]</md:caption>
+</md:matrixColumn>
+<md:matrixColumn col="9" format="###0.000" id="col9.ds14281615" source="data" type="numeric">
+<md:parameter id="col9.ds14281615.param508323">
+<md:name>Sulfur</md:name>
+<md:shortName>S</md:shortName>
+<md:unit>µg/kg</md:unit>
+<md:term endOffset="6" fragment="1" id="col9.ds14281615.param508323.term40685" startOffset="0" terminologyId="18" terminologyLabel="PAN-MicroBio">
+<md:name>sulfur</md:name>
+</md:term>
+</md:parameter>
+<md:method id="col9.ds14281615.method9570">
+<md:name>ICP-MS</md:name>
+<md:term id="col9.ds14281615.method9570.term68027" terminologyId="3" terminologyLabel="PAN-M&amp;D">
+<md:name>Chromatographs &amp; spectrometers</md:name>
+</md:term>
+<md:term id="col9.ds14281615.method9570.term2299496" semanticURI="SDN:L05::LAB15" terminologyId="21" terminologyLabel="NERC-L05-L22">
+<md:name>inductively-coupled plasma mass spectrometers</md:name>
+<md:URI>http://vocab.nerc.ac.uk/collection/L05/current/LAB15/</md:URI>
+</md:term>
+</md:method>
+<md:PI id="col9.ds14281615.pi60225">
+<md:lastName>Sigl</md:lastName>
+<md:firstName>Michael</md:firstName>
+<md:eMail>michael.sigl@unibe.ch</md:eMail>
+<md:orcid>0000-0002-9028-9703</md:orcid>
+</md:PI>
+<md:caption>S [µg/kg]</md:caption>
+</md:matrixColumn>
+<md:matrixColumn col="10" format="###0.000" id="col10.ds14281616" source="data" type="numeric">
+<md:parameter id="col10.ds14281616.param508588">
+<md:name>Calcium</md:name>
+<md:shortName>Ca</md:shortName>
+<md:unit>µg/kg</md:unit>
+<md:term endOffset="7" fragment="1" id="col10.ds14281616.param508588.term38520" semanticURI="http://purl.obolibrary.org/obo/CHEBI_22984" startOffset="0" terminologyId="18" terminologyLabel="PAN-MicroBio">
+<md:name>calcium</md:name>
+<md:optionalName>Ca</md:optionalName>
+<md:URI>https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:22984</md:URI>
+</md:term>
+</md:parameter>
+<md:method id="col10.ds14281616.method9570">
+<md:name>ICP-MS</md:name>
+<md:term id="col10.ds14281616.method9570.term68027" terminologyId="3" terminologyLabel="PAN-M&amp;D">
+<md:name>Chromatographs &amp; spectrometers</md:name>
+</md:term>
+<md:term id="col10.ds14281616.method9570.term2299496" semanticURI="SDN:L05::LAB15" terminologyId="21" terminologyLabel="NERC-L05-L22">
+<md:name>inductively-coupled plasma mass spectrometers</md:name>
+<md:URI>http://vocab.nerc.ac.uk/collection/L05/current/LAB15/</md:URI>
+</md:term>
+</md:method>
+<md:PI id="col10.ds14281616.pi60225">
+<md:lastName>Sigl</md:lastName>
+<md:firstName>Michael</md:firstName>
+<md:eMail>michael.sigl@unibe.ch</md:eMail>
+<md:orcid>0000-0002-9028-9703</md:orcid>
+</md:PI>
+<md:caption>Ca [µg/kg]</md:caption>
+</md:matrixColumn>
+<md:matrixColumn col="11" format="#0.000" id="col11.ds14281617" source="data" type="numeric">
+<md:parameter id="col11.ds14281617.param9434">
+<md:name>Manganese</md:name>
+<md:shortName>Mn</md:shortName>
+<md:unit>µg/kg</md:unit>
+<md:term endOffset="9" fragment="1" id="col11.ds14281617.param9434.term38521" semanticURI="http://purl.obolibrary.org/obo/CHEBI_18291" startOffset="0" terminologyId="18" terminologyLabel="PAN-MicroBio">
+<md:name>manganese</md:name>
+<md:optionalName>Mn</md:optionalName>
+<md:URI>https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:18291</md:URI>
+</md:term>
+</md:parameter>
+<md:method id="col11.ds14281617.method9570">
+<md:name>ICP-MS</md:name>
+<md:term id="col11.ds14281617.method9570.term68027" terminologyId="3" terminologyLabel="PAN-M&amp;D">
+<md:name>Chromatographs &amp; spectrometers</md:name>
+</md:term>
+<md:term id="col11.ds14281617.method9570.term2299496" semanticURI="SDN:L05::LAB15" terminologyId="21" terminologyLabel="NERC-L05-L22">
+<md:name>inductively-coupled plasma mass spectrometers</md:name>
+<md:URI>http://vocab.nerc.ac.uk/collection/L05/current/LAB15/</md:URI>
+</md:term>
+</md:method>
+<md:PI id="col11.ds14281617.pi60225">
+<md:lastName>Sigl</md:lastName>
+<md:firstName>Michael</md:firstName>
+<md:eMail>michael.sigl@unibe.ch</md:eMail>
+<md:orcid>0000-0002-9028-9703</md:orcid>
+</md:PI>
+<md:caption>Mn [µg/kg]</md:caption>
+</md:matrixColumn>
+<md:matrixColumn col="12" format="#0.000" id="col12.ds14281618" source="data" type="numeric">
+<md:parameter id="col12.ds14281618.param508591">
+<md:name>Strontium</md:name>
+<md:shortName>Sr</md:shortName>
+<md:unit>µg/kg</md:unit>
+<md:term endOffset="9" fragment="1" id="col12.ds14281618.param508591.term40663" startOffset="0" terminologyId="18" terminologyLabel="PAN-MicroBio">
+<md:name>strontium</md:name>
+</md:term>
+</md:parameter>
+<md:method id="col12.ds14281618.method9570">
+<md:name>ICP-MS</md:name>
+<md:term id="col12.ds14281618.method9570.term68027" terminologyId="3" terminologyLabel="PAN-M&amp;D">
+<md:name>Chromatographs &amp; spectrometers</md:name>
+</md:term>
+<md:term id="col12.ds14281618.method9570.term2299496" semanticURI="SDN:L05::LAB15" terminologyId="21" terminologyLabel="NERC-L05-L22">
+<md:name>inductively-coupled plasma mass spectrometers</md:name>
+<md:URI>http://vocab.nerc.ac.uk/collection/L05/current/LAB15/</md:URI>
+</md:term>
+</md:method>
+<md:PI id="col12.ds14281618.pi60225">
+<md:lastName>Sigl</md:lastName>
+<md:firstName>Michael</md:firstName>
+<md:eMail>michael.sigl@unibe.ch</md:eMail>
+<md:orcid>0000-0002-9028-9703</md:orcid>
+</md:PI>
+<md:caption>Sr [µg/kg]</md:caption>
+</md:matrixColumn>
+<md:matrixColumn col="13" format="##0.00000" id="col13.ds14281619" source="data" type="numeric">
+<md:parameter id="col13.ds14281619.param78401">
+<md:name>Cerium</md:name>
+<md:shortName>Ce</md:shortName>
+<md:unit>µg/kg</md:unit>
+<md:term endOffset="6" fragment="1" id="col13.ds14281619.param78401.term1073359" semanticURI="http://purl.obolibrary.org/obo/CHEBI_33369" startOffset="0" terminologyId="16" terminologyLabel="ChEBI">
+<md:name>cerium</md:name>
+<md:URI>http://purl.obolibrary.org/obo/CHEBI_33369</md:URI>
+</md:term>
+</md:parameter>
+<md:method id="col13.ds14281619.method9570">
+<md:name>ICP-MS</md:name>
+<md:term id="col13.ds14281619.method9570.term68027" terminologyId="3" terminologyLabel="PAN-M&amp;D">
+<md:name>Chromatographs &amp; spectrometers</md:name>
+</md:term>
+<md:term id="col13.ds14281619.method9570.term2299496" semanticURI="SDN:L05::LAB15" terminologyId="21" terminologyLabel="NERC-L05-L22">
+<md:name>inductively-coupled plasma mass spectrometers</md:name>
+<md:URI>http://vocab.nerc.ac.uk/collection/L05/current/LAB15/</md:URI>
+</md:term>
+</md:method>
+<md:PI id="col13.ds14281619.pi60225">
+<md:lastName>Sigl</md:lastName>
+<md:firstName>Michael</md:firstName>
+<md:eMail>michael.sigl@unibe.ch</md:eMail>
+<md:orcid>0000-0002-9028-9703</md:orcid>
+</md:PI>
+<md:caption>Ce [µg/kg]</md:caption>
+</md:matrixColumn>
+<md:status>
+<md:curationLevel id="curlevel30">
+<md:label>CurationLevelC</md:label>
+<md:name>Enhanced curation</md:name>
+<md:URI>https://wiki.pangaea.de/wiki/Curation_levels</md:URI>
+</md:curationLevel>
+</md:status>
+<md:keywords>
+<md:techKeyword type="autoGenerated">citable</md:techKeyword>
+<md:keyword id="keywords.term70041" type="fromDatabase">acidity</md:keyword>
+<md:keyword id="keywords.term48405" type="fromDatabase">aerosols</md:keyword>
+<md:keyword id="keywords.term50410" type="fromDatabase">ammonium</md:keyword>
+<md:keyword id="keywords.term49428" type="fromDatabase">annual-layer-counting</md:keyword>
+<md:keyword id="keywords.term51326" type="fromDatabase">black carbon</md:keyword>
+<md:keyword id="keywords.term52440" type="fromDatabase">calcium</md:keyword>
+<md:keyword id="keywords.term70042" type="fromDatabase">Cerium</md:keyword>
+<md:keyword id="keywords.term48404" type="fromDatabase">chronology</md:keyword>
+<md:keyword id="keywords.term48408" type="fromDatabase">Common Era</md:keyword>
+<md:keyword id="keywords.term49691" type="fromDatabase">Conductivity</md:keyword>
+<md:keyword id="keywords.term49381" type="fromDatabase">dust</md:keyword>
+<md:keyword id="keywords.term70048" type="fromDatabase">Eldgja</md:keyword>
+<md:keyword id="keywords.term70044" type="fromDatabase">GICC05</md:keyword>
+<md:keyword id="keywords.term47519" type="fromDatabase">Greenland</md:keyword>
+<md:keyword id="keywords.term47590" type="fromDatabase">Ice core</md:keyword>
+<md:keyword id="keywords.term70045" type="fromDatabase">Inductively coupled plasma mass spectrometry</md:keyword>
+<md:keyword id="keywords.term51940" type="fromDatabase">Krakatau volcano</md:keyword>
+<md:keyword id="keywords.term70047" type="fromDatabase">Laki</md:keyword>
+<md:keyword id="keywords.term52441" type="fromDatabase">magnesium</md:keyword>
+<md:keyword id="keywords.term50710" type="fromDatabase">manganese</md:keyword>
+<md:keyword id="keywords.term70051" type="fromDatabase">Miyake events</md:keyword>
+<md:keyword id="keywords.term70049" type="fromDatabase">mystery cloud 536</md:keyword>
+<md:keyword id="keywords.term47704" type="fromDatabase">nitrate</md:keyword>
+<md:keyword id="keywords.term70043" type="fromDatabase">NS1-2011</md:keyword>
+<md:keyword id="keywords.term70052" type="fromDatabase">Samalas</md:keyword>
+<md:keyword id="keywords.term52439" type="fromDatabase">sodium</md:keyword>
+<md:keyword id="keywords.term70050" type="fromDatabase">solar proton event 775</md:keyword>
+<md:keyword id="keywords.term54520" type="fromDatabase">SP2</md:keyword>
+<md:keyword id="keywords.term54374" type="fromDatabase">Strontium</md:keyword>
+<md:keyword id="keywords.term49806" type="fromDatabase">Sulfur</md:keyword>
+<md:keyword id="keywords.term70046" type="fromDatabase">Tambora</md:keyword>
+<md:keyword id="keywords.term67682" type="fromDatabase">Volcanic aerosol</md:keyword>
+<md:keyword id="keywords.term2687748" type="fromDatabase">volcanic eruptions</md:keyword>
+<md:techKeyword type="autoGenerated">author10345</md:techKeyword>
+<md:techKeyword type="autoGenerated">author10434</md:techKeyword>
+<md:techKeyword type="autoGenerated">author10471</md:techKeyword>
+<md:techKeyword type="autoGenerated">author10484</md:techKeyword>
+<md:techKeyword type="autoGenerated">author10524</md:techKeyword>
+<md:techKeyword type="autoGenerated">author10535</md:techKeyword>
+<md:techKeyword type="autoGenerated">author10545</md:techKeyword>
+<md:techKeyword type="autoGenerated">author10549</md:techKeyword>
+<md:techKeyword type="autoGenerated">author20000</md:techKeyword>
+<md:techKeyword type="autoGenerated">author23094</md:techKeyword>
+<md:techKeyword type="autoGenerated">author23183</md:techKeyword>
+<md:techKeyword type="autoGenerated">author26605</md:techKeyword>
+<md:techKeyword type="autoGenerated">author27064</md:techKeyword>
+<md:techKeyword type="autoGenerated">author30653</md:techKeyword>
+<md:techKeyword type="autoGenerated">author32285</md:techKeyword>
+<md:techKeyword type="autoGenerated">author34068</md:techKeyword>
+<md:techKeyword type="autoGenerated">author35455</md:techKeyword>
+<md:techKeyword type="autoGenerated">author36417</md:techKeyword>
+<md:techKeyword type="autoGenerated">author39501</md:techKeyword>
+<md:techKeyword type="autoGenerated">author41083</md:techKeyword>
+<md:techKeyword type="autoGenerated">author41187</md:techKeyword>
+<md:techKeyword type="autoGenerated">author44392</md:techKeyword>
+<md:techKeyword type="autoGenerated">author44588</md:techKeyword>
+<md:techKeyword type="autoGenerated">author44924</md:techKeyword>
+<md:techKeyword type="autoGenerated">author46617</md:techKeyword>
+<md:techKeyword type="autoGenerated">author47115</md:techKeyword>
+<md:techKeyword type="autoGenerated">author51341</md:techKeyword>
+<md:techKeyword type="autoGenerated">author53731</md:techKeyword>
+<md:techKeyword type="autoGenerated">author53748</md:techKeyword>
+<md:techKeyword type="autoGenerated">author60188</md:techKeyword>
+<md:techKeyword type="autoGenerated">author60192</md:techKeyword>
+<md:techKeyword type="autoGenerated">author60195</md:techKeyword>
+<md:techKeyword type="autoGenerated">author60204</md:techKeyword>
+<md:techKeyword type="autoGenerated">author60219</md:techKeyword>
+<md:techKeyword type="autoGenerated">author60225</md:techKeyword>
+<md:techKeyword type="autoGenerated">author60229</md:techKeyword>
+<md:techKeyword type="autoGenerated">author60232</md:techKeyword>
+<md:techKeyword type="autoGenerated">author60235</md:techKeyword>
+<md:techKeyword type="autoGenerated">author62453</md:techKeyword>
+<md:techKeyword type="autoGenerated">author64390</md:techKeyword>
+<md:techKeyword type="autoGenerated">author65534</md:techKeyword>
+<md:techKeyword type="autoGenerated">author65677</md:techKeyword>
+<md:techKeyword type="autoGenerated">author67560</md:techKeyword>
+<md:techKeyword type="autoGenerated">author68260</md:techKeyword>
+<md:techKeyword type="autoGenerated">author68261</md:techKeyword>
+<md:techKeyword type="autoGenerated">author73859</md:techKeyword>
+<md:techKeyword type="autoGenerated">author81218</md:techKeyword>
+<md:techKeyword type="autoGenerated">author81219</md:techKeyword>
+<md:techKeyword type="autoGenerated">author81220</md:techKeyword>
+<md:techKeyword type="autoGenerated">author86162</md:techKeyword>
+<md:techKeyword type="autoGenerated">author968</md:techKeyword>
+<md:techKeyword type="autoGenerated">award1026</md:techKeyword>
+<md:techKeyword type="autoGenerated">award1027</md:techKeyword>
+<md:techKeyword type="autoGenerated">award1028</md:techKeyword>
+<md:techKeyword type="autoGenerated">curlevel30</md:techKeyword>
+<md:techKeyword type="autoGenerated">event2902433</md:techKeyword>
+<md:techKeyword type="autoGenerated">funder20211</md:techKeyword>
+<md:techKeyword type="autoGenerated">geocode1600</md:techKeyword>
+<md:techKeyword type="autoGenerated">geocode1601</md:techKeyword>
+<md:techKeyword type="autoGenerated">geocode5059</md:techKeyword>
+<md:techKeyword type="autoGenerated">geocode8128</md:techKeyword>
+<md:techKeyword type="autoGenerated">journal11658</md:techKeyword>
+<md:techKeyword type="autoGenerated">journal16730</md:techKeyword>
+<md:techKeyword type="autoGenerated">journal8819</md:techKeyword>
+<md:techKeyword type="autoGenerated">license21</md:techKeyword>
+<md:techKeyword type="autoGenerated">method11164</md:techKeyword>
+<md:techKeyword type="autoGenerated">method9570</md:techKeyword>
+<md:techKeyword type="autoGenerated">param167165</md:techKeyword>
+<md:techKeyword type="autoGenerated">param2936</md:techKeyword>
+<md:techKeyword type="autoGenerated">param4918</md:techKeyword>
+<md:techKeyword type="autoGenerated">param508322</md:techKeyword>
+<md:techKeyword type="autoGenerated">param508323</md:techKeyword>
+<md:techKeyword type="autoGenerated">param508588</md:techKeyword>
+<md:techKeyword type="autoGenerated">param508589</md:techKeyword>
+<md:techKeyword type="autoGenerated">param508590</md:techKeyword>
+<md:techKeyword type="autoGenerated">param508591</md:techKeyword>
+<md:techKeyword type="autoGenerated">param52</md:techKeyword>
+<md:techKeyword type="autoGenerated">param756</md:techKeyword>
+<md:techKeyword type="autoGenerated">param78401</md:techKeyword>
+<md:techKeyword type="autoGenerated">param9434</md:techKeyword>
+<md:techKeyword type="autoGenerated">pi60225</md:techKeyword>
+<md:techKeyword type="autoGenerated">ref107995</md:techKeyword>
+<md:techKeyword type="autoGenerated">ref111298</md:techKeyword>
+<md:techKeyword type="autoGenerated">ref98818</md:techKeyword>
+<md:techKeyword type="autoGenerated">term1073131</md:techKeyword>
+<md:techKeyword type="autoGenerated">term1073135</md:techKeyword>
+<md:techKeyword type="autoGenerated">term1073162</md:techKeyword>
+<md:techKeyword type="autoGenerated">term1073173</md:techKeyword>
+<md:techKeyword type="autoGenerated">term1073200</md:techKeyword>
+<md:techKeyword type="autoGenerated">term1073359</md:techKeyword>
+<md:techKeyword type="autoGenerated">term1073482</md:techKeyword>
+<md:techKeyword type="autoGenerated">term1074560</md:techKeyword>
+<md:techKeyword type="autoGenerated">term20851</md:techKeyword>
+<md:techKeyword type="autoGenerated">term2299496</md:techKeyword>
+<md:techKeyword type="autoGenerated">term2687748</md:techKeyword>
+<md:techKeyword type="autoGenerated">term38520</md:techKeyword>
+<md:techKeyword type="autoGenerated">term38521</md:techKeyword>
+<md:techKeyword type="autoGenerated">term40462</md:techKeyword>
+<md:techKeyword type="autoGenerated">term40663</md:techKeyword>
+<md:techKeyword type="autoGenerated">term40665</md:techKeyword>
+<md:techKeyword type="autoGenerated">term40685</md:techKeyword>
+<md:techKeyword type="autoGenerated">term41048</md:techKeyword>
+<md:techKeyword type="autoGenerated">term42085</md:techKeyword>
+<md:techKeyword type="autoGenerated">term43863</md:techKeyword>
+<md:techKeyword type="autoGenerated">term43975</md:techKeyword>
+<md:techKeyword type="autoGenerated">term44030</md:techKeyword>
+<md:techKeyword type="autoGenerated">term44363</md:techKeyword>
+<md:techKeyword type="autoGenerated">term47519</md:techKeyword>
+<md:techKeyword type="autoGenerated">term47590</md:techKeyword>
+<md:techKeyword type="autoGenerated">term47704</md:techKeyword>
+<md:techKeyword type="autoGenerated">term48404</md:techKeyword>
+<md:techKeyword type="autoGenerated">term48405</md:techKeyword>
+<md:techKeyword type="autoGenerated">term48408</md:techKeyword>
+<md:techKeyword type="autoGenerated">term49381</md:techKeyword>
+<md:techKeyword type="autoGenerated">term49428</md:techKeyword>
+<md:techKeyword type="autoGenerated">term49691</md:techKeyword>
+<md:techKeyword type="autoGenerated">term49806</md:techKeyword>
+<md:techKeyword type="autoGenerated">term50410</md:techKeyword>
+<md:techKeyword type="autoGenerated">term50710</md:techKeyword>
+<md:techKeyword type="autoGenerated">term51326</md:techKeyword>
+<md:techKeyword type="autoGenerated">term51940</md:techKeyword>
+<md:techKeyword type="autoGenerated">term52439</md:techKeyword>
+<md:techKeyword type="autoGenerated">term52440</md:techKeyword>
+<md:techKeyword type="autoGenerated">term52441</md:techKeyword>
+<md:techKeyword type="autoGenerated">term54374</md:techKeyword>
+<md:techKeyword type="autoGenerated">term54520</md:techKeyword>
+<md:techKeyword type="autoGenerated">term67682</md:techKeyword>
+<md:techKeyword type="autoGenerated">term68027</md:techKeyword>
+<md:techKeyword type="autoGenerated">term70041</md:techKeyword>
+<md:techKeyword type="autoGenerated">term70042</md:techKeyword>
+<md:techKeyword type="autoGenerated">term70043</md:techKeyword>
+<md:techKeyword type="autoGenerated">term70044</md:techKeyword>
+<md:techKeyword type="autoGenerated">term70045</md:techKeyword>
+<md:techKeyword type="autoGenerated">term70046</md:techKeyword>
+<md:techKeyword type="autoGenerated">term70047</md:techKeyword>
+<md:techKeyword type="autoGenerated">term70048</md:techKeyword>
+<md:techKeyword type="autoGenerated">term70049</md:techKeyword>
+<md:techKeyword type="autoGenerated">term70050</md:techKeyword>
+<md:techKeyword type="autoGenerated">term70051</md:techKeyword>
+<md:techKeyword type="autoGenerated">term70052</md:techKeyword>
+<md:techKeyword type="autoGenerated">topotype1</md:techKeyword>
+</md:keywords>
+<md:technicalInfo>
+<md:entry key="xmlLastModified" value="2025-12-15T07:12:00Z"/>
+<md:entry key="lastModified" value="2024-03-05T06:53:31"/>
+<md:entry key="filename" value="Sigl-etal_2022"/>
+<md:entry key="mimeType" value="text/tab-separated-values"/>
+<md:entry key="status" value="published"/>
+<md:entry key="status_num" value="4"/>
+<md:entry key="DOIRegistryStatus" value="registered"/>
+<md:entry key="DOIRegistryStatus_num" value="4"/>
+<md:entry key="DOIRegistrationDate" value="2022-03-15T01:16:58"/>
+<md:entry key="loginOption" value="unrestricted"/>
+<md:entry key="loginOption_num" value="1"/>
+</md:technicalInfo>
+</md:MetaData>

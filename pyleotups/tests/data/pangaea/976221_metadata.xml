@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="UTF-8"?><md:MetaData xmlns:md="http://www.pangaea.de/MetaData" version="2024-07-19">
+<md:citation id="dataset976221">
+<md:author id="dataset.author89">
+<md:lastName>Nürnberg</md:lastName>
+<md:firstName>Dirk</md:firstName>
+<md:eMail>dnuernberg@geomar.de</md:eMail>
+<md:URI>https://www.geomar.de/dnuernberg/</md:URI>
+<md:affiliation id="dataset.author89.inst20147">
+<md:name>GEOMAR - Helmholtz Centre for Ocean Research Kiel</md:name>
+<md:optionalName>GEOMAR</md:optionalName>
+<md:URI>http://www.geomar.de</md:URI>
+<md:ROR>https://ror.org/02h2x0161</md:ROR>
+</md:affiliation>
+</md:author>
+<md:year>2025</md:year>
+<md:title>Radiocarbon datings of planktic foraminifer samples from gravity core LV28-34-2</md:title>
+<md:type id="dataset.reftype10" includeInCitation="true">dataset</md:type>
+<md:URI>https://doi.org/10.1594/PANGAEA.976221</md:URI>
+<md:dateTime>2025-02-24T10:52:56</md:dateTime>
+</md:citation>
+<md:abstract>Bound by the Asian continent to the northwest and north and the Kurile-Kamchatka-Island Arc to the east and southeast, the Sea of Okhotsk is the second largest marginal sea of the Pacific. In view of strengthened efforts of better understanding cool climate dynamics, the Sea of Okhotsk became an increasing focus of interest as it plays a key role for the modern hydrology of the NW Pacific, its high primary productivity, and its pronounced seasonality in sea ice coverage. We here provide proxydata from gravity core LV28-34-2. The ~9.6 m-long core was recovered from the Derugin Basin in the northern Sea of Okhotsk (53°51.971 N 146°47.499 E) from 1431 m water depth during R/V Lavrentiev Cruise LV28 in 1998 (doi:10.3289/GEOMAR_REP_82_1999). The proxyrecords cover the last ~150 kyrs at centennial resolution. The dataset comprises 8 Accelerator Mass Spectrometry (AMS) radiocarbon (14C) ages obtained from sediment core LV28-34-2, measured by the 'Leibniz-Labor für Altersbestimmung und Isotopenforschung Kiel', https://www.leibniz.uni-kiel.de. The AMS14C ages were measured on samples of mixed planktic calcitic foraminifera and benthic molluscs. The raw radiocarbon ages were calibrated to calender years using the software Calib 6.0 and a constant reservoir age correction of 800 yrs following Nürnberg et al. (2011).</md:abstract>
+<md:reference dataciteRelType="References" group="210" id="ref20602" relationType="Related to" relationTypeId="12">
+<md:author id="ref20602.author10916">
+<md:lastName>Biebow</md:lastName>
+<md:firstName>Nicole</md:firstName>
+<md:eMail>nicole.biebow@awi.de</md:eMail>
+<md:URI>https://www.awi.de/en/about-us/organisation/staff/single-view/nicole-biebow.html</md:URI>
+</md:author>
+<md:author id="ref20602.author23935">
+<md:lastName>Hütten</md:lastName>
+<md:firstName>E</md:firstName>
+</md:author>
+<md:year>1999</md:year>
+<md:title>Cruise Reports: KOMEX I and II, RV Professor Gagarinsky Cruise 22, RV Akademik M.A. Lavrentyev Cruise 28</md:title>
+<md:source>GEOMAR Report, GEOMAR Research Center for Marine Geosciences, Christian Albrechts University in Kiel</md:source>
+<md:volume>82</md:volume>
+<md:URI>https://doi.org/10.3289/GEOMAR_REP_82_1999</md:URI>
+<md:pages>58+188 pp</md:pages>
+</md:reference>
+<md:reference dataciteRelType="References" group="210" id="ref32424" relationType="Related to" relationTypeId="12">
+<md:author id="ref32424.author25025">
+<md:lastName>Kaiser</md:lastName>
+<md:firstName>André</md:firstName>
+</md:author>
+<md:year>2001</md:year>
+<md:title>Ozeanographie, Produktivität und Meereisverbreitung im Ochotskischen Meer während der letzten ca. 350 ka</md:title>
+<md:type id="ref32424.reftype12" includeInCitation="true">dissertation</md:type>
+<md:source>Mathematisch-Naturwissenschaftliche Fakultät der Christian-Albrechts-Universität zu Kiel, Germany</md:source>
+<md:URI>urn:nbn:de:gbv:8-diss-5823</md:URI>
+<md:pages>114 pp</md:pages>
+</md:reference>
+<md:reference dataciteRelType="References" group="210" id="refds743860" relationType="Related to" relationTypeId="12">
+<md:author id="refds743860.author25025">
+<md:lastName>Kaiser</md:lastName>
+<md:firstName>André</md:firstName>
+</md:author>
+<md:year>2010</md:year>
+<md:title>Oceanographic investiations from the Sea of Ochotsk</md:title>
+<md:type id="refds743860.reftype10" includeInCitation="true">dataset publication series</md:type>
+<md:URI>https://doi.org/10.1594/PANGAEA.743860</md:URI>
+</md:reference>
+<md:reference dataciteRelType="References" group="210" id="ref131995" relationType="Related to" relationTypeId="12">
+<md:author id="ref131995.author89">
+<md:lastName>Nürnberg</md:lastName>
+<md:firstName>Dirk</md:firstName>
+<md:eMail>dnuernberg@geomar.de</md:eMail>
+<md:URI>https://www.geomar.de/dnuernberg/</md:URI>
+</md:author>
+<md:author id="ref131995.author110">
+<md:lastName>Dethleff</md:lastName>
+<md:firstName>Dirk</md:firstName>
+<md:eMail>ddethlef@geomar.de</md:eMail>
+</md:author>
+<md:author id="ref131995.author20400">
+<md:lastName>Tiedemann</md:lastName>
+<md:firstName>Ralf</md:firstName>
+<md:eMail>ralf.tiedemann@awi.de</md:eMail>
+<md:URI>https://www.awi.de/en/about-us/organisation/staff/single-view/ralf-tiedemann.html</md:URI>
+<md:orcid>0000-0001-7211-8049</md:orcid>
+</md:author>
+<md:author id="ref131995.author25025">
+<md:lastName>Kaiser</md:lastName>
+<md:firstName>André</md:firstName>
+</md:author>
+<md:author id="ref131995.author27671">
+<md:lastName>Gorbarenko</md:lastName>
+<md:firstName>Sergey A</md:firstName>
+<md:eMail>gorbarenko@poi.dvo.ru</md:eMail>
+<md:orcid>0000-0001-8864-0499</md:orcid>
+</md:author>
+<md:year>2011</md:year>
+<md:title>Okhotsk Sea ice coverage and Kamchatka glaciation over the last 350ka — Evidence from ice-rafted debris and planktonic δ18O</md:title>
+<md:type id="ref131995.reftype1">journal article</md:type>
+<md:source id="ref131995.journal12485" relatedTermIds="33972,33974,34030" type="journal">Palaeogeography, Palaeoclimatology, Palaeoecology</md:source>
+<md:volume>310(3-4)</md:volume>
+<md:URI>https://doi.org/10.1016/j.palaeo.2011.07.011</md:URI>
+<md:pages>191-205</md:pages>
+</md:reference>
+<md:reference dataciteRelType="References" group="210" id="ref26211" relationType="Related to" relationTypeId="12">
+<md:author id="ref26211.author89">
+<md:lastName>Nürnberg</md:lastName>
+<md:firstName>Dirk</md:firstName>
+<md:eMail>dnuernberg@geomar.de</md:eMail>
+<md:URI>https://www.geomar.de/dnuernberg/</md:URI>
+</md:author>
+<md:author id="ref26211.author20400">
+<md:lastName>Tiedemann</md:lastName>
+<md:firstName>Ralf</md:firstName>
+<md:eMail>ralf.tiedemann@awi.de</md:eMail>
+<md:URI>https://www.awi.de/en/about-us/organisation/staff/single-view/ralf-tiedemann.html</md:URI>
+<md:orcid>0000-0001-7211-8049</md:orcid>
+</md:author>
+<md:year>2004</md:year>
+<md:title>Environmental change in the Sea of Okhotsk during the last 1.1 million years</md:title>
+<md:type id="ref26211.reftype1">journal article</md:type>
+<md:source id="ref26211.journal12511" relatedTermIds="33974,34022,34030" type="journal">Paleoceanography</md:source>
+<md:volume>19(4)</md:volume>
+<md:URI>https://doi.org/10.1029/2004PA001023</md:URI>
+<md:pages>PA4011</md:pages>
+</md:reference>
+<md:extent>
+<md:geographic>
+<md:westBoundLongitude>146.79165</md:westBoundLongitude>
+<md:eastBoundLongitude>146.79165</md:eastBoundLongitude>
+<md:southBoundLatitude>53.866183333333</md:southBoundLatitude>
+<md:northBoundLatitude>53.866183333333</md:northBoundLatitude>
+<md:meanLongitude>146.79165</md:meanLongitude>
+<md:meanLatitude>53.866183333333</md:meanLatitude>
+</md:geographic>
+<md:temporal>
+<md:minDateTime>1998-08-19T22:32:00</md:minDateTime>
+<md:maxDateTime>1998-08-19T22:32:00</md:maxDateTime>
+</md:temporal>
+<md:elevation geocodeId="geocode1" name="DEPTH, sediment/rock" unit="m">
+<md:min>0.36</md:min>
+<md:max>3.95</md:max>
+</md:elevation>
+<md:topoType id="topotype3">vertical profile</md:topoType>
+</md:extent>
+<md:project id="project82" type="National DFG">
+<md:label>KOMEX</md:label>
+<md:name>Kurile-Okhotsk Sea Marine Experiment</md:name>
+<md:institution id="project82.inst6">
+<md:name>IFM-GEOMAR Leibniz-Institute of Marine Sciences, Kiel University</md:name>
+<md:optionalName>IFM-GEOMAR</md:optionalName>
+<md:URI>http://www.geomar.de</md:URI>
+<md:ROR>https://ror.org/02h2x0161</md:ROR>
+</md:institution>
+</md:project>
+<md:event id="event98829">
+<md:label>LV28-34-2</md:label>
+<md:latitude>53.866183333333</md:latitude>
+<md:longitude>146.79165</md:longitude>
+<md:elevation>-1431.0</md:elevation>
+<md:dateTime>1998-08-19T22:32:00</md:dateTime>
+<md:attribute attid="40411" name="IGSN">https://doi.org/10.58031/kiel0105gelc201</md:attribute>
+<md:attribute attid="19163" name="Recovery">9.69 m</md:attribute>
+<md:location id="event98829.term20975">
+<md:name>Sea of Okhotsk</md:name>
+</md:location>
+<md:campaign id="event98829.campaign21107">
+<md:name>LV28</md:name>
+<md:optionalName>KOMEX I</md:optionalName>
+<md:URI>https://doi.org/10.3289/GEOMAR_REP_82_1999</md:URI>
+<md:chiefScientist>Suess, Erwin</md:chiefScientist>
+<md:chiefScientist>Kulinich, R</md:chiefScientist>
+<md:start>1998-08-03</md:start>
+<md:end>1998-09-12</md:end>
+</md:campaign>
+<md:basis id="event98829.basis105">
+<md:name>Akademik M.A. Lavrentyev</md:name>
+</md:basis>
+<md:method id="event98829.method11107">
+<md:name>Gravity corer</md:name>
+<md:optionalName>GC</md:optionalName>
+</md:method>
+<md:comment>Derugin Basin cont./969 cm/station for paleoceanography</md:comment>
+</md:event>
+<md:size unit="data points">81</md:size>
+<md:license id="license21">
+<md:label>CC-BY-4.0</md:label>
+<md:name>Creative Commons Attribution 4.0 International</md:name>
+<md:URI>https://creativecommons.org/licenses/by/4.0/</md:URI>
+</md:license>
+<md:matrixColumn col="0" id="col0.ds15397124" source="data" type="string">
+<md:parameter id="col0.ds15397124.param132179">
+<md:name>Laboratory code/label</md:name>
+<md:shortName>Lab label</md:shortName>
+<md:term endOffset="21" fragment="2" id="col0.ds15397124.param132179.term1073499" semanticURI="http://purl.obolibrary.org/obo/CHEBI_35209" startOffset="16" terminologyId="16" terminologyLabel="ChEBI">
+<md:name>label</md:name>
+<md:URI>http://purl.obolibrary.org/obo/CHEBI_35209</md:URI>
+</md:term>
+</md:parameter>
+<md:PI id="col0.ds15397124.pi89">
+<md:lastName>Nürnberg</md:lastName>
+<md:firstName>Dirk</md:firstName>
+<md:eMail>dnuernberg@geomar.de</md:eMail>
+<md:URI>https://www.geomar.de/dnuernberg/</md:URI>
+</md:PI>
+<md:comment>Leibniz-Labor für Altersbestimmung und Isotopenforschung Kiel, https://www.leibniz.uni-kiel.de</md:comment>
+<md:caption>Lab label (Leibniz-Labor für Altersbesti...)</md:caption>
+</md:matrixColumn>
+<md:matrixColumn col="1" id="col1.ds15397125" source="data" type="string">
+<md:parameter id="col1.ds15397125.param2836">
+<md:name>Age, dated material</md:name>
+<md:shortName>Dated material</md:shortName>
+<md:term endOffset="3" fragment="1" id="col1.ds15397125.param2836.term1073135" semanticURI="urn:obo:pato:term:0000011" startOffset="0" terminologyId="14" terminologyLabel="PATO">
+<md:name>age</md:name>
+<md:URI>http://purl.obolibrary.org/obo/PATO_0000011</md:URI>
+</md:term>
+</md:parameter>
+<md:PI id="col1.ds15397125.pi89">
+<md:lastName>Nürnberg</md:lastName>
+<md:firstName>Dirk</md:firstName>
+<md:eMail>dnuernberg@geomar.de</md:eMail>
+<md:URI>https://www.geomar.de/dnuernberg/</md:URI>
+</md:PI>
+<md:comment>mixed planktic foraminifera: Neogloboquadrina pachyderma sin. and Globigerina bulloides</md:comment>
+<md:caption>Dated material (mixed planktic foraminifera: ...)</md:caption>
+</md:matrixColumn>
+<md:matrixColumn col="2" id="col2.ds15397126" source="data" type="string">
+<md:parameter id="col2.ds15397126.param18011">
+<md:name>Sample comment</md:name>
+<md:shortName>Sample comment</md:shortName>
+</md:parameter>
+<md:PI id="col2.ds15397126.pi89">
+<md:lastName>Nürnberg</md:lastName>
+<md:firstName>Dirk</md:firstName>
+<md:eMail>dnuernberg@geomar.de</md:eMail>
+<md:URI>https://www.geomar.de/dnuernberg/</md:URI>
+</md:PI>
+<md:caption>Sample comment</md:caption>
+</md:matrixColumn>
+<md:matrixColumn behaviour="1" col="3" format="0.00" id="col3.ds15397127" source="geocode" type="numeric">
+<md:parameter id="col3.ds15397127.geocode1">
+<md:name>DEPTH, sediment/rock</md:name>
+<md:shortName>Depth sed</md:shortName>
+<md:unit>m</md:unit>
+<md:term endOffset="5" fragment="1" id="col3.ds15397127.geocode1.term1073131" semanticURI="urn:obo:pato:term:0001595" startOffset="0" terminologyId="14" terminologyLabel="PATO">
+<md:name>depth</md:name>
+<md:URI>http://purl.obolibrary.org/obo/PATO_0001595</md:URI>
+</md:term>
+<md:term endOffset="15" fragment="2" id="col3.ds15397127.geocode1.term38263" startOffset="7" terminologyId="18" terminologyLabel="PAN-MicroBio">
+<md:name>sediment</md:name>
+<md:URI>http://purl.obolibrary.org/obo/ENVO_00002007</md:URI>
+</md:term>
+<md:term endOffset="20" fragment="3" id="col3.ds15397127.geocode1.term41056" startOffset="16" terminologyId="18" terminologyLabel="PAN-MicroBio">
+<md:name>rock</md:name>
+</md:term>
+<md:term id="col3.ds15397127.geocode1.term43863" semanticURI="http://qudt.org/1.1/vocab/quantity#Length" terminologyId="13" terminologyLabel="PAN-Quantity">
+<md:name>Length</md:name>
+<md:optionalName>L</md:optionalName>
+<md:URI>http://dbpedia.org/resource/Length</md:URI>
+</md:term>
+</md:parameter>
+<md:PI id="col3.ds15397127.pi89">
+<md:lastName>Nürnberg</md:lastName>
+<md:firstName>Dirk</md:firstName>
+<md:eMail>dnuernberg@geomar.de</md:eMail>
+<md:URI>https://www.geomar.de/dnuernberg/</md:URI>
+</md:PI>
+<md:caption>Depth sed [m]</md:caption>
+</md:matrixColumn>
+<md:matrixColumn col="4" format="0.000" id="col4.ds15397128" source="data" type="numeric">
+<md:parameter id="col4.ds15397128.param519090">
+<md:name>Age, dated</md:name>
+<md:shortName>Age dated</md:shortName>
+<md:unit>ka BP</md:unit>
+<md:term endOffset="3" fragment="1" id="col4.ds15397128.param519090.term1073135" semanticURI="urn:obo:pato:term:0000011" startOffset="0" terminologyId="14" terminologyLabel="PATO">
+<md:name>age</md:name>
+<md:URI>http://purl.obolibrary.org/obo/PATO_0000011</md:URI>
+</md:term>
+<md:term id="col4.ds15397128.param519090.term43975" semanticURI="http://qudt.org/1.1/vocab/quantity#Time" terminologyId="13" terminologyLabel="PAN-Quantity">
+<md:name>Time</md:name>
+<md:optionalName>T</md:optionalName>
+<md:URI>http://dbpedia.org/resource/Time</md:URI>
+</md:term>
+</md:parameter>
+<md:method id="col4.ds15397128.method58">
+<md:name>Age, 14C AMS</md:name>
+<md:URI>https://doi.org/10.1146/annurev.ns.30.120180.002253</md:URI>
+<md:term id="col4.ds15397128.method58.term2299417" semanticURI="SDN:L05::LAB17" terminologyId="21" terminologyLabel="NERC-L05-L22">
+<md:name>accelerator mass spectrometers</md:name>
+<md:URI>http://vocab.nerc.ac.uk/collection/L05/current/LAB17/</md:URI>
+</md:term>
+<md:term id="col4.ds15397128.method58.term68027" terminologyId="3" terminologyLabel="PAN-M&amp;D">
+<md:name>Chromatographs &amp; spectrometers</md:name>
+</md:term>
+</md:method>
+<md:PI id="col4.ds15397128.pi89">
+<md:lastName>Nürnberg</md:lastName>
+<md:firstName>Dirk</md:firstName>
+<md:eMail>dnuernberg@geomar.de</md:eMail>
+<md:URI>https://www.geomar.de/dnuernberg/</md:URI>
+</md:PI>
+<md:comment>raw</md:comment>
+<md:caption>Age dated [ka BP] (raw)</md:caption>
+</md:matrixColumn>
+<md:matrixColumn col="5" format="0.000" id="col5.ds15397129" source="data" type="numeric">
+<md:parameter id="col5.ds15397129.param139321">
+<md:name>Age, dated, error to older</md:name>
+<md:shortName>Age e +</md:shortName>
+<md:unit>ka +</md:unit>
+<md:term endOffset="3" fragment="1" id="col5.ds15397129.param139321.term1073135" semanticURI="urn:obo:pato:term:0000011" startOffset="0" terminologyId="14" terminologyLabel="PATO">
+<md:name>age</md:name>
+<md:URI>http://purl.obolibrary.org/obo/PATO_0000011</md:URI>
+</md:term>
+<md:term id="col5.ds15397129.param139321.term43975" semanticURI="http://qudt.org/1.1/vocab/quantity#Time" terminologyId="13" terminologyLabel="PAN-Quantity">
+<md:name>Time</md:name>
+<md:optionalName>T</md:optionalName>
+<md:URI>http://dbpedia.org/resource/Time</md:URI>
+</md:term>
+</md:parameter>
+<md:method id="col5.ds15397129.method58">
+<md:name>Age, 14C AMS</md:name>
+<md:URI>https://doi.org/10.1146/annurev.ns.30.120180.002253</md:URI>
+<md:term id="col5.ds15397129.method58.term2299417" semanticURI="SDN:L05::LAB17" terminologyId="21" terminologyLabel="NERC-L05-L22">
+<md:name>accelerator mass spectrometers</md:name>
+<md:URI>http://vocab.nerc.ac.uk/collection/L05/current/LAB17/</md:URI>
+</md:term>
+<md:term id="col5.ds15397129.method58.term68027" terminologyId="3" terminologyLabel="PAN-M&amp;D">
+<md:name>Chromatographs &amp; spectrometers</md:name>
+</md:term>
+</md:method>
+<md:PI id="col5.ds15397129.pi89">
+<md:lastName>Nürnberg</md:lastName>
+<md:firstName>Dirk</md:firstName>
+<md:eMail>dnuernberg@geomar.de</md:eMail>
+<md:URI>https://www.geomar.de/dnuernberg/</md:URI>
+</md:PI>
+<md:comment>raw</md:comment>
+<md:caption>Age e + [ka +] (raw)</md:caption>
+</md:matrixColumn>
+<md:matrixColumn col="6" format="0.000" id="col6.ds15397130" source="data" type="numeric">
+<md:parameter id="col6.ds15397130.param139320">
+<md:name>Age, dated, error to younger</md:name>
+<md:shortName>Age e -</md:shortName>
+<md:unit>ka -</md:unit>
+<md:term endOffset="3" fragment="1" id="col6.ds15397130.param139320.term1073135" semanticURI="urn:obo:pato:term:0000011" startOffset="0" terminologyId="14" terminologyLabel="PATO">
+<md:name>age</md:name>
+<md:URI>http://purl.obolibrary.org/obo/PATO_0000011</md:URI>
+</md:term>
+<md:term id="col6.ds15397130.param139320.term43975" semanticURI="http://qudt.org/1.1/vocab/quantity#Time" terminologyId="13" terminologyLabel="PAN-Quantity">
+<md:name>Time</md:name>
+<md:optionalName>T</md:optionalName>
+<md:URI>http://dbpedia.org/resource/Time</md:URI>
+</md:term>
+</md:parameter>
+<md:method id="col6.ds15397130.method58">
+<md:name>Age, 14C AMS</md:name>
+<md:URI>https://doi.org/10.1146/annurev.ns.30.120180.002253</md:URI>
+<md:term id="col6.ds15397130.method58.term2299417" semanticURI="SDN:L05::LAB17" terminologyId="21" terminologyLabel="NERC-L05-L22">
+<md:name>accelerator mass spectrometers</md:name>
+<md:URI>http://vocab.nerc.ac.uk/collection/L05/current/LAB17/</md:URI>
+</md:term>
+<md:term id="col6.ds15397130.method58.term68027" terminologyId="3" terminologyLabel="PAN-M&amp;D">
+<md:name>Chromatographs &amp; spectrometers</md:name>
+</md:term>
+</md:method>
+<md:PI id="col6.ds15397130.pi89">
+<md:lastName>Nürnberg</md:lastName>
+<md:firstName>Dirk</md:firstName>
+<md:eMail>dnuernberg@geomar.de</md:eMail>
+<md:URI>https://www.geomar.de/dnuernberg/</md:URI>
+</md:PI>
+<md:comment>raw</md:comment>
+<md:caption>Age e - [ka -] (raw)</md:caption>
+</md:matrixColumn>
+<md:matrixColumn col="7" format="0.0" id="col7.ds15397131" source="data" type="numeric">
+<md:parameter id="col7.ds15397131.param136754">
+<md:name>Reservoir age</md:name>
+<md:shortName>Res age</md:shortName>
+<md:unit>ka</md:unit>
+<md:term id="col7.ds15397131.param136754.term43975" semanticURI="http://qudt.org/1.1/vocab/quantity#Time" terminologyId="13" terminologyLabel="PAN-Quantity">
+<md:name>Time</md:name>
+<md:optionalName>T</md:optionalName>
+<md:URI>http://dbpedia.org/resource/Time</md:URI>
+</md:term>
+</md:parameter>
+<md:PI id="col7.ds15397131.pi89">
+<md:lastName>Nürnberg</md:lastName>
+<md:firstName>Dirk</md:firstName>
+<md:eMail>dnuernberg@geomar.de</md:eMail>
+<md:URI>https://www.geomar.de/dnuernberg/</md:URI>
+</md:PI>
+<md:comment>applied</md:comment>
+<md:caption>Res age [ka] (applied)</md:caption>
+</md:matrixColumn>
+<md:matrixColumn col="8" format="0.00" id="col8.ds15397132" source="data" type="numeric">
+<md:parameter id="col8.ds15397132.param519090">
+<md:name>Age, dated</md:name>
+<md:shortName>Age dated</md:shortName>
+<md:unit>ka BP</md:unit>
+<md:term endOffset="3" fragment="1" id="col8.ds15397132.param519090.term1073135" semanticURI="urn:obo:pato:term:0000011" startOffset="0" terminologyId="14" terminologyLabel="PATO">
+<md:name>age</md:name>
+<md:URI>http://purl.obolibrary.org/obo/PATO_0000011</md:URI>
+</md:term>
+<md:term id="col8.ds15397132.param519090.term43975" semanticURI="http://qudt.org/1.1/vocab/quantity#Time" terminologyId="13" terminologyLabel="PAN-Quantity">
+<md:name>Time</md:name>
+<md:optionalName>T</md:optionalName>
+<md:URI>http://dbpedia.org/resource/Time</md:URI>
+</md:term>
+</md:parameter>
+<md:method id="col8.ds15397132.method58">
+<md:name>Age, 14C AMS</md:name>
+<md:URI>https://doi.org/10.1146/annurev.ns.30.120180.002253</md:URI>
+<md:term id="col8.ds15397132.method58.term2299417" semanticURI="SDN:L05::LAB17" terminologyId="21" terminologyLabel="NERC-L05-L22">
+<md:name>accelerator mass spectrometers</md:name>
+<md:URI>http://vocab.nerc.ac.uk/collection/L05/current/LAB17/</md:URI>
+</md:term>
+<md:term id="col8.ds15397132.method58.term68027" terminologyId="3" terminologyLabel="PAN-M&amp;D">
+<md:name>Chromatographs &amp; spectrometers</md:name>
+</md:term>
+</md:method>
+<md:PI id="col8.ds15397132.pi89">
+<md:lastName>Nürnberg</md:lastName>
+<md:firstName>Dirk</md:firstName>
+<md:eMail>dnuernberg@geomar.de</md:eMail>
+<md:URI>https://www.geomar.de/dnuernberg/</md:URI>
+</md:PI>
+<md:comment>Reservoir corrected 14C age</md:comment>
+<md:caption>Age dated [ka BP] (Reservoir corrected 14C age)</md:caption>
+</md:matrixColumn>
+<md:matrixColumn col="9" format="0.000" id="col9.ds15397133" source="data" type="numeric">
+<md:parameter id="col9.ds15397133.param14698">
+<md:name>Calendar age</md:name>
+<md:shortName>Cal age</md:shortName>
+<md:unit>ka BP</md:unit>
+<md:term id="col9.ds15397133.param14698.term43975" semanticURI="http://qudt.org/1.1/vocab/quantity#Time" terminologyId="13" terminologyLabel="PAN-Quantity">
+<md:name>Time</md:name>
+<md:optionalName>T</md:optionalName>
+<md:URI>http://dbpedia.org/resource/Time</md:URI>
+</md:term>
+</md:parameter>
+<md:PI id="col9.ds15397133.pi89">
+<md:lastName>Nürnberg</md:lastName>
+<md:firstName>Dirk</md:firstName>
+<md:eMail>dnuernberg@geomar.de</md:eMail>
+<md:URI>https://www.geomar.de/dnuernberg/</md:URI>
+</md:PI>
+<md:comment>calibrated age, Radiocarbon ages were calibrated using Radiocarbon Calibration Program REV4.3 (M. Stuiver &amp; P.J. Reimer, 1993, Radiocarbon 35, 215-230) and a constant reservoir age correction of 800 yrs</md:comment>
+<md:caption>Cal age [ka BP] (calibrated age, Radiocarbon a...)</md:caption>
+</md:matrixColumn>
+<md:matrixColumn col="10" format="0.000" id="col10.ds15397134" source="data" type="numeric">
+<md:parameter id="col10.ds15397134.param143777">
+<md:name>Calendar age, minimum/young</md:name>
+<md:shortName>Cal age min</md:shortName>
+<md:unit>ka BP</md:unit>
+<md:term endOffset="21" fragment="2" id="col10.ds15397134.param143777.term41019" startOffset="14" terminologyId="18" terminologyLabel="PAN-MicroBio">
+<md:name>minimum</md:name>
+</md:term>
+<md:term endOffset="27" fragment="3" id="col10.ds15397134.param143777.term1081569" semanticURI="urn:obo:pato:term:0000309" startOffset="22" terminologyId="14" terminologyLabel="PATO">
+<md:name>young</md:name>
+<md:URI>http://purl.obolibrary.org/obo/PATO_0000309</md:URI>
+</md:term>
+<md:term id="col10.ds15397134.param143777.term43975" semanticURI="http://qudt.org/1.1/vocab/quantity#Time" terminologyId="13" terminologyLabel="PAN-Quantity">
+<md:name>Time</md:name>
+<md:optionalName>T</md:optionalName>
+<md:URI>http://dbpedia.org/resource/Time</md:URI>
+</md:term>
+</md:parameter>
+<md:PI id="col10.ds15397134.pi89">
+<md:lastName>Nürnberg</md:lastName>
+<md:firstName>Dirk</md:firstName>
+<md:eMail>dnuernberg@geomar.de</md:eMail>
+<md:URI>https://www.geomar.de/dnuernberg/</md:URI>
+</md:PI>
+<md:comment>95% probability</md:comment>
+<md:caption>Cal age min [ka BP] (95% probability)</md:caption>
+</md:matrixColumn>
+<md:matrixColumn col="11" format="0.000" id="col11.ds15397135" source="data" type="numeric">
+<md:parameter id="col11.ds15397135.param143779">
+<md:name>Calendar age, maximum/old</md:name>
+<md:shortName>Cal age max</md:shortName>
+<md:unit>ka BP</md:unit>
+<md:term endOffset="21" fragment="2" id="col11.ds15397135.param143779.term38492" startOffset="14" terminologyId="18" terminologyLabel="PAN-MicroBio">
+<md:name>maximum</md:name>
+</md:term>
+<md:term endOffset="25" fragment="3" id="col11.ds15397135.param143779.term1073892" semanticURI="urn:obo:pato:term:0000308" startOffset="22" terminologyId="14" terminologyLabel="PATO">
+<md:name>old</md:name>
+<md:URI>http://purl.obolibrary.org/obo/PATO_0000308</md:URI>
+</md:term>
+<md:term id="col11.ds15397135.param143779.term43975" semanticURI="http://qudt.org/1.1/vocab/quantity#Time" terminologyId="13" terminologyLabel="PAN-Quantity">
+<md:name>Time</md:name>
+<md:optionalName>T</md:optionalName>
+<md:URI>http://dbpedia.org/resource/Time</md:URI>
+</md:term>
+</md:parameter>
+<md:PI id="col11.ds15397135.pi89">
+<md:lastName>Nürnberg</md:lastName>
+<md:firstName>Dirk</md:firstName>
+<md:eMail>dnuernberg@geomar.de</md:eMail>
+<md:URI>https://www.geomar.de/dnuernberg/</md:URI>
+</md:PI>
+<md:comment>95% probability</md:comment>
+<md:caption>Cal age max [ka BP] (95% probability)</md:caption>
+</md:matrixColumn>
+<md:status>
+<md:curationLevel id="curlevel30">
+<md:label>CurationLevelC</md:label>
+<md:name>Enhanced curation</md:name>
+<md:URI>https://wiki.pangaea.de/wiki/Curation_levels</md:URI>
+</md:curationLevel>
+</md:status>
+<md:keywords>
+<md:techKeyword type="autoGenerated">citable</md:techKeyword>
+<md:keyword id="keywords.term75797" type="fromDatabase">glacial/interglacial</md:keyword>
+<md:keyword id="keywords.term377" type="fromDatabase">productivity</md:keyword>
+<md:keyword id="keywords.term70354" type="fromDatabase">sediment composition</md:keyword>
+<md:keyword id="keywords.term672" type="fromDatabase">Stable isotopes</md:keyword>
+<md:keyword id="keywords.term69553" type="fromDatabase">the Sea of Okhotsk</md:keyword>
+<md:techKeyword id="keywords.term242" type="fromDatabase">geomar</md:techKeyword>
+<md:techKeyword type="autoGenerated">author10916</md:techKeyword>
+<md:techKeyword type="autoGenerated">author110</md:techKeyword>
+<md:techKeyword type="autoGenerated">author20400</md:techKeyword>
+<md:techKeyword type="autoGenerated">author23935</md:techKeyword>
+<md:techKeyword type="autoGenerated">author25025</md:techKeyword>
+<md:techKeyword type="autoGenerated">author27671</md:techKeyword>
+<md:techKeyword type="autoGenerated">author89</md:techKeyword>
+<md:techKeyword type="autoGenerated">basis105</md:techKeyword>
+<md:techKeyword type="autoGenerated">campaign21107</md:techKeyword>
+<md:techKeyword type="autoGenerated">curlevel30</md:techKeyword>
+<md:techKeyword type="autoGenerated">event98829</md:techKeyword>
+<md:techKeyword type="autoGenerated">geocode1</md:techKeyword>
+<md:techKeyword type="autoGenerated">geocode1599</md:techKeyword>
+<md:techKeyword type="autoGenerated">geocode1600</md:techKeyword>
+<md:techKeyword type="autoGenerated">geocode1601</md:techKeyword>
+<md:techKeyword type="autoGenerated">geocode8128</md:techKeyword>
+<md:techKeyword type="autoGenerated">inst20147</md:techKeyword>
+<md:techKeyword type="autoGenerated">inst6</md:techKeyword>
+<md:techKeyword type="autoGenerated">journal12485</md:techKeyword>
+<md:techKeyword type="autoGenerated">journal12511</md:techKeyword>
+<md:techKeyword type="autoGenerated">license21</md:techKeyword>
+<md:techKeyword type="autoGenerated">method11107</md:techKeyword>
+<md:techKeyword type="autoGenerated">method58</md:techKeyword>
+<md:techKeyword type="autoGenerated">param132179</md:techKeyword>
+<md:techKeyword type="autoGenerated">param136754</md:techKeyword>
+<md:techKeyword type="autoGenerated">param139320</md:techKeyword>
+<md:techKeyword type="autoGenerated">param139321</md:techKeyword>
+<md:techKeyword type="autoGenerated">param143777</md:techKeyword>
+<md:techKeyword type="autoGenerated">param143779</md:techKeyword>
+<md:techKeyword type="autoGenerated">param14698</md:techKeyword>
+<md:techKeyword type="autoGenerated">param18011</md:techKeyword>
+<md:techKeyword type="autoGenerated">param2836</md:techKeyword>
+<md:techKeyword type="autoGenerated">param519090</md:techKeyword>
+<md:techKeyword type="autoGenerated">pi89</md:techKeyword>
+<md:techKeyword type="autoGenerated">project82</md:techKeyword>
+<md:techKeyword type="autoGenerated">ref131995</md:techKeyword>
+<md:techKeyword type="autoGenerated">ref20602</md:techKeyword>
+<md:techKeyword type="autoGenerated">ref26211</md:techKeyword>
+<md:techKeyword type="autoGenerated">ref32424</md:techKeyword>
+<md:techKeyword type="autoGenerated">refds743860</md:techKeyword>
+<md:techKeyword type="autoGenerated">term1073131</md:techKeyword>
+<md:techKeyword type="autoGenerated">term1073135</md:techKeyword>
+<md:techKeyword type="autoGenerated">term1073499</md:techKeyword>
+<md:techKeyword type="autoGenerated">term1073892</md:techKeyword>
+<md:techKeyword type="autoGenerated">term1081569</md:techKeyword>
+<md:techKeyword type="autoGenerated">term20975</md:techKeyword>
+<md:techKeyword type="autoGenerated">term2299417</md:techKeyword>
+<md:techKeyword type="autoGenerated">term242</md:techKeyword>
+<md:techKeyword type="autoGenerated">term377</md:techKeyword>
+<md:techKeyword type="autoGenerated">term38263</md:techKeyword>
+<md:techKeyword type="autoGenerated">term38492</md:techKeyword>
+<md:techKeyword type="autoGenerated">term41019</md:techKeyword>
+<md:techKeyword type="autoGenerated">term41056</md:techKeyword>
+<md:techKeyword type="autoGenerated">term43863</md:techKeyword>
+<md:techKeyword type="autoGenerated">term43975</md:techKeyword>
+<md:techKeyword type="autoGenerated">term672</md:techKeyword>
+<md:techKeyword type="autoGenerated">term68027</md:techKeyword>
+<md:techKeyword type="autoGenerated">term69553</md:techKeyword>
+<md:techKeyword type="autoGenerated">term70354</md:techKeyword>
+<md:techKeyword type="autoGenerated">term75797</md:techKeyword>
+<md:techKeyword type="autoGenerated">topotype3</md:techKeyword>
+</md:keywords>
+<md:technicalInfo>
+<md:entry key="xmlLastModified" value="2025-11-03T11:34:13Z"/>
+<md:entry key="lastModified" value="2025-02-24T10:52:56"/>
+<md:entry key="filename" value="LV28-34-2_TOC-CaCO3_radiocarbon"/>
+<md:entry key="mimeType" value="text/tab-separated-values"/>
+<md:entry key="status" value="published"/>
+<md:entry key="status_num" value="4"/>
+<md:entry key="DOIRegistryStatus" value="registered"/>
+<md:entry key="DOIRegistryStatus_num" value="4"/>
+<md:entry key="DOIRegistrationDate" value="2025-03-25T01:12:32"/>
+<md:entry key="loginOption" value="unrestricted"/>
+<md:entry key="loginOption_num" value="1"/>
+</md:technicalInfo>
+</md:MetaData>

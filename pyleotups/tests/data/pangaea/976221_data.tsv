@@ -1,0 +1,39 @@
+/* DATA DESCRIPTION:
+Citation:	Nürnberg, Dirk (2025): Radiocarbon datings of planktic foraminifer samples from gravity core LV28-34-2 [dataset]. PANGAEA, https://doi.org/10.1594/PANGAEA.976221
+Abstract:	Bound by the Asian continent to the northwest and north and the Kurile-Kamchatka-Island Arc to the east and southeast, the Sea of Okhotsk is the second largest marginal sea of the Pacific. In view of strengthened efforts of better understanding cool climate dynamics, the Sea of Okhotsk became an increasing focus of interest as it plays a key role for the modern hydrology of the NW Pacific, its high primary productivity, and its pronounced seasonality in sea ice coverage. We here provide proxydata from gravity core LV28-34-2. The ~9.6 m-long core was recovered from the Derugin Basin in the northern Sea of Okhotsk (53°51.971 N 146°47.499 E) from 1431 m water depth during R/V Lavrentiev Cruise LV28 in 1998 (doi:10.3289/GEOMAR_REP_82_1999). The proxyrecords cover the last ~150 kyrs at centennial resolution. The dataset comprises 8 Accelerator Mass Spectrometry (AMS) radiocarbon (14C) ages obtained from sediment core LV28-34-2, measured by the 'Leibniz-Labor für Altersbestimmung und Isotopenforschung Kiel', https://www.leibniz.uni-kiel.de. The AMS14C ages were measured on samples of mixed planktic calcitic foraminifera and benthic molluscs. The raw radiocarbon ages were calibrated to calender years using the software Calib 6.0 and a constant reservoir age correction of 800 yrs following Nürnberg et al. (2011).
+Keyword(s):	glacial/interglacial; productivity; sediment composition; Stable isotopes; the Sea of Okhotsk
+Related to:	Biebow, Nicole; Hütten, E (1999): Cruise Reports: KOMEX I and II, RV Professor Gagarinsky Cruise 22, RV Akademik M.A. Lavrentyev Cruise 28. GEOMAR Report, GEOMAR Research Center for Marine Geosciences, Christian Albrechts University in Kiel, 82, 58+188 pp, https://doi.org/10.3289/GEOMAR_REP_82_1999
+	Kaiser, André (2001): Ozeanographie, Produktivität und Meereisverbreitung im Ochotskischen Meer während der letzten ca. 350 ka [dissertation]. Mathematisch-Naturwissenschaftliche Fakultät der Christian-Albrechts-Universität zu Kiel, Germany, 114 pp, urn:nbn:de:gbv:8-diss-5823
+	Kaiser, André (2010): Oceanographic investiations from the Sea of Ochotsk [dataset publication series]. PANGAEA, https://doi.org/10.1594/PANGAEA.743860
+	Nürnberg, Dirk; Dethleff, Dirk; Tiedemann, Ralf; Kaiser, André; Gorbarenko, Sergey A (2011): Okhotsk Sea ice coverage and Kamchatka glaciation over the last 350ka — Evidence from ice-rafted debris and planktonic δ18O. Palaeogeography, Palaeoclimatology, Palaeoecology, 310(3-4), 191-205, https://doi.org/10.1016/j.palaeo.2011.07.011
+	Nürnberg, Dirk; Tiedemann, Ralf (2004): Environmental change in the Sea of Okhotsk during the last 1.1 million years. Paleoceanography, 19(4), PA4011, https://doi.org/10.1029/2004PA001023
+Project(s):	Kurile-Okhotsk Sea Marine Experiment (KOMEX)
+Coverage:	LATITUDE: 53.866183 * LONGITUDE: 146.791650
+	DATE/TIME START: 1998-08-19T22:32:00 * DATE/TIME END: 1998-08-19T22:32:00
+	MINIMUM DEPTH, sediment/rock: 0.36 m * MAXIMUM DEPTH, sediment/rock: 3.95 m
+Event(s):	LV28-34-2 * LATITUDE: 53.866183 * LONGITUDE: 146.791650 * DATE/TIME: 1998-08-19T22:32:00 * ELEVATION: -1431.0 m * IGSN: https://doi.org/10.58031/kiel0105gelc201 * Recovery: 9.69 m * LOCATION: Sea of Okhotsk * CAMPAIGN: LV28 (KOMEX I) (URI: https://doi.org/10.3289/GEOMAR_REP_82_1999) * BASIS: Akademik M.A. Lavrentyev * METHOD/DEVICE: Gravity corer (GC) * COMMENT: Derugin Basin cont./969 cm/station for paleoceanography
+Parameter(s):	Laboratory code/label (Lab label) * PI: Nürnberg, Dirk (dnuernberg@geomar.de, https://www.geomar.de/dnuernberg/) * COMMENT: Leibniz-Labor für Altersbestimmung und Isotopenforschung Kiel, https://www.leibniz.uni-kiel.de
+	Age, dated material (Dated material) * PI: Nürnberg, Dirk (dnuernberg@geomar.de, https://www.geomar.de/dnuernberg/) * COMMENT: mixed planktic foraminifera: Neogloboquadrina pachyderma sin. and Globigerina bulloides
+	Sample comment (Sample comment) * PI: Nürnberg, Dirk (dnuernberg@geomar.de, https://www.geomar.de/dnuernberg/)
+	DEPTH, sediment/rock [m] (Depth sed) * GEOCODE * PI: Nürnberg, Dirk (dnuernberg@geomar.de, https://www.geomar.de/dnuernberg/)
+	Age, dated [ka BP] (Age dated) * PI: Nürnberg, Dirk (dnuernberg@geomar.de, https://www.geomar.de/dnuernberg/) * METHOD/DEVICE: Age, 14C AMS (URI: https://doi.org/10.1146/annurev.ns.30.120180.002253) * COMMENT: raw
+	Age, dated, error to older [ka +] (Age e +) * PI: Nürnberg, Dirk (dnuernberg@geomar.de, https://www.geomar.de/dnuernberg/) * METHOD/DEVICE: Age, 14C AMS (URI: https://doi.org/10.1146/annurev.ns.30.120180.002253) * COMMENT: raw
+	Age, dated, error to younger [ka -] (Age e -) * PI: Nürnberg, Dirk (dnuernberg@geomar.de, https://www.geomar.de/dnuernberg/) * METHOD/DEVICE: Age, 14C AMS (URI: https://doi.org/10.1146/annurev.ns.30.120180.002253) * COMMENT: raw
+	Reservoir age [ka] (Res age) * PI: Nürnberg, Dirk (dnuernberg@geomar.de, https://www.geomar.de/dnuernberg/) * COMMENT: applied
+	Age, dated [ka BP] (Age dated) * PI: Nürnberg, Dirk (dnuernberg@geomar.de, https://www.geomar.de/dnuernberg/) * METHOD/DEVICE: Age, 14C AMS (URI: https://doi.org/10.1146/annurev.ns.30.120180.002253) * COMMENT: Reservoir corrected 14C age
+	Calendar age [ka BP] (Cal age) * PI: Nürnberg, Dirk (dnuernberg@geomar.de, https://www.geomar.de/dnuernberg/) * COMMENT: calibrated age, Radiocarbon ages were calibrated using Radiocarbon Calibration Program REV4.3 (M. Stuiver & P.J. Reimer, 1993, Radiocarbon 35, 215-230) and a constant reservoir age correction of 800 yrs
+	Calendar age, minimum/young [ka BP] (Cal age min) * PI: Nürnberg, Dirk (dnuernberg@geomar.de, https://www.geomar.de/dnuernberg/) * COMMENT: 95% probability
+	Calendar age, maximum/old [ka BP] (Cal age max) * PI: Nürnberg, Dirk (dnuernberg@geomar.de, https://www.geomar.de/dnuernberg/) * COMMENT: 95% probability
+License:	Creative Commons Attribution 4.0 International (CC-BY-4.0) (URI: https://creativecommons.org/licenses/by/4.0/)
+Status:	Curation Level: Enhanced curation (URI: https://wiki.pangaea.de/wiki/Curation_levels)
+Size:	81 data points
+*/
+Lab label (Leibniz-Labor für Altersbesti...)	Dated material (mixed planktic foraminifera: ...)	Sample comment	Depth sed [m]	Age dated [ka BP] (raw)	Age e + [ka +] (raw)	Age e - [ka -] (raw)	Res age [ka] (applied)	Age dated [ka BP] (Reservoir corrected 14C age)	Cal age [ka BP] (calibrated age, Radiocarbon a...)	Cal age min [ka BP] (95% probability)	Cal age max [ka BP] (95% probability)
+KIA15269	Plankt. foram.	calcium carbonate	0.36	10.610	0.045	0.045	0.8	9.81	11.199	11.162	11.295
+KIA15270	Plankt. foram.	calcium carbonate	0.56	13.000	0.055	0.055	0.8	12.20	14.135	13.841	15.359
+KIA15271	Plankt. foram.	calcium carbonate	1.30	16.410	0.090	0.080	0.8	15.61	18.642	18.073	19.243
+KIA15272	Benth. molluscs	calcium carbonate	1.30	16.370	0.070	0.070	0.8	15.57	18.596	18.043	19.182
+KIA15273	Plankt. foram.	calcium carbonate	1.70	19.150	0.090	0.090	0.8	18.35	21.795	21.125	22.494
+KIA15274	Plankt. foram.	calcium carbonate	2.60	24.760		0.160	0.8	23.96	26.960		
+KIA15275	Plankt. foram.	calcium carbonate	3.65	30.950	0.280	0.270	0.8	30.15	33.650		
+KIA15276	Plankt. foram.	calcium carbonate	3.95	35.870	1.400	1.190	0.8	35.07	40.270		

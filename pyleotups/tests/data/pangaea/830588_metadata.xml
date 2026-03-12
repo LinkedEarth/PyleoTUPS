@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?><md:MetaData xmlns:md="http://www.pangaea.de/MetaData" version="2024-07-19">
+<md:citation id="dataset830588">
+<md:author id="dataset.author51083">
+<md:lastName>Khider</md:lastName>
+<md:firstName>D</md:firstName>
+<md:orcid>0000-0001-7501-8430</md:orcid>
+</md:author>
+<md:author id="dataset.author22620">
+<md:lastName>Stott</md:lastName>
+<md:firstName>Lowell D</md:firstName>
+<md:eMail>stott@usc.edu</md:eMail>
+<md:orcid>0000-0002-2025-0731</md:orcid>
+</md:author>
+<md:author id="dataset.author51084">
+<md:lastName>Emile-Geay</md:lastName>
+<md:firstName>J</md:firstName>
+<md:orcid>0000-0001-5920-4751</md:orcid>
+</md:author>
+<md:author id="dataset.author796">
+<md:lastName>Thunell</md:lastName>
+<md:firstName>Robert C</md:firstName>
+<md:URI>https://en.wikipedia.org/wiki/Robert_Thunell</md:URI>
+</md:author>
+<md:author id="dataset.author10664">
+<md:lastName>Hammond</md:lastName>
+<md:firstName>Douglas E</md:firstName>
+<md:eMail>dhammond@usc.edu</md:eMail>
+</md:author>
+<md:year>2011</md:year>
+<md:title>(Table 3) Lead 214 and Lead 210 concentration of sediment core MD98-2177</md:title>
+<md:type id="dataset.reftype10" includeInCitation="true">dataset</md:type>
+<md:URI>https://doi.org/10.1594/PANGAEA.830588</md:URI>
+<md:parentURI>https://doi.org/10.1594/PANGAEA.830589</md:parentURI>
+</md:citation>
+<md:reference dataciteRelType="References" group="210" id="ref63525" relationType="Related to" relationTypeId="12">
+<md:author id="ref63525.author51083">
+<md:lastName>Khider</md:lastName>
+<md:firstName>D</md:firstName>
+<md:orcid>0000-0001-7501-8430</md:orcid>
+</md:author>
+<md:author id="ref63525.author22620">
+<md:lastName>Stott</md:lastName>
+<md:firstName>Lowell D</md:firstName>
+<md:eMail>stott@usc.edu</md:eMail>
+<md:orcid>0000-0002-2025-0731</md:orcid>
+</md:author>
+<md:author id="ref63525.author51084">
+<md:lastName>Emile-Geay</md:lastName>
+<md:firstName>J</md:firstName>
+<md:orcid>0000-0001-5920-4751</md:orcid>
+</md:author>
+<md:author id="ref63525.author796">
+<md:lastName>Thunell</md:lastName>
+<md:firstName>Robert C</md:firstName>
+<md:URI>https://en.wikipedia.org/wiki/Robert_Thunell</md:URI>
+</md:author>
+<md:author id="ref63525.author10664">
+<md:lastName>Hammond</md:lastName>
+<md:firstName>Douglas E</md:firstName>
+<md:eMail>dhammond@usc.edu</md:eMail>
+</md:author>
+<md:year>2011</md:year>
+<md:title>Assessing El Niño Southern Oscillation variability during the past millennium</md:title>
+<md:type id="ref63525.reftype1">journal article</md:type>
+<md:source id="ref63525.journal12511" relatedTermIds="33974,34022,34030" type="journal">Paleoceanography</md:source>
+<md:volume>26(3)</md:volume>
+<md:URI>https://doi.org/10.1029/2011PA002139</md:URI>
+<md:pages>PA3222</md:pages>
+</md:reference>
+<md:extent>
+<md:geographic>
+<md:westBoundLongitude>119.08</md:westBoundLongitude>
+<md:eastBoundLongitude>119.08</md:eastBoundLongitude>
+<md:southBoundLatitude>1.4</md:southBoundLatitude>
+<md:northBoundLatitude>1.4</md:northBoundLatitude>
+<md:meanLongitude>119.08</md:meanLongitude>
+<md:meanLatitude>1.4</md:meanLatitude>
+</md:geographic>
+<md:elevation geocodeId="geocode1" name="DEPTH, sediment/rock" unit="m">
+<md:min>0.025</md:min>
+<md:max>0.125</md:max>
+</md:elevation>
+</md:extent>
+<md:event id="event2013989">
+<md:label>MD98-2177</md:label>
+<md:optionalLabel>MD982177</md:optionalLabel>
+<md:latitude>1.4</md:latitude>
+<md:longitude>119.08</md:longitude>
+<md:elevation>-968.0</md:elevation>
+<md:attribute attid="19163" name="Recovery">32.14 m</md:attribute>
+<md:campaign id="event2013989.campaign3003">
+<md:name>MD111</md:name>
+<md:optionalName>IMAGES IV-IPHIS III</md:optionalName>
+<md:chiefScientist>Bassinot, Franck C</md:chiefScientist>
+<md:start>1998-06-18</md:start>
+<md:end>1998-08-01</md:end>
+</md:campaign>
+<md:basis id="event2013989.basis94">
+<md:name>Marion Dufresne (1995)</md:name>
+<md:URI>https://en.wikipedia.org/wiki/Marion_Dufresne_(1994)</md:URI>
+<md:callSign>FNIN</md:callSign>
+<md:IMOnumber>9050814</md:IMOnumber>
+</md:basis>
+<md:method id="event2013989.method10861">
+<md:name>Calypso Corer</md:name>
+<md:optionalName>CALYPSO</md:optionalName>
+</md:method>
+</md:event>
+<md:size unit="data points">43</md:size>
+<md:license id="license101">
+<md:label>CC-BY-3.0</md:label>
+<md:name>Creative Commons Attribution 3.0 Unported</md:name>
+<md:URI>https://creativecommons.org/licenses/by/3.0/</md:URI>
+</md:license>
+<md:matrixColumn behaviour="1" col="0" format="#0.000" id="col0.ds1490695" source="geocode" type="numeric">
+<md:parameter id="col0.ds1490695.geocode1">
+<md:name>DEPTH, sediment/rock</md:name>
+<md:shortName>Depth sed</md:shortName>
+<md:unit>m</md:unit>
+<md:term endOffset="5" fragment="1" id="col0.ds1490695.geocode1.term1073131" semanticURI="urn:obo:pato:term:0001595" startOffset="0" terminologyId="14" terminologyLabel="PATO">
+<md:name>depth</md:name>
+<md:URI>http://purl.obolibrary.org/obo/PATO_0001595</md:URI>
+</md:term>
+<md:term endOffset="15" fragment="2" id="col0.ds1490695.geocode1.term38263" startOffset="7" terminologyId="18" terminologyLabel="PAN-MicroBio">
+<md:name>sediment</md:name>
+<md:URI>http://purl.obolibrary.org/obo/ENVO_00002007</md:URI>
+</md:term>
+<md:term endOffset="20" fragment="3" id="col0.ds1490695.geocode1.term41056" startOffset="16" terminologyId="18" terminologyLabel="PAN-MicroBio">
+<md:name>rock</md:name>
+</md:term>
+<md:term id="col0.ds1490695.geocode1.term43863" semanticURI="http://qudt.org/1.1/vocab/quantity#Length" terminologyId="13" terminologyLabel="PAN-Quantity">
+<md:name>Length</md:name>
+<md:optionalName>L</md:optionalName>
+<md:URI>http://dbpedia.org/resource/Length</md:URI>
+</md:term>
+</md:parameter>
+<md:caption>Depth sed [m]</md:caption>
+</md:matrixColumn>
+<md:matrixColumn col="1" format="#0.000" id="col1.ds12394652" source="data" type="numeric">
+<md:parameter id="col1.ds12394652.param1568">
+<md:name>Layer thickness</md:name>
+<md:shortName>Thickness</md:shortName>
+<md:unit>m</md:unit>
+<md:term id="col1.ds12394652.param1568.term43863" semanticURI="http://qudt.org/1.1/vocab/quantity#Length" terminologyId="13" terminologyLabel="PAN-Quantity">
+<md:name>Length</md:name>
+<md:optionalName>L</md:optionalName>
+<md:URI>http://dbpedia.org/resource/Length</md:URI>
+</md:term>
+</md:parameter>
+<md:PI id="col1.ds12394652.pi51083">
+<md:lastName>Khider</md:lastName>
+<md:firstName>D</md:firstName>
+<md:orcid>0000-0001-7501-8430</md:orcid>
+</md:PI>
+<md:caption>Thickness [m]</md:caption>
+</md:matrixColumn>
+<md:matrixColumn col="2" format="#0" id="col2.ds12394653" source="data" type="numeric">
+<md:parameter id="col2.ds12394653.param135317">
+<md:name>Lead-214</md:name>
+<md:shortName>214Pb</md:shortName>
+<md:unit>Bq/kg</md:unit>
+<md:term endOffset="8" fragment="1" id="col2.ds12394653.param135317.term40016" startOffset="0" terminologyId="18" terminologyLabel="PAN-MicroBio">
+<md:name>lead-214</md:name>
+<md:optionalName>214Pb</md:optionalName>
+<md:URI>https://en.wikipedia.org/wiki/Isotopes_of_lead#List_of_isotopes</md:URI>
+</md:term>
+</md:parameter>
+<md:PI id="col2.ds12394653.pi51083">
+<md:lastName>Khider</md:lastName>
+<md:firstName>D</md:firstName>
+<md:orcid>0000-0001-7501-8430</md:orcid>
+</md:PI>
+<md:caption>214Pb [Bq/kg]</md:caption>
+</md:matrixColumn>
+<md:matrixColumn col="3" format="#0" id="col3.ds12394654" source="data" type="numeric">
+<md:parameter id="col3.ds12394654.param135318">
+<md:name>Lead-214, standard deviation</md:name>
+<md:shortName>214Pb std dev</md:shortName>
+<md:unit>±</md:unit>
+<md:term endOffset="8" fragment="1" id="col3.ds12394654.param135318.term40016" startOffset="0" terminologyId="18" terminologyLabel="PAN-MicroBio">
+<md:name>lead-214</md:name>
+<md:optionalName>214Pb</md:optionalName>
+<md:URI>https://en.wikipedia.org/wiki/Isotopes_of_lead#List_of_isotopes</md:URI>
+</md:term>
+<md:term endOffset="28" fragment="2" id="col3.ds12394654.param135318.term37764" startOffset="10" terminologyId="18" terminologyLabel="PAN-MicroBio">
+<md:name>standard deviation</md:name>
+<md:optionalName>std dev</md:optionalName>
+<md:URI>https://en.wikipedia.org/wiki/Standard_deviation</md:URI>
+</md:term>
+</md:parameter>
+<md:PI id="col3.ds12394654.pi51083">
+<md:lastName>Khider</md:lastName>
+<md:firstName>D</md:firstName>
+<md:orcid>0000-0001-7501-8430</md:orcid>
+</md:PI>
+<md:comment>1 sigma</md:comment>
+<md:caption>214Pb std dev [±]</md:caption>
+</md:matrixColumn>
+<md:matrixColumn col="4" format="#0" id="col4.ds12394655" source="data" type="numeric">
+<md:parameter id="col4.ds12394655.param135319">
+<md:name>Lead-210</md:name>
+<md:shortName>210Pb</md:shortName>
+<md:unit>Bq/kg</md:unit>
+<md:term endOffset="8" fragment="1" id="col4.ds12394655.param135319.term40018" startOffset="0" terminologyId="18" terminologyLabel="PAN-MicroBio">
+<md:name>lead-210</md:name>
+<md:optionalName>210Pb</md:optionalName>
+<md:URI>https://en.wikipedia.org/wiki/Isotopes_of_lead#List_of_isotopes</md:URI>
+</md:term>
+</md:parameter>
+<md:PI id="col4.ds12394655.pi51083">
+<md:lastName>Khider</md:lastName>
+<md:firstName>D</md:firstName>
+<md:orcid>0000-0001-7501-8430</md:orcid>
+</md:PI>
+<md:caption>210Pb [Bq/kg]</md:caption>
+</md:matrixColumn>
+<md:matrixColumn col="5" format="##0" id="col5.ds12394656" source="data" type="numeric">
+<md:parameter id="col5.ds12394656.param108">
+<md:name>Lead-210, standard deviation</md:name>
+<md:shortName>210Pb std dev</md:shortName>
+<md:unit>±</md:unit>
+<md:term endOffset="8" fragment="1" id="col5.ds12394656.param108.term40018" startOffset="0" terminologyId="18" terminologyLabel="PAN-MicroBio">
+<md:name>lead-210</md:name>
+<md:optionalName>210Pb</md:optionalName>
+<md:URI>https://en.wikipedia.org/wiki/Isotopes_of_lead#List_of_isotopes</md:URI>
+</md:term>
+<md:term endOffset="28" fragment="2" id="col5.ds12394656.param108.term37764" startOffset="10" terminologyId="18" terminologyLabel="PAN-MicroBio">
+<md:name>standard deviation</md:name>
+<md:optionalName>std dev</md:optionalName>
+<md:URI>https://en.wikipedia.org/wiki/Standard_deviation</md:URI>
+</md:term>
+</md:parameter>
+<md:PI id="col5.ds12394656.pi51083">
+<md:lastName>Khider</md:lastName>
+<md:firstName>D</md:firstName>
+<md:orcid>0000-0001-7501-8430</md:orcid>
+</md:PI>
+<md:comment>1 sigma</md:comment>
+<md:caption>210Pb std dev [±]</md:caption>
+</md:matrixColumn>
+<md:matrixColumn col="6" format="#0" id="col6.ds12394657" source="data" type="numeric">
+<md:parameter id="col6.ds12394657.param31370">
+<md:name>Lead-210 excess</md:name>
+<md:shortName>210Pb xs</md:shortName>
+<md:unit>Bq/kg</md:unit>
+</md:parameter>
+<md:PI id="col6.ds12394657.pi51083">
+<md:lastName>Khider</md:lastName>
+<md:firstName>D</md:firstName>
+<md:orcid>0000-0001-7501-8430</md:orcid>
+</md:PI>
+<md:caption>210Pb xs [Bq/kg]</md:caption>
+</md:matrixColumn>
+<md:matrixColumn col="7" format="#0" id="col7.ds12394658" source="data" type="numeric">
+<md:parameter id="col7.ds12394658.param31371">
+<md:name>Lead-210 excess, standard deviation</md:name>
+<md:shortName>210Pb xs std dev</md:shortName>
+<md:unit>±</md:unit>
+<md:term endOffset="35" fragment="2" id="col7.ds12394658.param31371.term37764" startOffset="17" terminologyId="18" terminologyLabel="PAN-MicroBio">
+<md:name>standard deviation</md:name>
+<md:optionalName>std dev</md:optionalName>
+<md:URI>https://en.wikipedia.org/wiki/Standard_deviation</md:URI>
+</md:term>
+</md:parameter>
+<md:PI id="col7.ds12394658.pi51083">
+<md:lastName>Khider</md:lastName>
+<md:firstName>D</md:firstName>
+<md:orcid>0000-0001-7501-8430</md:orcid>
+</md:PI>
+<md:comment>1 sigma</md:comment>
+<md:caption>210Pb xs std dev [±]</md:caption>
+</md:matrixColumn>
+<md:keywords>
+<md:techKeyword type="autoGenerated">citable</md:techKeyword>
+<md:techKeyword id="keywords.term33871" type="fromDatabase">deNBIchemical</md:techKeyword>
+<md:techKeyword type="autoGenerated">author10664</md:techKeyword>
+<md:techKeyword type="autoGenerated">author22620</md:techKeyword>
+<md:techKeyword type="autoGenerated">author51083</md:techKeyword>
+<md:techKeyword type="autoGenerated">author51084</md:techKeyword>
+<md:techKeyword type="autoGenerated">author796</md:techKeyword>
+<md:techKeyword type="autoGenerated">basis94</md:techKeyword>
+<md:techKeyword type="autoGenerated">campaign3003</md:techKeyword>
+<md:techKeyword type="autoGenerated">event2013989</md:techKeyword>
+<md:techKeyword type="autoGenerated">geocode1</md:techKeyword>
+<md:techKeyword type="autoGenerated">geocode1600</md:techKeyword>
+<md:techKeyword type="autoGenerated">geocode1601</md:techKeyword>
+<md:techKeyword type="autoGenerated">geocode8128</md:techKeyword>
+<md:techKeyword type="autoGenerated">journal12511</md:techKeyword>
+<md:techKeyword type="autoGenerated">license101</md:techKeyword>
+<md:techKeyword type="autoGenerated">method10861</md:techKeyword>
+<md:techKeyword type="autoGenerated">param108</md:techKeyword>
+<md:techKeyword type="autoGenerated">param135317</md:techKeyword>
+<md:techKeyword type="autoGenerated">param135318</md:techKeyword>
+<md:techKeyword type="autoGenerated">param135319</md:techKeyword>
+<md:techKeyword type="autoGenerated">param1568</md:techKeyword>
+<md:techKeyword type="autoGenerated">param31370</md:techKeyword>
+<md:techKeyword type="autoGenerated">param31371</md:techKeyword>
+<md:techKeyword type="autoGenerated">pi51083</md:techKeyword>
+<md:techKeyword type="autoGenerated">ref63525</md:techKeyword>
+<md:techKeyword type="autoGenerated">term1073131</md:techKeyword>
+<md:techKeyword type="autoGenerated">term33871</md:techKeyword>
+<md:techKeyword type="autoGenerated">term37764</md:techKeyword>
+<md:techKeyword type="autoGenerated">term38263</md:techKeyword>
+<md:techKeyword type="autoGenerated">term40016</md:techKeyword>
+<md:techKeyword type="autoGenerated">term40018</md:techKeyword>
+<md:techKeyword type="autoGenerated">term41056</md:techKeyword>
+<md:techKeyword type="autoGenerated">term43863</md:techKeyword>
+</md:keywords>
+<md:technicalInfo>
+<md:entry key="xmlLastModified" value="2024-07-22T10:46:40Z"/>
+<md:entry key="lastModified" value="2016-10-07T18:39:45"/>
+<md:entry key="filename" value="MD98-2177_Pb210_Pb214"/>
+<md:entry key="mimeType" value="text/tab-separated-values"/>
+<md:entry key="status" value="published"/>
+<md:entry key="status_num" value="4"/>
+<md:entry key="DOIRegistryStatus" value="registered"/>
+<md:entry key="DOIRegistryStatus_num" value="4"/>
+<md:entry key="DOIRegistrationDate" value="2014-04-10T03:03:08"/>
+<md:entry key="hierarchyLevel" value="child"/>
+<md:entry key="loginOption" value="unrestricted"/>
+<md:entry key="loginOption_num" value="1"/>
+</md:technicalInfo>
+</md:MetaData>

@@ -6,7 +6,7 @@ import requests
 import copy
 from unittest.mock import patch, MagicMock
 from pyleotups.core import NOAADataset, UnsupportedFileTypeError
-from pyleotups.tests.helpers.mock_study_response import get_mock_study_response
+from pyleotups.tests.helpers.mock_noaa_response import get_mock_study_response
 
 
 # ------------------------

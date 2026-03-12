@@ -77,6 +77,23 @@ class PangaeaStudy:
     # Data Handling
     # ------------------------------------------------------------------
 
+    @staticmethod
+    def _normalize_id(study_id: str) -> int:
+        """
+        Extract numeric PANGAEA ID from DOI or URI string.
+
+        Examples
+        --------
+        'doi.pangaea.de/10.1594/PANGAEA.830587'
+        → 830587
+        """
+        match = re.search(r"PANGAEA\.(\d+)", str(study_id))
+        if match:
+            return int(match.group(1))
+
+        # Fallback: assume already numeric
+        return int(study_id)
+
     def get_data(self) -> pd.DataFrame:
         """
         Retrieve the dataset as a pandas DataFrame.
@@ -135,7 +152,7 @@ class PangaeaStudy:
 
             AGE_PATTERN = re.compile(r"\bage\b", re.IGNORECASE)
             EXCLUDE_PATTERN = re.compile(
-                r"(error|std|deviation|uncertainty|comment|\be\b)",
+                r"(error|std|deviation|uncertainty|dated|comment|\be\b)",
                 re.IGNORECASE
             )
 
@@ -214,20 +231,20 @@ class PangaeaStudy:
             # --------------------------------------------------
             # Fallback to Date/Time if nothing found
             # --------------------------------------------------
-            if (
-                earliest_ce is None
-                and earliest_bp is None
-                and "Date/Time" in df.columns
-            ):
-                years = pd.to_datetime(
-                    df["Date/Time"], errors="coerce"
-                ).dt.year.dropna()
+            # if (
+            #     earliest_ce is None
+            #     and earliest_bp is None
+            #     and "Date/Time" in df.columns
+            # ):
+            #     years = pd.to_datetime(
+            #         df["Date/Time"], errors="coerce"
+            #     ).dt.year.dropna()
 
-                if not years.empty:
-                    earliest_ce = int(years.min())
-                    latest_ce = int(years.max())
-                    earliest_bp = 1950 - latest_ce
-                    latest_bp = 1950 - earliest_ce
+            #     if not years.empty:
+            #         earliest_ce = int(years.min())
+            #         latest_ce = int(years.max())
+            #         earliest_bp = 1950 - latest_ce
+            #         latest_bp = 1950 - earliest_ce
 
         except Exception:
             pass
@@ -247,7 +264,10 @@ class PangaeaStudy:
         self.earliest_bp, self.latest_bp, self.earliest_ce, self.latest_ce = (
             self._extract_temporal_extent()
         )
-
+        # if collection_founds :
+        #     logger.warning(
+        #     f'The Summary Table Below may contain Dataset marked as collection.'
+        #     f'Refer to the "CollectionMembers" column to identify collection datasets and their members.')
         return {
             "StudyID": self.study_id,
             "StudyName": ds.title,
@@ -265,8 +285,8 @@ class PangaeaStudy:
                 for p in ds.projects
             ],
             "CollectionMembers": (
-                self._panobj.collection_members
-                if self._panobj.isCollection
+                [self._normalize_id(m) for m in ds.collection_members]
+                if ds.isCollection and ds.collection_members
                 else None
             ),
         }

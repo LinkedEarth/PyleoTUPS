@@ -137,13 +137,31 @@ class PangaeaDataset(BaseDataset):
     # -------------------------
     def get_summary(self) -> pd.DataFrame:
         """
-        Return a DataFrame summarizing all loaded/registered PANGAEA datasets.
-        Columns mirror NOAADataset.to_dict() keys:
-          ["StudyID","StudyName","EarliestYearBP","MostRecentYearBP",
-           "EarliestYearCE","MostRecentYearCE","StudyNotes","ScienceKeywords","Investigators",
-           "Publications","Sites","Funding"]
+        Retrieve summary metadata for all registered studies.
+
+        Returns
+        -------
+        pandas.DataFrame
+            Return a DataFrame summarizing all loaded/registered PANGAEA datasets.
+            ["StudyID","StudyName","EarliestYearBP","MostRecentYearBP",
+            "EarliestYearCE","MostRecentYearCE","StudyNotes","ScienceKeywords","Investigators",
+            "Publications","Sites","Funding"]
         """
-        rows = [study.to_summary_dict() for study in self.studies.values()]
+        rows = []
+        collection_found = []
+
+        for study in self.studies.values():
+            if study._panobj.isCollection:
+                collection_found.append(study.study_id)
+            rows.append(study.to_summary_dict())
+
+        if collection_found:
+            logger.warning(
+                f"The search contains dataset(s) [{', '.join(collection_found)}] marked as collection. "
+                "Refer to the 'CollectionMembers' column to"
+                "identify respective child datasets."
+            )
+
         return pd.DataFrame(rows)
 
     # -------------------------
@@ -151,9 +169,14 @@ class PangaeaDataset(BaseDataset):
     # -------------------------
     def get_geo(self) -> pd.DataFrame:
         """
-        Return a DataFrame with site-level rows and columns:
-        ['StudyID','SiteID','SiteName','LocationName','Latitude','Longitude','MinElevation','MaxElevation','DataType']
-        If PANGAEA lacks site-level metadata, returns an empty DataFrame.
+        Retrieve geographic information for all studies.
+
+        Returns
+        -------
+        pandas.DataFrame
+            Combined geographic metadata.
+            ['StudyID','SiteID','SiteName','LocationName','Latitude','Longitude','MinElevation','MaxElevation','DataType']
+            If PANGAEA lacks site-level metadata, returns an empty DataFrame.
         """
         frames = [study.get_geo() for study in self.studies.values()]
         return pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()

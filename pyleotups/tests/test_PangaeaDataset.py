@@ -92,7 +92,7 @@ class TestPangaeaDatasetOffline:
         with caplog.at_level("WARNING"):
             df = ds.get_data(830589)
 
-        assert df.empty
+        assert len(df) == 0
 
         assert any(
             "collection dataset" in rec.message.lower()
@@ -112,10 +112,14 @@ class TestPangaeaDatasetOffline:
         ds.search_studies(q="test")
 
         # Child of 830589
-        df = ds.get_data(830586)
 
-        assert not df.empty
-        assert 830586 in ds.studies
+        dfs = ds.get_data(830586)
+        assert isinstance(dfs, list)
+        assert len(dfs) == 1
+        assert not dfs[0].empty
+
+        dfs = ds.get_data([830586, 830587])
+        assert len(dfs) == 2
 
     #------------------------------
     # Temporal Extracation Test
@@ -256,14 +260,14 @@ class TestPangaeaDatasetOffline:
         assert len(bib.entries) > 0
 
 
-class TestPangaeaDatasetErrorHandling:
+# class TestPangaeaDatasetErrorHandling:
     
-    def test_get_data_before_search(self):
-        ds = PangaeaDataset()
-        with pytest.raises(KeyError):
-            ds.get_data(830586)
+#     def test_get_data_before_search(self):
+#         ds = PangaeaDataset()
+#         with pytest.raises(KeyError):
+#             ds.get_data(830586)
     
-    def test_get_data_before_search(self):
-        ds = PangaeaDataset()
-        with pytest.raises(KeyError):
-            ds.get_data(830586)
+#     def test_get_data_before_search(self):
+#         ds = PangaeaDataset()
+#         with pytest.raises(KeyError):
+#             ds.get_data(830586)

@@ -1,6 +1,6 @@
 from .BaseDataset import BaseDataset
 
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple, Union
 import logging
 import io
 import os
@@ -74,12 +74,71 @@ class PangaeaDataset(BaseDataset):
 
         # Fallback: assume already numeric
         return int(study_id)
+    
+    def _resolve_and_register_ids(self, study_ids):
+        """
+        Normalize and register study IDs.
+
+        Parameters
+        ----------
+        study_ids : int, str, or list
+            One or more StudyIDs (numeric or DOI string).
+
+        Returns
+        -------
+        list
+            List of normalized numeric StudyIDs.
+        """
+
+        if not isinstance(study_ids, (list, tuple)):
+            study_ids = [study_ids]
+
+        normalized_ids = [self._normalize_id(sid) for sid in study_ids]
+
+        for sid in normalized_ids:
+
+            # Already registered
+            if sid in self.studies:
+                continue
+
+            # Check if sid belongs to any registered collection
+            for parent in self.studies.values():
+                members = parent._panobj.collection_members
+                if members:
+                    normalized_members = [
+                        self._normalize_id(m) for m in members
+                    ]
+                    if sid in normalized_members:
+                        logger.info(
+                            f"Study {sid} found as collection member. "
+                            f"Registering child dataset."
+                        )
+                        self.studies[sid] = PangaeaStudy(
+                            study_id=sid,
+                            cache_dir=self.cache_dir,
+                            auth_token=self.auth_token,
+                        )
+                        break
+            else:
+                # Not in registry, not in collection → direct load
+                logger.info(
+                    f"Study {sid} not previously registered. "
+                    f"Loading ad hoc."
+                )
+                self.studies[sid] = PangaeaStudy(
+                    study_id=sid,
+                    cache_dir=self.cache_dir,
+                    auth_token=self.auth_token,
+                )
+
+        return normalized_ids
 
     # -------------------------
     # search_studies: q, bbox, keywords -> registers studies and returns same style as Dataset.search_studies (DataFrame)
     # -------------------------
     def search_studies(self,
                    q: Optional[str] = None,
+                   study_ids: Optional[Union[int, str, List]] = None,
                    bbox: Optional[Tuple[float, float, float, float]] = None,
                    limit: int = 10,
                    offset: int = 0,
@@ -101,6 +160,20 @@ class PangaeaDataset(BaseDataset):
         Returns:
             None by default, or pandas.DataFrame (same shape as Dataset.get_summary()) if display=True.
         """
+        # Direct ID loading mode
+        if study_ids is not None:
+
+            if q is not None:
+                raise ValueError("Provide either 'q' or 'study_ids', not both.")
+
+            self._resolve_and_register_ids(study_ids)
+
+            if display:
+                return self.get_summary()
+
+            return
+
+        # Query-based search
         # build query string
         q_parts = []
         if q:
@@ -289,58 +362,32 @@ class PangaeaDataset(BaseDataset):
 
         Parameters
         ----------
-        study_id : int
-            Numeric PANGAEA StudyID.
+        study_id : int, str, or list
+            One or more StudyIDs.
 
         Returns
         -------
-        pandas.DataFrame
-            Dataset table.
+        pandas.DataFrame or dict
+            If single ID → DataFrame.
+            If multiple IDs → dict of {StudyID: DataFrame}.
         """
 
-        # --------------------------------------------------
-        # Case 1: Directly registered
-        # --------------------------------------------------
-        if self._normalize_id(study_id) in self.studies:
-            study = self.studies[self._normalize_id(study_id)]
+        normalized_ids = self._resolve_and_register_ids(study_id)
+
+        results = []
+
+        for sid in normalized_ids:
+            study = self.studies[sid]
 
             if study._panobj.isCollection:
                 logger.warning(
-                    f"Study {study_id} is a collection dataset. "
-                    f"Use one of its CollectionMembers instead."
+                    f"Study {sid} is a collection dataset. Skipping."
                 )
-                return pd.DataFrame()
+                continue
 
-            return study.get_data()
+            results.append(study.get_data())
 
-        # --------------------------------------------------
-        # Case 2: Not registered — check collection members
-        # --------------------------------------------------
-        for parent_study in self.studies.values():
-            members = parent_study._panobj.collection_members
-
-            if members:
-                normalized_members = [
-                    self._normalize_id(m) for m in members
-                ]
-                # print(normalized_members)
-                if study_id in normalized_members:
-                # Register it dynamically
-                    self.studies[study_id] = PangaeaStudy(
-                        study_id=study_id,
-                        cache_dir=self.cache_dir,
-                        auth_token=self.auth_token,
-                    )
-                    return self.studies[study_id].get_data()
-
-        # --------------------------------------------------
-        # Case 3: Not found anywhere
-        # --------------------------------------------------
-        raise KeyError(
-            f"Study '{study_id}' not found. "
-            f"Run search_studies() first."
-        )
-
+        return results
 
     # -------------------------
     # translator stub
@@ -395,7 +442,7 @@ class PangaeaDataset(BaseDataset):
                     members = parent._panobj.collection_members
                     if members:
                         normalized_members = [
-                            self._normalize_id(m) for m in members
+                            PangaeaStudy._normalize_id(m) for m in members
                         ]
                         if normalized_id in normalized_members:
                             # Auto-load and register

@@ -68,6 +68,7 @@ class NOAAStudy:
                         "Malformed site entry encountered. Original error: "
                         f"{str(e)}"
                     )
+        self.coverage = self._compute_coverage()
 
     def _load_metadata(self, study_data):
         """
@@ -130,6 +131,28 @@ class NOAAStudy:
                 for f in funding_info if isinstance(f, dict)
             ]
         return []
+    
+    def _compute_coverage(self):
+        south_vals = []
+        north_vals = []
+        west_vals = []
+        east_vals = []
+
+        for site in self.sites:
+            if not np.isnan(site.south_lat):
+                south_vals.append(site.south_lat)
+            if not np.isnan(site.north_lat):
+                north_vals.append(site.north_lat)
+            if not np.isnan(site.west_lon):
+                west_vals.append(site.west_lon)
+            if not np.isnan(site.east_lon):
+                east_vals.append(site.east_lon)
+
+        if not south_vals or not north_vals or not west_vals or not east_vals:
+            return (np.nan, np.nan, np.nan, np.nan)
+        print(self.study_id, south_vals, north_vals, west_vals, east_vals)
+
+        return (min(south_vals), max(north_vals), min(west_vals), max(east_vals))
 
 
     def to_dict(self):
@@ -151,6 +174,7 @@ class NOAAStudy:
             "MostRecentYearBP": self.metadata.get("mostRecentYearBP"),
             "EarliestYearCE": self.metadata.get("earliestYearCE"),
             "MostRecentYearCE": self.metadata.get("mostRecentYearCE"),
+            "Coverage [S, N, W, E]": self.coverage,
             "StudyNotes": self.metadata.get("studyNotes"),
             "ScienceKeywords": self.metadata.get("scienceKeywords"),
             "Investigators": self.investigators,

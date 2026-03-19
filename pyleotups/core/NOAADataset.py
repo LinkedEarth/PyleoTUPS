@@ -92,7 +92,7 @@ class NOAADataset(BaseDataset):
                 except Exception:
                     check_same_study_content = False
                 if not check_same_study_content:
-                    warnings.warn(
+                    log.warning(
                         f"NOAADataset union: duplicate StudyID {sid} with differing content. "
                         "Keeping left-hand version. i.e. if C = A + B is perfomed, contents of A will be kept.", UserWarning
                     )
@@ -116,7 +116,7 @@ class NOAADataset(BaseDataset):
                 except Exception:
                     check_same_study_content = False
                 if not check_same_study_content:
-                    warnings.warn(
+                    log.warning(
                         f"Dataset in-place union: duplicate StudyID {sid} with differing content. "
                         "Keeping existing version. i.e. IF A = A + B is perfomed, contents of A will be kept", UserWarning
                     )
@@ -453,7 +453,7 @@ class NOAADataset(BaseDataset):
         if status == 204:
             inv = payload.get("investigators")
             if inv:
-                warnings.warn(
+                log.warning(
                     "No studies found for investigator(s): "
                     f"{inv}. NOAA expects 'LastName, Initials'. Try variations like:\n"
                     "  - 'LastName, Initials'\n  - 'LastName'\n  - 'Initials'"
@@ -500,7 +500,7 @@ class NOAADataset(BaseDataset):
                             self.file_url_to_datatable[file_url] = paleo.datatable_id
             
         if isinstance(limit, int) and len(data.get('study', [])) >= limit:
-            warnings.warn(
+            log.warning(
                 f"Retrieved {limit} studies, which is the specified limit. "
                 "Consider increasing the limit parameter to fetch more studies."
             )
@@ -598,7 +598,7 @@ class NOAADataset(BaseDataset):
             if not path:
                 timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M")
                 path = f"bibtex_{timestamp}.bib"
-                warnings.warn(f"No path specified. Saving BibTeX to: {path}")
+                log.warning(f"No path specified. Saving BibTeX to: {path}")
 
             try:
                 writer = Writer()
@@ -1014,7 +1014,7 @@ class NOAADataset(BaseDataset):
                 else:
                     mapping_details = self.data_table_index.get(mapping)
                     if not mapping_details:
-                        warnings.warn(
+                        log.warning(
                             f"Mapping details for file URL '{url}' (Data Table ID '{mapping}') not found; can not add metadata.",
                             UserWarning
                         )

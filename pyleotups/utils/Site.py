@@ -32,6 +32,13 @@ class Site:
             self.lon = np.nan
             self.min_elevation = np.nan
             self.max_elevation = np.nan
+        
+        properties = geo.get('properties', {})
+
+        self.south_lat = self._safe_float(properties.get('southernmostLatitude'))
+        self.north_lat = self._safe_float(properties.get('northernmostLatitude'))
+        self.west_lon = self._safe_float(properties.get('westernmostLongitude'))
+        self.east_lon = self._safe_float(properties.get('easternmostLongitude'))
 
         # ✅ Validate paleoData entries
         paleo_data_list = site_data.get('paleoData', [])
@@ -40,6 +47,12 @@ class Site:
             for paleo in paleo_data_list
             if isinstance(paleo, dict)
         ]
+
+    def _safe_float(self, val):
+        try:
+            return float(val)
+        except (TypeError, ValueError):
+            return np.nan
 
 
     def to_dict(self):

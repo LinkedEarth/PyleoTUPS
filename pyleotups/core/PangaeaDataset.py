@@ -168,10 +168,8 @@ class PangaeaDataset(BaseDataset):
 
             self._resolve_and_register_ids(study_ids)
 
-            if display:
-                return self.get_summary()
-
-            return
+            return self.get_summary() if display else logger.info(f"Retrived {len(self.studies)} studies")
+                
 
         # Query-based search
         # build query string
@@ -201,8 +199,7 @@ class PangaeaDataset(BaseDataset):
 
     
         # Only return if user explicitly asked for display
-        if display:
-            return self.get_summary()
+        return self.get_summary() if display else logger.info(f"Retrived {len(self.studies)} studies")
         
 
     # -------------------------

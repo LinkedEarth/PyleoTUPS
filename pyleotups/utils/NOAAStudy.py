@@ -150,7 +150,6 @@ class NOAAStudy:
 
         if not south_vals or not north_vals or not west_vals or not east_vals:
             return (np.nan, np.nan, np.nan, np.nan)
-        print(self.study_id, south_vals, north_vals, west_vals, east_vals)
 
         return (min(south_vals), max(north_vals), min(west_vals), max(east_vals))
 

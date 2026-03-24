@@ -17,6 +17,8 @@ from pangaeapy.pandataset import PanDataSet, PanEvent
 
 from ..utils.PangaeaStudy import PangaeaStudy
 
+logging.getLogger("pangaeapy").setLevel(logging.ERROR)
+
 logger = logging.getLogger(__name__)
 
 # try to import pangaeapy; raise helpful error if missing

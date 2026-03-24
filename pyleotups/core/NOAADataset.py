@@ -94,7 +94,7 @@ class NOAADataset(BaseDataset):
                 if not check_same_study_content:
                     log.warning(
                         f"NOAADataset union: duplicate StudyID {sid} with differing content. "
-                        "Keeping left-hand version. i.e. if C = A + B is perfomed, contents of A will be kept.", UserWarning
+                        "Keeping left-hand version. i.e. if C = A + B is perfomed, contents of A will be kept."
                     )
                 # else identical content -> do nothing
             else:
@@ -118,7 +118,7 @@ class NOAADataset(BaseDataset):
                 if not check_same_study_content:
                     log.warning(
                         f"Dataset in-place union: duplicate StudyID {sid} with differing content. "
-                        "Keeping existing version. i.e. IF A = A + B is perfomed, contents of A will be kept", UserWarning
+                        "Keeping existing version. i.e. IF A = A + B is perfomed, contents of A will be kept"
                     )
             else:
                 self.studies[sid] = study
@@ -459,7 +459,9 @@ class NOAADataset(BaseDataset):
                     "  - 'LastName, Initials'\n  - 'LastName'\n  - 'Initials'"
                 )
                 # Nothing to parse; return display summary (empty) or None
-                return self.get_summary() if ("display" in kwargs and kwargs.get("display")) else log.info(f"Retrieved {len(self.studies)} studies.")
+            log.info(f"Retrieved {len(self.studies)} studies.")
+            return self.get_summary() 
+        # if ("display" in kwargs and kwargs.get("display")) else log.info(f"Retrieved {len(self.studies)} studies.")
         # Non-204: ensure success and parse JSON
 
         try:
@@ -469,8 +471,10 @@ class NOAADataset(BaseDataset):
 
         # Parse into internal structures (you already have this)
         self._parse_response(response_json, kwargs.get("limit"))
+        log.info(f"Retrieved {len(self.studies)} studies.")
 
-        return self.get_summary() if ("display" in kwargs and kwargs.get("display")) else log.info(f"Retrieved {len(self.studies)} studies.")
+        return self.get_summary() 
+    # if ("display" in kwargs and kwargs.get("display")) else log.info(f"Retrieved {len(self.studies)} studies.")
         
 
     def _parse_response(self, data, limit):
@@ -1006,18 +1010,13 @@ class NOAADataset(BaseDataset):
             for url in file_urls:
                 mapping = self.file_url_to_datatable.get(url)
                 if not mapping:
-                    log.warning(
-                        f"Attached '{url}' is not linked to any parent study; can not add metadata.",
-                        UserWarning
-                    )
+                    log.warning(f"Attached '{url}' is not linked to any parent study; can not add metadata.")
                     dfs.extend(self._process_file(url))
                 else:
                     mapping_details = self.data_table_index.get(mapping)
                     if not mapping_details:
                         log.warning(
-                            f"Mapping details for file URL '{url}' (Data Table ID '{mapping}') not found; can not add metadata.",
-                            UserWarning
-                        )
+                            f"Mapping details for file URL '{url}' (Data Table ID '{mapping}') not found; can not add metadata.")
                         dfs.extend(self._process_file(url))
                     else:
                         dfs.extend(self._process_file(url, mapping_details))

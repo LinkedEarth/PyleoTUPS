@@ -415,7 +415,9 @@ def generate_df(lines_info, delimiter, headers, header_extent=0):
         raise ValueError(f"Column count ({len(rows[0])}) "
                          f"does not match header count ({len(col_names)})")
 
-    return pd.DataFrame(rows, columns=col_names)
+    df =  pd.DataFrame(rows, columns=col_names)
+    df = auto_cast_df(df)
+    return df
 
 
 def assign_tokens_by_overlap(lines_info, delimiter, headers, header_extent=0):
@@ -630,3 +632,19 @@ def refine_headers_by_correspondence(header_lines, data_lines, delimiter, broadc
         last_token_identity = current_token_identity
         
     return refined_headers
+
+def auto_cast_df(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Attempt to convert object columns to numeric where possible.
+    Leaves non-convertible columns unchanged.
+    """
+    for col in df.columns:
+        if df[col].dtype == "object":
+            # Try numeric conversion
+            converted = pd.to_numeric(df[col], errors="ignore")
+
+            # Only replace if conversion actually changed type
+            if converted.dtype != "object":
+                df[col] = converted
+
+    return df

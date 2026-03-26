@@ -4,7 +4,7 @@ import requests
 import pandas as pd
 import re
 
-from NonStandardParserUtils import auto_cast_df
+from .NonStandardParserUtils import auto_cast_df
 
 @DeprecationWarning
 class DataFetcher:

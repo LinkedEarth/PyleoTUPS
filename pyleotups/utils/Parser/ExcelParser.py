@@ -6,7 +6,7 @@ import pandas as pd
 from dataclasses import dataclass, field
 from typing import Any, List, Optional, Tuple, Iterable, Dict
 from enum import Enum
-from NonStandardParserUtils import auto_cast_df
+from .NonStandardParserUtils import auto_cast_df
 
 
 NUMERIC_THRESHOLD_HEADER = 0.25

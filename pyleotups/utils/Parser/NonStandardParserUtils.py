@@ -641,7 +641,7 @@ def auto_cast_df(df: pd.DataFrame) -> pd.DataFrame:
     for col in df.columns:
         if df[col].dtype == "object":
             # Try numeric conversion
-            converted = pd.to_numeric(df[col], errors="ignore")
+            converted = pd.to_numeric(df[col], errors="coerce")
 
             # Only replace if conversion actually changed type
             if converted.dtype != "object":

@@ -11,7 +11,7 @@ from ..utils.helpers import assert_list
 from ..utils.Parser.StandardParser import DataFetcher, StandardParser
 from ..utils.Parser.NonStandardParser import NonStandardParser
 from ..utils.api.constants import BASE_URL
-from ..utils.api.query_builder import build_payload
+from ..utils.api.query_builder import build_noaa_payload
 from ..utils.api.http import get
 
 
@@ -436,7 +436,7 @@ class NOAADataset(BaseDataset):
         )
 
         # Build payload using our utils (handles ids short-circuit, list→'|', Y/N coercion, time default)
-        payload, notes = build_payload(**kwargs)
+        payload, notes = build_noaa_payload(**kwargs)
         for n in notes:
             log.info("search_studies: %s", n)
         self.last_search_notes = notes

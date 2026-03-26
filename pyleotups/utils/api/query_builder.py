@@ -23,7 +23,7 @@ MULTI_SPECS = [
 ]
 
 
-def build_payload(**kwargs) -> Tuple[dict, List[str]]:
+def build_noaa_payload(**kwargs) -> Tuple[dict, List[str]]:
     """
     Normalize user kwargs (Pythonic names) into NOAA study search payload (camelCase).
     Returns (payload, notes). 'notes' contains human-readable info about defaults/normalizations.
@@ -122,3 +122,117 @@ def build_payload(**kwargs) -> Tuple[dict, List[str]]:
         payload["recent"] = "true"
 
     return payload, notes
+
+# -------------------------------------------------------
+# PANGAEA QUERY BUILDER
+# -------------------------------------------------------
+
+def _ensure_list(v):
+    if isinstance(v, (list, tuple, set)):
+        return list(v)
+    return [v]
+
+
+def build_pangaea_query(**kwargs):
+    """
+    Translate NOAA-style kwargs into PANGAEA query parameters.
+
+    Returns
+    -------
+    dict
+        {
+            "q": str,
+            "bbox": tuple or None,
+            "limit": int,
+            "offset": int
+        }
+    """
+
+    import logging
+    log = logging.getLogger(__name__)
+
+    parts = []
+
+    # ---------------------------------------------------
+    # GEO HANDLING (ALWAYS handled, even if q is provided)
+    # ---------------------------------------------------
+    min_lat = kwargs.get("min_lat")
+    max_lat = kwargs.get("max_lat")
+    min_lon = kwargs.get("min_lon")
+    max_lon = kwargs.get("max_lon")
+
+    geo_params = [min_lat, max_lat, min_lon, max_lon]
+
+    if any(v is not None for v in geo_params):
+        if not all(v is not None for v in geo_params):
+            log.warning(
+                "Incomplete geographic bounds provided. "
+                "PANGAEA requires min_lat, max_lat, min_lon, max_lon together. "
+                "Ignoring geographic filter."
+            )
+            bbox = None
+        else:
+            bbox = (min_lon, min_lat, max_lon, max_lat)
+    else:
+        bbox = None
+
+    # ---------------------------------------------------
+    # DIRECT q (override other query params)
+    # ---------------------------------------------------
+    if kwargs.get("q"):
+        q = kwargs["q"]
+
+    else:
+        # -----------------------------------------------
+        # search_text → raw query
+        # -----------------------------------------------
+        if kwargs.get("search_text"):
+            parts.append(str(kwargs["search_text"]))
+
+        # -----------------------------------------------
+        # investigators → author:
+        # -----------------------------------------------
+        if kwargs.get("investigators"):
+            vals = _ensure_list(kwargs["investigators"])
+            parts.extend([f"author:{v}" for v in vals])
+
+        # -----------------------------------------------
+        # variables → parameter:
+        # -----------------------------------------------
+        if kwargs.get("variables"):
+            vals = _ensure_list(kwargs["variables"])
+            parts.extend([f"parameter:{v}" for v in vals])
+
+        # -----------------------------------------------
+        # keywords → raw
+        # -----------------------------------------------
+        if kwargs.get("keywords"):
+            vals = _ensure_list(kwargs["keywords"])
+            parts.extend([str(v) for v in vals])
+
+        # -----------------------------------------------
+        # final query string
+        # -----------------------------------------------
+        q = " ".join(parts).strip()
+
+    # ---------------------------------------------------
+    # VALIDATION
+    # ---------------------------------------------------
+    if not q:
+        raise ValueError(
+            "At least one query parameter must be provided "
+            "(search_text, investigators, keywords, variables, or q)."
+        )
+
+    # ---------------------------------------------------
+    # LIMIT / OFFSET
+    # ---------------------------------------------------
+    limit = kwargs.get("limit", 10)
+    offset = kwargs.get("skip", 0)
+
+    return {
+        "q": q,
+        "bbox": bbox,
+        "limit": limit,
+        "offset": offset,
+    }

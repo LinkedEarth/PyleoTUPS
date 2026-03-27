@@ -6,6 +6,7 @@ import pandas as pd
 from dataclasses import dataclass, field
 from typing import Any, List, Optional, Tuple, Iterable, Dict
 from enum import Enum
+from .NonStandardParserUtils import auto_cast_df
 
 
 NUMERIC_THRESHOLD_HEADER = 0.25
@@ -416,7 +417,8 @@ class ExcelParser:
                 block.df = None
         
         elif block.block_type == BlockType.COMPLETE_TABULAR and merged_headers:
-            block.df = self._generate_df(block, grid, merged_headers, hdr_info)
+            df = self._generate_df(block, grid, merged_headers, hdr_info)
+            block.df = auto_cast_df(df)
         
         else:
             block.df = None
@@ -766,13 +768,7 @@ class ExcelParser:
         return out
 
 if __name__ == "__main__":
-    # Example usage
-    # parser = ExcelParser("/Users/dhirenoswal/Desktop/TU corpus/NonStandardParser/Correspondence/notebook/frank1999.xls")
-    # parser = ExcelParser("/Users/dhirenoswal/Desktop/TU corpus/ExcelParser/Data/orig-ocean99-xls/Clemens/Clemens1996/clemens1996.xls")
-    # parser = ExcelParser("/Users/dhirenoswal/Desktop/TU corpus/ExcelParser/Data/orig-ocean99-xls/Ishiwatari/ishiwatari1999.xls")
-    parser = ExcelParser("/Users/dhirenoswal/Desktop/TU corpus/ExcelParser/Data/orig-ocean99-xls/Overpeck1996/overpeck1996.xls")
-    # parser = ExcelParser("/Users/dhirenoswal/Desktop/TU corpus/ExcelParser/Data/orig-ocean99-xls/Bond/bond1992.xls")
-    # parser = ExcelParser("/Users/dhirenoswal/Desktop/TU corpus/ExcelParser/Data/orig-ocean99-xls/Charles/charles1996.xls")
+    parser = ExcelParser("https://www.ncei.noaa.gov/pub/data/paleo/contributions_by_author/frank1999/frank1999.xls")
     
     blocks = parser.parse()
 

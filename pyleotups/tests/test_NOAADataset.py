@@ -358,8 +358,9 @@ class TestNOAADatasetGetDataMocked:
     # --- Test t04: file_url not in mapping, should still parse ---
     @patch("pyleotups.core.NOAADataset.requests.get")
     @patch("pyleotups.core.NOAADataset.StandardParser")
-    def test_get_data_t04_unmapped_file_url_warns_and_parses(self, mock_parser, mock_get):
+    def test_get_data_t04_unmapped_file_url_warns_and_parses(self, mock_parser, mock_get, caplog):
         unmapped_url = "https://example.com/fake.txt"
+        
         mock_get.return_value.status_code = 200
         mock_get.return_value.raise_for_status = lambda: None
         mock_get.return_value.text = "# mock\n# mock\n# mock\n# mock\n# mock"
@@ -367,9 +368,18 @@ class TestNOAADatasetGetDataMocked:
         dummy_df = pd.DataFrame({"depth": [10, 20]})
         mock_parser.return_value.parse.return_value = dummy_df
 
-        with pytest.warns(UserWarning, match="not linked to any parent study"):
+        # Capture logs at WARNING level
+        with caplog.at_level("WARNING"):
             result = self.ds.get_data(file_urls=[unmapped_url])
-            assert isinstance(result[0], pd.DataFrame)
+
+        # Assert log message was emitted
+        assert any(
+            "not linked to any parent study" in record.message
+            for record in caplog.records
+        )
+
+        # Existing assertion
+        assert isinstance(result[0], pd.DataFrame)
 
     # --- Test t05: file with unsupported extension ---
     def test_get_data_t05_unsupported_file_type_raises(self):
@@ -486,7 +496,7 @@ class TestNOAADatasetAddBinary:
         assert len(C.data_table_index) == len(A.data_table_index)
         assert len(C.file_url_to_datatable) == len(A.file_url_to_datatable)
 
-    def test_add_t03_same_id_different_warns_and_keeps_left(self):
+    def test_add_t03_same_id_different_warns_and_keeps_left(self, caplog):
         """C = A + B where same NOAAStudyId but different content → warning; C looks like A."""
         A = _build_NOAAdataset_for_noaa_id(18315)
 
@@ -497,7 +507,8 @@ class TestNOAADatasetAddBinary:
         B = _build_NOAAdataset_for_noaa_id(18315, mutate=_mutate)
 
         # Expect a UserWarning mentioning duplicate/different study; keep regex loose and case-insensitive
-        with pytest.warns(UserWarning, match=r"(?i)duplicate.*study.*18315"):
+        # with pytest.warns(UserWarning, match=r"(?i)duplicate.*study.*18315"):
+        with caplog.at_level("WARNING"):
             C = A + B
 
         assert _ids(C) == {18315}
@@ -507,6 +518,11 @@ class TestNOAADatasetAddBinary:
         # Indexes remain as A
         assert len(C.data_table_index) == len(A.data_table_index)
         assert len(C.file_url_to_datatable) == len(A.file_url_to_datatable)
+
+        assert any(
+            "duplicate" in record.message.lower() and "study" in record.message.lower() and "18315" in record.message
+            for record in caplog.records
+        )
 
 
 # ---------------------------------------------------------------------------
@@ -546,7 +562,7 @@ class TestNOAADatasetAddRebind:
         assert len(A.data_table_index) == len(canonical_A.data_table_index)
         assert len(A.file_url_to_datatable) == len(canonical_A.file_url_to_datatable)
 
-    def test_add_rebind_t03_same_id_different_warns_and_keeps_left(self):
+    def test_add_rebind_t03_same_id_different_warns_and_keeps_left(self, caplog):
         """A = A + B where same NOAAStudyId but different content → warning; A still looks like original A."""
         A = _build_NOAAdataset_for_noaa_id(18315)
 
@@ -555,7 +571,8 @@ class TestNOAADatasetAddRebind:
 
         B = _build_NOAAdataset_for_noaa_id(18315, mutate=_mutate)
 
-        with pytest.warns(UserWarning, match=r"(?i)duplicate.*study.*18315"):
+        # with pytest.warns(UserWarning, match=r"(?i)duplicate.*study.*18315"):
+        with caplog.at_level("WARNING"):
             A = A + B
 
         assert _ids(A) == {18315}
@@ -566,3 +583,8 @@ class TestNOAADatasetAddRebind:
         assert _ids(A) == _ids(canonical_A)
         assert len(A.data_table_index) == len(canonical_A.data_table_index)
         assert len(A.file_url_to_datatable) == len(canonical_A.file_url_to_datatable)
+
+        assert any(
+            "duplicate" in record.message.lower() and "study" in record.message.lower() and "18315" in record.message
+            for record in caplog.records
+        )

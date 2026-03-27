@@ -51,7 +51,7 @@ class NOAADataset(BaseDataset):
         self.data_table_index = {}      # dataTableID -> dict with study, site, paleo_data
         self.file_url_to_datatable = {} # file_url -> dataTableID
         # self.last_timing = {}
-        self.logger = logging.getLogger("pyleotups.Dataset")
+        self.logger = logging.getLogger("pyleotups.NOAADataset")
 
 
     def _reindex(self):
@@ -92,9 +92,9 @@ class NOAADataset(BaseDataset):
                 except Exception:
                     check_same_study_content = False
                 if not check_same_study_content:
-                    warnings.warn(
+                    log.warning(
                         f"NOAADataset union: duplicate StudyID {sid} with differing content. "
-                        "Keeping left-hand version. i.e. if C = A + B is perfomed, contents of A will be kept.", UserWarning
+                        "Keeping left-hand version. i.e. if C = A + B is perfomed, contents of A will be kept."
                     )
                 # else identical content -> do nothing
             else:
@@ -116,9 +116,9 @@ class NOAADataset(BaseDataset):
                 except Exception:
                     check_same_study_content = False
                 if not check_same_study_content:
-                    warnings.warn(
+                    log.warning(
                         f"Dataset in-place union: duplicate StudyID {sid} with differing content. "
-                        "Keeping existing version. i.e. IF A = A + B is perfomed, contents of A will be kept", UserWarning
+                        "Keeping existing version. i.e. IF A = A + B is perfomed, contents of A will be kept"
                     )
             else:
                 self.studies[sid] = study
@@ -453,14 +453,15 @@ class NOAADataset(BaseDataset):
         if status == 204:
             inv = payload.get("investigators")
             if inv:
-                warnings.warn(
+                log.warning(
                     "No studies found for investigator(s): "
                     f"{inv}. NOAA expects 'LastName, Initials'. Try variations like:\n"
                     "  - 'LastName, Initials'\n  - 'LastName'\n  - 'Initials'"
                 )
                 # Nothing to parse; return display summary (empty) or None
-                return self.get_summary() 
-            # if kwargs.get("display") else None
+            log.info(f"Retrieved {len(self.studies)} studies.")
+            return self.get_summary() 
+        # if ("display" in kwargs and kwargs.get("display")) else log.info(f"Retrieved {len(self.studies)} studies.")
         # Non-204: ensure success and parse JSON
 
         try:
@@ -470,9 +471,10 @@ class NOAADataset(BaseDataset):
 
         # Parse into internal structures (you already have this)
         self._parse_response(response_json, kwargs.get("limit"))
+        log.info(f"Retrieved {len(self.studies)} studies.")
 
         return self.get_summary() 
-    # if kwargs.get("display") else log.info(f"Parsed {len(self.studies)} studies.")
+    # if ("display" in kwargs and kwargs.get("display")) else log.info(f"Retrieved {len(self.studies)} studies.")
         
 
     def _parse_response(self, data, limit):
@@ -502,7 +504,7 @@ class NOAADataset(BaseDataset):
                             self.file_url_to_datatable[file_url] = paleo.datatable_id
             
         if isinstance(limit, int) and len(data.get('study', [])) >= limit:
-            warnings.warn(
+            log.warning(
                 f"Retrieved {limit} studies, which is the specified limit. "
                 "Consider increasing the limit parameter to fetch more studies."
             )
@@ -600,7 +602,7 @@ class NOAADataset(BaseDataset):
             if not path:
                 timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M")
                 path = f"bibtex_{timestamp}.bib"
-                warnings.warn(f"No path specified. Saving BibTeX to: {path}")
+                log.warning(f"No path specified. Saving BibTeX to: {path}")
 
             try:
                 writer = Writer()
@@ -825,64 +827,6 @@ class NOAADataset(BaseDataset):
             return pd.DataFrame(columns=["StudyID", "SiteID", "FileURL", "VariableName"])  # fallback for no data
 
         return df.set_index("DataTableID")
-
-    @DeprecationWarning
-    def get_data_deprecated(self, dataTableIDs=None, file_urls=None):
-        """
-        Fetch external data for given dataTableIDs or file URLs and attach study/site metadata.
-
-        Parameters
-        ----------
-        dataTableIDs : list or str, optional
-            One or more NOAA data table IDs.
-        file_urls : list or str, optional
-            One or more file URLs.
-
-        Returns
-        -------
-        list of pandas.DataFrame
-            A list of DataFrames, each corresponding to fetched data.
-        """
-
-        if dataTableIDs:
-            dataTableIDs = assert_list(dataTableIDs)
-            dfs = []
-            for dt_id in dataTableIDs:
-                mapping = self.data_table_index.get(dt_id)
-                if not mapping:
-                    print(f"Data Table ID {dt_id} not found or no associated file URL.")
-                    continue
-                file_url = mapping['paleo_data'].file_url
-                if not file_url:
-                    print(f"No file URL for Data Table ID {dt_id}.")
-                    continue
-                fetched_data = DataFetcher.fetch_data(file_url)
-                if isinstance(fetched_data, list):
-                    for df in fetched_data:
-                        df.attrs['NOAAStudyId'] = mapping['study_id']
-                        df.attrs['SiteID'] = mapping['site_id']
-                        study_obj = self.studies.get(mapping['study_id'], {})
-                        df.attrs['StudyName'] = study_obj.metadata.get("studyName") if hasattr(study_obj, 'metadata') else None
-                        publications = study_obj.publications if hasattr(study_obj, 'publications') else None
-                        print(len(publications))
-                        for pub in publications:
-                            if hasattr(pub, "doi"):
-                                doi = pub.doi if pub.doi else None
-                                df.attrs['PublicationDOI'].append(doi)                                
-                        dfs.append(df)
-                else:
-                    fetched_data.attrs['NOAAStudyId'] = mapping['study_id']
-                    fetched_data.attrs['SiteID'] = mapping['site_id']
-                    study_obj = self.studies.get(mapping['study_id'], {})
-                    fetched_data.attrs['StudyName'] = study_obj.metadata.get("studyName") if hasattr(study_obj, 'metadata') else None
-                    dfs.append(fetched_data)
-            return dfs
-        if file_urls:
-            file_urls = assert_list(file_urls)
-            dfs = [DataFetcher.fetch_data(url) for url in file_urls]
-            return dfs
-        print("No dataTableID or file URL provided.")
-        return pd.DataFrame()
     
 
     def _process_file(self, file_url, mapping=None):
@@ -1050,10 +994,6 @@ class NOAADataset(BaseDataset):
             dataTableIDs = assert_list(dataTableIDs)
             for dt_id in dataTableIDs:
 
-                # print(self.data_table_index, type(self.data_table_index.values()))
-                # for id, value in self.data_table_index.items():
-                    # print(type(id))
-                    # print(value, type(value))
                 mapping = self.data_table_index.get(dt_id)
                 if not mapping:
                     raise ValueError(f"No parent study mapping found for Data Table ID '{dt_id}'. "
@@ -1070,18 +1010,13 @@ class NOAADataset(BaseDataset):
             for url in file_urls:
                 mapping = self.file_url_to_datatable.get(url)
                 if not mapping:
-                    warnings.warn(
-                        f"Attached '{url}' is not linked to any parent study; can not add metadata.",
-                        UserWarning
-                    )
+                    log.warning(f"Attached '{url}' is not linked to any parent study; can not add metadata.")
                     dfs.extend(self._process_file(url))
                 else:
                     mapping_details = self.data_table_index.get(mapping)
                     if not mapping_details:
-                        warnings.warn(
-                            f"Mapping details for file URL '{url}' (Data Table ID '{mapping}') not found; can not add metadata.",
-                            UserWarning
-                        )
+                        log.warning(
+                            f"Mapping details for file URL '{url}' (Data Table ID '{mapping}') not found; can not add metadata.")
                         dfs.extend(self._process_file(url))
                     else:
                         dfs.extend(self._process_file(url, mapping_details))

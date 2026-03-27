@@ -31,6 +31,11 @@ def build_payload(**kwargs) -> Tuple[dict, List[str]]:
     notes: List[str] = []
     payload: dict = {}
 
+    # Defaults
+    if kwargs.get("data_type_id") is not None:
+        payload["dataTypeID"] = kwargs.get("data_type_id") 
+    payload["dataPublisher"] = DATA_PUBLISHER
+    
     # Identifier short-circuit
     xml_id  = kwargs.get("xml_id")
     noaa_id = kwargs.get("noaa_id")
@@ -39,13 +44,12 @@ def build_payload(**kwargs) -> Tuple[dict, List[str]]:
             payload["xmlId"] = validate_digits(xml_id)
         if noaa_id is not None:
             payload["NOAAStudyId"] = validate_digits(noaa_id)
-        payload["dataPublisher"] = DATA_PUBLISHER
+        
         # Ignore all other filters by design
-        notes.append("Using identifier-only fetch (xml_id/NOAAStudyId). Other parameters will be ignored.")
-        return payload, notes
+        # notes.append("Using identifier-only fetch (xml_id/NOAAStudyId). Other parameters will be ignored.")
+        # return payload, notes
 
-    # Defaults
-    payload["dataPublisher"] = DATA_PUBLISHER
+    
     payload["limit"] = kwargs.get("limit", DEFAULT_LIMIT)
     if payload["limit"] != DEFAULT_LIMIT:
         notes.append(f"Limit set to {payload['limit']}.")
@@ -82,6 +86,8 @@ def build_payload(**kwargs) -> Tuple[dict, List[str]]:
         payload["minLon"] = validate_int_range("min_lon", v, -180, 180)
     if (v := kwargs.get("max_lon")) is not None:
         payload["maxLon"] = validate_int_range("max_lon", v, -180, 180)
+    
+    notes.append("Input Query includes geographical bounds. Inspect the results to ensure they match your intended region as one study can contain sites across various parts of the world.")
 
     # Elevation (any ints allowed)
     if (v := kwargs.get("min_elevation")) is not None:

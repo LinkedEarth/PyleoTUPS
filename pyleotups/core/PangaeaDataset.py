@@ -17,6 +17,8 @@ from pangaeapy.pandataset import PanDataSet, PanEvent
 
 from ..utils.PangaeaStudy import PangaeaStudy
 
+logging.getLogger("pangaeapy").setLevel(logging.ERROR)
+
 logger = logging.getLogger(__name__)
 
 # try to import pangaeapy; raise helpful error if missing
@@ -158,7 +160,7 @@ class PangaeaDataset(BaseDataset):
             display: if True, return get_summary() after populating registry
 
         Returns:
-            None by default, or pandas.DataFrame (same shape as Dataset.get_summary()) if display=True.
+            pandas.DataFrame (same shape as Dataset.get_summary()).
         """
         # Direct ID loading mode
         if study_ids is not None:
@@ -168,10 +170,11 @@ class PangaeaDataset(BaseDataset):
 
             self._resolve_and_register_ids(study_ids)
 
-            if display:
-                return self.get_summary()
+            logger.info(f"Retrived {len(self.studies)} studies")
 
-            return
+            return self.get_summary() 
+            # if display else logger.info(f"Retrived {len(self.studies)} studies")
+                
 
         # Query-based search
         # build query string
@@ -183,7 +186,7 @@ class PangaeaDataset(BaseDataset):
         try:
             pq = PanQuery(query=query_str, bbox=bbox, limit=limit, offset=offset)
         except Exception as exc:
-            logger.exception("PanQuery failed")
+            logger.exception(f"PanQuery failed due to {exc}")
             raise
 
         # register results in self.studies but do not accumulate into a dataframe here
@@ -199,10 +202,10 @@ class PangaeaDataset(BaseDataset):
                     auth_token=self.auth_token,
                 )
 
-    
-        # Only return if user explicitly asked for display
-        if display:
-            return self.get_summary()
+        logger.info(f"Retrived {len(self.studies)} studies")
+
+        return self.get_summary() 
+        # if display else logger.info(f"Retrived {len(self.studies)} studies")
         
 
     # -------------------------

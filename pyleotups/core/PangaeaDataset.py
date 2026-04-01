@@ -166,6 +166,27 @@ class PangaeaDataset(BaseDataset):
             One or more PANGAEA dataset identifiers (numeric ID or DOI string).
             If provided, performs direct lookup and ignores other filters.
 
+        topic : str, optional
+            Filter datasets by PANGAEA topic classification.
+            Must be one of the predefined topics:
+            - "all" (default)
+            - "Agriculture" 
+            - "Atmosphere" 
+            - "Biological Classification"
+            - "Biosphere"
+            - "Chemistry" 
+            - "Cryosphere" 
+            - "Ecology"
+            - "Fisheries" 
+            - "Geophysics" 
+            - "Human Dimensions"
+            - "Lakes & Rivers" 
+            - "Land Surface" 
+            - "Lithosphere"
+            - "Oceans" 
+            - "Paleontology"
+            If set to "all" or omitted, no topic filtering is applied.
+
         search_text : str, optional
             Free-text search query applied across dataset metadata. Maps to PANGAEA full-text search parameter 'q'.
             Example: 'stable carbon and oxygen isotopes'.
@@ -308,7 +329,6 @@ class PangaeaDataset(BaseDataset):
             df.head()
         """
         study_ids = kwargs.get("study_ids")
-        q = kwargs.get("search_text")
 
         # -------------------------------------------
         # MODE 1: STUDY IDS (HIGHEST PRIORITY)
@@ -324,7 +344,6 @@ class PangaeaDataset(BaseDataset):
                 kwargs.get("max_lat"),
                 kwargs.get("min_lon"),
                 kwargs.get("max_lon"),
-                q
             ]):
                 logger.warning(
                     "Using identifier-only fetch (Pangaea DOI). Other parameters will be ignored.."
@@ -345,7 +364,6 @@ class PangaeaDataset(BaseDataset):
                 kwargs.get("max_lat"),
                 kwargs.get("min_lon"),
                 kwargs.get("max_lon"),
-                q
             ]):
             raise ValueError(
                 "At least one search parameter must be specified to initiate a query. "
@@ -353,6 +371,7 @@ class PangaeaDataset(BaseDataset):
             )
 
         params = build_pangaea_query(**kwargs)
+        print(params)
 
         try:
             pq = PanQuery(
@@ -645,34 +664,3 @@ class PangaeaDataset(BaseDataset):
             return pd.DataFrame()
 
         return pd.concat(frames, ignore_index=True)
-
-
-if __name__ == "__main__":
-
-    pg = PangaeaDataset()
-
-    # Search (returns DataFrame)
-    pg.search_studies(q="coral aragonite", bbox=(-180,-90,180,90), keywords=["Sr/Ca"], limit=10)
-
-    hits_df = pg.search_studies(q="coral aragonite", bbox=(-180,-90,180,90), keywords=["Sr/Ca"], limit=10)
-    
-    print(hits_df.shape)
-    print(hits_df.columns)
-    # register is automatically populated
-    print("Registry size:", len(pg.studies))
-
-    # Pick an id from hits and fetch summary (DataFrame single-row)
-    ident = hits_df.iloc[0]["id"]
-    summary_df = pg.get_summary()
-    print(summary_df.T)   # pretty inspect
-
-    # get_geo (DataFrame or empty DataFrame)
-    geo_df = pg.get_geo()
-    print(geo_df)
-
-    # get_publications -> DataFrame
-    pubs_df = pg.get_publications()
-    print(pubs_df)
-    # get_data -> DataFrame (parsed table)
-    data_df = pg.get_data()  # uses PanDataSet and returns pandas.DataFrame
-    print(data_df)  # provenance

@@ -127,10 +127,26 @@ def build_noaa_payload(**kwargs) -> Tuple[dict, List[str]]:
 # PANGAEA QUERY BUILDER
 # -------------------------------------------------------
 
-def _ensure_list(v):
-    if isinstance(v, (list, tuple, set)):
-        return list(v)
-    return [v]
+
+def _build_logical_block(field_name, values, operator, formatter):
+    if not values:
+        return None
+
+    if not isinstance(values, (list, tuple, set)):
+        values = [values]
+
+    values = [v for v in values if v]
+
+    if not values:
+        return None
+
+    parts = [formatter(v) for v in values]
+
+    if len(parts) == 1:
+        return parts[0]
+
+    
+    return f"({' OR '.join(parts)})" if operator.lower() == "or" else  f"{' '.join(parts)}"   # implicit AND
 
 
 def build_pangaea_query(**kwargs):
@@ -148,9 +164,6 @@ def build_pangaea_query(**kwargs):
         }
     """
 
-    import logging
-    log = logging.getLogger(__name__)
-
     parts = []
 
     # ---------------------------------------------------
@@ -160,6 +173,51 @@ def build_pangaea_query(**kwargs):
     max_lat = kwargs.get("max_lat")
     min_lon = kwargs.get("min_lon")
     max_lon = kwargs.get("max_lon")
+
+    # -----------------------------------------------
+    # topic → topic:<value>
+    # -----------------------------------------------
+    VALID_TOPICS = {
+    "agriculture", "atmosphere", "biological classification",
+    "biosphere", "chemistry", "cryosphere", "ecology",
+    "fisheries", "geophysics", "human dimensions",
+    "lakes & rivers", "land surface", "lithosphere",
+    "oceans", "paleontology"
+    }
+
+    topic = kwargs.get("topic")
+
+    if topic:
+        # normalize to list
+        if not isinstance(topic, (list, tuple, set)):
+            topic = [topic]
+
+        if topic:
+            # validate
+            normalized_topics = []
+            invalid = []
+            for t in topic:
+                key = str(t).strip().lower()
+                if key in VALID_TOPICS:
+                    normalized_topics.append(t)   # use normalized
+                elif key != "all":
+                    invalid.append(t)
+            if invalid:
+                log.warning(
+                    f"Invalid topic(s) found. Skipping: {invalid}. "
+                    f"Please select from available topics: {sorted(VALID_TOPICS)}"
+                )
+
+            # build query block
+            block = _build_logical_block(
+                "topic",
+                normalized_topics,
+                kwargs.get("topic_and_or", "or"),
+                lambda v: f"topic:{v}"
+            )
+
+            if block:
+                parts.append(block)
 
     geo_params = [min_lat, max_lat, min_lon, max_lon]
 
@@ -176,59 +234,62 @@ def build_pangaea_query(**kwargs):
     else:
         bbox = None
 
-    # ---------------------------------------------------
-    # DIRECT q (override other query params)
-    # ---------------------------------------------------
-    if kwargs.get("q"):
-        q = kwargs["q"]
+    
+    # -----------------------------------------------
+    # search_text → raw query
+    # -----------------------------------------------
+    if kwargs.get("search_text"):
+        parts.append(str(kwargs["search_text"]))
 
-    else:
-        # -----------------------------------------------
-        # search_text → raw query
-        # -----------------------------------------------
-        if kwargs.get("search_text"):
-            parts.append(str(kwargs["search_text"]))
+    # -----------------------------------------------
+    # investigators → author:
+    # -----------------------------------------------
+    block = _build_logical_block(
+        "investigators",
+        kwargs.get("investigators"),
+        kwargs.get("investigators_and_or", "and"),
+        lambda v: f"author:{v}"
+    )
 
-        # -----------------------------------------------
-        # investigators → author:
-        # -----------------------------------------------
-        if kwargs.get("investigators"):
-            vals = _ensure_list(kwargs["investigators"])
-            parts.extend([f"author:{v}" for v in vals])
+    if block:
+        parts.append(block)
 
-        # -----------------------------------------------
-        # variables → parameter:
-        # -----------------------------------------------
-        if kwargs.get("variable_name"):
-            vals = _ensure_list(kwargs["variable_name"])
-            parts.extend([f"parameter:{v}" for v in vals])
+    # -----------------------------------------------
+    # variables → parameter:
+    # -----------------------------------------------
+    block = _build_logical_block(
+        "variable_name",
+        kwargs.get("variable_name"),
+        kwargs.get("variable_name_and_or", "and"),
+        lambda v: f"parameter:{v}"
+    )
 
-        # -----------------------------------------------
-        # keywords → raw
-        # -----------------------------------------------
-        if kwargs.get("keywords"):
-            vals = _ensure_list(kwargs["keywords"])
-            parts.extend([str(v) for v in vals])
+    if block:
+        parts.append(block)
 
-        # -----------------------------------------------
-        # final query string
-        # -----------------------------------------------
-        q = " ".join(parts).strip()
 
-    # ---------------------------------------------------
-    # VALIDATION
-    # ---------------------------------------------------
+    # -----------------------------------------------
+    # final query string
+    # -----------------------------------------------
+    q = " ".join(parts).strip()
+
     if not q and not bbox:
         raise ValueError(
-            "At least one query parameter must be provided "
-            "(bbox, search_text, investigators, variables, or q)."
+        "At least one valid (non-null) search parameter or geographic bound must be provided to build a query." 
+        "To view available parameters and usage examples, run: help(PangaeaDataset.search_studies)"
         )
+
+
 
     # ---------------------------------------------------
     # LIMIT / OFFSET
     # ---------------------------------------------------
     limit = kwargs.get("limit", 100)
-    log.info(f"Limit defaulted to {DEFAULT_LIMIT} (PyleoTUPS).") if limit == 100 else log.info(f"Limit set to {limit}")
+    if limit > 500:
+        log.warning("Limit exceeds maximum allowed (500). Using 500.")
+        limit = 500
+    else:
+        log.info(f"Limit set to {limit}")
     offset = kwargs.get("skip", 0)
 
     return {

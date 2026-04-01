@@ -218,16 +218,17 @@ def build_pangaea_query(**kwargs):
     # ---------------------------------------------------
     # VALIDATION
     # ---------------------------------------------------
-    if not q:
+    if not q and not bbox:
         raise ValueError(
             "At least one query parameter must be provided "
-            "(search_text, investigators, keywords, variables, or q)."
+            "(bbox, search_text, investigators, variables, or q)."
         )
 
     # ---------------------------------------------------
     # LIMIT / OFFSET
     # ---------------------------------------------------
-    limit = kwargs.get("limit", 10)
+    limit = kwargs.get("limit", 100)
+    log.info(f"Limit defaulted to {DEFAULT_LIMIT} (PyleoTUPS).") if limit == 100 else log.info(f"Limit set to {limit}")
     offset = kwargs.get("skip", 0)
 
     return {

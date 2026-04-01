@@ -17,6 +17,8 @@ from pangaeapy.pandataset import PanDataSet, PanEvent
 
 from ..utils.PangaeaStudy import PangaeaStudy
 
+from ..utils.api.query_builder import build_pangaea_query
+
 logging.getLogger("pangaeapy").setLevel(logging.ERROR)
 
 logger = logging.getLogger(__name__)
@@ -139,12 +141,13 @@ class PangaeaDataset(BaseDataset):
     # search_studies: q, bbox, keywords -> registers studies and returns same style as Dataset.search_studies (DataFrame)
     # -------------------------
     def search_studies(self,
-                   q: Optional[str] = None,
-                   study_ids: Optional[Union[int, str, List]] = None,
-                   bbox: Optional[Tuple[float, float, float, float]] = None,
-                   limit: int = 10,
-                   offset: int = 0,
-                   display: bool = False) -> Optional[pd.DataFrame]:
+                #    q: Optional[str] = None,
+                #    study_ids: Optional[Union[int, str, List]] = None,
+                #    bbox: Optional[Tuple[float, float, float, float]] = None,
+                #    limit: int = 10,
+                #    offset: int = 0,
+                #    display: bool = False
+                **kwargs) -> Optional[pd.DataFrame]:
         """
         Search PANGAEA and register results in self.studies.
 
@@ -162,29 +165,45 @@ class PangaeaDataset(BaseDataset):
         Returns:
             pandas.DataFrame (same shape as Dataset.get_summary()).
         """
-        # Direct ID loading mode
+        study_ids = kwargs.get("study_ids")
+        q = kwargs.get("q")
+
+        # -------------------------------------------
+        # MODE 1: STUDY IDS (HIGHEST PRIORITY)
+        # -------------------------------------------
         if study_ids is not None:
 
-            if q is not None:
-                raise ValueError("Provide either 'q' or 'study_ids', not both.")
+            # Prevent mixing modes
+            if any([
+                kwargs.get("search_text"),
+                kwargs.get("investigators"),
+                kwargs.get("keywords"),
+                kwargs.get("variables"),
+                kwargs.get("min_lat"),
+                kwargs.get("max_lat"),
+                kwargs.get("min_lon"),
+                kwargs.get("max_lon"),
+                q
+            ]):
+                logger.warning(
+                    "Using identifier-only fetch (Pangaea DOI). Other parameters will be ignored.."
+                )
 
-            self._resolve_and_register_ids(study_ids)
+            self._resolve_and_register_ids(kwargs.get("study_ids"))
 
             logger.info(f"Retrived {len(self.studies)} studies")
 
             return self.get_summary() 
-            # if display else logger.info(f"Retrived {len(self.studies)} studies")
-                
+            # if display else logger.info(f"Retrived {len(self.studies)} studies")   
 
-        # Query-based search
-        # build query string
-        q_parts = []
-        if q:
-            q_parts.append(q)
-        query_str = " ".join(q_parts).strip() or ""
+        params = build_pangaea_query(**kwargs)
 
         try:
-            pq = PanQuery(query=query_str, bbox=bbox, limit=limit, offset=offset)
+            pq = PanQuery(
+                query = params["q"], 
+                bbox = params["bbox"], 
+                limit = params["limit"], 
+                offset = params["offset"])
         except Exception as exc:
             logger.exception(f"PanQuery failed due to {exc}")
             raise

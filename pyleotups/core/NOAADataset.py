@@ -185,11 +185,11 @@ class NOAADataset(BaseDataset):
         species_and_or : {"and","or"}, default "or"
             Logical combiner for multiple species. Only sent when 2+ items.
         
-        cv_whats : str or list[str], optional
-            PaST “What” terms (hierarchies with ``>``). Lists joined with ``|``.
+        variable_name : str or list[str], optional
+            Refers to PaST "cvWhats” terms (hierarchies with ``>``). Lists joined with ``|``.
         
-        cv_whats_and_or : {"and","or"}, default "or"
-            Logical combiner for multiple cv_whats. Only sent when 2+ items.
+        variable_name_and_or : {"and","or"}, default "or"
+            Logical combiner for multiple cvWhats/variable_name. Only sent when 2+ items.
         
         cv_materials : str or list[str], optional
             PaST “Material” terms (hierarchies with ``>``). Lists joined with ``|``.
@@ -256,7 +256,7 @@ class NOAADataset(BaseDataset):
         -----
         User Guide:
 
-        **Multi-value fields.** For ``investigators``, ``locations``, ``keywords``, ``species``, ``cv_whats``,
+        **Multi-value fields.** For ``investigators``, ``locations``, ``keywords``, ``species``, ``variable_name`` (cvWhats),
         ``cv_materials``, ``cv_seasonalities``:
         - Accept a string (already ``|``-separated) **or** a Python list of strings.
         - Lists are joined with ``|``. The corresponding ``*_and_or`` flag is included only when 2+ items.
@@ -419,14 +419,14 @@ class NOAADataset(BaseDataset):
         kwargs.get("location") or kwargs.get("locations"),
         kwargs.get("publication"), kwargs.get("search_text"),
         kwargs.get("earliest_year"), kwargs.get("latest_year"),
-        kwargs.get("cv_whats"), kwargs.get("min_elevation"),
+        kwargs.get("variable_name"), kwargs.get("min_elevation"),
         kwargs.get("max_elevation"), kwargs.get("time_format"),
         kwargs.get("time_method"), kwargs.get("reconstruction"),
         kwargs.get("species"), kwargs.get("recent"), kwargs.get("skip")
         ]):
             raise ValueError(
                 "At least one search parameter must be specified to initiate a query. "
-                "To view available parameters and usage examples, run: help(Dataset.search_studies)"
+                "To view available parameters and usage examples, run: help(NOAADataset.search_studies)"
             )
         
         if kwargs.get("data_publisher") and kwargs["data_publisher"] != "NOAA":
@@ -434,6 +434,9 @@ class NOAADataset(BaseDataset):
             "PyleoTUPS currently supports data_publisher='NOAA' only. "
             "Please retry with data_publisher='NOAA'."
         )
+
+        if kwargs.get("cv_whats") and not kwargs.get("variable_name"):
+            kwargs["variable_name"] = kwargs.pop("cv_whats")
 
         # Build payload using our utils (handles ids short-circuit, list→'|', Y/N coercion, time default)
         payload, notes = build_noaa_payload(**kwargs)

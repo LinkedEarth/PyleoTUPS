@@ -17,7 +17,7 @@ MULTI_SPECS = [
     ("locations",        "locations",        "locations_and_or",        "locationsAndOr",        normalize_passthrough),
     ("keywords",         "keywords",         "keywords_and_or",         "keywordsAndOr",         normalize_passthrough),
     ("species",          "species",          "species_and_or",          "speciesAndOr",          normalize_species_code),
-    ("cv_whats",         "cvWhats",          "cv_whats_and_or",         "cvWhatsAndOr",          normalize_passthrough),
+    ("variable_name",    "cvWhats",          "variable_name_and_or",    "cvWhatsAndOr",          normalize_passthrough),
     ("cv_materials",     "cvMaterials",      "cv_materials_and_or",     "cvMaterialsAndOr",      normalize_passthrough),
     ("cv_seasonalities", "cvSeasonalities",  "cv_seasonalities_and_or", "cvSeasonalitiesAndOr",  normalize_passthrough),
 ]
@@ -199,8 +199,8 @@ def build_pangaea_query(**kwargs):
         # -----------------------------------------------
         # variables → parameter:
         # -----------------------------------------------
-        if kwargs.get("variables"):
-            vals = _ensure_list(kwargs["variables"])
+        if kwargs.get("variable_name"):
+            vals = _ensure_list(kwargs["variable_name"])
             parts.extend([f"parameter:{v}" for v in vals])
 
         # -----------------------------------------------

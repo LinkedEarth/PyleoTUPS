@@ -166,7 +166,7 @@ class PangaeaDataset(BaseDataset):
             pandas.DataFrame (same shape as Dataset.get_summary()).
         """
         study_ids = kwargs.get("study_ids")
-        q = kwargs.get("q")
+        q = kwargs.get("search_text") or kwargs.get("q")
 
         # -------------------------------------------
         # MODE 1: STUDY IDS (HIGHEST PRIORITY)
@@ -178,7 +178,7 @@ class PangaeaDataset(BaseDataset):
                 kwargs.get("search_text"),
                 kwargs.get("investigators"),
                 kwargs.get("keywords"),
-                kwargs.get("variables"),
+                kwargs.get("variable_name"),
                 kwargs.get("min_lat"),
                 kwargs.get("max_lat"),
                 kwargs.get("min_lon"),
@@ -195,6 +195,22 @@ class PangaeaDataset(BaseDataset):
 
             return self.get_summary() 
             # if display else logger.info(f"Retrived {len(self.studies)} studies")   
+
+        if not any([
+                kwargs.get("search_text"),
+                kwargs.get("investigators"),
+                kwargs.get("keywords"),
+                kwargs.get("variable_name"),
+                kwargs.get("min_lat"),
+                kwargs.get("max_lat"),
+                kwargs.get("min_lon"),
+                kwargs.get("max_lon"),
+                q
+            ]):
+            raise ValueError(
+                "At least one search parameter must be specified to initiate a query. "
+                "To view available parameters and usage examples, run: help(PangaeaDataset.search_studies)"
+            )
 
         params = build_pangaea_query(**kwargs)
 

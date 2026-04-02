@@ -59,7 +59,7 @@ class TestPangaeaDatasetOffline:
         ]
 
         ds = PangaeaDataset()
-        ds.search_studies(q="test")
+        ds.search_studies(search_text="test")
 
         assert 830589 in ds.studies
 
@@ -87,7 +87,7 @@ class TestPangaeaDatasetOffline:
         ]
 
         ds = PangaeaDataset()
-        ds.search_studies(q="test")
+        ds.search_studies(search_text="test")
 
         with caplog.at_level("WARNING"):
             df = ds.get_data(830589)
@@ -109,7 +109,7 @@ class TestPangaeaDatasetOffline:
         ]
 
         ds = PangaeaDataset()
-        ds.search_studies(q="test")
+        ds.search_studies(search_text="test")
 
         # Child of 830589
 
@@ -133,7 +133,7 @@ class TestPangaeaDatasetOffline:
         ]
 
         ds = PangaeaDataset()
-        ds.search_studies(q="test")
+        ds.search_studies(search_text="test")
 
         summary = ds.get_summary()
         row = summary.iloc[0]
@@ -152,7 +152,7 @@ class TestPangaeaDatasetOffline:
         ]
 
         ds = PangaeaDataset()
-        ds.search_studies(q="test")
+        ds.search_studies(search_text="test")
 
         summary = ds.get_summary()
         row = summary.iloc[0]
@@ -171,7 +171,7 @@ class TestPangaeaDatasetOffline:
         ]
 
         ds = PangaeaDataset()
-        ds.search_studies(q="test")
+        ds.search_studies(search_text="test")
 
         summary = ds.get_summary()
         row = summary.iloc[0]
@@ -190,7 +190,7 @@ class TestPangaeaDatasetOffline:
         ]
 
         ds = PangaeaDataset()
-        ds.search_studies(q="test")
+        ds.search_studies(search_text="test")
 
         summary = ds.get_summary()
         row = summary.iloc[0]
@@ -212,7 +212,7 @@ class TestPangaeaDatasetOffline:
         ]
 
         ds = PangaeaDataset()
-        ds.search_studies(q="test")
+        ds.search_studies(search_text="test")
 
         df_vars = ds.get_variables(830586)
 
@@ -235,7 +235,7 @@ class TestPangaeaDatasetOffline:
         ]
 
         ds = PangaeaDataset()
-        ds.search_studies(q="test")
+        ds.search_studies(search_text="test")
 
         df_funding = ds.get_funding()
 
@@ -252,7 +252,7 @@ class TestPangaeaDatasetOffline:
         ]
 
         ds = PangaeaDataset()
-        ds.search_studies(q="test")
+        ds.search_studies(search_text="test")
 
         bib, df_pub = ds.get_publications()
 

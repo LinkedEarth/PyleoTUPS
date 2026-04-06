@@ -725,7 +725,7 @@ class NOAADataset(BaseDataset):
                     "DataType": data_type,
                     **{
                         k: v for k, v in site.to_dict()[0].items()  # site.to_dict() returns list of dicts (1 per file)
-                        if k in ["SiteID", "SiteName", "LocationName", "Latitude", "Longitude", "MinElevation", "MaxElevation"]
+                        if k in ["SiteID", "SiteName", "LocationName", "GeoType","GeometryType", "MinLatitude", "MaxLatitude", "MinLongitude", "MaxLongitude", "MinElevation", "MaxElevation"]
                     }
                 }
                 site_records.append(site_dict)

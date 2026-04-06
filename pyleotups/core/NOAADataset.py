@@ -11,7 +11,7 @@ from ..utils.helpers import assert_list
 from ..utils.Parser.StandardParser import DataFetcher, StandardParser
 from ..utils.Parser.NonStandardParser import NonStandardParser
 from ..utils.api.constants import BASE_URL
-from ..utils.api.query_builder import build_payload
+from ..utils.api.query_builder import build_noaa_payload
 from ..utils.api.http import get
 
 
@@ -185,11 +185,11 @@ class NOAADataset(BaseDataset):
         species_and_or : {"and","or"}, default "or"
             Logical combiner for multiple species. Only sent when 2+ items.
         
-        cv_whats : str or list[str], optional
-            PaST “What” terms (hierarchies with ``>``). Lists joined with ``|``.
+        variable_name : str or list[str], optional
+            Refers to PaST "cvWhats” terms (hierarchies with ``>``). Lists joined with ``|``.
         
-        cv_whats_and_or : {"and","or"}, default "or"
-            Logical combiner for multiple cv_whats. Only sent when 2+ items.
+        variable_name_and_or : {"and","or"}, default "or"
+            Logical combiner for multiple cvWhats/variable_name. Only sent when 2+ items.
         
         cv_materials : str or list[str], optional
             PaST “Material” terms (hierarchies with ``>``). Lists joined with ``|``.
@@ -256,7 +256,7 @@ class NOAADataset(BaseDataset):
         -----
         User Guide:
 
-        **Multi-value fields.** For ``investigators``, ``locations``, ``keywords``, ``species``, ``cv_whats``,
+        **Multi-value fields.** For ``investigators``, ``locations``, ``keywords``, ``species``, ``variable_name`` (cvWhats),
         ``cv_materials``, ``cv_seasonalities``:
         - Accept a string (already ``|``-separated) **or** a Python list of strings.
         - Lists are joined with ``|``. The corresponding ``*_and_or`` flag is included only when 2+ items.
@@ -281,7 +281,7 @@ class NOAADataset(BaseDataset):
         .. jupyter-execute::
 
             import pyleotups as pt
-            ds = pt.Dataset()
+            ds = pt.NOAADataset()
             df_noaa = ds.search_studies(noaa_id=13156)
             df_xml = ds.search_studies(xml_id=1840)
             df_noaa.head()
@@ -291,26 +291,26 @@ class NOAADataset(BaseDataset):
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         .. jupyter-execute::
 
-            # Single phrase
+            ### Single phrase
             df_singlephrase = ds.search_studies(search_text="younger dryas", limit=20)
             df_singlephrase.head()
 
         .. jupyter-execute::
 
-            # Logical operator (AND)
+            ### Logical operator (AND)
             df_logop = ds.search_studies(search_text="loess AND stratigraphy", limit=20)
             df_logop.head()
 
         .. jupyter-execute::
 
-            # Wildcards: '_' (single char), '%' (multi-char)
+            ### Wildcards: '_' (single char), '%' (multi-char)
             df_wc_1 = ds.search_studies(search_text="f_re", limit=20)
             df_wc_2 = ds.search_studies(search_text="pol%", limit=20)
             df_wc_1.head(), df_wc_2.head()
 
         .. jupyter-execute::
 
-            # Escaping special characters (use backslashes)
+            ### Escaping special characters (use backslashes)
             df_specchar = ds.search_studies(search_text=r"noaa\-tree\-19260", limit=20)
             df_specchar.head()
 
@@ -319,25 +319,25 @@ class NOAADataset(BaseDataset):
 
         .. jupyter-execute::
 
-            # Multiple investigators (OR by default)
+            ### Multiple investigators (OR by default)
             df_multinv_default = ds.search_studies(investigators=["Wahl, E.R.", "Vose, R.S."])
             df_multinv_default.head()
         
         .. jupyter-execute::
 
-            # Multiple investigators (AND by default)
+            ### Multiple investigators (AND by default)
             df_multinv_and = ds.search_studies(investigators=["Wahl, E.R.", "Vose, R.S."], investigatorsAndOr = "and")
             df_multinv_and.head()
 
         .. jupyter-execute::
             
-            # Keywords: hierarchy with '>' and multiple via '|'
+            ### Keywords: hierarchy with '>' and multiple via '|'
             df_keywords = ds.search_studies(keywords="earth science>paleoclimate>paleocean>biomarkers")
             df_keywords.head()
 
         .. jupyter-execute::
             
-            # Location hierarchy
+            ### Location hierarchy
             df_loc = ds.search_studies(locations="Continent>Africa>Eastern Africa>Zambia")
             df_loc.head()
 
@@ -345,13 +345,13 @@ class NOAADataset(BaseDataset):
         ^^^^^^^^^^^^^^^^^
         .. jupyter-execute::
 
-            # Species: four-letter codes (uppercase enforced)
+            ### Species: four-letter codes (uppercase enforced)
             df_species = ds.search_studies(species=["ABAL", "PIPO"])
             df_species.head()
 
         .. jupyter-execute::
 
-            # Data types: one or more IDs separated by '|'
+            ### Data types: one or more IDs separated by '|'
             df_muldatatypes = ds.search_studies(data_type_id="4|18")
             df_muldatatypes.head()  
 
@@ -371,13 +371,13 @@ class NOAADataset(BaseDataset):
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         .. jupyter-execute::
 
-            # Explicit BP with method
+            ### Explicit BP with method
             df_timew = ds.search_studies(earliest_year=12000, time_format="BP", time_method="overAny")
             df_timew.head()
 
         .. jupyter-execute::
 
-            # No time_format/time_method → defaults to CE
+            ### No time_format/time_method → defaults to CE
             df_time_defualt = ds.search_studies(earliest_year=1500, latest_year=0)
             df_time_defualt.head()
 
@@ -397,11 +397,11 @@ class NOAADataset(BaseDataset):
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         .. jupyter-execute::
 
-            # Limit up to first 10 results 
+            ### Limit up to first 10 results 
             df_limit = ds.search_studies(earliest_year=12000, time_format="BP", time_method="overAny", limit=10)
             df_limit.head()
 
-            # Skip the first 10 results (i.e., get results 11-20)
+            ### Skip the first 10 results (i.e., get results 11-20)
             df_skip = ds.search_studies(earliest_year=12000, time_format="BP", time_method="overAny", limit=10, skip=10)
             df_skip.head()
         """
@@ -419,14 +419,14 @@ class NOAADataset(BaseDataset):
         kwargs.get("location") or kwargs.get("locations"),
         kwargs.get("publication"), kwargs.get("search_text"),
         kwargs.get("earliest_year"), kwargs.get("latest_year"),
-        kwargs.get("cv_whats"), kwargs.get("min_elevation"),
+        kwargs.get("variable_name"), kwargs.get("min_elevation"),
         kwargs.get("max_elevation"), kwargs.get("time_format"),
         kwargs.get("time_method"), kwargs.get("reconstruction"),
         kwargs.get("species"), kwargs.get("recent"), kwargs.get("skip")
         ]):
             raise ValueError(
                 "At least one search parameter must be specified to initiate a query. "
-                "To view available parameters and usage examples, run: help(Dataset.search_studies)"
+                "To view available parameters and usage examples, run: help(NOAADataset.search_studies)"
             )
         
         if kwargs.get("data_publisher") and kwargs["data_publisher"] != "NOAA":
@@ -435,8 +435,11 @@ class NOAADataset(BaseDataset):
             "Please retry with data_publisher='NOAA'."
         )
 
+        if kwargs.get("cv_whats") and not kwargs.get("variable_name"):
+            kwargs["variable_name"] = kwargs.pop("cv_whats")
+
         # Build payload using our utils (handles ids short-circuit, list→'|', Y/N coercion, time default)
-        payload, notes = build_payload(**kwargs)
+        payload, notes = build_noaa_payload(**kwargs)
         for n in notes:
             log.info("search_studies: %s", n)
         self.last_search_notes = notes

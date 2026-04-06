@@ -23,6 +23,8 @@ class Site:
             coordinates = geometry.get('coordinates', [np.nan, np.nan])
             self.lat = coordinates[0] if len(coordinates) > 0 else np.nan
             self.lon = coordinates[1] if len(coordinates) > 1 else np.nan
+            self.geo_type  = geo.get('geoType', np.nan)
+            self.geometry_type = geometry.get('type', np.nan)
 
             properties = geo.get('properties', {})
             self.min_elevation = properties.get('minElevationMeters', np.nan)
@@ -64,8 +66,12 @@ class Site:
             "SiteID": self.site_id,
             "SiteName": self.site_name,
             "LocationName": self.location_name,
-            "Latitude": self.lat,
-            "Longitude": self.lon,
+            "GeoType":self.geo_type,
+            "GeometryType":self.geometry_type,
+            "MinLatitude": self.south_lat,
+            "MaxLatitude": self.north_lat,
+            "MinLongitude": self.west_lon,
+            "MaxLongitude": self.east_lon,
             "MinElevation": self.min_elevation,
             "MaxElevation": self.max_elevation,
         }

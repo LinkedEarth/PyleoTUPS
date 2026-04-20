@@ -645,20 +645,38 @@ class NOAADataset(BaseDataset):
             df = ds.get_tables()
             df.head()
         """
-
         records = []
+
         for study in self.studies.values():
             study_id = study.study_id
             study_name = study.metadata.get("studyName")
 
             for site in study.sites:
-                paleo_data_records = site.to_dict()  # Already flattened per file
-                for paleo_record in paleo_data_records:
-                    paleo_record.update({
-                        "StudyID": study_id,
-                        "StudyName": study_name
-                    })
-                    records.append(paleo_record)
+                for paleo in site.paleo_data:
+                    for file_obj in paleo.files:
+
+                        row = paleo.to_dict(file_obj)
+
+                        # ❌ REMOVE paleo-level field
+                        row.pop("TotalFilesAvailable", None)
+
+                        row.update({
+                            "SiteID": site.site_id,
+                            "SiteName": site.site_name,
+                            "LocationName": site.location_name,
+                            "GeoType": site.geo_type,
+                            "GeometryType": site.geometry_type,
+                            "MinLatitude": site.south_lat,
+                            "MaxLatitude": site.north_lat,
+                            "MinLongitude": site.west_lon,
+                            "MaxLongitude": site.east_lon,
+                            "MinElevation": site.min_elevation,
+                            "MaxElevation": site.max_elevation,
+                            "StudyID": study_id,
+                            "StudyName": study_name,
+                        })
+
+                        records.append(row)
 
         return pd.DataFrame(records)
 
@@ -674,20 +692,59 @@ class NOAADataset(BaseDataset):
         """
 
         records = []
+
         for study in self.studies.values():
             study_id = study.study_id
             study_name = study.metadata.get("studyName")
 
             for site in study.sites:
-                paleo_data_records = site.to_dict()  # Already flattened per file
-                for paleo_record in paleo_data_records:
-                    paleo_record.update({
-                        "StudyID": study_id,
-                        "StudyName": study_name
-                    })
-                    records.append(paleo_record)
 
-        return pd.DataFrame(records)
+                file_urls = []
+                variables_list = []
+
+                for paleo in site.paleo_data:
+                    for file_obj in paleo.files:
+                        file_url = file_obj.get("fileUrl")
+
+                        file_urls.append(file_url)
+
+                        variables = list(
+                            paleo.file_variable_map.get(file_url, {}).keys()
+                        )
+                        variables_list.append(variables)
+
+                row = {
+                    # ❌ Removed DataTable-level fields
+
+                    "FileURL": file_urls,
+                    "Variables": variables_list,
+                    "TotalFilesAvailable": len(file_urls),
+
+                    "SiteID": site.site_id,
+                    "SiteName": site.site_name,
+                    "LocationName": site.location_name,
+                    "GeoType": site.geo_type,
+                    "GeometryType": site.geometry_type,
+                    "MinLatitude": site.south_lat,
+                    "MaxLatitude": site.north_lat,
+                    "MinLongitude": site.west_lon,
+                    "MaxLongitude": site.east_lon,
+                    "MinElevation": site.min_elevation,
+                    "MaxElevation": site.max_elevation,
+
+                    "StudyID": study_id,
+                    "StudyName": study_name,
+                }
+
+                records.append(row)
+
+        df = pd.DataFrame(records)
+
+        # Reorder as requested
+        priority = ["SiteID", "SiteName", "StudyID"]
+        cols = priority + [c for c in df.columns if c not in priority]
+
+        return df[cols]
 
 
     def get_geo(self):

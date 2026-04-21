@@ -186,7 +186,7 @@ class NOAADataset(BaseDataset):
             Logical combiner for multiple species. Only sent when 2+ items.
         
         variable_name : str or list[str], optional
-            Refers to PaST "cvWhats” terms (hierarchies with ``>``). Lists joined with ``|``.
+            Refers to PaST "cvWhats" terms (hierarchies with ``>``). Lists joined with ``|``.
         
         variable_name_and_or : {"and","or"}, default "or"
             Logical combiner for multiple cvWhats/variable_name. Only sent when 2+ items.
@@ -234,7 +234,6 @@ class NOAADataset(BaseDataset):
         display : bool, default False
             If True, render a small preview after parsing. 
 
-         
         skip : int, optional
             Number of studies to skip (for pagination). Use with ``limit`` to page through results.
             Example: ``limit=10, skip=10`` returns items 11–20.
@@ -254,23 +253,23 @@ class NOAADataset(BaseDataset):
 
         Notes
         -----
-        User Guide:
+        User Guide.
 
-        **Multi-value fields.** For ``investigators``, ``locations``, ``keywords``, ``species``, ``variable_name`` (cvWhats),
+        Multi-value fields. For ``investigators``, ``locations``, ``keywords``, ``species``, ``variable_name`` (cvWhats),
         ``cv_materials``, ``cv_seasonalities``:
-        - Accept a string (already ``|``-separated) **or** a Python list of strings.
+        - Accept a string (already ``|``-separated) or a Python list of strings.
         - Lists are joined with ``|``. The corresponding ``*_and_or`` flag is included only when 2+ items.
-        - Species are validated to **four uppercase letters**.
+        - Species are validated to four uppercase letters.
 
-        **Identifiers short-circuit.** If ``xml_id`` or ``noaa_id`` is set, the request includes only that id (plus
+        Identifiers short-circuit. If ``xml_id`` or ``noaa_id`` is set, the request includes only that id (plus
         publisher), ignoring other filters.
 
-        **Time window defaults.** If either ``earliest_year`` or ``latest_year`` is provided and neither ``time_format``
+        Time window defaults. If either ``earliest_year`` or ``latest_year`` is provided and neither ``time_format``
         nor ``time_method`` is supplied, ``time_format`` defaults to ``'CE'`` (a note is recorded).
 
-        **Unsupported parameters.** ``headersOnly`` and ``skip`` are not supported by PyleoTUPS and are ignored if passed.
+        Unsupported parameters. ``headersOnly`` and ``skip`` are not supported by PyleoTUPS and are ignored if passed.
 
-        **Boolean normalization.** Parameters expected as ``'Y'/'N'`` accept: True/False, or strings like
+        Boolean normalization. Parameters expected as ``'Y'/'N'`` accept: True/False, or strings like
         ``"true"|"yes"|"y"|"1"`` → ``'Y'`` and ``"false"|"no"|"n"|"0"`` → ``'N'``.
 
         Examples
@@ -530,8 +529,8 @@ class NOAADataset(BaseDataset):
 
         .. jupyter-execute::
 
-            from pyleotups import Dataset
-            ds=Dataset()
+            from pyleotups import NOAADataset
+            ds=NOAADataset()
             df = ds.search_studies(noaa_id=33213)
             df.head()
         """
@@ -564,8 +563,8 @@ class NOAADataset(BaseDataset):
 
         .. jupyter-execute::
 
-            from pyleotups import Dataset
-            ds=Dataset()
+            from pyleotups import NOAADataset
+            ds=NOAADataset()
             dsf = ds.search_studies(noaa_id=33213)
             bib, df = ds.get_publications() 
             df.head()
@@ -639,8 +638,8 @@ class NOAADataset(BaseDataset):
 
         .. jupyter-execute::
 
-            from pyleotups import Dataset
-            ds=Dataset()
+            from pyleotups import NOAADataset
+            ds=NOAADataset()
             dsf = ds.search_studies(noaa_id=33213)
             df = ds.get_tables()
             df.head()
@@ -707,8 +706,8 @@ class NOAADataset(BaseDataset):
 
         .. jupyter-execute::
 
-            from pyleotups import Dataset
-            ds=Dataset()
+            from pyleotups import NOAADataset
+            ds=NOAADataset()
             dsf = ds.search_studies(noaa_id=33213)
             df = ds.get_geo()
             df.head()
@@ -748,8 +747,8 @@ class NOAADataset(BaseDataset):
 
         .. jupyter-execute::
 
-            from pyleotups import Dataset
-            ds=Dataset()
+            from pyleotups import NOAADataset
+            ds=NOAADataset()
             dsf = ds.search_studies(noaa_id=33213)
             df = ds.get_funding()
             df.head()
@@ -791,8 +790,8 @@ class NOAADataset(BaseDataset):
 
         .. jupyter-execute::
 
-            from pyleotups import Dataset
-            ds=Dataset()
+            from pyleotups import NOAADataset
+            ds=NOAADataset()
             dsf = ds.search_studies(noaa_id=33213)
             df_var = ds.get_variables(dataTableIDs="45859")
             df_var.head()
@@ -984,8 +983,8 @@ class NOAADataset(BaseDataset):
 
         .. jupyter-execute::
 
-            from pyleotups import Dataset
-            ds=Dataset()
+            from pyleotups import NOAADataset
+            ds=NOAADataset()
             df = ds.search_studies(noaa_id=33213)
             dfs = ds.get_data(dataTableIDs="45859")
             dfs[0].head()

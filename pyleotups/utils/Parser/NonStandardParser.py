@@ -38,21 +38,15 @@ class NonStandardParser:
     Notes
     -----
     The parsing workflow is as follows:
-    1.  A `NonStandardParser` instance is created with a `file_path`.
-    2.  The public `parse()` method is called.
-    3.  `_fetch_lines()` reads the file into `self.lines`.
-    4.  `_segregate_blocks()` splits `self.lines` into `Block` objects
+    1.A `NonStandardParser` instance is created with a `file_path`.
+    2.The public `parse()` method is called.
+    3.`_fetch_lines()` reads the file into `self.lines`.
+    4.`_segregate_blocks()` splits `self.lines` into `Block` objects
         (groups of non-empty lines) and saves them to `self.blocks`.
-    5.  `parse()` iterates through each `block` in `self.blocks`.
-    6.  `_process_block()` is called on each block, which:
-        a.  Computes statistics for the block.
-        b.  Classifies it (e.g., TABULAR, DATA, NARRATIVE).
-        c.  Dispatches to a specific parsing method (e.g.,
-            `_parse_tabular_block`).
-    7.  The specific parse methods (e.g., `_parse_data_block`) handle
-        logic for header borrowing, DataFrame generation, and error
-        handling, modifying the `block` object in place.
-    8.  `parse()` returns the fully processed `self.blocks` list.
+    5.`parse()` iterates through each `block` in `self.blocks`.
+    6.`_process_block()` is called on each block, which a. Computes statistics for the block, b. Classifies it (e.g., TABULAR, DATA, NARRATIVE), c.  Dispatches to a specific parsing method (e.g.,`_parse_tabular_block`).
+    7. The specific parse methods (e.g., `_parse_data_block`) handle logic for header borrowing, DataFrame generation, and error handling, modifying the `block` object in place.
+    8.`parse()` returns the fully processed `self.blocks` list.
     """
 
     def __init__(self, file_path, use_skip=True, use_refinement=True):
@@ -70,11 +64,14 @@ class NonStandardParser:
             If True (default), attempts to refine column headers by analyzing the
             vertical alignment of data columns (histogramming).
             
-            **Do's and Don'ts**:
-            - **Do** set this to `True` for standard NOAA Paleo files.
-            - **Don't** set this to `True` if your file has no "DATA:"
-              marker, as it will raise a `ValueError`. Set it to `False`
-              to parse the entire file from the beginning.
+        Notes
+        -----
+        Do's and Don'ts:
+
+        - Do set this to True for standard NOAA Paleo files.
+        - Do not set this to True if your file has no "DATA:" marker.
+        In that case, it will raise a ValueError. Set it to False
+        to parse the entire file from the beginning.
         """
         self.file_path = file_path
         self.use_skip = use_skip

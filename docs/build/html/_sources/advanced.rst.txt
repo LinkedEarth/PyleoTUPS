@@ -3,10 +3,10 @@
 Advanced Functionalities
 ========================
 
-NOAADataset (pyleotups.utils.NOAADataset)
-"""""""""""""""""""""""""""""""""""""""""
+NOAAStudy (pyleotups.utils.NOAAStudy)
+"""""""""""""""""""""""""""""""""""""
 
-.. automodule:: pyleotups.utils.NOAADataset
+.. automodule:: pyleotups.utils.NOAAStudy
    :members:
    :ignore-module-all: True
 
@@ -33,6 +33,14 @@ Site (pyleotups.utils.Site)
    :ignore-module-all: True
 
 
+PangaeaStudy (pyleotups.utils.PangaeaStudy)
+"""""""""""""""""""""""""""""""""""""""""""
+
+.. automodule:: pyleotups.utils.PangaeaStudy
+   :members:
+   :ignore-module-all: True
+
+
 Parsers
 """""""
 
@@ -44,15 +52,22 @@ StandardParser (pyleotups.utils.Parser.StandardParser)
    
 
 NonStandardParser (pyleotups.utils.Parser.NonStandardParser)
-#############################################################
+############################################################
 
 .. autoclass:: pyleotups.utils.Parser.NonStandardParser
    :members:
    
 
 NonStandardParserUtils (pyleotups.utils.Parser.NonStandardParserUtils)
-#######################################################################
+######################################################################
 
 .. automodule:: pyleotups.utils.Parser.NonStandardParserUtils
    :members:
    :ignore-module-all: True
+
+
+ExcelParser (pyleotups.utils.Parser.ExcelParser)
+################################################
+
+.. autoclass:: pyleotups.utils.Parser.ExcelParser
+   :members:

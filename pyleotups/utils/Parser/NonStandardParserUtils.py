@@ -426,8 +426,7 @@ def assign_tokens_by_overlap(lines_info, delimiter, headers, header_extent=0):
 
     This is a fallback for misaligned data. It checks two stages:
     1. Assigns a token to the header with the *maximum overlap*.
-    2. If no overlap, assigns to the header with the *minimum distance*
-       (closest neighbor).
+    2. If no overlap, assigns to the header with the *minimum distance* (closest neighbor).
 
     Parameters
     ----------

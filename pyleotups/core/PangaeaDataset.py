@@ -40,7 +40,7 @@ class PangaeaDataset(BaseDataset):
     PangaeaDataset: lightweight provider that mirrors pyleotups.core.Dataset responses.
 
     Notes:
-    - search_studies(**kwargs) registers studies
+    - search_studies(kwargs) registers studies
     in self.studies (StudyID -> {'panobj': PanDataSet|None, 'summary': normalized_dict})
     - get_summary() returns a pandas.DataFrame exactly matching NOAA Dataset.to_dict() column names.
     - get_publications(), get_geo(), get_funding() return DataFrames with the same column names
@@ -229,28 +229,28 @@ class PangaeaDataset(BaseDataset):
         PANGAEA search is text-based and less structured than NOAA filters.
         Results may vary depending on metadata completeness.
 
-        **Unified query interface.**
+        Unified query interface.
         PyleoTUPS uses consistent parameter names across datasets:
         
         - ``variable_name`` → mapped to ``parameter:`` in PANGAEA
         - ``investigators`` → mapped to ``author:``
         
-        **Query construction.**
+        Query construction.
         If ``q`` is not provided, a query string is constructed by combining:
         - search_text
         - investigators
         - variable_name
         - keywords
 
-        **Geospatial filtering.**
+        Geospatial filtering.
         Bounding box requires all four parameters:
         ``min_lat, max_lat, min_lon, max_lon``.
         Partial inputs are ignored.
 
-        **Identifier priority.**
+        Identifier priority.
         If ``study_ids`` is provided, all other filters are ignored.
 
-        **Multi-value parameters.**
+        Multi-value parameters.
         Multiple values for parameters like `variable_name` or `investigators`
         are combined into a space-separated query, interpreted as logical AND
         by the PANGAEA search engine.

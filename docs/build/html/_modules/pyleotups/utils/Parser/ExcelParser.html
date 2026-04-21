@@ -1,0 +1,912 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pyleotups.utils.Parser.ExcelParser &mdash; PyleoTUPS 0.0.2b0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/jupyter-sphinx.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/thebelab.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css\rtd_sphinx_search.min.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=5e47b899"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/thebelab-helper.js"></script>
+      <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../../../_static/js\rtd_search_config.js"></script>
+      <script src="../../../../_static/js\rtd_sphinx_search.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            PyleoTUPS
+              <img src="../../../../_static/pyleotups_logo_small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Working with PyleoTUPS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installing PyleoTUPS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api.html">PyleoTUPS User APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials.html">Tutorials</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced Functions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../advanced.html">Advanced Functionalities</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Involved</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contribution_guide.html">Contributing to PyleoTUPS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../citation.html">Citing PyleoTUPS</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">PyleoTUPS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">pyleotups.utils.Parser.ExcelParser</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pyleotups.utils.Parser.ExcelParser</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Dict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.NonStandardParserUtils</span><span class="w"> </span><span class="kn">import</span> <span class="n">auto_cast_df</span>
+
+
+<span class="n">NUMERIC_THRESHOLD_HEADER</span> <span class="o">=</span> <span class="mf">0.25</span>
+<span class="n">MAX_TABLE_COLUMN_LEN</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">MIN_REGION_AREA</span> <span class="o">=</span> <span class="mi">1</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">BlockType</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Enumeration for the different types a Block can be classified as.&quot;&quot;&quot;</span>
+    <span class="n">NARRATIVE</span> <span class="o">=</span> <span class="s2">&quot;narrative&quot;</span>
+    <span class="n">HEADER_ONLY</span> <span class="o">=</span> <span class="s2">&quot;header-only&quot;</span>
+    <span class="n">DATA_ONLY</span> <span class="o">=</span> <span class="s2">&quot;data-only&quot;</span>
+    <span class="n">COMPLETE_TABULAR</span> <span class="o">=</span> <span class="s2">&quot;complete-tabular&quot;</span>
+    <span class="n">METADATA</span> <span class="o">=</span> <span class="s2">&quot;metadata&quot;</span>
+    <span class="n">EMPTY</span> <span class="o">=</span> <span class="s2">&quot;empty&quot;</span>
+
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SheetGrid</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Lightweight 0-based grid wrapper over a sheet&#39;s values.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    name : str</span>
+<span class="sd">        Name of the Excel sheet.</span>
+<span class="sd">    sheet_idx : int</span>
+<span class="sd">        Index of the sheet in the workbook.</span>
+<span class="sd">    nrows : int</span>
+<span class="sd">        Number of used rows.</span>
+<span class="sd">    ncols : int</span>
+<span class="sd">        Number of used columns.</span>
+<span class="sd">    _values : List[List[Any]]</span>
+<span class="sd">        The raw cell values (row-major).</span>
+<span class="sd">    merged_spans : List[Tuple[int, int, int, int]], optional</span>
+<span class="sd">        List of merged cell ranges (r0, r1, c0, c1) inclusive 0-based.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">sheet_idx</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">nrows</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">ncols</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">_values</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]]</span>
+    <span class="n">merged_spans</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Safe accessor for grid values.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">r</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">nrows</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">c</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">ncols</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_values</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Checks if a cell is visually empty (None or whitespace string).&quot;&quot;&quot;</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Block</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a contiguous non-empty region in an Excel sheet.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    idx : int</span>
+<span class="sd">        Unique identifier for the block in the parsing session.</span>
+<span class="sd">    sheet_name : str</span>
+<span class="sd">        Name of the sheet containing this block.</span>
+<span class="sd">    sheet_idx : int</span>
+<span class="sd">        Index of the sheet.</span>
+<span class="sd">    top : int</span>
+<span class="sd">        Top row index (inclusive).</span>
+<span class="sd">    bottom : int</span>
+<span class="sd">        Bottom row index (inclusive).</span>
+<span class="sd">    left : int</span>
+<span class="sd">        Left column index (inclusive).</span>
+<span class="sd">    right : int</span>
+<span class="sd">        Right column index (inclusive).</span>
+<span class="sd">    area : int</span>
+<span class="sd">        Number of cells in the block.</span>
+<span class="sd">    block_type : BlockType</span>
+<span class="sd">        Classified type of the block (e.g., TABULAR, NARRATIVE).</span>
+<span class="sd">    headers : List[str]</span>
+<span class="sd">        List of column headers strings.</span>
+<span class="sd">    header_extent : int</span>
+<span class="sd">        Number of rows detected as headers.</span>
+<span class="sd">    title : str</span>
+<span class="sd">        Detected title text for the block.</span>
+<span class="sd">    stats : dict</span>
+<span class="sd">        Computed statistics (numeric ratios, dimensions, etc.).</span>
+<span class="sd">    df : pd.DataFrame</span>
+<span class="sd">        The parsed DataFrame (if successful).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">sheet_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">sheet_idx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">top</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">bottom</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">left</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">right</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">area</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">block_type</span><span class="p">:</span> <span class="n">BlockType</span> <span class="o">=</span> <span class="n">BlockType</span><span class="o">.</span><span class="n">NARRATIVE</span>
+    <span class="n">headers</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">header_extent</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">stats</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    
+    <span class="c1"># Internal usage for parser logic</span>
+    <span class="n">delimiter</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;excel&quot;</span> 
+
+
+<span class="c1"># ---------------------------------------------------------------------</span>
+<span class="c1"># ExcelParser Class</span>
+<span class="c1"># ---------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="ExcelParser">
+<a class="viewcode-back" href="../../../../advanced.html#pyleotups.utils.Parser.ExcelParser">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ExcelParser</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parses Excel files by detecting contiguous blocks of non-empty cells</span>
+<span class="sd">    and converting them into structured DataFrames.</span>
+
+<span class="sd">    It handles:</span>
+<span class="sd">    - Spatial segmentation (BFS) to find tables.</span>
+<span class="sd">    - Merged cell propagation.</span>
+<span class="sd">    - Statistical header detection.</span>
+<span class="sd">    - Multi-row header merging.</span>
+<span class="sd">    - Header borrowing for data-only blocks.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    file_path : str</span>
+<span class="sd">        The local path or URL to the Excel file.</span>
+<span class="sd">    sheets : List[SheetGrid]</span>
+<span class="sd">        The loaded sheets content.</span>
+<span class="sd">    blocks : List[Block]</span>
+<span class="sd">        The segregated and processed blocks.</span>
+<span class="sd">    _header_registry : Dict[str, List[Block]]</span>
+<span class="sd">        Internal registry for header borrowing logic.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the ExcelParser.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        file_path : str</span>
+<span class="sd">            The local file path or HTTP/HTTPS URL of the .xls/.xlsx file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_path</span> <span class="o">=</span> <span class="n">file_path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sheets</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">SheetGrid</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_header_registry</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Block</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="ExcelParser.parse">
+<a class="viewcode-back" href="../../../../advanced.html#pyleotups.utils.Parser.ExcelParser.parse">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Block</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Executes the full parsing workflow.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        List[Block]</span>
+<span class="sd">            A list of processed Block objects, potentially containing DataFrames.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fetch_workbook</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_segregate_blocks</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">block</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">blocks</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_process_block</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_fetch_workbook</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fetches file content and populates self.sheets using openpyxl or xlrd.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># 1. Determine source bytes or path</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">is_path</span> <span class="o">=</span> <span class="kc">False</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_path</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;http&quot;</span><span class="p">):</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file_path</span><span class="p">)</span>
+            <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file_path</span><span class="p">):</span>
+                <span class="n">content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_path</span>
+                <span class="n">is_path</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;File not found: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">file_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># 2. Open Workbook</span>
+        <span class="n">wb_xlsx</span><span class="p">,</span> <span class="n">wb_xls</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+        
+        <span class="c1"># Try openpyxl (.xlsx) first</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">openpyxl</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_workbook</span>
+            <span class="c1"># data_only=True gets values, not formulas</span>
+            <span class="n">wb_xlsx</span> <span class="o">=</span> <span class="n">load_workbook</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">content</span><span class="p">,</span> <span class="n">data_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="c1"># Fallback to xlrd (.xls)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">is_path</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="s1">&#39;seek&#39;</span><span class="p">):</span>
+                <span class="n">content</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            
+            <span class="k">try</span><span class="p">:</span>
+                <span class="kn">import</span><span class="w"> </span><span class="nn">xlrd</span>
+                <span class="k">if</span> <span class="n">is_path</span><span class="p">:</span>
+                    <span class="n">wb_xls</span> <span class="o">=</span> <span class="n">xlrd</span><span class="o">.</span><span class="n">open_workbook</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">formatting_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">wb_xls</span> <span class="o">=</span> <span class="n">xlrd</span><span class="o">.</span><span class="n">open_workbook</span><span class="p">(</span><span class="n">file_contents</span><span class="o">=</span><span class="n">content</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> <span class="n">formatting_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Failed to open workbook. Ensure &#39;openpyxl&#39; (xlsx) or &#39;xlrd&#39; (xls) is installed. Error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+
+        <span class="c1"># 3. Convert to SheetGrid objects</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sheets</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">wb_xlsx</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parse_openpyxl</span><span class="p">(</span><span class="n">wb_xlsx</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">wb_xls</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parse_xlrd</span><span class="p">(</span><span class="n">wb_xls</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_openpyxl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wb</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Internal helper to convert openpyxl workbook to SheetGrids.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">ws</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">wb</span><span class="o">.</span><span class="n">worksheets</span><span class="p">):</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="p">(</span><span class="n">ws</span><span class="o">.</span><span class="n">title</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+            <span class="k">if</span> <span class="s2">&quot;readme&quot;</span> <span class="ow">in</span> <span class="n">title</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="n">max_row</span> <span class="o">=</span> <span class="n">ws</span><span class="o">.</span><span class="n">max_row</span> <span class="ow">or</span> <span class="mi">0</span>
+            <span class="n">max_col</span> <span class="o">=</span> <span class="n">ws</span><span class="o">.</span><span class="n">max_column</span> <span class="ow">or</span> <span class="mi">0</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="p">[[</span><span class="n">cell</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">row</span><span class="p">]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">ws</span><span class="o">.</span><span class="n">iter_rows</span><span class="p">(</span><span class="n">min_row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_row</span><span class="o">=</span><span class="n">max_row</span><span class="p">,</span>
+                                                                          <span class="n">min_col</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_col</span><span class="o">=</span><span class="n">max_col</span><span class="p">)]</span>
+            <span class="n">merged_spans</span> <span class="o">=</span> <span class="p">[]</span>
+            
+            <span class="c1"># Propagate merged cells</span>
+            <span class="k">for</span> <span class="n">rng</span> <span class="ow">in</span> <span class="n">ws</span><span class="o">.</span><span class="n">merged_cells</span><span class="o">.</span><span class="n">ranges</span><span class="p">:</span>
+                <span class="n">r0</span><span class="p">,</span> <span class="n">r1</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">min_row</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">rng</span><span class="o">.</span><span class="n">max_row</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="n">c0</span><span class="p">,</span> <span class="n">c1</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">min_col</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">rng</span><span class="o">.</span><span class="n">max_col</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="n">merged_spans</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">r0</span><span class="p">,</span> <span class="n">r1</span><span class="p">,</span> <span class="n">c0</span><span class="p">,</span> <span class="n">c1</span><span class="p">))</span>
+                
+                <span class="n">tl</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">r0</span><span class="p">][</span><span class="n">c0</span><span class="p">]</span> <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">r0</span> <span class="o">&lt;</span> <span class="n">max_row</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">c0</span> <span class="o">&lt;</span> <span class="n">max_col</span> <span class="k">else</span> <span class="kc">None</span>
+                <span class="k">if</span> <span class="n">tl</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">tl</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">tl</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+                    <span class="n">tl</span> <span class="o">=</span> <span class="kc">None</span>
+                
+                <span class="k">if</span> <span class="n">tl</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">rr</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">r0</span><span class="p">,</span> <span class="n">r1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                        <span class="k">for</span> <span class="n">cc</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">c0</span><span class="p">,</span> <span class="n">c1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                            <span class="n">current</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">rr</span><span class="p">][</span><span class="n">cc</span><span class="p">]</span>
+                            <span class="k">if</span> <span class="n">current</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">current</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+                                <span class="n">values</span><span class="p">[</span><span class="n">rr</span><span class="p">][</span><span class="n">cc</span><span class="p">]</span> <span class="o">=</span> <span class="n">tl</span>
+
+            <span class="n">nrows_used</span><span class="p">,</span> <span class="n">ncols_used</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_used_bounds</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+            <span class="n">trimmed</span> <span class="o">=</span> <span class="p">[</span><span class="n">row</span><span class="p">[:</span><span class="n">ncols_used</span><span class="p">]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">values</span><span class="p">[:</span><span class="n">nrows_used</span><span class="p">]]</span>
+            
+            <span class="bp">self</span><span class="o">.</span><span class="n">sheets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SheetGrid</span><span class="p">(</span><span class="n">ws</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">nrows_used</span><span class="p">,</span> <span class="n">ncols_used</span><span class="p">,</span> <span class="n">trimmed</span><span class="p">,</span> <span class="n">merged_spans</span><span class="p">))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_xlrd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wb</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Internal helper to convert xlrd workbook to SheetGrids.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">wb</span><span class="o">.</span><span class="n">nsheets</span><span class="p">):</span>
+            <span class="n">sh</span> <span class="o">=</span> <span class="n">wb</span><span class="o">.</span><span class="n">sheet_by_index</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="p">(</span><span class="n">sh</span><span class="o">.</span><span class="n">name</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+            <span class="k">if</span> <span class="s2">&quot;readme&quot;</span> <span class="ow">in</span> <span class="n">title</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="n">nrows</span><span class="p">,</span> <span class="n">ncols</span> <span class="o">=</span> <span class="n">sh</span><span class="o">.</span><span class="n">nrows</span><span class="p">,</span> <span class="n">sh</span><span class="o">.</span><span class="n">ncols</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="p">[[</span><span class="n">sh</span><span class="o">.</span><span class="n">cell_value</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ncols</span><span class="p">)]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nrows</span><span class="p">)]</span>
+            <span class="n">merged_spans</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">sh</span><span class="p">,</span> <span class="s2">&quot;merged_cells&quot;</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">rlo</span><span class="p">,</span> <span class="n">rhi</span><span class="p">,</span> <span class="n">clo</span><span class="p">,</span> <span class="n">chi</span> <span class="ow">in</span> <span class="n">sh</span><span class="o">.</span><span class="n">merged_cells</span><span class="p">:</span>
+                    <span class="n">r0</span><span class="p">,</span> <span class="n">r1</span> <span class="o">=</span> <span class="n">rlo</span><span class="p">,</span> <span class="n">rhi</span> <span class="o">-</span> <span class="mi">1</span>
+                    <span class="n">c0</span><span class="p">,</span> <span class="n">c1</span> <span class="o">=</span> <span class="n">clo</span><span class="p">,</span> <span class="n">chi</span> <span class="o">-</span> <span class="mi">1</span>
+                    <span class="n">merged_spans</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">r0</span><span class="p">,</span> <span class="n">r1</span><span class="p">,</span> <span class="n">c0</span><span class="p">,</span> <span class="n">c1</span><span class="p">))</span>
+                    
+                    <span class="n">tl</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">r0</span><span class="p">][</span><span class="n">c0</span><span class="p">]</span> <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">r0</span> <span class="o">&lt;</span> <span class="n">nrows</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">c0</span> <span class="o">&lt;</span> <span class="n">ncols</span> <span class="k">else</span> <span class="kc">None</span>
+                    <span class="k">if</span> <span class="n">tl</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">tl</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">tl</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+                        <span class="n">tl</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="k">if</span> <span class="n">tl</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="k">for</span> <span class="n">rr</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">r0</span><span class="p">,</span> <span class="n">r1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                            <span class="k">for</span> <span class="n">cc</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">c0</span><span class="p">,</span> <span class="n">c1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                                <span class="n">current</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">rr</span><span class="p">][</span><span class="n">cc</span><span class="p">]</span>
+                                <span class="k">if</span> <span class="n">current</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">current</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+                                    <span class="n">values</span><span class="p">[</span><span class="n">rr</span><span class="p">][</span><span class="n">cc</span><span class="p">]</span> <span class="o">=</span> <span class="n">tl</span>
+
+            <span class="n">nrows_used</span><span class="p">,</span> <span class="n">ncols_used</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_used_bounds</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+            <span class="n">trimmed</span> <span class="o">=</span> <span class="p">[</span><span class="n">row</span><span class="p">[:</span><span class="n">ncols_used</span><span class="p">]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">values</span><span class="p">[:</span><span class="n">nrows_used</span><span class="p">]]</span>
+            
+            <span class="bp">self</span><span class="o">.</span><span class="n">sheets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SheetGrid</span><span class="p">(</span><span class="n">sh</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">nrows_used</span><span class="p">,</span> <span class="n">ncols_used</span><span class="p">,</span> <span class="n">trimmed</span><span class="p">,</span> <span class="n">merged_spans</span><span class="p">))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_segregate_blocks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Identify contiguous blocks of non-empty cells in all sheets.</span>
+<span class="sd">        Applies BFS spatial clustering and minimal enclosure consolidation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">raw_blocks</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">grid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sheets</span><span class="p">:</span>
+            <span class="n">visited</span> <span class="o">=</span> <span class="p">[[</span><span class="kc">False</span><span class="p">]</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">grid</span><span class="o">.</span><span class="n">ncols</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">grid</span><span class="o">.</span><span class="n">nrows</span><span class="p">))]</span>
+            
+            <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">nrows</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">ncols</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">visited</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="ow">or</span> <span class="n">grid</span><span class="o">.</span><span class="n">is_empty</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+                        <span class="n">visited</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="k">continue</span>
+
+                    <span class="c1"># BFS to find island</span>
+                    <span class="n">queue</span> <span class="o">=</span> <span class="p">[(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">)]</span>
+                    <span class="n">visited</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="n">top</span> <span class="o">=</span> <span class="n">bottom</span> <span class="o">=</span> <span class="n">r</span>
+                    <span class="n">left</span> <span class="o">=</span> <span class="n">right</span> <span class="o">=</span> <span class="n">c</span>
+                    <span class="n">area</span> <span class="o">=</span> <span class="mi">0</span>
+
+                    <span class="k">while</span> <span class="n">queue</span><span class="p">:</span>
+                        <span class="n">rr</span><span class="p">,</span> <span class="n">cc</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                        <span class="k">if</span> <span class="n">grid</span><span class="o">.</span><span class="n">is_empty</span><span class="p">(</span><span class="n">rr</span><span class="p">,</span> <span class="n">cc</span><span class="p">):</span>
+                            <span class="k">continue</span>
+                        <span class="n">area</span> <span class="o">+=</span> <span class="mi">1</span>
+                        <span class="n">top</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">rr</span><span class="p">)</span>
+                        <span class="n">bottom</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">bottom</span><span class="p">,</span> <span class="n">rr</span><span class="p">)</span>
+                        <span class="n">left</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">cc</span><span class="p">)</span>
+                        <span class="n">right</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">right</span><span class="p">,</span> <span class="n">cc</span><span class="p">)</span>
+
+                        <span class="k">for</span> <span class="n">dr</span><span class="p">,</span> <span class="n">dc</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_neighbors8</span><span class="p">():</span>
+                            <span class="n">nr</span><span class="p">,</span> <span class="n">nc</span> <span class="o">=</span> <span class="n">rr</span> <span class="o">+</span> <span class="n">dr</span><span class="p">,</span> <span class="n">cc</span> <span class="o">+</span> <span class="n">dc</span>
+                            <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">nr</span> <span class="o">&lt;</span> <span class="n">grid</span><span class="o">.</span><span class="n">nrows</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">nc</span> <span class="o">&lt;</span> <span class="n">grid</span><span class="o">.</span><span class="n">ncols</span><span class="p">:</span>
+                                <span class="k">if</span> <span class="ow">not</span> <span class="n">visited</span><span class="p">[</span><span class="n">nr</span><span class="p">][</span><span class="n">nc</span><span class="p">]:</span>
+                                    <span class="n">visited</span><span class="p">[</span><span class="n">nr</span><span class="p">][</span><span class="n">nc</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                                    <span class="k">if</span> <span class="ow">not</span> <span class="n">grid</span><span class="o">.</span><span class="n">is_empty</span><span class="p">(</span><span class="n">nr</span><span class="p">,</span> <span class="n">nc</span><span class="p">):</span>
+                                        <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">nr</span><span class="p">,</span> <span class="n">nc</span><span class="p">))</span>
+
+                    <span class="k">if</span> <span class="n">area</span> <span class="o">&gt;=</span> <span class="n">MIN_REGION_AREA</span><span class="p">:</span>
+                        <span class="n">raw_blocks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Block</span><span class="p">(</span>
+                            <span class="n">idx</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+                            <span class="n">sheet_name</span><span class="o">=</span><span class="n">grid</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                            <span class="n">sheet_idx</span><span class="o">=</span><span class="n">grid</span><span class="o">.</span><span class="n">sheet_idx</span><span class="p">,</span>
+                            <span class="n">top</span><span class="o">=</span><span class="n">top</span><span class="p">,</span> <span class="n">bottom</span><span class="o">=</span><span class="n">bottom</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="n">right</span><span class="p">,</span>
+                            <span class="n">area</span><span class="o">=</span><span class="n">area</span>
+                        <span class="p">))</span>
+
+        <span class="c1"># Consolidate Enclosures &amp; Sort</span>
+        <span class="n">consolidated</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_consolidate_enclosures_minimal</span><span class="p">(</span><span class="n">raw_blocks</span><span class="p">)</span>
+        
+        <span class="c1"># Sort: Sheet, then visual reading order (top-left)</span>
+        <span class="n">consolidated</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">b</span><span class="p">:</span> <span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">sheet_idx</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">top</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">right</span><span class="p">,</span> <span class="o">-</span><span class="n">b</span><span class="o">.</span><span class="n">area</span><span class="p">))</span>
+        
+        <span class="c1"># Assign IDs</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">blk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">consolidated</span><span class="p">):</span>
+            <span class="n">blk</span><span class="o">.</span><span class="n">idx</span> <span class="o">=</span> <span class="n">i</span>
+            
+        <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span> <span class="o">=</span> <span class="n">consolidated</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_process_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Block</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Main processing logic for a single block.</span>
+<span class="sd">        </span>
+<span class="sd">        Computes statistics, detects headers, classifies the block,</span>
+<span class="sd">        and generates the DataFrame if applicable.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">grid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_sheet_by_name</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">sheet_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">grid</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="c1"># 0. Gate: Minimum distinct columns check</span>
+        <span class="n">col_len</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_block_column_len</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">grid</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">col_len</span> <span class="o">&lt;</span> <span class="n">MAX_TABLE_COLUMN_LEN</span><span class="p">:</span>
+            <span class="n">block</span><span class="o">.</span><span class="n">block_type</span> <span class="o">=</span> <span class="n">BlockType</span><span class="o">.</span><span class="n">NARRATIVE</span>
+            <span class="k">return</span>
+
+        <span class="c1"># 1. Compute Profiles (Stats)</span>
+        <span class="n">block</span><span class="o">.</span><span class="n">stats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_statistics</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">grid</span><span class="p">)</span>
+
+        <span class="c1"># 2. Detect Header Extent &amp; Title</span>
+        <span class="n">hdr_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detect_header_extent</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">block</span><span class="o">.</span><span class="n">stats</span><span class="p">)</span>
+        <span class="n">block</span><span class="o">.</span><span class="n">header_extent</span> <span class="o">=</span> <span class="n">hdr_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;header_extent&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">block</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_title_text</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">hdr_info</span><span class="p">)</span>
+
+        <span class="c1"># 3. Extract &amp; Merge Headers</span>
+        <span class="n">merged_headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_and_merge_headers</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">hdr_info</span><span class="p">)</span>
+        <span class="n">block</span><span class="o">.</span><span class="n">headers</span> <span class="o">=</span> <span class="n">merged_headers</span>
+
+        <span class="c1"># 4. Classify</span>
+        <span class="n">block</span><span class="o">.</span><span class="n">block_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_classify_block</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">block</span><span class="o">.</span><span class="n">stats</span><span class="p">,</span> <span class="n">merged_headers</span><span class="p">)</span>
+
+        <span class="c1"># 5. Register Header-Bearing Blocks (for borrowing)</span>
+        <span class="k">if</span> <span class="n">block</span><span class="o">.</span><span class="n">block_type</span> <span class="ow">in</span> <span class="p">(</span><span class="n">BlockType</span><span class="o">.</span><span class="n">COMPLETE_TABULAR</span><span class="p">,</span> <span class="n">BlockType</span><span class="o">.</span><span class="n">HEADER_ONLY</span><span class="p">)</span> <span class="ow">and</span> <span class="n">merged_headers</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_header_registry</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">sheet_name</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+
+        <span class="c1"># 6. Parse Data / Handle Borrowing</span>
+        <span class="k">if</span> <span class="n">block</span><span class="o">.</span><span class="n">block_type</span> <span class="o">==</span> <span class="n">BlockType</span><span class="o">.</span><span class="n">DATA_ONLY</span><span class="p">:</span>
+            <span class="c1"># Attempt to borrow headers from a previous block on the same sheet</span>
+            <span class="n">candidates</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_header_registry</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">sheet_name</span><span class="p">,</span> <span class="p">[])</span>
+            <span class="n">donor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_borrow_candidate</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">candidates</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="n">donor</span> <span class="ow">and</span> <span class="n">donor</span><span class="o">.</span><span class="n">headers</span><span class="p">:</span>
+                <span class="n">borrowed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_borrow_headers</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">donor</span><span class="p">)</span>
+                <span class="n">block</span><span class="o">.</span><span class="n">headers</span> <span class="o">=</span> <span class="n">borrowed</span>
+                <span class="n">block</span><span class="o">.</span><span class="n">block_type</span> <span class="o">=</span> <span class="n">BlockType</span><span class="o">.</span><span class="n">COMPLETE_TABULAR</span>
+                
+                <span class="c1"># Adjust header info for generation (data starts immediately after title)</span>
+                <span class="n">hdr_info_borrow</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">hdr_info</span><span class="p">)</span>
+                <span class="n">hdr_info_borrow</span><span class="p">[</span><span class="s2">&quot;header_extent&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span> 
+                <span class="n">block</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_df</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">borrowed</span><span class="p">,</span> <span class="n">hdr_info_borrow</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">block</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="kc">None</span>
+        
+        <span class="k">elif</span> <span class="n">block</span><span class="o">.</span><span class="n">block_type</span> <span class="o">==</span> <span class="n">BlockType</span><span class="o">.</span><span class="n">COMPLETE_TABULAR</span> <span class="ow">and</span> <span class="n">merged_headers</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_df</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">merged_headers</span><span class="p">,</span> <span class="n">hdr_info</span><span class="p">)</span>
+            <span class="n">block</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">auto_cast_df</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+        
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">block</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># -----------------------------------------------------------------</span>
+    <span class="c1"># Core Logic Methods</span>
+    <span class="c1"># -----------------------------------------------------------------</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_compute_statistics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Block</span><span class="p">,</span> <span class="n">grid</span><span class="p">:</span> <span class="n">SheetGrid</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Computes numeric density and non-empty counts for rows/cols.&quot;&quot;&quot;</span>
+        <span class="n">row_nonempty</span><span class="p">,</span> <span class="n">row_numeric</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+        
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">top</span><span class="p">,</span> <span class="n">block</span><span class="o">.</span><span class="n">bottom</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">vals</span> <span class="o">=</span> <span class="p">[</span><span class="n">grid</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">block</span><span class="o">.</span><span class="n">right</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+            <span class="n">nonempties</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vals</span> <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_val_empty</span><span class="p">(</span><span class="n">v</span><span class="p">)]</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nonempties</span><span class="p">)</span>
+            <span class="n">row_nonempty</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">row_numeric</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ratio</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">nonempties</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_numeric_cell</span><span class="p">(</span><span class="n">v</span><span class="p">))</span> <span class="o">/</span> <span class="n">k</span>
+                <span class="n">row_numeric</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ratio</span><span class="p">)</span>
+
+        <span class="c1"># Basic aggregate stats</span>
+        <span class="n">mean_nonempty</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">row_nonempty</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">row_nonempty</span><span class="p">)</span> <span class="k">if</span> <span class="n">row_nonempty</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="n">mean_numeric</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">row_numeric</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">row_numeric</span><span class="p">)</span> <span class="k">if</span> <span class="n">row_numeric</span> <span class="k">else</span> <span class="mi">0</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;row_nonempty_counts&quot;</span><span class="p">:</span> <span class="n">row_nonempty</span><span class="p">,</span>
+            <span class="s2">&quot;row_numeric_ratio&quot;</span><span class="p">:</span> <span class="n">row_numeric</span><span class="p">,</span>
+            <span class="s2">&quot;mean_row_nonempty&quot;</span><span class="p">:</span> <span class="n">mean_nonempty</span><span class="p">,</span>
+            <span class="s2">&quot;mean_row_numeric_ratio&quot;</span><span class="p">:</span> <span class="n">mean_numeric</span>
+        <span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_detect_header_extent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Block</span><span class="p">,</span> <span class="n">grid</span><span class="p">:</span> <span class="n">SheetGrid</span><span class="p">,</span> <span class="n">stats</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Determines the title row and how many lines constitute the header.</span>
+<span class="sd">        </span>
+<span class="sd">        Title Rule: First row of block has exactly 1 non-empty cell.</span>
+<span class="sd">        Header Rule: Extend while row numeric ratio &lt; threshold.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">row_nonempty</span> <span class="o">=</span> <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;row_nonempty_counts&quot;</span><span class="p">]</span>
+        <span class="n">row_numeric</span> <span class="o">=</span> <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;row_numeric_ratio&quot;</span><span class="p">]</span>
+        
+        <span class="n">title_row_idx</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># Check if first row looks like a title (single cell at top-left of block)</span>
+        <span class="k">if</span> <span class="n">row_nonempty</span> <span class="ow">and</span> <span class="n">row_nonempty</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">grid</span><span class="o">.</span><span class="n">is_empty</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">top</span><span class="p">,</span> <span class="n">block</span><span class="o">.</span><span class="n">left</span><span class="p">):</span>
+                <span class="n">title_row_idx</span> <span class="o">=</span> <span class="n">block</span><span class="o">.</span><span class="n">top</span>
+
+        <span class="n">start_offset</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">title_row_idx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="n">header_extent</span> <span class="o">=</span> <span class="mi">0</span>
+        
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start_offset</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">row_numeric</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">row_numeric</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">NUMERIC_THRESHOLD_HEADER</span><span class="p">:</span>
+                <span class="n">header_extent</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">break</span>
+                
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;title_row&quot;</span><span class="p">:</span> <span class="n">title_row_idx</span><span class="p">,</span> <span class="s2">&quot;header_extent&quot;</span><span class="p">:</span> <span class="n">header_extent</span><span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_extract_title_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Block</span><span class="p">,</span> <span class="n">grid</span><span class="p">:</span> <span class="n">SheetGrid</span><span class="p">,</span> <span class="n">hdr_info</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="n">tr</span> <span class="o">=</span> <span class="n">hdr_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;title_row&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">tr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="c1"># Find the single non-empty cell</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">block</span><span class="o">.</span><span class="n">right</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">tr</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_val_empty</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+                <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_extract_and_merge_headers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Block</span><span class="p">,</span> <span class="n">grid</span><span class="p">:</span> <span class="n">SheetGrid</span><span class="p">,</span> <span class="n">hdr_info</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extracts multi-row headers, respecting merged cells, and merges them vertically.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">H</span> <span class="o">=</span> <span class="n">hdr_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;header_extent&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">H</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># 1. Build lookup for merged cells</span>
+        <span class="n">merged_idx</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">r0</span><span class="p">,</span> <span class="n">r1</span><span class="p">,</span> <span class="n">c0</span><span class="p">,</span> <span class="n">c1</span><span class="p">)</span> <span class="ow">in</span> <span class="n">grid</span><span class="o">.</span><span class="n">merged_spans</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">r0</span><span class="p">,</span> <span class="n">r1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">c0</span><span class="p">,</span> <span class="n">c1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                    <span class="n">merged_idx</span><span class="p">[(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">)]</span> <span class="o">=</span> <span class="p">(</span><span class="n">r0</span><span class="p">,</span> <span class="n">r1</span><span class="p">,</span> <span class="n">c0</span><span class="p">,</span> <span class="n">c1</span><span class="p">)</span>
+
+        <span class="c1"># 2. Extract spans for each header row</span>
+        <span class="n">title_row</span> <span class="o">=</span> <span class="n">hdr_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;title_row&quot;</span><span class="p">)</span>
+        <span class="n">start_row</span> <span class="o">=</span> <span class="n">block</span><span class="o">.</span><span class="n">top</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="k">if</span> <span class="n">title_row</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">header_rows_spans</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start_row</span><span class="p">,</span> <span class="n">start_row</span> <span class="o">+</span> <span class="n">H</span><span class="p">):</span>
+            <span class="n">spans</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="n">block</span><span class="o">.</span><span class="n">left</span>
+            <span class="k">while</span> <span class="n">c</span> <span class="o">&lt;=</span> <span class="n">block</span><span class="o">.</span><span class="n">right</span><span class="p">:</span>
+                <span class="n">txt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_norm_text</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">))</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">txt</span><span class="p">:</span>
+                    <span class="n">c</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="k">continue</span>
+                
+                <span class="c1"># Determine horizontal span of this text</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="ow">in</span> <span class="n">merged_idx</span><span class="p">:</span>
+                    <span class="c1"># Use merged cell info</span>
+                    <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">c0</span><span class="p">,</span> <span class="n">c1</span> <span class="o">=</span> <span class="n">merged_idx</span><span class="p">[(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">)]</span>
+                    <span class="c1"># Clip to block bounds</span>
+                    <span class="n">c0</span><span class="p">,</span> <span class="n">c1</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">c0</span><span class="p">,</span> <span class="n">block</span><span class="o">.</span><span class="n">left</span><span class="p">),</span> <span class="nb">min</span><span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="n">block</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="n">c0</span><span class="p">:</span> <span class="c1"># Add only once</span>
+                        <span class="n">spans</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;c0&quot;</span><span class="p">:</span> <span class="n">c0</span><span class="p">,</span> <span class="s2">&quot;c1&quot;</span><span class="p">:</span> <span class="n">c1</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">txt</span><span class="p">})</span>
+                    <span class="n">c</span> <span class="o">=</span> <span class="n">c1</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># Collapse repeats if not strictly merged</span>
+                    <span class="n">c0</span><span class="p">,</span> <span class="n">c1</span> <span class="o">=</span> <span class="n">c</span><span class="p">,</span> <span class="n">c</span>
+                    <span class="k">while</span> <span class="n">c1</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">block</span><span class="o">.</span><span class="n">right</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_norm_text</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="o">==</span> <span class="n">txt</span><span class="p">:</span>
+                        <span class="n">c1</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">spans</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;c0&quot;</span><span class="p">:</span> <span class="n">c0</span><span class="p">,</span> <span class="s2">&quot;c1&quot;</span><span class="p">:</span> <span class="n">c1</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">txt</span><span class="p">})</span>
+                    <span class="n">c</span> <span class="o">=</span> <span class="n">c1</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">header_rows_spans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">spans</span><span class="p">)</span>
+
+        <span class="c1"># 3. Merge vertically down columns</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="n">block</span><span class="o">.</span><span class="n">right</span> <span class="o">-</span> <span class="n">block</span><span class="o">.</span><span class="n">left</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">col_tokens</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">width</span><span class="p">)]</span>
+
+        <span class="k">for</span> <span class="n">row_spans</span> <span class="ow">in</span> <span class="n">header_rows_spans</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">block</span><span class="o">.</span><span class="n">right</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="c1"># Check which span covers column j</span>
+                <span class="n">token</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+                <span class="k">for</span> <span class="n">sp</span> <span class="ow">in</span> <span class="n">row_spans</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">sp</span><span class="p">[</span><span class="s2">&quot;c0&quot;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">sp</span><span class="p">[</span><span class="s2">&quot;c1&quot;</span><span class="p">]:</span>
+                        <span class="n">token</span> <span class="o">=</span> <span class="n">sp</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span>
+                        <span class="k">break</span>
+                <span class="k">if</span> <span class="n">token</span><span class="p">:</span>
+                    <span class="n">col_tokens</span><span class="p">[</span><span class="n">j</span> <span class="o">-</span> <span class="n">block</span><span class="o">.</span><span class="n">left</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+
+        <span class="c1"># 4. Join and Dedupe</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">tokens</span> <span class="ow">in</span> <span class="n">col_tokens</span><span class="p">:</span>
+            <span class="n">cleaned</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">prev</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+                <span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">t</span> <span class="ow">and</span> <span class="n">t</span> <span class="o">!=</span> <span class="n">prev</span><span class="p">:</span>
+                    <span class="n">cleaned</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+                    <span class="n">prev</span> <span class="o">=</span> <span class="n">t</span>
+            <span class="n">headers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cleaned</span><span class="p">))</span>
+
+        <span class="c1"># 5. Ensure uniqueness</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_unique</span><span class="p">(</span><span class="n">headers</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_classify_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Block</span><span class="p">,</span> <span class="n">stats</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">BlockType</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Determines BlockType based on header existence and data presence.&quot;&quot;&quot;</span>
+        <span class="n">H</span> <span class="o">=</span> <span class="n">block</span><span class="o">.</span><span class="n">header_extent</span>
+        <span class="c1"># Data starts after title + header</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="k">if</span> <span class="n">block</span><span class="o">.</span><span class="n">title</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">H</span>
+        <span class="n">data_start_row_idx</span> <span class="o">=</span> <span class="n">offset</span>  <span class="c1"># relative to stats array 0-index</span>
+
+        <span class="c1"># Count data rows (rows with &gt;= 1 non-empty cell)</span>
+        <span class="n">data_rows</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">counts</span> <span class="o">=</span> <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;row_nonempty_counts&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">data_start_row_idx</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">counts</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">data_start_row_idx</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">counts</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">counts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">data_rows</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="n">headers</span> <span class="ow">and</span> <span class="n">data_rows</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">BlockType</span><span class="o">.</span><span class="n">COMPLETE_TABULAR</span>
+        <span class="k">if</span> <span class="n">headers</span> <span class="ow">and</span> <span class="n">data_rows</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">BlockType</span><span class="o">.</span><span class="n">HEADER_ONLY</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">headers</span> <span class="ow">and</span> <span class="n">data_rows</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">BlockType</span><span class="o">.</span><span class="n">DATA_ONLY</span>
+        
+        <span class="k">return</span> <span class="n">BlockType</span><span class="o">.</span><span class="n">NARRATIVE</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_generate_df</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Block</span><span class="p">,</span> <span class="n">grid</span><span class="p">:</span> <span class="n">SheetGrid</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">hdr_info</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates DataFrame from the block&#39;s data region.&quot;&quot;&quot;</span>
+        <span class="n">H</span> <span class="o">=</span> <span class="n">hdr_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;header_extent&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">tr</span> <span class="o">=</span> <span class="n">hdr_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;title_row&quot;</span><span class="p">)</span>
+        <span class="n">data_start</span> <span class="o">=</span> <span class="n">block</span><span class="o">.</span><span class="n">top</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="k">if</span> <span class="n">tr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">H</span>
+        
+        <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">ncols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">headers</span><span class="p">)</span>
+        
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">data_start</span><span class="p">,</span> <span class="n">block</span><span class="o">.</span><span class="n">bottom</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">raw_vals</span> <span class="o">=</span> <span class="p">[</span><span class="n">grid</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">block</span><span class="o">.</span><span class="n">right</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+            
+            <span class="c1"># Skip completely empty rows</span>
+            <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_is_val_empty</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">raw_vals</span><span class="p">):</span>
+                <span class="k">continue</span>
+                
+            <span class="c1"># Normalize length</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw_vals</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">ncols</span><span class="p">:</span>
+                <span class="n">raw_vals</span> <span class="o">+=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">ncols</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw_vals</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw_vals</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">ncols</span><span class="p">:</span>
+                <span class="n">raw_vals</span> <span class="o">=</span> <span class="n">raw_vals</span><span class="p">[:</span><span class="n">ncols</span><span class="p">]</span>
+            
+            <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">raw_vals</span><span class="p">)</span>
+            
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+
+    <span class="c1"># -----------------------------------------------------------------</span>
+    <span class="c1"># Helpers: Borrowing &amp; Utils</span>
+    <span class="c1"># -----------------------------------------------------------------</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_find_borrow_candidate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Block</span><span class="p">,</span> <span class="n">candidates</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Block</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Finds a preceding header block with exact horizontal alignment.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">cand</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">candidates</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">cand</span><span class="o">.</span><span class="n">left</span> <span class="o">==</span> <span class="n">block</span><span class="o">.</span><span class="n">left</span> <span class="ow">and</span> <span class="n">cand</span><span class="o">.</span><span class="n">right</span> <span class="o">==</span> <span class="n">block</span><span class="o">.</span><span class="n">right</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">cand</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_borrow_headers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Block</span><span class="p">,</span> <span class="n">donor</span><span class="p">:</span> <span class="n">Block</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Copies headers from donor, adjusting length if necessary.&quot;&quot;&quot;</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="n">block</span><span class="o">.</span><span class="n">right</span> <span class="o">-</span> <span class="n">block</span><span class="o">.</span><span class="n">left</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">hdrs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">donor</span><span class="o">.</span><span class="n">headers</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">hdrs</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">width</span><span class="p">:</span>
+            <span class="n">hdrs</span> <span class="o">+=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;unnamed_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">hdrs</span><span class="p">),</span> <span class="n">width</span><span class="p">)]</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">hdrs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">width</span><span class="p">:</span>
+            <span class="n">hdrs</span> <span class="o">=</span> <span class="n">hdrs</span><span class="p">[:</span><span class="n">width</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">hdrs</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_sheet_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SheetGrid</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sheets</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">s</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_block_column_len</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Block</span><span class="p">,</span> <span class="n">grid</span><span class="p">:</span> <span class="n">SheetGrid</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Counts columns that have at least one non-empty cell.&quot;&quot;&quot;</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">block</span><span class="o">.</span><span class="n">right</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">top</span><span class="p">,</span> <span class="n">block</span><span class="o">.</span><span class="n">bottom</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">grid</span><span class="o">.</span><span class="n">is_empty</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+                    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="k">break</span>
+        <span class="k">return</span> <span class="n">count</span>
+
+    <span class="c1"># -----------------------------------------------------------------</span>
+    <span class="c1"># Static Utils</span>
+    <span class="c1"># -----------------------------------------------------------------</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_neighbors8</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]:</span>
+        <span class="k">return</span> <span class="p">[(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+                <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span>           <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+                <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span>  <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>  <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_compute_used_bounds</span><span class="p">(</span><span class="n">values</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Trims trailing empty rows and columns.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">values</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+        <span class="n">nrows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+        <span class="n">ncols</span> <span class="o">=</span> <span class="nb">max</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">values</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Pad rows</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">ncols</span><span class="p">:</span>
+                <span class="n">row</span> <span class="o">+=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">ncols</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">))</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">is_empty</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">v</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">v</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+
+        <span class="n">last_row</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nrows</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="ow">not</span> <span class="n">is_empty</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">])</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ncols</span><span class="p">)):</span>
+                <span class="n">last_row</span> <span class="o">=</span> <span class="n">r</span>
+                <span class="k">break</span>
+        
+        <span class="k">if</span> <span class="n">last_row</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+
+        <span class="n">last_col</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ncols</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="ow">not</span> <span class="n">is_empty</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">])</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">last_row</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
+                <span class="n">last_col</span> <span class="o">=</span> <span class="n">c</span>
+                <span class="k">break</span>
+        
+        <span class="k">return</span> <span class="n">last_row</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">last_col</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_consolidate_enclosures_minimal</span><span class="p">(</span><span class="n">blocks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Block</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Block</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Removes blocks fully enclosed within larger blocks on the same sheet.&quot;&quot;&quot;</span>
+        <span class="n">by_sheet</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">blocks</span><span class="p">:</span>
+            <span class="n">by_sheet</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">sheet_idx</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+
+        <span class="n">survivors</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">sheet_blocks</span> <span class="ow">in</span> <span class="n">by_sheet</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="c1"># Sort by area descending</span>
+            <span class="n">sorted_blocks</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">sheet_blocks</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">b</span><span class="p">:</span> <span class="n">b</span><span class="o">.</span><span class="n">area</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">dropped</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+            
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">A</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sorted_blocks</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">dropped</span><span class="p">:</span> <span class="k">continue</span>
+                <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">B</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sorted_blocks</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">j</span> <span class="ow">or</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">dropped</span><span class="p">:</span> <span class="k">continue</span>
+                    <span class="c1"># Check if B inside A</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">left</span> <span class="o">&lt;=</span> <span class="n">B</span><span class="o">.</span><span class="n">left</span> <span class="ow">and</span> <span class="n">B</span><span class="o">.</span><span class="n">right</span> <span class="o">&lt;=</span> <span class="n">A</span><span class="o">.</span><span class="n">right</span> <span class="ow">and</span> 
+                        <span class="n">A</span><span class="o">.</span><span class="n">top</span> <span class="o">&lt;=</span> <span class="n">B</span><span class="o">.</span><span class="n">top</span> <span class="ow">and</span> <span class="n">B</span><span class="o">.</span><span class="n">bottom</span> <span class="o">&lt;=</span> <span class="n">A</span><span class="o">.</span><span class="n">bottom</span><span class="p">):</span>
+                        <span class="n">dropped</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+            
+            <span class="n">survivors</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">b</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sorted_blocks</span><span class="p">)</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dropped</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">survivors</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_is_numeric_cell</span><span class="p">(</span><span class="n">val</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">val</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">and</span> <span class="n">math</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">val</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;([{&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;)]}&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">s</span><span class="p">:</span> <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;%&quot;</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span> 
+                    <span class="nb">float</span><span class="p">(</span><span class="n">s</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                    <span class="k">return</span> <span class="kc">True</span>
+                <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span> <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="nb">float</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_is_val_empty</span><span class="p">(</span><span class="n">v</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">v</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">v</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_norm_text</span><span class="p">(</span><span class="n">v</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_ensure_unique</span><span class="p">(</span><span class="n">names</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="n">seen</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
+            <span class="n">base</span> <span class="o">=</span> <span class="n">n</span> <span class="k">if</span> <span class="n">n</span> <span class="k">else</span> <span class="s2">&quot;unnamed&quot;</span>
+            <span class="k">if</span> <span class="n">base</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span>
+                <span class="n">seen</span><span class="p">[</span><span class="n">base</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">base</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">seen</span><span class="p">[</span><span class="n">base</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">base</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">seen</span><span class="p">[</span><span class="n">base</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">out</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">ExcelParser</span><span class="p">(</span><span class="s2">&quot;https://www.ncei.noaa.gov/pub/data/paleo/contributions_by_author/frank1999/frank1999.xls&quot;</span><span class="p">)</span>
+    
+    <span class="n">blocks</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="n">blocks</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Block ID: </span><span class="si">{</span><span class="n">block</span><span class="o">.</span><span class="n">idx</span><span class="si">}</span><span class="s2">, Type: </span><span class="si">{</span><span class="n">block</span><span class="o">.</span><span class="n">block_type</span><span class="si">}</span><span class="s2">, Sheet: </span><span class="si">{</span><span class="n">block</span><span class="o">.</span><span class="n">sheet_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">block</span><span class="o">.</span><span class="n">df</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, LinkedEarth.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

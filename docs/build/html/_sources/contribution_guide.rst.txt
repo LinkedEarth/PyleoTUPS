@@ -31,8 +31,8 @@ Bug reports must:
 
 1. Include a minimal working example (a short, self*contained Python snippet reproducing the problem). You can format the code nicely by using GitHub Flavored Markdown::
 
-    from pyleotups import Dataset
-    ds=Dataset()
+    from pyleotups import NOAADataset
+    ds=NOAADataset()
     ds.search_studies(noaa_id=33213)
     
 
@@ -291,7 +291,7 @@ You may use existing docstrings as examples. A good docstring explains:
 
 For the latter, make sure the example is prefaced by:
 
-      .. jupyter-execute::
+      ```.. jupyter-execute::```
 
 and properly indented (look at other docstrings for inspiration).
 

@@ -8,11 +8,11 @@
   <title>pyleotups.utils.Parser.NonStandardParserUtils &mdash; PyleoTUPS 0.0.2b0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/plot_directive.css?v=7f9a90b1" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/jupyter-sphinx.css?v=572af1d6" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/jupyter-sphinx.css" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/thebelab.css" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/css/rtd_sphinx_search.min.css?v=e72958e9" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css\rtd_sphinx_search.min.css" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css" />
 
   
@@ -24,8 +24,8 @@
       <script src="../../../../_static/thebelab-helper.js"></script>
       <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
       <script src="../../../../_static/copybutton.js?v=f281be69"></script>
-      <script src="../../../../_static/js/rtd_search_config.js?v=b0596c34"></script>
-      <script src="../../../../_static/js/rtd_sphinx_search.min.js?v=5e065386"></script>
+      <script src="../../../../_static/js\rtd_search_config.js"></script>
+      <script src="../../../../_static/js\rtd_sphinx_search.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -547,7 +547,9 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Column count (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s2">) &quot;</span>
                          <span class="sa">f</span><span class="s2">&quot;does not match header count (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">col_names</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">col_names</span><span class="p">)</span></div>
+    <span class="n">df</span> <span class="o">=</span>  <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">col_names</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">auto_cast_df</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span></div>
 
 
 
@@ -559,8 +561,7 @@
 
 <span class="sd">    This is a fallback for misaligned data. It checks two stages:</span>
 <span class="sd">    1. Assigns a token to the header with the *maximum overlap*.</span>
-<span class="sd">    2. If no overlap, assigns to the header with the *minimum distance*</span>
-<span class="sd">       (closest neighbor).</span>
+<span class="sd">    2. If no overlap, assigns to the header with the *minimum distance* (closest neighbor).</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -626,6 +627,167 @@
                     <span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">best_match_col</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">current_val</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">tok_display</span><span class="si">}</span><span class="s2">&quot;</span>
 
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">col_names</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="refine_headers_by_correspondence">
+<a class="viewcode-back" href="../../../../advanced.html#pyleotups.utils.Parser.NonStandardParserUtils.refine_headers_by_correspondence">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">refine_headers_by_correspondence</span><span class="p">(</span><span class="n">header_lines</span><span class="p">,</span> <span class="n">data_lines</span><span class="p">,</span> <span class="n">delimiter</span><span class="p">,</span> <span class="n">broadcast_identical</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Refines headers by analyzing the physical layout (vertical alignment) of the data lines.</span>
+
+<span class="sd">    It creates a density mask (histogram) of the data to find physical columns, then maps</span>
+<span class="sd">    the header tokens to these physical columns. If multiple distinct header tokens map to a single</span>
+<span class="sd">    wide data column, it forces a split (preserving granular headers). If adjacent data columns share</span>
+<span class="sd">    the exact same header identity, it merges them (unless broadcast_identical is True).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    header_lines : list[LineInfo]</span>
+<span class="sd">        The lines identified as headers.</span>
+<span class="sd">    data_lines : list[LineInfo]</span>
+<span class="sd">        The lines identified as data.</span>
+<span class="sd">    delimiter : str</span>
+<span class="sd">        The regex delimiter used to tokenize the lines.</span>
+<span class="sd">    broadcast_identical : bool, optional</span>
+<span class="sd">        If True, adjacent columns with identical headers are kept separate (suffixed).</span>
+<span class="sd">        If False (default), they are merged into one column.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list[dict] or None</span>
+<span class="sd">        A list of refined header dictionaries containing &quot;name&quot; and &quot;interval&quot;.</span>
+<span class="sd">        Returns None if refinement is not possible (e.g., no data lines).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">data_lines</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="c1"># --- Step 1: Identify Physical Data Columns (The Histogram) ---</span>
+    <span class="n">mask_len</span> <span class="o">=</span> <span class="nb">max</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">text</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">data_lines</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">mask_len</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+        
+    <span class="n">density_mask</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">mask_len</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">data_lines</span><span class="p">:</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="n">mask_len</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">char</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">char</span><span class="o">.</span><span class="n">isspace</span><span class="p">():</span>
+                <span class="n">density_mask</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="c1"># Find continuous segments (Physical Intervals)</span>
+    <span class="n">physical_intervals</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">in_segment</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">is_data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">density_mask</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">is_data</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">in_segment</span><span class="p">:</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="n">i</span>
+            <span class="n">in_segment</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">is_data</span> <span class="ow">and</span> <span class="n">in_segment</span><span class="p">:</span>
+            <span class="n">physical_intervals</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">start</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
+            <span class="n">in_segment</span> <span class="o">=</span> <span class="kc">False</span>
+            
+    <span class="k">if</span> <span class="n">in_segment</span><span class="p">:</span>
+        <span class="n">physical_intervals</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">start</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">density_mask</span><span class="p">)))</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">physical_intervals</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="c1"># --- Step 2: Map Headers &amp; Apply Granularity Logic ---</span>
+    <span class="n">refined_headers</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="c1"># Tokenize all header lines to check overlaps</span>
+    <span class="n">all_header_tokens</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">get_token_intervals_multi</span><span class="p">(</span><span class="n">h_line</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">delimiter</span><span class="p">)</span> 
+        <span class="k">for</span> <span class="n">h_line</span> <span class="ow">in</span> <span class="n">header_lines</span>
+    <span class="p">]</span>
+    
+    <span class="c1"># Track identity for merging logic</span>
+    <span class="n">last_token_identity</span> <span class="o">=</span> <span class="kc">None</span> 
+
+    <span class="k">for</span> <span class="n">p_start</span><span class="p">,</span> <span class="n">p_end</span> <span class="ow">in</span> <span class="n">physical_intervals</span><span class="p">:</span>
+        <span class="c1"># Convert 0-based index to 1-based to match token intervals from get_token_intervals_multi</span>
+        <span class="n">p_interval_1based</span> <span class="o">=</span> <span class="p">(</span><span class="n">p_start</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">p_end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        
+        <span class="c1"># --- GRANULARITY LOGIC UPDATE ---</span>
+        <span class="c1"># Previous logic forced a split if multiple tokens overlapped.</span>
+        <span class="c1"># This caused &quot;Depth (cm)&quot; to split into &quot;Depth&quot; and &quot;(cm)&quot; if they both fit the data width.</span>
+        <span class="c1"># We now treat the physical data interval as the source of truth:</span>
+        <span class="c1"># One physical data column -&gt; One resulting column.</span>
+        
+        <span class="n">current_name_parts</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">current_token_identity</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">row_tokens</span> <span class="ow">in</span> <span class="n">all_header_tokens</span><span class="p">:</span>
+            <span class="n">overlapping_tokens</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">tok</span> <span class="k">for</span> <span class="n">tok</span> <span class="ow">in</span> <span class="n">row_tokens</span> 
+                <span class="k">if</span> <span class="n">compute_interval_overlap</span><span class="p">(</span><span class="n">tok</span><span class="p">[</span><span class="s1">&#39;interval&#39;</span><span class="p">],</span> <span class="n">p_interval_1based</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+            <span class="p">]</span>
+            <span class="k">if</span> <span class="n">overlapping_tokens</span><span class="p">:</span>
+                <span class="n">part_text</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="s1">&#39;display&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">overlapping_tokens</span><span class="p">)</span>
+                <span class="n">current_name_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">part_text</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">overlapping_tokens</span><span class="p">:</span>
+                    <span class="n">current_token_identity</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">])</span>
+
+        <span class="n">full_name</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">current_name_parts</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+        <span class="c1"># --- Merge Logic (Scenario A) ---</span>
+        <span class="c1"># Check if this column has the exact same header identity as the previous one</span>
+        <span class="n">is_identical</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">refined_headers</span> <span class="ow">and</span> 
+            <span class="n">last_token_identity</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> 
+            <span class="n">current_token_identity</span> <span class="o">==</span> <span class="n">last_token_identity</span> <span class="ow">and</span> 
+            <span class="nb">bool</span><span class="p">(</span><span class="n">current_token_identity</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">is_identical</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">broadcast_identical</span><span class="p">:</span>
+            <span class="c1"># Extend previous header to cover this new segment</span>
+            <span class="n">last_header</span> <span class="o">=</span> <span class="n">refined_headers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">new_int</span> <span class="o">=</span> <span class="p">(</span><span class="n">last_header</span><span class="p">[</span><span class="s1">&#39;interval&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">p_end</span><span class="p">)</span>
+            <span class="n">last_header</span><span class="p">[</span><span class="s1">&#39;interval&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_int</span>
+            <span class="k">continue</span>
+
+        <span class="c1"># --- Naming Logic (Scenario B) ---</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">full_name</span><span class="p">:</span>
+            <span class="c1"># Handle orphans (data columns with no header overlap)</span>
+            <span class="k">if</span> <span class="n">refined_headers</span><span class="p">:</span>
+                <span class="n">full_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">refined_headers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">_sub&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">full_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Column_</span><span class="si">{</span><span class="n">p_start</span><span class="si">}</span><span class="s2">&quot;</span>
+        
+        <span class="c1"># Handle duplicate names by suffixing</span>
+        <span class="n">original_name</span> <span class="o">=</span> <span class="n">full_name</span>
+        <span class="n">counter</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="nb">any</span><span class="p">(</span><span class="n">h</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">full_name</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">refined_headers</span><span class="p">):</span>
+            <span class="n">full_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">original_name</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">counter</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="n">refined_headers</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">full_name</span><span class="p">,</span> 
+            <span class="s2">&quot;interval&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">p_start</span><span class="p">,</span> <span class="n">p_end</span><span class="p">)</span>
+        <span class="p">})</span>
+        
+        <span class="n">last_token_identity</span> <span class="o">=</span> <span class="n">current_token_identity</span>
+        
+    <span class="k">return</span> <span class="n">refined_headers</span></div>
+
+
+<div class="viewcode-block" id="auto_cast_df">
+<a class="viewcode-back" href="../../../../advanced.html#pyleotups.utils.Parser.NonStandardParserUtils.auto_cast_df">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">auto_cast_df</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Attempt to convert object columns to numeric where possible.</span>
+<span class="sd">    Leaves non-convertible columns unchanged.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s2">&quot;object&quot;</span><span class="p">:</span>
+            <span class="c1"># Try numeric conversion</span>
+            <span class="n">converted</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Only replace if conversion actually changed type</span>
+            <span class="k">if</span> <span class="n">converted</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="s2">&quot;object&quot;</span><span class="p">:</span>
+                <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">converted</span>
+
+    <span class="k">return</span> <span class="n">df</span></div>
 
 </pre></div>
 

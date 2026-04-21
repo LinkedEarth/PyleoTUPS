@@ -9,11 +9,11 @@
   <title>Contributing to PyleoTUPS &mdash; PyleoTUPS 0.0.2b0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="_static/plot_directive.css?v=7f9a90b1" />
-      <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css?v=572af1d6" />
+      <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
       <link rel="stylesheet" type="text/css" href="_static/thebelab.css" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="_static/css/rtd_sphinx_search.min.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css\rtd_sphinx_search.min.css" />
       <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
 
   
@@ -25,8 +25,8 @@
       <script src="_static/thebelab-helper.js"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>
       <script src="_static/copybutton.js?v=f281be69"></script>
-      <script src="_static/js/rtd_search_config.js"></script>
-      <script src="_static/js/rtd_sphinx_search.min.js"></script>
+      <script src="_static/js\rtd_search_config.js"></script>
+      <script src="_static/js\rtd_sphinx_search.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -154,8 +154,8 @@ Trying the bug-producing code out on the main branch is often a worthwhile exerc
 <p>Bug reports must:</p>
 <ol class="arabic">
 <li><p>Include a minimal working example (a short, self*contained Python snippet reproducing the problem). You can format the code nicely by using GitHub Flavored Markdown:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyleotups</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dataset</span>
-<span class="n">ds</span><span class="o">=</span><span class="n">Dataset</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyleotups</span><span class="w"> </span><span class="kn">import</span> <span class="n">NOAADataset</span>
+<span class="n">ds</span><span class="o">=</span><span class="n">NOAADataset</span><span class="p">()</span>
 <span class="n">ds</span><span class="o">.</span><span class="n">search_studies</span><span class="p">(</span><span class="n">noaa_id</span><span class="o">=</span><span class="mi">33213</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -429,7 +429,8 @@ To improve the chances of your pull request being reviewed, you should:</p>
 </div></blockquote>
 <p>For the latter, make sure the example is prefaced by:</p>
 <blockquote>
-<div></div></blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">`..</span> <span class="pre">jupyter-execute::`</span></code></p>
+</div></blockquote>
 <p>and properly indented (look at other docstrings for inspiration).</p>
 </section>
 <section id="how-to-build-the-pyleotups-documentation">

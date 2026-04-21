@@ -26,7 +26,7 @@ class Site:
             self.geo_type  = geo.get('geoType', np.nan)
             self.geometry_type = geometry.get('type', np.nan)
 
-            properties = geo.get('properties', {})
+            properties = (geo or {}).get('properties', {})
             self.min_elevation = properties.get('minElevationMeters', np.nan)
             self.max_elevation = properties.get('maxElevationMeters', np.nan)
         else:
@@ -35,12 +35,12 @@ class Site:
             self.min_elevation = np.nan
             self.max_elevation = np.nan
         
-        properties = geo.get('properties', {})
+        properties = (geo or {}).get('properties', {})
 
-        self.south_lat = self._safe_float(properties.get('southernmostLatitude'))
-        self.north_lat = self._safe_float(properties.get('northernmostLatitude'))
-        self.west_lon = self._safe_float(properties.get('westernmostLongitude'))
-        self.east_lon = self._safe_float(properties.get('easternmostLongitude'))
+        self.south_lat = self._safe_float(properties.get('southernmostLatitude', np.nan))
+        self.north_lat = self._safe_float(properties.get('northernmostLatitude', np.nan))
+        self.west_lon = self._safe_float(properties.get('westernmostLongitude', np.nan))
+        self.east_lon = self._safe_float(properties.get('easternmostLongitude', np.nan))
 
         # ✅ Validate paleoData entries
         paleo_data_list = site_data.get('paleoData', [])

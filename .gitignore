@@ -30,3 +30,4 @@ nonstd-parser/
 .ipynb_checkpoints/
 
 .env
+/dist

@@ -17,7 +17,7 @@ class Site:
         self.location_name = site_data.get('locationName', np.nan)
 
         # ✅ Safely extract geo information
-        geo = site_data.get('geo')
+        geo = site_data.get('geo', {})
         if isinstance(geo, dict):
             geometry = geo.get('geometry', {})
             coordinates = geometry.get('coordinates', [np.nan, np.nan])
@@ -34,6 +34,8 @@ class Site:
             self.lon = np.nan
             self.min_elevation = np.nan
             self.max_elevation = np.nan
+            self.geo_type = np.nan
+            self.geometry_type = np.nan
         
         properties = (geo or {}).get('properties', {})
 

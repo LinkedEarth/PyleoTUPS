@@ -231,8 +231,8 @@ class NOAADataset(BaseDataset):
         limit : int, default 100
             Number of studies to return (PyleoTUPS default).
         
-        display : bool, default False
-            If True, render a small preview after parsing. 
+        skip : int, 
+            Number of studies to skip (for paging). Paired with `limit`.
 
         skip : int, optional
             Number of studies to skip (for pagination). Use with ``limit`` to page through results.

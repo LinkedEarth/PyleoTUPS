@@ -37,16 +37,15 @@ class NonStandardParser:
 
     Notes
     -----
-    The parsing workflow is as follows:
-    1.A `NonStandardParser` instance is created with a `file_path`.
-    2.The public `parse()` method is called.
-    3.`_fetch_lines()` reads the file into `self.lines`.
-    4.`_segregate_blocks()` splits `self.lines` into `Block` objects
-        (groups of non-empty lines) and saves them to `self.blocks`.
-    5.`parse()` iterates through each `block` in `self.blocks`.
-    6.`_process_block()` is called on each block, which a. Computes statistics for the block, b. Classifies it (e.g., TABULAR, DATA, NARRATIVE), c.  Dispatches to a specific parsing method (e.g.,`_parse_tabular_block`).
-    7. The specific parse methods (e.g., `_parse_data_block`) handle logic for header borrowing, DataFrame generation, and error handling, modifying the `block` object in place.
-    8.`parse()` returns the fully processed `self.blocks` list.
+    The parsing workflow is as follows.
+    - A `NonStandardParser` instance is created with a `file_path`.
+    - The public `parse()` method is called.
+    - `_fetch_lines()` reads the file into `self.lines`.
+    - `_segregate_blocks()` splits `self.lines` into `Block` objects -a groups of non-empty lines- and saves them to `self.blocks`.
+    - `parse()` iterates through each `block` in `self.blocks`.
+    - `_process_block()` is called on each block, which a. Computes statistics for the block, b. Classifies it (e.g., TABULAR, DATA, NARRATIVE), c.  Dispatches to a specific parsing method (e.g.,`_parse_tabular_block`).
+    - The specific parse methods (e.g., `_parse_data_block`) handle logic for header borrowing, DataFrame generation, and error handling, modifying the `block` object in place.
+    - `parse()` returns the fully processed `self.blocks` list.
     """
 
     def __init__(self, file_path, use_skip=True, use_refinement=True):

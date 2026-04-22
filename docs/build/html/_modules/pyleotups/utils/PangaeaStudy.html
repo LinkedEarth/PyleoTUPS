@@ -1,0 +1,667 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pyleotups.utils.PangaeaStudy &mdash; PyleoTUPS 0.0.2b0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/jupyter-sphinx.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/thebelab.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css\rtd_sphinx_search.min.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=5e47b899"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/thebelab-helper.js"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../../_static/js\rtd_search_config.js"></script>
+      <script src="../../../_static/js\rtd_sphinx_search.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            PyleoTUPS
+              <img src="../../../_static/pyleotups_logo_small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Working with PyleoTUPS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installing PyleoTUPS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">PyleoTUPS User APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Tutorials</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced Functions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced.html">Advanced Functionalities</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Involved</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../contribution_guide.html">Contributing to PyleoTUPS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../citation.html">Citing PyleoTUPS</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">PyleoTUPS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">pyleotups.utils.PangaeaStudy</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pyleotups.utils.PangaeaStudy</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pangaeapy</span><span class="w"> </span><span class="kn">import</span> <span class="n">PanDataSet</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pybtex.database</span><span class="w"> </span><span class="kn">import</span> <span class="n">Entry</span><span class="p">,</span> <span class="n">Person</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">_DOI_RE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;(10\.\d{4,9}/\S+)&quot;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
+<span class="n">_YEAR_RE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\b(19|20)\d</span><span class="si">{2}</span><span class="s2">\b&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_extract_dois</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">s</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;.,);&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">_DOI_RE</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">s</span><span class="p">)]</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_extract_year</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">s</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">_YEAR_RE</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="k">if</span> <span class="n">m</span> <span class="k">else</span> <span class="kc">None</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_make_citation_key</span><span class="p">(</span><span class="n">base</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">safe</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">safe</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">&quot;</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_split_authors</span><span class="p">(</span><span class="n">author_str</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Person</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">author_str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+    <span class="n">parts</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;;| and |, and |,&quot;</span><span class="p">,</span> <span class="n">author_str</span><span class="p">)</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">Person</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="PangaeaStudy">
+<a class="viewcode-back" href="../../../advanced.html#pyleotups.utils.PangaeaStudy.PangaeaStudy">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PangaeaStudy</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Utility class representing a single PANGAEA study.</span>
+
+<span class="sd">    This class wraps a persistent `pangaeapy.PanDataSet` instance and provides:</span>
+<span class="sd">    - Lazy data loading</span>
+<span class="sd">    - NOAA-style summary normalization</span>
+<span class="sd">    - Geographic extraction</span>
+<span class="sd">    - Deep publication parsing (including supplement handling)</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    study_id : str</span>
+<span class="sd">        DOI, URI, or identifier of the PANGAEA dataset.</span>
+<span class="sd">    cache_dir : str or None, optional</span>
+<span class="sd">        Directory for pangaeapy cache.</span>
+<span class="sd">    auth_token : str or None, optional</span>
+<span class="sd">        PANGAEA authentication token for restricted datasets.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">study_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">cache_dir</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">auth_token</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">study_id</span> <span class="o">=</span> <span class="n">study_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cache_dir</span> <span class="o">=</span> <span class="n">cache_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">auth_token</span> <span class="o">=</span> <span class="n">auth_token</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_panobj</span> <span class="o">=</span> <span class="n">PanDataSet</span><span class="p">(</span>
+            <span class="nb">id</span><span class="o">=</span><span class="n">study_id</span><span class="p">,</span>
+            <span class="n">cachedir</span><span class="o">=</span><span class="n">cache_dir</span><span class="p">,</span>
+            <span class="n">auth_token</span><span class="o">=</span><span class="n">auth_token</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="c1"># ------------------------------------------------------------------</span>
+    <span class="c1"># Data Handling</span>
+    <span class="c1"># ------------------------------------------------------------------</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_normalize_id</span><span class="p">(</span><span class="n">study_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extract numeric PANGAEA ID from DOI or URI string.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &#39;doi.pangaea.de/10.1594/PANGAEA.830587&#39;</span>
+<span class="sd">        → 830587</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;PANGAEA\.(\d+)&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">study_id</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+
+        <span class="c1"># Fallback: assume already numeric</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">study_id</span><span class="p">)</span>
+
+<div class="viewcode-block" id="PangaeaStudy.get_data">
+<a class="viewcode-back" href="../../../advanced.html#pyleotups.utils.PangaeaStudy.PangaeaStudy.get_data">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve the dataset as a pandas DataFrame.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pandas.DataFrame</span>
+<span class="sd">            Copy of the dataset table with metadata stored in ``df.attrs``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_panobj</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+        <span class="n">df</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;PANGAEA&quot;</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;StudyID&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">study_id</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;DOI&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_panobj</span><span class="o">.</span><span class="n">doi</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;Citation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_panobj</span><span class="o">.</span><span class="n">citation</span>
+
+        <span class="k">return</span> <span class="n">df</span></div>
+
+
+    <span class="c1"># ------------------------------------------------------------------</span>
+    <span class="c1"># Summary Metadata</span>
+    <span class="c1"># ------------------------------------------------------------------</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_extract_temporal_extent</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extract temporal coverage from Age columns (CE and/or BP).</span>
+
+<span class="sd">        1.Collect all CE-type columns</span>
+<span class="sd">        2.Collect all BP-type columns</span>
+<span class="sd">        3.Compute CE from CE columns</span>
+<span class="sd">        4.Compute BP from BP columns    </span>
+<span class="sd">        5.If one side missing → derive from the other</span>
+<span class="sd">        6.If still missing → fallback to Date/Time column (if present)</span>
+<span class="sd">    </span>
+<span class="sd">            Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple</span>
+<span class="sd">            (EarliestYearBP, MostRecentYearBP,</span>
+<span class="sd">            EarliestYearCE, MostRecentYearCE)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">earliest_bp</span> <span class="o">=</span> <span class="n">latest_bp</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">earliest_ce</span> <span class="o">=</span> <span class="n">latest_ce</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_panobj</span><span class="o">.</span><span class="n">data</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_panobj</span><span class="o">.</span><span class="n">params</span>
+
+            <span class="n">ce_values</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">bp_values</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="c1"># --------------------------------------------------</span>
+            <span class="c1"># Identify all age-related columns</span>
+            <span class="c1"># --------------------------------------------------</span>
+
+            <span class="n">AGE_PATTERN</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\bage\b&quot;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
+            <span class="n">EXCLUDE_PATTERN</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+                <span class="sa">r</span><span class="s2">&quot;(error|std|deviation|uncertainty|dated|comment|\be\b)&quot;</span><span class="p">,</span>
+                <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span>
+            <span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">col_name</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+
+                <span class="n">name</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">name</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span>
+                <span class="n">short</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">shortName</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span>
+                <span class="n">unit</span> <span class="o">=</span> <span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">unit</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+                <span class="c1"># -----------------------------------------</span>
+                <span class="c1"># Detect Age columns (word boundary safe)</span>
+                <span class="c1"># -----------------------------------------</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">AGE_PATTERN</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="ow">or</span> <span class="n">AGE_PATTERN</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">short</span><span class="p">)):</span>
+                    <span class="k">continue</span>
+
+                <span class="c1"># -----------------------------------------</span>
+                <span class="c1"># Exclude uncertainty / error columns</span>
+                <span class="c1"># -----------------------------------------</span>
+                <span class="k">if</span> <span class="n">EXCLUDE_PATTERN</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="ow">or</span> <span class="n">EXCLUDE_PATTERN</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">short</span><span class="p">):</span>
+                    <span class="k">continue</span>
+
+                <span class="c1"># if col_name not in df.columns:</span>
+                <span class="c1">#     continue</span>
+                
+                <span class="n">series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col_name</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">series</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>    
+                    <span class="k">continue</span>
+
+                <span class="c1"># -----------------------------------------</span>
+                <span class="c1"># CE units</span>
+                <span class="c1"># -----------------------------------------</span>
+                <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\b(ad|ce)\b&quot;</span><span class="p">,</span> <span class="n">unit</span><span class="p">):</span>
+                    <span class="n">ce_values</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">series</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+
+                <span class="c1"># -----------------------------------------</span>
+                <span class="c1"># BP units</span>
+                <span class="c1"># -----------------------------------------</span>
+                <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\bbp\b&quot;</span><span class="p">,</span> <span class="n">unit</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="s2">&quot;ka&quot;</span> <span class="ow">in</span> <span class="n">unit</span><span class="p">:</span>
+                        <span class="n">bp_values</span><span class="o">.</span><span class="n">extend</span><span class="p">((</span><span class="n">series</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">bp_values</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">series</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+                
+                
+            <span class="c1"># --------------------------------------------------</span>
+            <span class="c1"># Compute CE if present</span>
+            <span class="c1"># --------------------------------------------------</span>
+            <span class="k">if</span> <span class="n">ce_values</span><span class="p">:</span>
+                <span class="n">ce_min</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">ce_values</span><span class="p">)</span>
+                <span class="n">ce_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">ce_values</span><span class="p">)</span>
+
+                <span class="n">earliest_ce</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ce_min</span><span class="p">)</span>
+                <span class="n">latest_ce</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ce_max</span><span class="p">)</span>
+
+            <span class="c1"># --------------------------------------------------</span>
+            <span class="c1"># Compute BP if present</span>
+            <span class="c1"># --------------------------------------------------</span>
+            <span class="k">if</span> <span class="n">bp_values</span><span class="p">:</span>
+                <span class="n">bp_min</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">bp_values</span><span class="p">)</span>
+                <span class="n">bp_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">bp_values</span><span class="p">)</span>
+
+                <span class="c1"># In BP: larger = older</span>
+                <span class="n">earliest_bp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">bp_max</span><span class="p">)</span>
+                <span class="n">latest_bp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">bp_min</span><span class="p">)</span>
+
+            <span class="c1"># --------------------------------------------------</span>
+            <span class="c1"># Derive missing side if necessary</span>
+            <span class="c1"># --------------------------------------------------</span>
+            <span class="k">if</span> <span class="n">earliest_ce</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">earliest_bp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">earliest_bp</span> <span class="o">=</span> <span class="mi">1950</span> <span class="o">-</span> <span class="n">latest_ce</span>
+                <span class="n">latest_bp</span> <span class="o">=</span> <span class="mi">1950</span> <span class="o">-</span> <span class="n">earliest_ce</span>
+
+            <span class="k">if</span> <span class="n">earliest_bp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">earliest_ce</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">earliest_ce</span> <span class="o">=</span> <span class="mi">1950</span> <span class="o">-</span> <span class="n">earliest_bp</span>
+                <span class="n">latest_ce</span> <span class="o">=</span> <span class="mi">1950</span> <span class="o">-</span> <span class="n">latest_bp</span>
+
+            <span class="c1"># --------------------------------------------------</span>
+            <span class="c1"># Fallback to Date/Time if nothing found</span>
+            <span class="c1"># --------------------------------------------------</span>
+            <span class="c1"># if (</span>
+            <span class="c1">#     earliest_ce is None</span>
+            <span class="c1">#     and earliest_bp is None</span>
+            <span class="c1">#     and &quot;Date/Time&quot; in df.columns</span>
+            <span class="c1"># ):</span>
+            <span class="c1">#     years = pd.to_datetime(</span>
+            <span class="c1">#         df[&quot;Date/Time&quot;], errors=&quot;coerce&quot;</span>
+            <span class="c1">#     ).dt.year.dropna()</span>
+
+            <span class="c1">#     if not years.empty:</span>
+            <span class="c1">#         earliest_ce = int(years.min())</span>
+            <span class="c1">#         latest_ce = int(years.max())</span>
+            <span class="c1">#         earliest_bp = 1950 - latest_ce</span>
+            <span class="c1">#         latest_bp = 1950 - earliest_ce</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="k">return</span> <span class="n">earliest_bp</span><span class="p">,</span> <span class="n">latest_bp</span><span class="p">,</span> <span class="n">earliest_ce</span><span class="p">,</span> <span class="n">latest_ce</span>
+
+<div class="viewcode-block" id="PangaeaStudy.to_summary_dict">
+<a class="viewcode-back" href="../../../advanced.html#pyleotups.utils.PangaeaStudy.PangaeaStudy.to_summary_dict">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_summary_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert study metadata to NOAA-style summary dictionary.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            Dictionary with standardized summary fields.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_panobj</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">earliest_bp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">latest_bp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">earliest_ce</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">latest_ce</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_extract_temporal_extent</span><span class="p">()</span>
+        <span class="p">)</span>
+        <span class="c1"># if collection_founds :</span>
+        <span class="c1">#     logger.warning(</span>
+        <span class="c1">#     f&#39;The Summary Table Below may contain Dataset marked as collection.&#39;</span>
+        <span class="c1">#     f&#39;Refer to the &quot;CollectionMembers&quot; column to identify collection datasets and their members.&#39;)</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;StudyID&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">study_id</span><span class="p">,</span>
+            <span class="s2">&quot;StudyName&quot;</span><span class="p">:</span> <span class="n">ds</span><span class="o">.</span><span class="n">title</span><span class="p">,</span>
+            <span class="s2">&quot;EarliestYearBP&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">earliest_bp</span><span class="p">,</span>
+            <span class="s2">&quot;MostRecentYearBP&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">latest_bp</span><span class="p">,</span>
+            <span class="s2">&quot;EarliestYearCE&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">earliest_ce</span><span class="p">,</span>
+            <span class="s2">&quot;MostRecentYearCE&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">latest_ce</span><span class="p">,</span>
+            <span class="s2">&quot;StudyNotes&quot;</span><span class="p">:</span> <span class="n">ds</span><span class="o">.</span><span class="n">abstract</span><span class="p">,</span>
+            <span class="s2">&quot;ScienceKeywords&quot;</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="s2">&quot;keywords&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+            <span class="s2">&quot;Investigators&quot;</span><span class="p">:</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">fullname</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">ds</span><span class="o">.</span><span class="n">authors</span><span class="p">),</span>
+            <span class="s2">&quot;Publications&quot;</span><span class="p">:</span> <span class="n">ds</span><span class="o">.</span><span class="n">citation</span><span class="p">,</span>
+            <span class="s2">&quot;Sites&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">label</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">ds</span><span class="o">.</span><span class="n">events</span><span class="p">],</span>
+            <span class="s2">&quot;Funding&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">URL</span><span class="p">,</span> <span class="s2">&quot;award&quot;</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">awardURI</span><span class="p">}</span>
+                <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">ds</span><span class="o">.</span><span class="n">projects</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;CollectionMembers&quot;</span><span class="p">:</span> <span class="p">(</span>
+                <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_normalize_id</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">ds</span><span class="o">.</span><span class="n">collection_members</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">ds</span><span class="o">.</span><span class="n">isCollection</span> <span class="ow">and</span> <span class="n">ds</span><span class="o">.</span><span class="n">collection_members</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">),</span>
+        <span class="p">}</span></div>
+
+
+    <span class="c1"># ------------------------------------------------------------------</span>
+    <span class="c1"># Geographic Information</span>
+    <span class="c1"># ------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="PangaeaStudy.get_geo">
+<a class="viewcode-back" href="../../../advanced.html#pyleotups.utils.PangaeaStudy.PangaeaStudy.get_geo">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_geo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve geographic metadata for study events.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pandas.DataFrame</span>
+<span class="sd">            DataFrame containing event-level geographic information.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">ev</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_panobj</span><span class="o">.</span><span class="n">events</span><span class="p">:</span>
+            <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;StudyID&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">study_id</span><span class="p">,</span>
+                    <span class="s2">&quot;SiteID&quot;</span><span class="p">:</span> <span class="n">ev</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                    <span class="s2">&quot;SiteName&quot;</span><span class="p">:</span> <span class="n">ev</span><span class="o">.</span><span class="n">label</span><span class="p">,</span>
+                    <span class="s2">&quot;LocationName&quot;</span><span class="p">:</span> <span class="n">ev</span><span class="o">.</span><span class="n">location</span><span class="p">,</span>
+                    <span class="s2">&quot;Latitude&quot;</span><span class="p">:</span> <span class="n">ev</span><span class="o">.</span><span class="n">latitude</span><span class="p">,</span>
+                    <span class="s2">&quot;Longitude&quot;</span><span class="p">:</span> <span class="n">ev</span><span class="o">.</span><span class="n">longitude</span><span class="p">,</span>
+                    <span class="s2">&quot;Elevation&quot;</span><span class="p">:</span> <span class="n">ev</span><span class="o">.</span><span class="n">elevation</span><span class="p">,</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ------------------------------------------------------------------</span>
+    <span class="c1"># Publications</span>
+    <span class="c1"># ------------------------------------------------------------------</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_extract_publications</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extract structured publication information.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple</span>
+<span class="sd">            (list_of_rows, dict_of_bibtex_entries)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_panobj</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">bib_entries</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="n">study_title</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">title</span>
+        <span class="n">citation</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">citation</span> <span class="ow">or</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="s2">&quot;citationString&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">citation</span><span class="p">:</span>
+            <span class="n">dataset_doi</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">doi</span> <span class="ow">or</span> <span class="n">ds</span><span class="o">.</span><span class="n">uri</span>
+            <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;StudyID&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">study_id</span><span class="p">,</span>
+                    <span class="s2">&quot;StudyName&quot;</span><span class="p">:</span> <span class="n">study_title</span><span class="p">,</span>
+                    <span class="s2">&quot;Author&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="s2">&quot;Title&quot;</span><span class="p">:</span> <span class="n">study_title</span><span class="p">,</span>
+                    <span class="s2">&quot;Journal&quot;</span><span class="p">:</span> <span class="s2">&quot;PANGAEA&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Year&quot;</span><span class="p">:</span> <span class="n">ds</span><span class="o">.</span><span class="n">year</span><span class="p">,</span>
+                    <span class="s2">&quot;Volume&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="s2">&quot;Number&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="s2">&quot;Pages&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="s2">&quot;Type&quot;</span><span class="p">:</span> <span class="s2">&quot;dataset&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;DOI&quot;</span><span class="p">:</span> <span class="n">dataset_doi</span><span class="p">,</span>
+                    <span class="s2">&quot;URL&quot;</span><span class="p">:</span> <span class="n">ds</span><span class="o">.</span><span class="n">uri</span><span class="p">,</span>
+                    <span class="s2">&quot;CitationKey&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="n">rows</span><span class="p">,</span> <span class="n">bib_entries</span>
+
+        <span class="n">dataset_dois</span> <span class="o">=</span> <span class="n">_extract_dois</span><span class="p">(</span><span class="n">citation</span><span class="p">)</span>
+        <span class="n">dataset_doi</span> <span class="o">=</span> <span class="n">dataset_dois</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">dataset_dois</span> <span class="k">else</span> <span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">doi</span> <span class="ow">or</span> <span class="n">ds</span><span class="o">.</span><span class="n">uri</span><span class="p">)</span>
+        <span class="n">dataset_year</span> <span class="o">=</span> <span class="n">_extract_year</span><span class="p">(</span><span class="n">citation</span><span class="p">)</span> <span class="ow">or</span> <span class="n">ds</span><span class="o">.</span><span class="n">year</span>
+
+        <span class="n">author_part</span> <span class="o">=</span> <span class="n">citation</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;(&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+
+        <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;StudyID&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">study_id</span><span class="p">,</span>
+                <span class="s2">&quot;StudyName&quot;</span><span class="p">:</span> <span class="n">study_title</span><span class="p">,</span>
+                <span class="s2">&quot;Author&quot;</span><span class="p">:</span> <span class="n">author_part</span><span class="p">,</span>
+                <span class="s2">&quot;Title&quot;</span><span class="p">:</span> <span class="n">study_title</span><span class="p">,</span>
+                <span class="s2">&quot;Journal&quot;</span><span class="p">:</span> <span class="s2">&quot;PANGAEA&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;Year&quot;</span><span class="p">:</span> <span class="n">dataset_year</span><span class="p">,</span>
+                <span class="s2">&quot;Volume&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s2">&quot;Number&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s2">&quot;Pages&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s2">&quot;Type&quot;</span><span class="p">:</span> <span class="s2">&quot;dataset&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;DOI&quot;</span><span class="p">:</span> <span class="n">dataset_doi</span><span class="p">,</span>
+                <span class="s2">&quot;URL&quot;</span><span class="p">:</span> <span class="n">ds</span><span class="o">.</span><span class="n">uri</span><span class="p">,</span>
+                <span class="s2">&quot;CitationKey&quot;</span><span class="p">:</span> <span class="n">citation</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="n">idx</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">_make_citation_key</span><span class="p">(</span><span class="n">dataset_doi</span> <span class="ow">or</span> <span class="n">study_title</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span>
+
+        <span class="n">bib_entries</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">Entry</span><span class="p">(</span>
+            <span class="s2">&quot;misc&quot;</span><span class="p">,</span>
+            <span class="n">persons</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;author&quot;</span><span class="p">:</span> <span class="n">_split_authors</span><span class="p">(</span><span class="n">author_part</span><span class="p">)},</span>
+            <span class="n">fields</span><span class="o">=</span><span class="p">{</span>
+                <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="n">study_title</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;year&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">dataset_year</span><span class="p">)</span> <span class="k">if</span> <span class="n">dataset_year</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;doi&quot;</span><span class="p">:</span> <span class="n">dataset_doi</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="n">ds</span><span class="o">.</span><span class="n">uri</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="s2">&quot;Supplement to:&quot;</span> <span class="ow">in</span> <span class="n">citation</span><span class="p">:</span>
+            <span class="n">article_part</span> <span class="o">=</span> <span class="n">citation</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;Supplement to:&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="n">article_dois</span> <span class="o">=</span> <span class="n">_extract_dois</span><span class="p">(</span><span class="n">article_part</span><span class="p">)</span>
+            <span class="n">article_doi</span> <span class="o">=</span> <span class="n">article_dois</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">article_dois</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="n">article_year</span> <span class="o">=</span> <span class="n">_extract_year</span><span class="p">(</span><span class="n">article_part</span><span class="p">)</span>
+
+            <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;StudyID&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">study_id</span><span class="p">,</span>
+                    <span class="s2">&quot;StudyName&quot;</span><span class="p">:</span> <span class="n">study_title</span><span class="p">,</span>
+                    <span class="s2">&quot;Author&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="s2">&quot;Title&quot;</span><span class="p">:</span> <span class="n">article_part</span><span class="p">,</span>
+                    <span class="s2">&quot;Journal&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="s2">&quot;Year&quot;</span><span class="p">:</span> <span class="n">article_year</span><span class="p">,</span>
+                    <span class="s2">&quot;Volume&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="s2">&quot;Number&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="s2">&quot;Pages&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="s2">&quot;Type&quot;</span><span class="p">:</span> <span class="s2">&quot;article&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;DOI&quot;</span><span class="p">:</span> <span class="n">article_doi</span><span class="p">,</span>
+                    <span class="s2">&quot;URL&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="s2">&quot;CitationKey&quot;</span><span class="p">:</span> <span class="n">article_part</span><span class="p">,</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">rows</span><span class="p">,</span> <span class="n">bib_entries</span>
+    
+<div class="viewcode-block" id="PangaeaStudy.get_funding">
+<a class="viewcode-back" href="../../../advanced.html#pyleotups.utils.PangaeaStudy.PangaeaStudy.get_funding">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_funding</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve funding information for this study.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pandas.DataFrame</span>
+<span class="sd">            DataFrame with columns:</span>
+<span class="sd">            [&#39;StudyID&#39;, &#39;StudyName&#39;, &#39;FundingAgency&#39;, &#39;FundingGrant&#39;].</span>
+
+<span class="sd">            If no funding metadata is available,</span>
+<span class="sd">            returns an empty DataFrame with columns preserved.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_panobj</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">projects</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="s2">&quot;projects&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">projects</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">projects</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">projects</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">))</span> <span class="k">else</span> <span class="p">[</span><span class="n">projects</span><span class="p">]:</span>
+                <span class="n">grant</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+                <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+                    <span class="n">grant</span> <span class="o">+=</span> <span class="n">p</span><span class="o">.</span><span class="n">label</span>
+                <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+                    <span class="n">grant</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; / </span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&quot;</span>
+
+                <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="p">{</span>
+                        <span class="s2">&quot;StudyID&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">study_id</span><span class="p">,</span>
+                        <span class="s2">&quot;StudyName&quot;</span><span class="p">:</span> <span class="n">ds</span><span class="o">.</span><span class="n">title</span><span class="p">,</span>
+                        <span class="s2">&quot;FundingAgency&quot;</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s2">&quot;URL&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                                        <span class="ow">or</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s2">&quot;url&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+                        <span class="s2">&quot;FundingGrant&quot;</span><span class="p">:</span> <span class="n">grant</span> <span class="k">if</span> <span class="n">grant</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="p">}</span>
+                <span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">rows</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+                <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;StudyID&quot;</span><span class="p">,</span> <span class="s2">&quot;StudyName&quot;</span><span class="p">,</span> <span class="s2">&quot;FundingAgency&quot;</span><span class="p">,</span> <span class="s2">&quot;FundingGrant&quot;</span><span class="p">]</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="n">rows</span><span class="p">,</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;StudyID&quot;</span><span class="p">,</span> <span class="s2">&quot;StudyName&quot;</span><span class="p">,</span> <span class="s2">&quot;FundingAgency&quot;</span><span class="p">,</span> <span class="s2">&quot;FundingGrant&quot;</span><span class="p">],</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PangaeaStudy.get_variables">
+<a class="viewcode-back" href="../../../advanced.html#pyleotups.utils.PangaeaStudy.PangaeaStudy.get_variables">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_variables</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve variable (parameter) metadata for this study.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pandas.DataFrame</span>
+<span class="sd">            One row per parameter with the following columns:</span>
+
+<span class="sd">            - StudyID</span>
+<span class="sd">            - VariableName</span>
+<span class="sd">            - ShortName</span>
+<span class="sd">            - Unit</span>
+<span class="sd">            - OntologyTerms</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        For collection datasets, this returns an empty DataFrame.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">ds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_panobj</span>
+
+        <span class="c1"># Collections do not contain parameters</span>
+        <span class="k">if</span> <span class="n">ds</span><span class="o">.</span><span class="n">isCollection</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+                <span class="n">columns</span><span class="o">=</span><span class="p">[</span>
+                    <span class="s2">&quot;StudyID&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;VariableName&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;ShortName&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Unit&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;OntologyTerms&quot;</span><span class="p">,</span>
+                <span class="p">]</span>
+            <span class="p">)</span>
+
+        <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">col_name</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">ds</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+
+            <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;StudyID&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">study_id</span><span class="p">,</span>
+                    <span class="s2">&quot;VariableName&quot;</span><span class="p">:</span> <span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                    <span class="s2">&quot;ShortName&quot;</span><span class="p">:</span> <span class="n">param</span><span class="o">.</span><span class="n">shortName</span><span class="p">,</span>
+                    <span class="s2">&quot;Unit&quot;</span><span class="p">:</span> <span class="n">param</span><span class="o">.</span><span class="n">unit</span><span class="p">,</span>
+                    <span class="s2">&quot;OntologyTerms&quot;</span><span class="p">:</span> <span class="n">param</span><span class="o">.</span><span class="n">terms</span><span class="p">,</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, LinkedEarth.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

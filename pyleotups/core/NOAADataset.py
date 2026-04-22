@@ -153,12 +153,12 @@ class NOAADataset(BaseDataset):
 
         data_type_id : str, optional
             Filter by data type. Use one or more type IDs separated by '|'.
-            Available IDs:
-                1: BOREHOLE, 2: CLIMATE FORCING, 3: CLIMATE RECONSTRUCTIONS, 4: CORALS AND SCLEROSPONGES,
-                6: HISTORICAL, 7: ICE CORES, 8: INSECT, 9: LAKE LEVELS, 10: LOESS,
-                11: PALEOCLIMATIC MODELING, 12: FIRE HISTORY, 13: PALEOLIMNOLOGY, 14: PALEOCEANOGRAPHY,
-                15: PLANT MACROFOSSILS, 16: POLLEN, 17: SPELEOTHEMS, 18: TREE RING,
-                19: OTHER COLLECTIONS, 20: INSTRUMENTAL, 59: SOFTWARE, 60: REPOSITORY
+            Available IDs.
+            1. BOREHOLE, 2. CLIMATE FORCING, 3. CLIMATE RECONSTRUCTIONS, 4. CORALS AND SCLEROSPONGES,
+            6. HISTORICAL, 7. ICE CORES, 8. INSECT, 9. LAKE LEVELS, 10. LOESS,
+            11. PALEOCLIMATIC MODELING, 12. FIRE HISTORY, 13. PALEOLIMNOLOGY, 14. PALEOCEANOGRAPHY,
+            15. PLANT MACROFOSSILS, 16. POLLEN, 17. SPELEOTHEMS, 18. TREE RING,
+            19. OTHER COLLECTIONS, 20. INSTRUMENTAL, 59. SOFTWARE, 60. REPOSITORY
             Example: '4', '4|18'
 
         investigators : str or list[str], optional

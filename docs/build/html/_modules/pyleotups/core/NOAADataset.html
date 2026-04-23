@@ -254,12 +254,12 @@
 
 <span class="sd">        data_type_id : str, optional</span>
 <span class="sd">            Filter by data type. Use one or more type IDs separated by &#39;|&#39;.</span>
-<span class="sd">            Available IDs:</span>
-<span class="sd">                1: BOREHOLE, 2: CLIMATE FORCING, 3: CLIMATE RECONSTRUCTIONS, 4: CORALS AND SCLEROSPONGES,</span>
-<span class="sd">                6: HISTORICAL, 7: ICE CORES, 8: INSECT, 9: LAKE LEVELS, 10: LOESS,</span>
-<span class="sd">                11: PALEOCLIMATIC MODELING, 12: FIRE HISTORY, 13: PALEOLIMNOLOGY, 14: PALEOCEANOGRAPHY,</span>
-<span class="sd">                15: PLANT MACROFOSSILS, 16: POLLEN, 17: SPELEOTHEMS, 18: TREE RING,</span>
-<span class="sd">                19: OTHER COLLECTIONS, 20: INSTRUMENTAL, 59: SOFTWARE, 60: REPOSITORY</span>
+<span class="sd">            Available IDs.</span>
+<span class="sd">            1. BOREHOLE, 2. CLIMATE FORCING, 3. CLIMATE RECONSTRUCTIONS, 4. CORALS AND SCLEROSPONGES,</span>
+<span class="sd">            6. HISTORICAL, 7. ICE CORES, 8. INSECT, 9. LAKE LEVELS, 10. LOESS,</span>
+<span class="sd">            11. PALEOCLIMATIC MODELING, 12. FIRE HISTORY, 13. PALEOLIMNOLOGY, 14. PALEOCEANOGRAPHY,</span>
+<span class="sd">            15. PLANT MACROFOSSILS, 16. POLLEN, 17. SPELEOTHEMS, 18. TREE RING,</span>
+<span class="sd">            19. OTHER COLLECTIONS, 20. INSTRUMENTAL, 59. SOFTWARE, 60. REPOSITORY</span>
 <span class="sd">            Example: &#39;4&#39;, &#39;4|18&#39;</span>
 
 <span class="sd">        investigators : str or list[str], optional</span>
@@ -287,7 +287,7 @@
 <span class="sd">            Logical combiner for multiple species. Only sent when 2+ items.</span>
 <span class="sd">        </span>
 <span class="sd">        variable_name : str or list[str], optional</span>
-<span class="sd">            Refers to PaST &quot;cvWhats” terms (hierarchies with ``&gt;``). Lists joined with ``|``.</span>
+<span class="sd">            Refers to PaST &quot;cvWhats&quot; terms (hierarchies with ``&gt;``). Lists joined with ``|``.</span>
 <span class="sd">        </span>
 <span class="sd">        variable_name_and_or : {&quot;and&quot;,&quot;or&quot;}, default &quot;or&quot;</span>
 <span class="sd">            Logical combiner for multiple cvWhats/variable_name. Only sent when 2+ items.</span>
@@ -332,8 +332,8 @@
 <span class="sd">        limit : int, default 100</span>
 <span class="sd">            Number of studies to return (PyleoTUPS default).</span>
 <span class="sd">        </span>
-<span class="sd">        display : bool, default False</span>
-<span class="sd">            If True, render a small preview after parsing. </span>
+<span class="sd">        skip : int, </span>
+<span class="sd">            Number of studies to skip (for paging). Paired with `limit`.</span>
 
 <span class="sd">        skip : int, optional</span>
 <span class="sd">            Number of studies to skip (for pagination). Use with ``limit`` to page through results.</span>
@@ -754,20 +754,38 @@
 <span class="sd">            df = ds.get_tables()</span>
 <span class="sd">            df.head()</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="n">records</span> <span class="o">=</span> <span class="p">[]</span>
+
         <span class="k">for</span> <span class="n">study</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">studies</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
             <span class="n">study_id</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">study_id</span>
             <span class="n">study_name</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;studyName&quot;</span><span class="p">)</span>
 
             <span class="k">for</span> <span class="n">site</span> <span class="ow">in</span> <span class="n">study</span><span class="o">.</span><span class="n">sites</span><span class="p">:</span>
-                <span class="n">paleo_data_records</span> <span class="o">=</span> <span class="n">site</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>  <span class="c1"># Already flattened per file</span>
-                <span class="k">for</span> <span class="n">paleo_record</span> <span class="ow">in</span> <span class="n">paleo_data_records</span><span class="p">:</span>
-                    <span class="n">paleo_record</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
-                        <span class="s2">&quot;StudyID&quot;</span><span class="p">:</span> <span class="n">study_id</span><span class="p">,</span>
-                        <span class="s2">&quot;StudyName&quot;</span><span class="p">:</span> <span class="n">study_name</span>
-                    <span class="p">})</span>
-                    <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">paleo_record</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">paleo</span> <span class="ow">in</span> <span class="n">site</span><span class="o">.</span><span class="n">paleo_data</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">file_obj</span> <span class="ow">in</span> <span class="n">paleo</span><span class="o">.</span><span class="n">files</span><span class="p">:</span>
+
+                        <span class="n">row</span> <span class="o">=</span> <span class="n">paleo</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">file_obj</span><span class="p">)</span>
+
+                        <span class="c1"># ❌ REMOVE paleo-level field</span>
+                        <span class="n">row</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;TotalFilesAvailable&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+                        <span class="n">row</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+                            <span class="s2">&quot;SiteID&quot;</span><span class="p">:</span> <span class="n">site</span><span class="o">.</span><span class="n">site_id</span><span class="p">,</span>
+                            <span class="s2">&quot;SiteName&quot;</span><span class="p">:</span> <span class="n">site</span><span class="o">.</span><span class="n">site_name</span><span class="p">,</span>
+                            <span class="s2">&quot;LocationName&quot;</span><span class="p">:</span> <span class="n">site</span><span class="o">.</span><span class="n">location_name</span><span class="p">,</span>
+                            <span class="s2">&quot;GeoType&quot;</span><span class="p">:</span> <span class="n">site</span><span class="o">.</span><span class="n">geo_type</span><span class="p">,</span>
+                            <span class="s2">&quot;GeometryType&quot;</span><span class="p">:</span> <span class="n">site</span><span class="o">.</span><span class="n">geometry_type</span><span class="p">,</span>
+                            <span class="s2">&quot;MinLatitude&quot;</span><span class="p">:</span> <span class="n">site</span><span class="o">.</span><span class="n">south_lat</span><span class="p">,</span>
+                            <span class="s2">&quot;MaxLatitude&quot;</span><span class="p">:</span> <span class="n">site</span><span class="o">.</span><span class="n">north_lat</span><span class="p">,</span>
+                            <span class="s2">&quot;MinLongitude&quot;</span><span class="p">:</span> <span class="n">site</span><span class="o">.</span><span class="n">west_lon</span><span class="p">,</span>
+                            <span class="s2">&quot;MaxLongitude&quot;</span><span class="p">:</span> <span class="n">site</span><span class="o">.</span><span class="n">east_lon</span><span class="p">,</span>
+                            <span class="s2">&quot;MinElevation&quot;</span><span class="p">:</span> <span class="n">site</span><span class="o">.</span><span class="n">min_elevation</span><span class="p">,</span>
+                            <span class="s2">&quot;MaxElevation&quot;</span><span class="p">:</span> <span class="n">site</span><span class="o">.</span><span class="n">max_elevation</span><span class="p">,</span>
+                            <span class="s2">&quot;StudyID&quot;</span><span class="p">:</span> <span class="n">study_id</span><span class="p">,</span>
+                            <span class="s2">&quot;StudyName&quot;</span><span class="p">:</span> <span class="n">study_name</span><span class="p">,</span>
+                        <span class="p">})</span>
+
+                        <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">records</span><span class="p">)</span></div>
 
@@ -786,20 +804,59 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">records</span> <span class="o">=</span> <span class="p">[]</span>
+
         <span class="k">for</span> <span class="n">study</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">studies</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
             <span class="n">study_id</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">study_id</span>
             <span class="n">study_name</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;studyName&quot;</span><span class="p">)</span>
 
             <span class="k">for</span> <span class="n">site</span> <span class="ow">in</span> <span class="n">study</span><span class="o">.</span><span class="n">sites</span><span class="p">:</span>
-                <span class="n">paleo_data_records</span> <span class="o">=</span> <span class="n">site</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>  <span class="c1"># Already flattened per file</span>
-                <span class="k">for</span> <span class="n">paleo_record</span> <span class="ow">in</span> <span class="n">paleo_data_records</span><span class="p">:</span>
-                    <span class="n">paleo_record</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
-                        <span class="s2">&quot;StudyID&quot;</span><span class="p">:</span> <span class="n">study_id</span><span class="p">,</span>
-                        <span class="s2">&quot;StudyName&quot;</span><span class="p">:</span> <span class="n">study_name</span>
-                    <span class="p">})</span>
-                    <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">paleo_record</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">records</span><span class="p">)</span></div>
+                <span class="n">file_urls</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">variables_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+                <span class="k">for</span> <span class="n">paleo</span> <span class="ow">in</span> <span class="n">site</span><span class="o">.</span><span class="n">paleo_data</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">file_obj</span> <span class="ow">in</span> <span class="n">paleo</span><span class="o">.</span><span class="n">files</span><span class="p">:</span>
+                        <span class="n">file_url</span> <span class="o">=</span> <span class="n">file_obj</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;fileUrl&quot;</span><span class="p">)</span>
+
+                        <span class="n">file_urls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file_url</span><span class="p">)</span>
+
+                        <span class="n">variables</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+                            <span class="n">paleo</span><span class="o">.</span><span class="n">file_variable_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">file_url</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+                        <span class="p">)</span>
+                        <span class="n">variables_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">variables</span><span class="p">)</span>
+
+                <span class="n">row</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="c1"># ❌ Removed DataTable-level fields</span>
+
+                    <span class="s2">&quot;FileURL&quot;</span><span class="p">:</span> <span class="n">file_urls</span><span class="p">,</span>
+                    <span class="s2">&quot;Variables&quot;</span><span class="p">:</span> <span class="n">variables_list</span><span class="p">,</span>
+                    <span class="s2">&quot;TotalFilesAvailable&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">file_urls</span><span class="p">),</span>
+
+                    <span class="s2">&quot;SiteID&quot;</span><span class="p">:</span> <span class="n">site</span><span class="o">.</span><span class="n">site_id</span><span class="p">,</span>
+                    <span class="s2">&quot;SiteName&quot;</span><span class="p">:</span> <span class="n">site</span><span class="o">.</span><span class="n">site_name</span><span class="p">,</span>
+                    <span class="s2">&quot;LocationName&quot;</span><span class="p">:</span> <span class="n">site</span><span class="o">.</span><span class="n">location_name</span><span class="p">,</span>
+                    <span class="s2">&quot;GeoType&quot;</span><span class="p">:</span> <span class="n">site</span><span class="o">.</span><span class="n">geo_type</span><span class="p">,</span>
+                    <span class="s2">&quot;GeometryType&quot;</span><span class="p">:</span> <span class="n">site</span><span class="o">.</span><span class="n">geometry_type</span><span class="p">,</span>
+                    <span class="s2">&quot;MinLatitude&quot;</span><span class="p">:</span> <span class="n">site</span><span class="o">.</span><span class="n">south_lat</span><span class="p">,</span>
+                    <span class="s2">&quot;MaxLatitude&quot;</span><span class="p">:</span> <span class="n">site</span><span class="o">.</span><span class="n">north_lat</span><span class="p">,</span>
+                    <span class="s2">&quot;MinLongitude&quot;</span><span class="p">:</span> <span class="n">site</span><span class="o">.</span><span class="n">west_lon</span><span class="p">,</span>
+                    <span class="s2">&quot;MaxLongitude&quot;</span><span class="p">:</span> <span class="n">site</span><span class="o">.</span><span class="n">east_lon</span><span class="p">,</span>
+                    <span class="s2">&quot;MinElevation&quot;</span><span class="p">:</span> <span class="n">site</span><span class="o">.</span><span class="n">min_elevation</span><span class="p">,</span>
+                    <span class="s2">&quot;MaxElevation&quot;</span><span class="p">:</span> <span class="n">site</span><span class="o">.</span><span class="n">max_elevation</span><span class="p">,</span>
+
+                    <span class="s2">&quot;StudyID&quot;</span><span class="p">:</span> <span class="n">study_id</span><span class="p">,</span>
+                    <span class="s2">&quot;StudyName&quot;</span><span class="p">:</span> <span class="n">study_name</span><span class="p">,</span>
+                <span class="p">}</span>
+
+                <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">records</span><span class="p">)</span>
+
+        <span class="c1"># Reorder as requested</span>
+        <span class="n">priority</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;SiteID&quot;</span><span class="p">,</span> <span class="s2">&quot;SiteName&quot;</span><span class="p">,</span> <span class="s2">&quot;StudyID&quot;</span><span class="p">]</span>
+        <span class="n">cols</span> <span class="o">=</span> <span class="n">priority</span> <span class="o">+</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">priority</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">df</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span></div>
 
 
 
@@ -840,7 +897,7 @@
                     <span class="s2">&quot;DataType&quot;</span><span class="p">:</span> <span class="n">data_type</span><span class="p">,</span>
                     <span class="o">**</span><span class="p">{</span>
                         <span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">site</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>  <span class="c1"># site.to_dict() returns list of dicts (1 per file)</span>
-                        <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;SiteID&quot;</span><span class="p">,</span> <span class="s2">&quot;SiteName&quot;</span><span class="p">,</span> <span class="s2">&quot;LocationName&quot;</span><span class="p">,</span> <span class="s2">&quot;Latitude&quot;</span><span class="p">,</span> <span class="s2">&quot;Longitude&quot;</span><span class="p">,</span> <span class="s2">&quot;MinElevation&quot;</span><span class="p">,</span> <span class="s2">&quot;MaxElevation&quot;</span><span class="p">]</span>
+                        <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;SiteID&quot;</span><span class="p">,</span> <span class="s2">&quot;SiteName&quot;</span><span class="p">,</span> <span class="s2">&quot;LocationName&quot;</span><span class="p">,</span> <span class="s2">&quot;GeoType&quot;</span><span class="p">,</span><span class="s2">&quot;GeometryType&quot;</span><span class="p">,</span> <span class="s2">&quot;MinLatitude&quot;</span><span class="p">,</span> <span class="s2">&quot;MaxLatitude&quot;</span><span class="p">,</span> <span class="s2">&quot;MinLongitude&quot;</span><span class="p">,</span> <span class="s2">&quot;MaxLongitude&quot;</span><span class="p">,</span> <span class="s2">&quot;MinElevation&quot;</span><span class="p">,</span> <span class="s2">&quot;MaxElevation&quot;</span><span class="p">]</span>
                     <span class="p">}</span>
                 <span class="p">}</span>
                 <span class="n">site_records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">site_dict</span><span class="p">)</span>

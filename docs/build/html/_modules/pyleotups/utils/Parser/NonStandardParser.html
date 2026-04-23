@@ -136,16 +136,15 @@
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
-<span class="sd">    The parsing workflow is as follows:</span>
-<span class="sd">    1.A `NonStandardParser` instance is created with a `file_path`.</span>
-<span class="sd">    2.The public `parse()` method is called.</span>
-<span class="sd">    3.`_fetch_lines()` reads the file into `self.lines`.</span>
-<span class="sd">    4.`_segregate_blocks()` splits `self.lines` into `Block` objects</span>
-<span class="sd">        (groups of non-empty lines) and saves them to `self.blocks`.</span>
-<span class="sd">    5.`parse()` iterates through each `block` in `self.blocks`.</span>
-<span class="sd">    6.`_process_block()` is called on each block, which a. Computes statistics for the block, b. Classifies it (e.g., TABULAR, DATA, NARRATIVE), c.  Dispatches to a specific parsing method (e.g.,`_parse_tabular_block`).</span>
-<span class="sd">    7. The specific parse methods (e.g., `_parse_data_block`) handle logic for header borrowing, DataFrame generation, and error handling, modifying the `block` object in place.</span>
-<span class="sd">    8.`parse()` returns the fully processed `self.blocks` list.</span>
+<span class="sd">    The parsing workflow is as follows.</span>
+<span class="sd">    - A `NonStandardParser` instance is created with a `file_path`.</span>
+<span class="sd">    - The public `parse()` method is called.</span>
+<span class="sd">    - `_fetch_lines()` reads the file into `self.lines`.</span>
+<span class="sd">    - `_segregate_blocks()` splits `self.lines` into `Block` objects -a groups of non-empty lines- and saves them to `self.blocks`.</span>
+<span class="sd">    - `parse()` iterates through each `block` in `self.blocks`.</span>
+<span class="sd">    - `_process_block()` is called on each block, which a. Computes statistics for the block, b. Classifies it (e.g., TABULAR, DATA, NARRATIVE), c.  Dispatches to a specific parsing method (e.g.,`_parse_tabular_block`).</span>
+<span class="sd">    - The specific parse methods (e.g., `_parse_data_block`) handle logic for header borrowing, DataFrame generation, and error handling, modifying the `block` object in place.</span>
+<span class="sd">    - `parse()` returns the fully processed `self.blocks` list.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">use_skip</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">use_refinement</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>

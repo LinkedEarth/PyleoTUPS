@@ -4,8 +4,8 @@
 Contributing to PyleoTUPS
 #########################
 
-GitHub, GitHub, GitHub
-=======================
+GitHub
+======
 All contributions, bug reports, bug fixes, documentation improvements, enhancements,
 and ideas are welcome, and take place through `GitHub <https://github.com/LinkedEarth/PyleoTUPS/issues>`_
 

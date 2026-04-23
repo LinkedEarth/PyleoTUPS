@@ -458,8 +458,12 @@ from all studies loaded into the Dataset.</p>
       <th>SiteID</th>
       <th>SiteName</th>
       <th>LocationName</th>
-      <th>Latitude</th>
-      <th>Longitude</th>
+      <th>GeoType</th>
+      <th>GeometryType</th>
+      <th>MinLatitude</th>
+      <th>MaxLatitude</th>
+      <th>MinLongitude</th>
+      <th>MaxLongitude</th>
       <th>MinElevation</th>
       <th>MaxElevation</th>
     </tr>
@@ -472,7 +476,11 @@ from all studies loaded into the Dataset.</p>
       <td>58697</td>
       <td>IODP U1446</td>
       <td>Ocean&gt;Indian Ocean</td>
+      <td>Feature</td>
+      <td>POINT</td>
       <td>19.083</td>
+      <td>19.083</td>
+      <td>85.733</td>
       <td>85.733</td>
       <td>-1440</td>
       <td>-1440</td>
@@ -726,12 +734,15 @@ saves to ‘bibtex_&lt;timestamp&gt;.bib’.</p></li>
       <th>FileURL</th>
       <th>Variables</th>
       <th>FileDescription</th>
-      <th>TotalFilesAvailable</th>
       <th>SiteID</th>
       <th>SiteName</th>
       <th>LocationName</th>
-      <th>Latitude</th>
-      <th>Longitude</th>
+      <th>GeoType</th>
+      <th>GeometryType</th>
+      <th>MinLatitude</th>
+      <th>MaxLatitude</th>
+      <th>MinLongitude</th>
+      <th>MaxLongitude</th>
       <th>MinElevation</th>
       <th>MaxElevation</th>
       <th>StudyID</th>
@@ -747,11 +758,14 @@ saves to ‘bibtex_&lt;timestamp&gt;.bib’.</p></li>
       <td>https://www.ncei.noaa.gov/pub/data/paleo/contr...</td>
       <td>[Site, d13C, d18O, Age, Sample_Depth, Section_...</td>
       <td>NOAA Template File</td>
-      <td>1</td>
       <td>58697</td>
       <td>IODP U1446</td>
       <td>Ocean&gt;Indian Ocean</td>
+      <td>Feature</td>
+      <td>POINT</td>
       <td>19.083</td>
+      <td>19.083</td>
+      <td>85.733</td>
       <td>85.733</td>
       <td>-1440</td>
       <td>-1440</td>
@@ -766,11 +780,14 @@ saves to ‘bibtex_&lt;timestamp&gt;.bib’.</p></li>
       <td>https://www.ncei.noaa.gov/pub/data/paleo/contr...</td>
       <td>[Age, Sample_Depth, Comments, Site]</td>
       <td>NOAA Template File</td>
-      <td>1</td>
       <td>58697</td>
       <td>IODP U1446</td>
       <td>Ocean&gt;Indian Ocean</td>
+      <td>Feature</td>
+      <td>POINT</td>
       <td>19.083</td>
+      <td>19.083</td>
+      <td>85.733</td>
       <td>85.733</td>
       <td>-1440</td>
       <td>-1440</td>
@@ -783,13 +800,16 @@ saves to ‘bibtex_&lt;timestamp&gt;.bib’.</p></li>
       <td>U1446 Rb/Ca Clemens2021</td>
       <td>cal yr BP</td>
       <td>https://www.ncei.noaa.gov/pub/data/paleo/contr...</td>
-      <td>[Rb/Ca, Rb_normalized, Ca_normalized, Age, Sam...</td>
+      <td>[Section, Type, Hole, Site, Rb/Ca, Rb_normaliz...</td>
       <td>NOAA Template File</td>
-      <td>1</td>
       <td>58697</td>
       <td>IODP U1446</td>
       <td>Ocean&gt;Indian Ocean</td>
+      <td>Feature</td>
+      <td>POINT</td>
       <td>19.083</td>
+      <td>19.083</td>
+      <td>85.733</td>
       <td>85.733</td>
       <td>-1440</td>
       <td>-1440</td>
@@ -804,11 +824,14 @@ saves to ‘bibtex_&lt;timestamp&gt;.bib’.</p></li>
       <td>https://www.ncei.noaa.gov/pub/data/paleo/contr...</td>
       <td>[Mg/Ca_SST, Mg/Ca, Age, Sample_Depth, Section_...</td>
       <td>NOAA Template File</td>
-      <td>1</td>
       <td>58697</td>
       <td>IODP U1446</td>
       <td>Ocean&gt;Indian Ocean</td>
+      <td>Feature</td>
+      <td>POINT</td>
       <td>19.083</td>
+      <td>19.083</td>
+      <td>85.733</td>
       <td>85.733</td>
       <td>-1440</td>
       <td>-1440</td>
@@ -823,11 +846,14 @@ saves to ‘bibtex_&lt;timestamp&gt;.bib’.</p></li>
       <td>https://www.ncei.noaa.gov/pub/data/paleo/contr...</td>
       <td>[d13C_Ave, d13C_C32, d13C_C30, d13C_C28, d13C_...</td>
       <td>NOAA Template File</td>
-      <td>1</td>
       <td>58697</td>
       <td>IODP U1446</td>
       <td>Ocean&gt;Indian Ocean</td>
+      <td>Feature</td>
+      <td>POINT</td>
       <td>19.083</td>
+      <td>19.083</td>
+      <td>85.733</td>
       <td>85.733</td>
       <td>-1440</td>
       <td>-1440</td>
@@ -930,90 +956,90 @@ Includes full variable metadata such as cvShortName, cvUnit, etc.</p>
       <td>33213</td>
       <td>58697</td>
       <td>https://www.ncei.noaa.gov/pub/data/paleo/contr...</td>
-      <td>Core</td>
-      <td>PALEOCEANOGRAPHY</td>
-      <td>sampling metadata&gt;sample identification</td>
+      <td>SST</td>
+      <td>CLIMATE RECONSTRUCTIONS|PALEOCEANOGRAPHY</td>
+      <td>earth system variable&gt;temperature variable&gt;tem...</td>
+      <td>reconstruction material&gt;organic compound index...</td>
+      <td>None</td>
+      <td>temperature unit&gt;degree Celsius</td>
       <td>None</td>
       <td>None</td>
       <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>Core number</td>
+      <td>index of Kim et al. 2010</td>
       <td>Numeric</td>
-      <td>Core</td>
+      <td>SST</td>
     </tr>
     <tr>
       <th>45859</th>
       <td>33213</td>
       <td>58697</td>
       <td>https://www.ncei.noaa.gov/pub/data/paleo/contr...</td>
-      <td>Section</td>
+      <td>TEX86H</td>
       <td>PALEOCEANOGRAPHY</td>
-      <td>sampling metadata&gt;sample identification</td>
+      <td>chemical composition&gt;compound&gt;organic compound...</td>
       <td>None</td>
       <td>None</td>
+      <td>dimensionless</td>
       <td>None</td>
       <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>Section number ( 1 through 7 and core catcher ...</td>
-      <td>Character</td>
-      <td>Section</td>
+      <td>laboratory method&gt;chromatography&gt;liquid chroma...</td>
+      <td>index of Schouten et al. 2002; extracted lipids</td>
+      <td>Numeric</td>
+      <td>TEX86H</td>
     </tr>
     <tr>
       <th>45859</th>
       <td>33213</td>
       <td>58697</td>
       <td>https://www.ncei.noaa.gov/pub/data/paleo/contr...</td>
-      <td>Type</td>
-      <td>PALEOCEANOGRAPHY</td>
-      <td>sampling metadata&gt;sample identification</td>
+      <td>Age</td>
+      <td>CLIMATE RECONSTRUCTIONS|PALEOCEANOGRAPHY</td>
+      <td>age variable&gt;age</td>
+      <td>None</td>
+      <td>None</td>
+      <td>time unit&gt;age unit&gt;calendar kiloyear before pr...</td>
       <td>None</td>
       <td>None</td>
       <td>None</td>
       <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>H (9 m hydraulic piston core)  F (4.5 m hydrau...</td>
-      <td>Character</td>
-      <td>Type</td>
+      <td>Numeric</td>
+      <td>Age</td>
     </tr>
     <tr>
       <th>45859</th>
       <td>33213</td>
       <td>58697</td>
       <td>https://www.ncei.noaa.gov/pub/data/paleo/contr...</td>
-      <td>Hole</td>
-      <td>PALEOCEANOGRAPHY</td>
-      <td>sampling metadata&gt;sample identification</td>
+      <td>Sample_Depth</td>
+      <td>CLIMATE RECONSTRUCTIONS|PALEOCEANOGRAPHY</td>
+      <td>depth variable&gt;depth</td>
+      <td>None</td>
+      <td>None</td>
+      <td>length unit&gt;meter</td>
       <td>None</td>
       <td>None</td>
       <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>Hole drilled at  Site U1446</td>
-      <td>Character</td>
-      <td>Hole</td>
+      <td>Spliced  core composite depth below sea floor ...</td>
+      <td>Numeric</td>
+      <td>Sample_Depth</td>
     </tr>
     <tr>
       <th>45859</th>
       <td>33213</td>
       <td>58697</td>
       <td>https://www.ncei.noaa.gov/pub/data/paleo/contr...</td>
-      <td>Site</td>
+      <td>Section_Depth</td>
       <td>PALEOCEANOGRAPHY</td>
       <td>sampling metadata&gt;sample identification</td>
       <td>None</td>
       <td>None</td>
+      <td>length unit&gt;centimeter</td>
       <td>None</td>
       <td>None</td>
       <td>None</td>
-      <td>None</td>
-      <td>Site identification</td>
-      <td>Character</td>
-      <td>Site</td>
+      <td>Mid-depth of sample within section</td>
+      <td>Numeric</td>
+      <td>Section_Depth</td>
     </tr>
   </tbody>
 </table>
@@ -1037,17 +1063,14 @@ investigators, time range, keywords, and more.</p>
 Examples: ‘younger dryas’, ‘loess AND stratigraphy’</p></li>
 <li><p><strong>data_publisher</strong> (<em>by default 'NOAA'</em>) – Choose from: ‘NOAA’, ‘NEOTOMA’, or ‘PANGAEA’.
 Example: ‘NOAA’</p></li>
-<li><p><strong>data_type_id</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>Filter by data type. Use one or more type IDs separated by ‘|’.
-Available IDs:</p>
-<blockquote>
-<div><p>1: BOREHOLE, 2: CLIMATE FORCING, 3: CLIMATE RECONSTRUCTIONS, 4: CORALS AND SCLEROSPONGES,
-6: HISTORICAL, 7: ICE CORES, 8: INSECT, 9: LAKE LEVELS, 10: LOESS,
-11: PALEOCLIMATIC MODELING, 12: FIRE HISTORY, 13: PALEOLIMNOLOGY, 14: PALEOCEANOGRAPHY,
-15: PLANT MACROFOSSILS, 16: POLLEN, 17: SPELEOTHEMS, 18: TREE RING,
-19: OTHER COLLECTIONS, 20: INSTRUMENTAL, 59: SOFTWARE, 60: REPOSITORY</p>
-</div></blockquote>
-<p>Example: ‘4’, ‘4|18’</p>
-</p></li>
+<li><p><strong>data_type_id</strong> (<em>str</em><em>, </em><em>optional</em>) – Filter by data type. Use one or more type IDs separated by ‘|’.
+Available IDs.
+1. BOREHOLE, 2. CLIMATE FORCING, 3. CLIMATE RECONSTRUCTIONS, 4. CORALS AND SCLEROSPONGES,
+6. HISTORICAL, 7. ICE CORES, 8. INSECT, 9. LAKE LEVELS, 10. LOESS,
+11. PALEOCLIMATIC MODELING, 12. FIRE HISTORY, 13. PALEOLIMNOLOGY, 14. PALEOCEANOGRAPHY,
+15. PLANT MACROFOSSILS, 16. POLLEN, 17. SPELEOTHEMS, 18. TREE RING,
+19. OTHER COLLECTIONS, 20. INSTRUMENTAL, 59. SOFTWARE, 60. REPOSITORY
+Example: ‘4’, ‘4|18’</p></li>
 <li><p><strong>investigators</strong> (<em>str</em><em> or </em><em>list</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Investigator(s) in the form <code class="docutils literal notranslate"><span class="pre">&quot;LastName,</span> <span class="pre">Initials&quot;</span></code>. Lists are joined with <code class="docutils literal notranslate"><span class="pre">|</span></code>.</p></li>
 <li><p><strong>investigators_and_or</strong> (<em>{&quot;and&quot;</em><em>,</em><em>&quot;or&quot;}</em><em>, </em><em>default &quot;or&quot;</em>) – Logical combiner when multiple investigators are supplied. Only sent when 2+ items.</p></li>
 <li><p><strong>locations</strong> (<em>str</em><em> or </em><em>list</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Location(s) as hierarchical strings using <code class="docutils literal notranslate"><span class="pre">&gt;</span></code> (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;Continent&gt;Africa&gt;Kenya&quot;</span></code>). Lists joined with <code class="docutils literal notranslate"><span class="pre">|</span></code>.</p></li>
@@ -1076,8 +1099,8 @@ Available IDs:</p>
 <code class="docutils literal notranslate"><span class="pre">&quot;false&quot;|&quot;no&quot;|&quot;n&quot;|&quot;0&quot;</span></code> → <code class="docutils literal notranslate"><span class="pre">'N'</span></code>. <code class="docutils literal notranslate"><span class="pre">None</span></code> omits the filter.</p></li>
 <li><p><strong>recent</strong> (<em>bool</em><em>, </em><em>default False</em>) – If True, restrict to studies from the last ~2 years (newest first).</p></li>
 <li><p><strong>limit</strong> (<em>int</em><em>, </em><em>default 100</em>) – Number of studies to return (PyleoTUPS default).</p></li>
-<li><p><strong>display</strong> (<em>bool</em><em>, </em><em>default False</em>) – If True, render a small preview after parsing.</p></li>
-<li><p><strong>skip</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of studies to skip (for pagination). Use with <code class="docutils literal notranslate"><span class="pre">limit</span></code> to page through results.
+<li><p><strong>skip</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of studies to skip (for paging). Paired with <cite>limit</cite>.</p></li>
+<li><p><strong>skip</strong> – Number of studies to skip (for pagination). Use with <code class="docutils literal notranslate"><span class="pre">limit</span></code> to page through results.
 Example: <code class="docutils literal notranslate"><span class="pre">limit=10,</span> <span class="pre">skip=10</span></code> returns items 11–20.</p></li>
 </ul>
 </dd>
@@ -1534,7 +1557,7 @@ nor <code class="docutils literal notranslate"><span class="pre">time_method</sp
  1  [[{&#39;DataTableID&#39;: &#39;48957&#39;, &#39;DataTableName&#39;: &#39;K...   
  2  [[{&#39;DataTableID&#39;: &#39;33444&#39;, &#39;DataTableName&#39;: &#39;L...   
  3  [[{&#39;DataTableID&#39;: &#39;21230&#39;, &#39;DataTableName&#39;: &#39;T...   
- 4  [[{&#39;DataTableID&#39;: &#39;29818&#39;, &#39;DataTableName&#39;: &#39;R...   
+ 4  [[{&#39;DataTableID&#39;: &#39;1002175&#39;, &#39;DataTableName&#39;: ...   
  
                                               Funding  
  0  [{&#39;fundingAgency&#39;: &#39;Swiss National Science Fou...  
@@ -2431,7 +2454,7 @@ nor <code class="docutils literal notranslate"><span class="pre">time_method</sp
       <td>None</td>
       <td>Laura Cunningham, William Austin, Karen-Luise ...</td>
       <td>[{'Author': 'Cunningham, L.K., Austin, W.E.N.,...</td>
-      <td>[[{'DataTableID': '24154', 'DataTableName': 'N...</td>
+      <td>[[{'DataTableID': '24146', 'DataTableName': 'P...</td>
       <td>[{'fundingAgency': 'European Commission', 'fun...</td>
     </tr>
     <tr>
@@ -2861,7 +2884,7 @@ nor <code class="docutils literal notranslate"><span class="pre">time_method</sp
       <td>None</td>
       <td>Laura Cunningham, William Austin, Karen-Luise ...</td>
       <td>[{'Author': 'Cunningham, L.K., Austin, W.E.N.,...</td>
-      <td>[[{'DataTableID': '24154', 'DataTableName': 'N...</td>
+      <td>[[{'DataTableID': '24146', 'DataTableName': 'P...</td>
       <td>[{'fundingAgency': 'European Commission', 'fun...</td>
     </tr>
     <tr>
@@ -3147,7 +3170,7 @@ nor <code class="docutils literal notranslate"><span class="pre">time_method</sp
       <td>None</td>
       <td>Laura Cunningham, William Austin, Karen-Luise ...</td>
       <td>[{'Author': 'Cunningham, L.K., Austin, W.E.N.,...</td>
-      <td>[[{'DataTableID': '24154', 'DataTableName': 'N...</td>
+      <td>[[{'DataTableID': '24146', 'DataTableName': 'P...</td>
       <td>[{'fundingAgency': 'European Commission', 'fun...</td>
     </tr>
     <tr>
@@ -3439,7 +3462,7 @@ nor <code class="docutils literal notranslate"><span class="pre">time_method</sp
       <td></td>
       <td>[Sea Surface Temperature Reconstruction]</td>
       <td>Katharina Pahnke, Rainer Zahn, Henry Elderfiel...</td>
-      <td>[{'Author': 'Pahnke, K., R. Zahn, H. Elderfiel...</td>
+      <td>[{'Author': 'Shackleton, N.J.', 'Title': 'The ...</td>
       <td>[[{'DataTableID': '4289', 'DataTableName': 'MD...</td>
       <td>[]</td>
     </tr>

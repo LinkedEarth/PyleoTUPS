@@ -844,18 +844,15 @@ classification.</p>
 </dd></dl>
 
 <p class="rubric">Notes</p>
-<p>The parsing workflow is as follows:
-1.A <cite>NonStandardParser</cite> instance is created with a <cite>file_path</cite>.
-2.The public <cite>parse()</cite> method is called.
-3.`_fetch_lines()` reads the file into <cite>self.lines</cite>.
-4.`_segregate_blocks()` splits <cite>self.lines</cite> into <cite>Block</cite> objects</p>
-<blockquote>
-<div><p>(groups of non-empty lines) and saves them to <cite>self.blocks</cite>.</p>
-</div></blockquote>
-<p>5.`parse()` iterates through each <cite>block</cite> in <cite>self.blocks</cite>.
-6.`_process_block()` is called on each block, which a. Computes statistics for the block, b. Classifies it (e.g., TABULAR, DATA, NARRATIVE), c.  Dispatches to a specific parsing method (e.g.,`_parse_tabular_block`).
-7. The specific parse methods (e.g., <cite>_parse_data_block</cite>) handle logic for header borrowing, DataFrame generation, and error handling, modifying the <cite>block</cite> object in place.
-8.`parse()` returns the fully processed <cite>self.blocks</cite> list.</p>
+<p>The parsing workflow is as follows.
+- A <cite>NonStandardParser</cite> instance is created with a <cite>file_path</cite>.
+- The public <cite>parse()</cite> method is called.
+- <cite>_fetch_lines()</cite> reads the file into <cite>self.lines</cite>.
+- <cite>_segregate_blocks()</cite> splits <cite>self.lines</cite> into <cite>Block</cite> objects -a groups of non-empty lines- and saves them to <cite>self.blocks</cite>.
+- <cite>parse()</cite> iterates through each <cite>block</cite> in <cite>self.blocks</cite>.
+- <cite>_process_block()</cite> is called on each block, which a. Computes statistics for the block, b. Classifies it (e.g., TABULAR, DATA, NARRATIVE), c.  Dispatches to a specific parsing method (e.g.,`_parse_tabular_block`).
+- The specific parse methods (e.g., <cite>_parse_data_block</cite>) handle logic for header borrowing, DataFrame generation, and error handling, modifying the <cite>block</cite> object in place.
+- <cite>parse()</cite> returns the fully processed <cite>self.blocks</cite> list.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyleotups.utils.Parser.NonStandardParser.parse">
 <span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyleotups/utils/Parser/NonStandardParser.html#NonStandardParser.parse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyleotups.utils.Parser.NonStandardParser.parse" title="Link to this definition"></a></dt>

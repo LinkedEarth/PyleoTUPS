@@ -139,14 +139,23 @@ class PangaeaDataset(BaseDataset):
     # -------------------------
     # search_studies: q, bbox, keywords -> registers studies and returns same style as Dataset.search_studies (DataFrame)
     # -------------------------
-    def search_studies(self,
-                #    q: Optional[str] = None,
-                #    study_ids: Optional[Union[int, str, List]] = None,
-                #    bbox: Optional[Tuple[float, float, float, float]] = None,
-                #    limit: int = 10,
-                #    offset: int = 0,
-                #    display: bool = False
-                **kwargs) -> Optional[pd.DataFrame]:
+    def search_studies(
+            self,
+            study_ids: int | str | list[int | str] | None = None,
+            topic: str | list[str] | None = None,
+            topic_and_or: str = "or",
+            search_text: str | None = None,
+            investigators: str | list[str] | None = None,
+            investigators_and_or: str = "and",
+            variable_name: str | list[str] | None = None,
+            variable_name_and_or: str = "and",
+            min_lat: float | None = None,
+            max_lat: float | None = None,
+            min_lon: float | None = None,
+            max_lon: float | None = None,
+            limit: int = 100,
+            skip: int = 0,
+            ) -> Optional[pd.DataFrame]:
         """
         Search PANGAEA and register results in self.studies.
 
@@ -328,6 +337,9 @@ class PangaeaDataset(BaseDataset):
             )
             df.head()
         """
+
+        kwargs = locals().copy()
+        kwargs.pop("self")
         study_ids = kwargs.get("study_ids")
 
         # -------------------------------------------

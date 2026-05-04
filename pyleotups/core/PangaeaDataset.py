@@ -62,6 +62,53 @@ class PangaeaDataset(BaseDataset):
         # keys: StudyID (DOI/URI) -> {'panobj': PanDataSet or None, 'summary': normalized_dict}
         self.studies: Dict[str, PangaeaStudy] = {}
 
+    def __add__(self, other):
+        if not isinstance(other, PangaeaDataset):
+            return NotImplemented
+
+        merged = PangaeaDataset(cache_dir=self.cache_dir, auth_token=self.auth_token)
+
+        # Start with a shallow copy of left's studies
+        merged.studies = dict(self.studies)
+
+        # Union by StudyID. If duplicate ID appears, keep left's version
+        # but sanity-check equality and warn if they differ.
+        for sid, study in other.studies.items():
+            if sid in merged.studies:
+                try:
+                    check_same = (merged.studies[sid].to_summary_dict() == study.to_summary_dict())
+                except Exception:
+                    check_same = False
+                if not check_same:
+                    logger.warning(
+                        f"PangaeaDataset union: duplicate StudyID {sid} with differing content. "
+                        "Keeping left-hand version."
+                    )
+            else:
+                merged.studies[sid] = study
+
+        return merged
+
+    def __iadd__(self, other):
+        if not isinstance(other, PangaeaDataset):
+            return NotImplemented
+
+        for sid, study in other.studies.items():
+            if sid in self.studies:
+                try:
+                    check_same = (self.studies[sid].to_summary_dict() == study.to_summary_dict())
+                except Exception:
+                    check_same = False
+                if not check_same:
+                    logger.warning(
+                        f"PangaeaDataset in-place union: duplicate StudyID {sid} with differing content. "
+                        "Keeping existing version."
+                    )
+            else:
+                self.studies[sid] = study
+
+        return self
+
     @staticmethod
     def _normalize_id(study_id: str) -> int:
         """
@@ -340,6 +387,7 @@ class PangaeaDataset(BaseDataset):
 
         kwargs = locals().copy()
         kwargs.pop("self")
+        self.studies.clear()
         study_ids = kwargs.get("study_ids")
 
         # -------------------------------------------

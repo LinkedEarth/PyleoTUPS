@@ -132,6 +132,7 @@ class NOAADataset(BaseDataset):
         xml_id: int | str | None = None,
         noaa_id: int | str | None = None,
         search_text: str | None = None,
+        data_type_id: str | None = None,
         investigators: str | list[str] | None = None,
         investigators_and_or: str = "or",
         locations: str | list[str] | None = None,
@@ -181,7 +182,7 @@ class NOAADataset(BaseDataset):
             General text search across study content. Supports wildcards (%) and logical operators (AND, OR).
             Examples: 'younger dryas', 'loess AND stratigraphy'
 
-        data_publisher : by default 'NOAA'
+        data_publisher : str, default "NOAA"
             Choose from: 'NOAA', 'NEOTOMA', or 'PANGAEA'.
             Example: 'NOAA'
 
@@ -356,7 +357,7 @@ class NOAADataset(BaseDataset):
         .. jupyter-execute::
 
             ### Multiple investigators (AND by default)
-            df_multinv_and = ds.search_studies(investigators=["Wahl, E.R.", "Vose, R.S."], investigatorsAndOr = "and")
+            df_multinv_and = ds.search_studies(investigators=["Wahl, E.R.", "Vose, R.S."], investigators_and_or="and")
             df_multinv_and.head()
 
         .. jupyter-execute::

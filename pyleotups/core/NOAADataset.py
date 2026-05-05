@@ -127,7 +127,41 @@ class NOAADataset(BaseDataset):
         return self
 
     
-    def search_studies(self, **kwargs):
+    def search_studies(
+        self,
+        xml_id: int | str | None = None,
+        noaa_id: int | str | None = None,
+        search_text: str | None = None,
+        investigators: str | list[str] | None = None,
+        investigators_and_or: str = "or",
+        locations: str | list[str] | None = None,
+        locations_and_or: str = "or",
+        keywords: str | list[str] | None = None,
+        keywords_and_or: str = "or",
+        species: str | list[str] | None = None,
+        species_and_or: str = "or",
+        variable_name: str | list[str] | None = None,
+        variable_name_and_or: str = "or",
+        cv_materials: str | list[str] | None = None,
+        cv_materials_and_or: str = "or",
+        cv_seasonalities: str | list[str] | None = None,
+        cv_seasonalities_and_or: str = "or",
+        min_lat: int | None = None,
+        max_lat: int | None = None,
+        min_lon: int | None = None,
+        max_lon: int | None = None,
+        min_elevation: int | None = None,
+        max_elevation: int | None = None,
+        earliest_year: int | None = None,
+        latest_year: int | None = None,
+        time_format: str | None = None,
+        time_method: str | None = None,
+        reconstruction: bool | None = None,
+        recent: bool = False,
+        limit: int = 100,
+        skip: int | None = None,
+        data_publisher: str = "NOAA",
+    ):
         r"""
         Search for NOAA studies using the specified parameters.
 
@@ -404,6 +438,10 @@ class NOAADataset(BaseDataset):
             df_skip = ds.search_studies(earliest_year=12000, time_format="BP", time_method="overAny", limit=10, skip=10)
             df_skip.head()
         """
+
+        kwargs = locals().copy()
+
+        kwargs.pop("self")
 
         if "headers_only" in kwargs:
             log.warning("Keyword Argument Pair : 'headers_only' is not supported and will be ignored while making requests.")

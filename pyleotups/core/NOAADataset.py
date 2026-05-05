@@ -132,6 +132,7 @@ class NOAADataset(BaseDataset):
         xml_id: int | str | None = None,
         noaa_id: int | str | None = None,
         search_text: str | None = None,
+        data_type_id: str | None = None,
         investigators: str | list[str] | None = None,
         investigators_and_or: str = "or",
         locations: str | list[str] | None = None,
@@ -181,7 +182,7 @@ class NOAADataset(BaseDataset):
             General text search across study content. Supports wildcards (%) and logical operators (AND, OR).
             Examples: 'younger dryas', 'loess AND stratigraphy'
 
-        data_publisher : by default 'NOAA'
+        data_publisher : str, default "NOAA"
             Choose from: 'NOAA', 'NEOTOMA', or 'PANGAEA'.
             Example: 'NOAA'
 
@@ -264,9 +265,6 @@ class NOAADataset(BaseDataset):
         
         limit : int, default 100
             Number of studies to return (PyleoTUPS default).
-        
-        skip : int, 
-            Number of studies to skip (for paging). Paired with `limit`.
 
         skip : int, optional
             Number of studies to skip (for pagination). Use with ``limit`` to page through results.
@@ -301,7 +299,7 @@ class NOAADataset(BaseDataset):
         Time window defaults. If either ``earliest_year`` or ``latest_year`` is provided and neither ``time_format``
         nor ``time_method`` is supplied, ``time_format`` defaults to ``'CE'`` (a note is recorded).
 
-        Unsupported parameters. ``headersOnly`` and ``skip`` are not supported by PyleoTUPS and are ignored if passed.
+        Unsupported parameters. ``headersOnly`` is not supported by PyleoTUPS and ignored if passed.
 
         Boolean normalization. Parameters expected as ``'Y'/'N'`` accept: True/False, or strings like
         ``"true"|"yes"|"y"|"1"`` → ``'Y'`` and ``"false"|"no"|"n"|"0"`` → ``'N'``.
@@ -359,7 +357,7 @@ class NOAADataset(BaseDataset):
         .. jupyter-execute::
 
             ### Multiple investigators (AND by default)
-            df_multinv_and = ds.search_studies(investigators=["Wahl, E.R.", "Vose, R.S."], investigatorsAndOr = "and")
+            df_multinv_and = ds.search_studies(investigators=["Wahl, E.R.", "Vose, R.S."], investigators_and_or="and")
             df_multinv_and.head()
 
         .. jupyter-execute::

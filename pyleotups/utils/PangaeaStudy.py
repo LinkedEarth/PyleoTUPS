@@ -251,6 +251,48 @@ class PangaeaStudy:
 
         return earliest_bp, latest_bp, earliest_ce, latest_ce
 
+    def _compute_coverage(self) -> Optional[Tuple[float, float, float, float]]:
+        """
+        Compute consolidated geographic coverage for the study events.
+
+        The coverage is based on all event latitude/longitude pairs.
+        If latitude2/longitude2 are not provided for an event, the single
+        coordinate is reused for both bounds.
+
+        Returns
+        -------
+        tuple or None
+            (MinLatitude, MaxLatitude, MinLongitude, MaxLongitude)
+            or None when no valid coordinates exist.
+        """
+        latitudes = []
+        longitudes = []
+
+        for ev in self._panobj.events:
+            lat1 = ev.latitude
+            lat2 = ev.latitude2 if getattr(ev, "latitude2", None) is not None else lat1
+            lon1 = ev.longitude
+            lon2 = ev.longitude2 if getattr(ev, "longitude2", None) is not None else lon1
+
+            if lat1 is not None:
+                latitudes.append(lat1)
+            if lat2 is not None:
+                latitudes.append(lat2)
+            if lon1 is not None:
+                longitudes.append(lon1)
+            if lon2 is not None:
+                longitudes.append(lon2)
+
+        if not latitudes or not longitudes:
+            return None
+
+        return (
+            min(latitudes),
+            max(latitudes),
+            min(longitudes),
+            max(longitudes),
+        )
+
     def to_summary_dict(self) -> Dict[str, Any]:
         """
         Convert study metadata to NOAA-style summary dictionary.
@@ -264,10 +306,8 @@ class PangaeaStudy:
         self.earliest_bp, self.latest_bp, self.earliest_ce, self.latest_ce = (
             self._extract_temporal_extent()
         )
-        # if collection_founds :
-        #     logger.warning(
-        #     f'The Summary Table Below may contain Dataset marked as collection.'
-        #     f'Refer to the "CollectionMembers" column to identify collection datasets and their members.')
+        self.coverage = self._compute_coverage()
+
         return {
             "StudyID": self.study_id,
             "StudyName": ds.title,
@@ -275,6 +315,7 @@ class PangaeaStudy:
             "MostRecentYearBP": self.latest_bp,
             "EarliestYearCE": self.earliest_ce,
             "MostRecentYearCE": self.latest_ce,
+            "Coverage [S, N, W, E]": self.coverage,
             "StudyNotes": ds.abstract,
             "ScienceKeywords": getattr(ds, "keywords", None),
             "Investigators": ", ".join(a.fullname for a in ds.authors),
@@ -306,14 +347,21 @@ class PangaeaStudy:
         """
         rows = []
         for ev in self._panobj.events:
+            lat1 = ev.latitude
+            lon1 = ev.longitude
+            lat2 = ev.latitude2 if getattr(ev, "latitude2", None) is not None else lat1
+            lon2 = ev.longitude2 if getattr(ev, "longitude2", None) is not None else lon1
+
             rows.append(
                 {
                     "StudyID": self.study_id,
                     "SiteID": ev.id,
                     "SiteName": ev.label,
                     "LocationName": ev.location,
-                    "Latitude": ev.latitude,
-                    "Longitude": ev.longitude,
+                    "MinLatitude": min(v for v in [lat1, lat2] if v is not None) if lat1 is not None or lat2 is not None else None,
+                    "MaxLatitude": max(v for v in [lat1, lat2] if v is not None) if lat1 is not None or lat2 is not None else None,
+                    "MinLongitude": min(v for v in [lon1, lon2] if v is not None) if lon1 is not None or lon2 is not None else None,
+                    "MaxLongitude": max(v for v in [lon1, lon2] if v is not None) if lon1 is not None or lon2 is not None else None,
                     "Elevation": ev.elevation,
                 }
             )

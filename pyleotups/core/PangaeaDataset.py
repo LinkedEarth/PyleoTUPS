@@ -474,7 +474,8 @@ class PangaeaDataset(BaseDataset):
         pandas.DataFrame
             Return a DataFrame summarizing all loaded/registered PANGAEA datasets.
             ["StudyID","StudyName","EarliestYearBP","MostRecentYearBP",
-            "EarliestYearCE","MostRecentYearCE","StudyNotes","ScienceKeywords","Investigators",
+            "EarliestYearCE","MostRecentYearCE","Coverage [S, N, W, E]",
+            "StudyNotes","ScienceKeywords","Investigators",
             "Publications","Sites","Funding"]
         """
         rows = []

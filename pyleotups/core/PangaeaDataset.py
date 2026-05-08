@@ -190,12 +190,12 @@ class PangaeaDataset(BaseDataset):
             self,
             study_ids: int | str | list[int | str] | None = None,
             topic: str | list[str] | None = None,
-            topic_and_or: str | None = None,
+            topic_and_or: str = "or",
             search_text: str | None = None,
             investigators: str | list[str] | None = None,
-            investigators_and_or: str | None = None,
+            investigators_and_or: str = "or",
             variable_name: str | list[str] | None = None,
-            variable_name_and_or: str | None = None,
+            variable_name_and_or: str = "or",
             min_lat: float | None = None,
             max_lat: float | None = None,
             min_lon: float | None = None,
@@ -242,6 +242,8 @@ class PangaeaDataset(BaseDataset):
             - "Oceans" 
             - "Paleontology"
             If set to "all" or omitted, no topic filtering is applied.
+            If multiple values are provided, they are combined using a logical operator
+            controlled by ``topic_and_or``.
 
         search_text : str, optional
             Free-text search query applied across dataset metadata. Maps to PANGAEA full-text search parameter 'q'.
@@ -267,6 +269,19 @@ class PangaeaDataset(BaseDataset):
 
         skip : int, default 0
             Number of results to skip (pagination). Maps to PANGAEA 'offset'
+
+        topic_and_or : {"and", "or"}, optional, default="or"
+            Logical operator used to combine multiple ``topic`` values.
+            - ``"or"`` (default): Matches datasets containing any of the provided topics.
+            - ``"and"``: Matches datasets containing all provided topics.
+
+        investigators_and_or : {"and", "or"}, optional, default="or"
+            Logical operator used to combine multiple investigator names.
+            - ``"or"`` (default): Matches datasets authored by any of the investigators.
+            - ``"and"``: Matches datasets authored by all listed investigators.
+        
+        variable_name_and_or : {"and", "or"}, optional, default="or"
+            Logical operator used to combine multiple variable names.
 
 
         Returns
@@ -307,9 +322,10 @@ class PangaeaDataset(BaseDataset):
         If ``study_ids`` is provided, all other filters are ignored.
 
         Multi-value parameters.
-        Multiple values for parameters like `variable_name` or `investigators`
-        are combined into a space-separated query, interpreted as logical AND
-        by the PANGAEA search engine.
+        When multiple values are provided (e.g., for ``variable_name``, ``investigators``, or ``topic``),
+        they are combined using a configurable logical operator (``*_and_or``).
+        By default, PyleoTUPS uses OR semantics (union of matches), even though
+        PANGAEA interprets space-separated terms as AND.
 
         Examples
         --------

@@ -317,6 +317,8 @@ class PangaeaDataset(BaseDataset):
         Bounding box requires all four parameters:
         ``min_lat, max_lat, min_lon, max_lon``.
         Partial inputs are ignored.
+        Elevation parameters are not currently exposed through the PangaeaPy object or the PANGAEA advanced search endpoint. 
+        Hence, geographical queries are presently limited to 2D horizontal coordinates (lat/lon)
 
         Identifier priority.
         If ``study_ids`` is provided, all other filters are ignored.

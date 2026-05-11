@@ -33,7 +33,7 @@ def build_noaa_payload(**kwargs) -> Tuple[dict, List[str]]:
 
     # Defaults
     if kwargs.get("data_type_id") is not None:
-        payload["dataTypeID"] = kwargs.get("data_type_id") 
+        payload["dataTypeId"] = kwargs.get("data_type_id") 
     payload["dataPublisher"] = DATA_PUBLISHER
     
     # Identifier short-circuit

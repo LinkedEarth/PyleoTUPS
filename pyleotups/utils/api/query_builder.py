@@ -87,7 +87,8 @@ def build_noaa_payload(**kwargs) -> Tuple[dict, List[str]]:
     if (v := kwargs.get("max_lon")) is not None:
         payload["maxLon"] = validate_int_range("max_lon", v, -180, 180)
     
-    notes.append("Input Query includes geographical bounds. Inspect the results to ensure they match your intended region as one study can contain sites across various parts of the world.")
+    if any(kwargs.get(k) is not None for k in ["min_lat", "max_lat", "min_lon", "max_lon"]):
+        notes.append("Input Query includes geographical bounds. Inspect the results to ensure they match your intended region as one study can contain sites across various parts of the world.")
 
     # Elevation (any ints allowed)
     if (v := kwargs.get("min_elevation")) is not None:
@@ -145,8 +146,20 @@ def _build_logical_block(field_name, values, operator, formatter):
     if len(parts) == 1:
         return parts[0]
 
-    
-    return f"({' OR '.join(parts)})" if operator.lower() == "or" else  f"{' '.join(parts)}"   # implicit AND
+
+    op = (operator or "or").strip().lower()
+    if op == "and":
+        log.warning(
+            f"Multiple values provided for '{field_name}' with 'AND' operator." 
+            f"Consider using 'OR' if you want to match any of the values.")
+        return f"({' AND '.join(parts)})"
+    if op == "or":
+        log.warning(
+            f"Multiple values provided for '{field_name}' with 'OR' operator." 
+            f"Consider using 'AND' if you want to match all of the values.")
+        return f"({' OR '.join(parts)})"
+
+    return " ".join(parts)
 
 
 def build_pangaea_query(**kwargs):
@@ -247,7 +260,7 @@ def build_pangaea_query(**kwargs):
     block = _build_logical_block(
         "investigators",
         kwargs.get("investigators"),
-        kwargs.get("investigators_and_or", "and"),
+        kwargs.get("investigators_and_or", "or"),
         lambda v: f"author:{v}"
     )
 
@@ -260,7 +273,7 @@ def build_pangaea_query(**kwargs):
     block = _build_logical_block(
         "variable_name",
         kwargs.get("variable_name"),
-        kwargs.get("variable_name_and_or", "and"),
+        kwargs.get("variable_name_and_or", "or"),
         lambda v: f"parameter:{v}"
     )
 

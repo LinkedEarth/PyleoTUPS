@@ -253,8 +253,8 @@ class NOAADataset(BaseDataset):
         time_format : {"CE","BP"}, optional
             Interpretation of years. If omitted with a time window, defaults to ``'CE'``.
         
-        time_method : {"overAny","entireOver","overEntire"}, optional
-            How to apply the time window (overlap, envelop, or within).
+        time_method : {"overAny","entireOver","overEntire"}, optional, default = None
+            How to apply the time window (overlap, envelop, or within). NOAA internally defaults to "overAny" if a time window is provided without a method.
         
         reconstruction : bool or str, optional
             Accepts True/False or strings (case-insensitive) like ``"true"|"yes"|"y"|"1"`` → ``'Y'`` and

@@ -540,21 +540,118 @@ class PangaeaDataset(BaseDataset):
         verbose: bool = False,
     ):
         """
-        Retrieve publication information in BibTeX and DataFrame format.
+        Retrieve publication information for all registered PANGAEA studies.
 
-        Parameters
-        ----------
-        save : bool, default=False
-            If True, save BibTeX file.
-        path : str or None, optional
-            Output path.
-        verbose : bool, default=False
-            Print BibTeX content.
+        This method aggregates publication metadata across all studies currently
+        registered in the dataset. It returns both a structured pandas DataFrame
+        and a BibTeX-compatible ``pybtex.database.BibliographyData`` object.
+
+        Publication extraction is performed at the study level via the internal
+        ``PangaeaStudy._extract_publications()`` method, and results are combined
+        across studies.
+
+        Publication Sources
+        -------------------
+        Publications are collected from three metadata sources within each
+        ``PanDataSet`` object:
+
+        1. **Dataset Citation (Primary Source)**
+        - Extracted directly from ``PanDataSet.citation``.
+        - No external API calls are made for this source.
+        - The citation string is treated as authoritative dataset metadata.
+        - Parsed minimally into:
+            - ``Title`` → full citation string
+            - ``Year`` → extracted using regex
+        - Other structured fields (authors, journal, etc.) may be unavailable.
+        - Assigned:
+            ``Type = "citation"``
+
+        2. **Supplementary Publications**
+        - Extracted from ``PanDataSet.supplement_to["uri"]``.
+        - Represents the publication to which the dataset is a supplement.
+        - If the URI contains a valid DOI, metadata is fetched via Crossref.
+        - Assigned:
+            ``Type = "supplement to"``
+
+        3. **Related Publications**
+        - Extracted from ``PanDataSet.relations``.
+        - Each relation is expected to have:
+            ``{"id", "title", "uri", "type"}``
+        - Only relations with DOI-containing URIs are processed.
+        - Metadata is fetched via Crossref.
+        - Assigned:
+            ``Type = relation["type"]``
+
+        Crossref Integration
+        --------------------
+        For supplement and relation publications, metadata is retrieved using
+        ``doi2bib.crossref.get_bib()`` and parsed via ``bibtexparser``.
+
+        The helper method ``_fetch_publication_from_doi()``:
+        - Normalizes DOI strings
+        - Retrieves BibTeX from Crossref
+        - Parses BibTeX into structured fields
+        - Converts entries into:
+            - Row dictionaries for DataFrame output
+            - ``pybtex.database.Entry`` objects for BibTeX export
+
+        Dataset citations are intentionally excluded from Crossref resolution
+        to avoid inconsistencies and API failures.
+
+        Deduplication
+        -------------
+        Duplicate DOIs across citation, supplement, and relations are removed
+        within each study using a DOI-based uniqueness check.
 
         Returns
         -------
         tuple
-            (BibliographyData, pandas.DataFrame)
+            A tuple containing:
+
+            - ``BibliographyData`` :
+                A pybtex bibliography object containing all publication entries,
+                suitable for BibTeX export.
+
+            - ``pandas.DataFrame`` :
+                Tabular representation of publications with columns:
+
+                - ``Author`` : str or None
+                - ``Title`` : str
+                - ``Journal`` : str or None
+                - ``Year`` : str or None
+                - ``Volume`` : str or None
+                - ``Number`` : str or None
+                - ``Pages`` : str or None
+                - ``Type`` : str
+                    One of {"citation", "supplement to", relation type}
+                - ``DOI`` : str or None
+                - ``URL`` : str or None
+
+        Parameters
+        ----------
+        save : bool, optional, default=False
+            If True, saves the BibTeX output to disk.
+
+        path : str or None, optional
+            Output file path or directory. If a directory is provided, a timestamped
+            filename is generated.
+
+        verbose : bool, optional, default=False
+            If True, prints the BibTeX content to stdout.
+
+        Notes
+        -----
+        - The dataset citation is always included, even if supplement or relation
+        publications are present.
+        - Crossref lookups are only performed for supplement and relation DOIs.
+        - Some fields may be missing depending on metadata availability.
+        - BibTeX entry keys are auto-generated and guaranteed to be unique
+        within the returned bibliography.
+
+        See Also
+        --------
+        PangaeaStudy._extract_publications : Study-level publication extraction logic
+        _fetch_publication_from_doi : DOI-based metadata retrieval helper
         """
         all_rows = []
         all_entries = {}

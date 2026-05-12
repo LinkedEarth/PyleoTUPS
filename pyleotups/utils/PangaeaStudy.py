@@ -4,6 +4,8 @@ from typing import Optional, Dict, Any, List, Tuple
 import pandas as pd
 from pangaeapy import PanDataSet
 from pybtex.database import Entry, Person
+import bibtexparser
+from doi2bib import crossref
 
 import logging
 logger = logging.getLogger(__name__)
@@ -371,9 +373,114 @@ class PangaeaStudy:
     # Publications
     # ------------------------------------------------------------------
 
+    def _fetch_publication_from_doi(self, doi: str, type):
+        """
+        Fetch publication metadata from a DOI using Crossref.
+
+        Parameters
+        ----------
+        doi : str
+            DOI string (may include prefixes or extra text)
+
+        Returns
+        -------
+        tuple
+            (row_dict, pybtex_entry)
+            Returns (None, None) if retrieval fails.
+        """
+
+        if not doi or not isinstance(doi, str):
+            return None, None
+
+        # try:
+            # --------------------------------------------------
+            # Normalize DOI
+            # --------------------------------------------------
+        doi_clean = doi.replace("doi:", "").strip()
+
+        # --------------------------------------------------
+        # Fetch BibTeX from Crossref
+        # --------------------------------------------------
+        status, citation = crossref.get_bib(doi=doi_clean)
+
+        # if "PANGAEA" in doi_clean:
+
+        if not status or not citation:
+            logger.warning(f"Failed to fetch bibtex for DOI {doi_clean}, status: {status}, citation: {citation}")
+            return None, None
+
+        # --------------------------------------------------
+        # Fix BibTeX formatting issues (month field)
+        # --------------------------------------------------
+        citation = re.sub(
+            r'month\s*=\s*(\w+)',
+            r'month={\1}',
+            citation
+        )
+
+        # --------------------------------------------------
+        # Parse BibTeX
+        # --------------------------------------------------
+        parser = bibtexparser.bparser.BibTexParser(common_strings=True)
+        library = bibtexparser.loads(citation, parser=parser)
+
+        if not library.entries:
+            logger.warning(f"No entries parsed from bibtex for DOI {doi_clean}")
+            return None, None
+
+        entry = library.entries[0]
+
+        # --------------------------------------------------
+        # Build row dictionary
+        # --------------------------------------------------
+        author_str = entry.get("author", "")
+
+        persons = []
+        if author_str:
+            persons = [Person(a.strip()) for a in author_str.split(" and ") if a.strip()]
+
+        row = {
+            "Author": author_str,
+            "Title": entry.get("title", "").strip("{}"),
+            "Journal": entry.get("journal", "").strip("{}"),
+            "Year": entry.get("year", ""),
+            "Volume": entry.get("volume", ""),
+            "Number": entry.get("number", ""),
+            "Pages": entry.get("pages", ""),
+            "Type": None,  # ← IMPORTANT: assigned outside
+            "DOI": doi_clean,
+            "URL": entry.get("url", ""),
+        }
+
+        # --------------------------------------------------
+        # Build pybtex Entry
+        # --------------------------------------------------
+        bib_entry = Entry(
+            entry.get("ENTRYTYPE", "article"),
+            persons={"authors": persons},
+            fields={
+                k: v for k, v in entry.items()
+                if k not in ["ENTRYTYPE", "ID", "author"]
+            }
+        )
+
+        if entry.get("ID"):
+            bib_entry.key = entry.get("ID")
+
+        return row, bib_entry
+
+        # except Exception as e:
+        #     logger.error(f"Error fetching publication for DOI {doi}: {str(e)}")
+            # return None, None
+        
     def _extract_publications(self):
         """
-        Extract structured publication information.
+        Extract structured publication information from PANGAEA dataset.
+
+        Sources:
+        1. Dataset citation (always included)
+        2. supplement_to (if DOI present)
+        3. relations (if DOI present)
 
         Returns
         -------
@@ -381,95 +488,88 @@ class PangaeaStudy:
             (list_of_rows, dict_of_bibtex_entries)
         """
         ds = self._panobj
+
         rows = []
         bib_entries = {}
         idx = 0
+        seen_dois = set()
 
-        study_title = ds.title
-        citation = ds.citation or getattr(ds, "citationString", None)
+        # -------------------------------------------------------
+        # Helper to safely add publication
+        # -------------------------------------------------------
+        def _add_publication(doi, pub_type):
+            nonlocal idx
 
-        if not citation:
-            dataset_doi = ds.doi or ds.uri
-            rows.append(
-                {
-                    "StudyID": self.study_id,
-                    "StudyName": study_title,
-                    "Author": None,
-                    "Title": study_title,
-                    "Journal": "PANGAEA",
-                    "Year": ds.year,
-                    "Volume": None,
-                    "Number": None,
-                    "Pages": None,
-                    "Type": "dataset",
-                    "DOI": dataset_doi,
-                    "URL": ds.uri,
-                    "CitationKey": None,
-                }
-            )
-            return rows, bib_entries
+            if not doi or doi in seen_dois:
+                return
 
-        dataset_dois = _extract_dois(citation)
-        dataset_doi = dataset_dois[0] if dataset_dois else (ds.doi or ds.uri)
-        dataset_year = _extract_year(citation) or ds.year
+            row, entry = self._fetch_publication_from_doi(doi, pub_type)
 
-        author_part = citation.split("(")[0].strip().rstrip(":")
+            if row:
+                row["Type"] = pub_type
+                rows.append(row)
 
-        rows.append(
-            {
-                "StudyID": self.study_id,
-                "StudyName": study_title,
-                "Author": author_part,
-                "Title": study_title,
-                "Journal": "PANGAEA",
-                "Year": dataset_year,
+                if entry:
+                    if not entry.key:
+                        key = _make_citation_key(doi, idx)
+                    else:
+                        key = entry.key
+                bib_entries[key] = entry
+
+                seen_dois.add(doi)
+                idx += 1
+
+        # -------------------------------------------------------
+        # 1. Dataset citation (ALWAYS INCLUDED)
+        # -------------------------------------------------------
+        citation = ds.citation
+
+        if citation:
+            row = {
+                "Author": None,
+                "Title": citation,
+                "Journal": "Pangaea",
+                "Year": _extract_year(citation),
                 "Volume": None,
                 "Number": None,
                 "Pages": None,
-                "Type": "dataset",
-                "DOI": dataset_doi,
-                "URL": ds.uri,
-                "CitationKey": citation,
+                "Type": "dataset_citation",
+                "DOI": _extract_dois(citation)[0] if _extract_dois(citation) else None,
+                "URL": None,
             }
-        )
 
-        idx += 1
-        key = _make_citation_key(dataset_doi or study_title, idx)
+            rows.append(row)
 
-        bib_entries[key] = Entry(
-            "misc",
-            persons={"author": _split_authors(author_part)},
-            fields={
-                "title": study_title or "",
-                "year": str(dataset_year) if dataset_year else "",
-                "doi": dataset_doi or "",
-                "url": ds.uri or "",
-            },
-        )
+        # -------------------------------------------------------
+        # 2. supplement_to
+        # -------------------------------------------------------
+        supp = ds.supplement_to
 
-        if "Supplement to:" in citation:
-            article_part = citation.split("Supplement to:")[-1].strip()
-            article_dois = _extract_dois(article_part)
-            article_doi = article_dois[-1] if article_dois else None
-            article_year = _extract_year(article_part)
+        if supp and supp.get("uri"):
+            uri = supp.get("uri")
 
-            rows.append(
-                {
-                    "StudyID": self.study_id,
-                    "StudyName": study_title,
-                    "Author": None,
-                    "Title": article_part,
-                    "Journal": None,
-                    "Year": article_year,
-                    "Volume": None,
-                    "Number": None,
-                    "Pages": None,
-                    "Type": "article",
-                    "DOI": article_doi,
-                    "URL": None,
-                    "CitationKey": article_part,
-                }
-            )
+            doi_list = _extract_dois(uri)
+
+            if doi_list:
+                _add_publication(doi_list[0], "supplement")
+
+        # -------------------------------------------------------
+        # 3. relations
+        # -------------------------------------------------------
+        for rel in ds.relations:
+            uri = rel.get("uri")
+            rel_type = rel.get("type", "")
+            rel = "reference" if rel_type and "related" in rel_type.lower() else None
+
+            if not uri:
+                continue
+
+            doi_list = _extract_dois(uri)
+
+            if not doi_list:
+                continue
+
+            _add_publication(doi_list[0], rel)
 
         return rows, bib_entries
     

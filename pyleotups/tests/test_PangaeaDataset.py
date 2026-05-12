@@ -243,13 +243,26 @@ class TestPangaeaDatasetOffline:
         assert isinstance(df_funding, pd.DataFrame)
     
 
+    @patch("doi2bib.crossref.get_bib")
     @patch("pangaeapy.pandataset.requests.get", side_effect=mock_requests_get)
     @patch("pyleotups.core.PangaeaDataset.PanQuery")
-    def test_get_publications(self, mock_panquery, mock_requests):
+    def test_get_publications(self, mock_panquery, mock_requests, mock_crossref):
 
         mock_panquery.return_value.result = [
             {"URI": "10.1594/PANGAEA.830586"}
         ]
+
+        mock_crossref.return_value = (
+            200,
+            """
+            @article{test,
+                author = {Smith, John},
+                title = {Test Paper},
+                journal = {Nature},
+                year = {2020}
+            }
+            """
+        )
 
         ds = PangaeaDataset()
         ds.search_studies(search_text="test")

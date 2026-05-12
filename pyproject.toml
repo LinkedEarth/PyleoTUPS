@@ -27,7 +27,9 @@ dependencies = [
   "nbstripout",
   "xlrd",
   "openpyxl", 
-  "pangaeapy"
+  "pangaeapy",
+  "bibtexparser",
+  "doi2bib"
 ]
 keywords = ["pyleotups", "Table Understanding", "Data Analysis"]
 urls = { Homepage = "https://github.com/LinkedEarth/pyleotups/pyleotups" }

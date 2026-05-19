@@ -391,7 +391,7 @@ class PangaeaStudy:
                     }
                 )
                 
-            return pd.DataFrame(rows)
+        return pd.DataFrame(rows)
 
     # ------------------------------------------------------------------
     # Publications

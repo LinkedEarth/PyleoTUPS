@@ -367,6 +367,30 @@ class PangaeaStudy:
                     "Elevation": ev.elevation,
                 }
             )
+        
+        # --------------------------------------------------
+        # Fallback: dataset-level geometryextent
+        # --------------------------------------------------
+        if not rows:
+
+            geo = getattr(self._panobj, "geometryextent", None)
+
+            if geo:
+
+                rows.append(
+                    {
+                        "StudyID": self.study_id,
+                        "SiteID": None,
+                        "SiteName": None,
+                        "LocationName": None,
+                        "MinLatitude": ( float(geo["southBoundLatitude"]) if geo.get("southBoundLatitude") is not None else None),
+                        "MaxLatitude": ( float(geo["northBoundLatitude"]) if geo.get("northBoundLatitude") is not None else None),
+                        "MinLongitude": ( float(geo["westBoundLongitude"]) if geo.get("westBoundLongitude") is not None else None),
+                        "MaxLongitude": ( float(geo["eastBoundLongitude"]) if geo.get("eastBoundLongitude") is not None else None),
+                        "Elevation": None,
+                    }
+                )
+                
         return pd.DataFrame(rows)
 
     # ------------------------------------------------------------------

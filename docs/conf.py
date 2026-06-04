@@ -12,7 +12,7 @@ autodoc_mock_imports = ["_tkinter"]
 import pyleotups as tups
 
 project = 'PyleoTUPS'
-copyright = '2025, LinkedEarth'
+copyright = '2026, LinkedEarth'
 author = 'Dhiren Oswal, Deborah Khider, Jay Pujara'
 release = tups.__version__
 version = tups.__version__
@@ -38,7 +38,8 @@ extensions = [
     # 'IPython.sphinxext.ipython_directive',
     'sphinx_search.extension',
     'jupyter_sphinx',
-    'sphinx_copybutton'
+    'sphinx_copybutton',
+    'sphinx_design'
 ]
 
 # mathjax_config = {

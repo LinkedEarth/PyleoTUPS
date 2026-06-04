@@ -126,7 +126,7 @@ df_multinv_default.head()
 
 
 ### Multiple investigators (AND by default)
-df_multinv_and = ds.search_studies(investigators=["Wahl, E.R.", "Vose, R.S."], investigatorsAndOr = "and")
+df_multinv_and = ds.search_studies(investigators=["Wahl, E.R.", "Vose, R.S."], investigators_and_or="and")
 df_multinv_and.head()
 
 

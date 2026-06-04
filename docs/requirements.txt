@@ -7,3 +7,4 @@ sphinx-copybutton
 IPython
 matplotlib
 readthedocs-sphinx-search
+sphinx-design

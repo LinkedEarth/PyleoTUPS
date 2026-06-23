@@ -6,7 +6,7 @@
 PyleoTUPS: Automated Paleoclimate Data Extraction and Processing
 ================================================================
 
-PyleoTUPS is a Python package developed by LinkedEarth to simplify access to paleoclimate datasets from major public repositories. It provides a unified interface for searching, retrieving, and processing data from `NOAA NCEI for Paleoclimatology <https://www.ncei.noaa.gov/products/paleoclimatology>`_ and `PANGAEA <https://www.pangaea.de>`_, two repositories that differ substantially in structure, metadata organization, search syntax, and file formats.
+PyleoTUPS is a Python package developed by `LinkedEarth <https://www.linked.earth>`_ to simplify access to paleoclimate datasets from major public repositories. It provides a unified interface for searching, retrieving, and processing data from `NOAA NCEI for Paleoclimatology <https://www.ncei.noaa.gov/products/paleoclimatology>`_ and `PANGAEA <https://www.pangaea.de>`_, two repositories that differ substantially in structure, metadata organization, search syntax, and file formats.
 
 The package is designed to reduce a common bottleneck in paleoclimate research: manually locating datasets, navigating repository-specific APIs, downloading files, parsing legacy formats, and reshaping results for analysis. PyleoTUPS handles these steps through a consistent Python API and returns results as pandas DataFrames with associated metadata.
 

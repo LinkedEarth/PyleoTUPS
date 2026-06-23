@@ -44,7 +44,7 @@ To remove the conda environment:
 More information about managing conda environments can be found `here <https://docs.conda.io/en/latest/user-guide/tasks/manage-environments.html>`_.
 
 Running the test suite
-======================
+-----------------------
 
 PyleoTUPS comes with a set of unit tests. To run these, you need to install `pytest` in the same environment as PyleoTUPS via `pip install pytest`. To run the tests from a Python terminal, navigate to the tests folder on your computer and run:
 
@@ -53,7 +53,7 @@ PyleoTUPS comes with a set of unit tests. To run these, you need to install `pyt
   pytest
 
 Dependencies
-============
+-------------
 
 PyleoTUPS depends on several Python packages:
  * pandas

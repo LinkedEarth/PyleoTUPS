@@ -35,13 +35,9 @@ bibliography: paper.bib
 
 # Summary
 
-# Summary
-
-Paleoclimate researchers use measurements from natural archives, such as tree rings, corals, ice cores, and lake or marine sediments, to study how Earth’s climate varied before the instrumental period. Many of these datasets are archived in the US National Oceanic and Atmospheric Administration (NOAA) National Centers for Environmental Information (NCEI) for Paleoclimatology and PANGAEA, the two main repositories used worldwide by the paleoclimate community. These repositories are essential resources, but they differ in their search interfaces, metadata models, and data organization.
+Paleoclimate researchers use measurements from natural archives, such as tree rings, corals, ice cores, and lake or marine sediments, to study how Earth’s climate varied before the instrumental period. Many of these datasets are archived in the U.S. National Oceanic and Atmospheric Administration (NOAA) National Centers for Environmental Information (NCEI) for Paleoclimatology and PANGAEA, the two main repositories used worldwide by the paleoclimate community. These repositories are essential resources, but they differ in their search interfaces, metadata models, and data organization.
 
 `PyleoTUPS` is a Python package designed to support the discovery, retrieval, and inspection of paleoclimate data across these repositories. The package provides repository-specific dataset objects, `NOAADataset` and `PangaeaDataset`, that expose a common set of methods for searching records, retrieving dataset-level metadata, and loading associated data tables. Results are returned as `pandas.DataFrame` objects that can be inspected, documented, and passed to downstream paleoclimate workflows. By harmonizing access patterns while preserving scientifically meaningful repository-specific metadata, `PyleoTUPS` supports reproducible cross-repository data discovery for paleoclimate synthesis, data-model comparison, climate field reconstruction, and related research applications.
-
-# Statement of need
 
 # Statement of need
 
@@ -76,7 +72,7 @@ Both dataset objects provide common methods, including `get_publications`, `get_
 
 Although `PyleoTUPS` is a new package, it is already being tested in an active paleoclimate data-compilation workflow. An undergraduate researcher with no prior experience in Python or paleoclimate science is using the package to help retrieve and transform repository data into LiPD format for an update to the PAGES2k compilation [@PAGES2k2017]. This ongoing use case suggests that `PyleoTUPS` can lower the technical barrier to cross-repository data access and support workflows that feed into community-scale paleoclimate products.
 
-`PyleoTUPS` is also designed to connect repository discovery with downstream scientific software. The tutorials demonstrate interoperability with `Pyleoclim` [@Khider2022], and the same `pandas.DataFrame`-based outputs can support workflows using packages such as `cfr` [@Zhu2024]. The package is being integrated into PaleoPAL, an AI-assisted paleoclimate workflow system, where it will provide repository-level access to paleoclimate data for automated and reproducible analyses.
+`PyleoTUPS` is also designed to connect repository discovery with downstream scientific software. The tutorials demonstrate interoperability with `Pyleoclim` [@Khider2022], and the same `pandas.DataFrame`-based outputs can support workflows using packages such as `cfr` [@Zhu2024]. 
 
 # AI usage disclosure
 

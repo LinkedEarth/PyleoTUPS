@@ -28,7 +28,7 @@ affiliations:
    index: 2
  - name: School of Earth and Sustainability, Northern Arizona University
    index: 3
-date: 23 June 2026
+date: 12 Aug 2026
 bibliography: paper.bib
 
 ---
@@ -76,7 +76,7 @@ Although `PyleoTUPS` is a new package, it is already being tested in an active p
 
 # AI usage disclosure
 
-AI code completion was used to help generate API documentation and write unit tests. Generative AI tools, including Claude and ChatGPT, were used to help draft the manuscript and tighten the prose in the tutorials. All tutorial code was written manually by the authors to test and demonstrate scientific use of the package.
+AI code completion was used to help fix some functionalities, generate API documentation, and write unit tests. Generative AI tools, including Claude and ChatGPT, were used to help draft the manuscript and tighten the prose in the tutorials. All tutorial code was written manually by the authors to test and demonstrate scientific use of the package.
 
 
 # Acknowledgements

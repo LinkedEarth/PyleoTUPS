@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=64", "wheel"]
+requires = ["setuptools>=77", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
@@ -8,14 +8,16 @@ include = ["pyleotups*"]
 
 [project]
 name = "pyleotups"
-version = "1.0.0"
+version = "1.1.0"
 description = "Automated Paleoclimate Data Extraction and Processing"
+readme = "README.md"
 authors = [
   { name = "Dhiren Oswal", email = "linkedearth@gmail.com" },
   { name = "Deborah Khider", email = "linkedearth@gmail.com" },
   { name = "Jay Pujara", email = "linkedearth@gmail.com" }
 ]
-license = { text = "Apache License 2.0" }
+license = "Apache-2.0"
+license-files = ["LICENSE"]
 requires-python = ">=3.11"
 dependencies = [
   "pandas",
@@ -26,13 +28,10 @@ dependencies = [
   "tqdm",
   "nbstripout",
   "xlrd",
-  "openpyxl", 
+  "openpyxl",
   "pangaeapy",
   "bibtexparser",
   "doi2bib"
 ]
 keywords = ["pyleotups", "Table Understanding", "Data Analysis"]
 urls = { Homepage = "https://github.com/LinkedEarth/pyleotups/pyleotups" }
-
-[tool.setuptools]
-license-files = []

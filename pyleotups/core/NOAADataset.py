@@ -48,7 +48,8 @@ class NOAADataset(BaseDataset):
         Attributes are set to their default empty values.
         """
         self.studies = {}               # NOAAStudyId -> NOAAStudy instance
-        self.data_table_index = {}      # dataTableID -> dict with study, site, paleo_data
+        self.data_table_index = {}      # dataTableID -> dict with study, site, paleo_data (last one wins)
+        self.data_table_index_all = {}  # dataTableID -> list of ALL matching dicts (handles duplicate IDs)
         self.file_url_to_datatable = {} # file_url -> dataTableID
         # self.last_timing = {}
         self.logger = logging.getLogger("pyleotups.NOAADataset")
@@ -57,22 +58,58 @@ class NOAADataset(BaseDataset):
     def _reindex(self):
         """Rebuild secondary indexes from `self.studies`."""
         self.data_table_index.clear()
+        self.data_table_index_all.clear()
         self.file_url_to_datatable.clear()
 
         for study in self.studies.values():
             for site in study.sites:
                 for paleo in site.paleo_data:
-                    # map datatable -> study/site/paleo
-                    self.data_table_index[paleo.datatable_id] = {
+                    # map datatable -> study/site/paleo (single entry; last one wins on collision)
+                    mapping = {
                         "study_id": study.study_id,
                         "site_id": site.site_id,
                         "paleo_data": paleo,
                     }
+                    self.data_table_index[paleo.datatable_id] = mapping
+                    # map datatable -> ALL study/site/paleo entries sharing this ID, so
+                    # get_data() can still open every one of them even when the ID collides.
+                    self.data_table_index_all.setdefault(paleo.datatable_id, []).append(mapping)
                     # map file_url -> datatable
                     for f in paleo.files:
                         url = f.get("fileUrl")
                         if url:
                             self.file_url_to_datatable[url] = paleo.datatable_id
+
+    def _check_duplicate_datatable_ids(self, context=""):
+        """
+        Warn about DataTableIDs shared by more than one (Study, Site) pair.
+
+        NOAA DataTableIDs are expected to be unique, but when they are not,
+        `self.data_table_index` (keyed by DataTableID) can only point to one of
+        the colliding entries. `get_data()` uses `self.data_table_index_all`
+        instead so it still opens every colliding entry's files; this method
+        only surfaces the collision to the user via a log warning.
+
+        Parameters
+        ----------
+        context : str, optional
+            Short prefix identifying the calling method, used in the log message.
+
+        Returns
+        -------
+        dict
+            Mapping of duplicated DataTableID -> list of (StudyID, SiteID) pairs.
+        """
+        duplicates = {
+            dt_id: [(m["study_id"], m["site_id"]) for m in mappings]
+            for dt_id, mappings in self.data_table_index_all.items()
+            if len(mappings) > 1
+        }
+        for dt_id, locs in duplicates.items():
+            log.warning(
+                f"{context}Duplicate DataTableID '{dt_id}' found across multiple Study/Site pairs {locs}."
+            )
+        return duplicates
 
     def __add__(self, other):
         if not isinstance(other, NOAADataset):
@@ -523,6 +560,7 @@ class NOAADataset(BaseDataset):
         
         self.studies.clear()
         self.data_table_index.clear()
+        self.data_table_index_all.clear()
         self.file_url_to_datatable.clear()
 
         for study_data in tqdm(data.get('study', []), desc="Parsing NOAA studies"):
@@ -531,11 +569,13 @@ class NOAADataset(BaseDataset):
 
             for site in study_obj.sites:
                 for paleo in site.paleo_data:
-                    self.data_table_index[paleo.datatable_id] = {
+                    mapping = {
                         'study_id': study_obj.study_id,
                         'site_id': site.site_id,
                         'paleo_data': paleo
                     }
+                    self.data_table_index[paleo.datatable_id] = mapping
+                    self.data_table_index_all.setdefault(paleo.datatable_id, []).append(mapping)
                     for file_obj in paleo.files:
                         file_url = file_obj.get('fileUrl')
                         if file_url:
@@ -680,6 +720,8 @@ class NOAADataset(BaseDataset):
             df = ds.get_tables()
             df.head()
         """
+        self._check_duplicate_datatable_ids(context="get_tables(): ")
+
         records = []
 
         for study in self.studies.values():
@@ -924,21 +966,178 @@ class NOAADataset(BaseDataset):
         return df.set_index("DataTableID")
     
 
+    def _rank_file_priority(self, file_obj):
+        """
+        Rank a NOAA file entry by how "easy" it is expected to be to parse.
+
+        Lower rank is attempted first. Order follows the priority requested for
+        `get_data`: NOAA structured (templated) .txt -> Original Contributed .txt
+        -> .csv -> web page / directory listing -> anything else (e.g. proprietary
+        binary formats like .crn/.rwl/.fhx/.lpd, which pyleotups cannot parse).
+
+        Parameters
+        ----------
+        file_obj : dict
+            A raw `dataFile` entry, expected to have a ``fileUrl`` and optionally
+            a ``urlDescription``.
+
+        Returns
+        -------
+        int
+            Priority rank (0 = easiest/first, 4 = last resort).
+        """
+        url = (file_obj.get('fileUrl') or '').strip()
+        desc = (file_obj.get('urlDescription') or '').lower()
+        name = url.rsplit('/', 1)[-1]
+        file_type = name.rsplit('.', 1)[-1].lower() if '.' in name else ''
+
+        if file_type == 'txt':
+            return 0 if ('noaa' in desc or 'template' in desc) else 1
+        if file_type == 'csv':
+            return 2
+        if file_type in self._PROPRIETARY_TYPES:
+            return 4
+        # No extension (directory index) or an .html/.htm page -> treat as a web page.
+        return 3
+
+    @staticmethod
+    def _extract_links_from_html(base_url, html_text):
+        """
+        Extract absolute hyperlinks from an HTML page (e.g. a NOAA directory listing).
+
+        Only links whose target filename has an extension are kept, so directory
+        "Parent Directory" / sibling-folder links are skipped and recursion into
+        another folder page cannot loop indefinitely.
+
+        Parameters
+        ----------
+        base_url : str
+            The (already-redirect-resolved) URL the HTML was fetched from, used to
+            resolve relative hrefs.
+        html_text : str
+            Raw HTML content of the page.
+
+        Returns
+        -------
+        list of str
+            Deduplicated, absolute candidate file URLs discovered on the page.
+        """
+        from html.parser import HTMLParser
+        from urllib.parse import urljoin, urlparse
+
+        hrefs = []
+
+        class _LinkParser(HTMLParser):
+            def handle_starttag(self, tag, attrs):
+                if tag.lower() == 'a':
+                    for attr, value in attrs:
+                        if attr.lower() == 'href' and value:
+                            hrefs.append(value)
+
+        _LinkParser().feed(html_text)
+
+        base = base_url if base_url.endswith('/') else base_url + '/'
+
+        seen = set()
+        links = []
+        for href in hrefs:
+            href = href.strip()
+            if not href or href in ('.', '..') or href.startswith('#'):
+                continue
+
+            parsed = urlparse(href)
+            if parsed.scheme and parsed.scheme not in ('http', 'https'):
+                continue  # skip mailto:, javascript:, etc.
+
+            absolute = urljoin(base, href)
+            if absolute in seen:
+                continue
+
+            # Skip links back into a (sub)folder — only keep actual files.
+            name = absolute.rsplit('/', 1)[-1]
+            if '.' not in name:
+                continue
+
+            seen.add(absolute)
+            links.append(absolute)
+
+        return links
+
+    def _attach_metadata(self, df, mapping):
+        """Attach NOAAStudyId/StudyName metadata to a parsed DataFrame, if available."""
+        df.attrs['NOAAStudyId'] = mapping.get('study_id')
+        study_obj = self.studies.get(mapping.get('study_id'), {})
+        df.attrs['StudyName'] = study_obj.metadata.get("studyName") if hasattr(study_obj, 'metadata') else None
+        return df
+
+    def _process_csv_file(self, file_url, mapping=None):
+        """Fetch and parse a .csv data file into a single-item list of DataFrames."""
+        try:
+            df = pd.read_csv(file_url)
+        except Exception as e:
+            raise RuntimeError(f"Failed to read CSV file from '{file_url}': {e}")
+
+        if mapping:
+            df = self._attach_metadata(df, mapping)
+        return [df]
+
+    def _process_folder_page(self, file_url, html_text, mapping=None):
+        """
+        Treat `file_url` as a web page/directory-index rather than a data file:
+        extract hyperlinks from the page and attempt every candidate file (easiest
+        first, same priority order as `get_data`), collecting a DataFrame for each
+        one that parses rather than stopping at the first success.
+        """
+        candidate_urls = self._extract_links_from_html(file_url, html_text)
+        if not candidate_urls:
+            raise UnsupportedFileTypeError(
+                f"'{file_url}' is a web page/folder with no discoverable data file links."
+            )
+
+        ranked_urls = sorted(candidate_urls, key=lambda u: self._rank_file_priority({'fileUrl': u}))
+
+        results = []
+        last_error = None
+        for url in ranked_urls:
+            try:
+                results.extend(self._process_file(url, mapping))
+            except Exception as e:
+                last_error = e
+                log.warning(f"Could not parse linked file '{url}' discovered on page '{file_url}': {e}")
+
+        if not results:
+            raise UnsupportedFileTypeError(
+                f"None of the {len(ranked_urls)} link(s) discovered on '{file_url}' could be parsed. "
+                f"Last error: {last_error}"
+            )
+        return results
+
     def _process_file(self, file_url, mapping=None):
         """
-        Process a single file URL: detect parser, parse the file, and attach metadata.
+        Process a single file URL: detect its type, parse it, and attach metadata.
+
+        Supports NOAA .txt files (structured/NOAA-templated or contributed),
+        .csv files, and web pages/directory listings (whose linked files are
+        discovered and attempted in turn). Proprietary formats (.crn/.rwl/.fhx/.lpd)
+        and any other extension are rejected.
         """
         if not file_url:
             raise ValueError("File URL is missing.")
 
-        file_type = file_url.split('.')[-1].lower()
+        name = file_url.rsplit('/', 1)[-1]
+        file_type = name.rsplit('.', 1)[-1].lower() if '.' in name else ''
+
         if file_type in self._PROPRIETARY_TYPES:
             raise UnsupportedFileTypeError(
-                f"pyleotups works with .txt files only. File type '{file_type}' is proprietary."
+                f"pyleotups works with .txt/.csv files only. File type '{file_type}' is proprietary."
             )
-        if file_type != 'txt':
+
+        if file_type == 'csv':
+            return self._process_csv_file(file_url, mapping)
+
+        if file_type not in ('', 'txt', 'html', 'htm'):
             raise UnsupportedFileTypeError(
-                f"Invalid file type '{file_type}'. Only .txt files are supported."
+                f"Invalid file type '{file_type}'. Only .txt, .csv files and web-page/folder links are supported."
             )
 
         # Step 1: Detect parser type by reading initial lines
@@ -991,10 +1190,24 @@ class NOAADataset(BaseDataset):
         try:
             response = requests.get(file_url)
             response.raise_for_status()
-            lines = response.text.splitlines()
-            parser_type = detect_parser_type(lines)
         except Exception as e:
             raise RuntimeError(f"Failed to read file from '{file_url}': {e}")
+
+        # An .html/.htm link, or an extension-less link (e.g. a NOAA directory
+        # listing), may actually be a web page rather than a data file. Detect
+        # this from the response and, if so, hand off to the folder-page handler
+        # (using the redirect-resolved URL so relative links resolve correctly).
+        content_type = response.headers.get('Content-Type', '').lower()
+        looks_like_html = 'html' in content_type or file_type in ('html', 'htm')
+        if not looks_like_html and file_type == '':
+            sniff = response.text.lstrip()[:300].lower()
+            looks_like_html = sniff.startswith('<!doctype html') or sniff.startswith('<html')
+
+        if looks_like_html:
+            return self._process_folder_page(response.url, response.text, mapping)
+
+        lines = response.text.splitlines()
+        parser_type = detect_parser_type(lines)
 
         # Step 2: Use the appropriate parser
         if parser_type == "standard":
@@ -1012,12 +1225,6 @@ class NOAADataset(BaseDataset):
             raise RuntimeError(f"Error while parsing file {file_url}: {e}")
 
         # Step 3: Attach metadata
-        def attach_metadata(df, mapping):
-            df.attrs['NOAAStudyId'] = mapping.get('study_id')
-            study_obj = self.studies.get(mapping.get('study_id'), {})
-            df.attrs['StudyName'] = study_obj.metadata.get("studyName") if hasattr(study_obj, 'metadata') else None
-            return df
-
         results = []
         to_process = []
 
@@ -1041,7 +1248,7 @@ class NOAADataset(BaseDataset):
         # Now `to_process` contains only the DataFrames we want
         for df in to_process:
             if mapping:
-                df = attach_metadata(df, mapping)
+                df = self._attach_metadata(df, mapping)
             results.append(df)
 
         return results
@@ -1051,6 +1258,21 @@ class NOAADataset(BaseDataset):
         """
         Fetch external data for given dataTableIDs or file URLs, perform validations,
         and attach study and site metadata.
+
+        A single DataTableID can be associated with several files of different
+        formats (e.g. a NOAA-templated .txt file, the original contributed .txt,
+        a .csv, or a web page/folder listing links to all of them) — and these
+        files do not always hold the same data in different formats (e.g. a tree-ring
+        DataTableID may bundle separate "Raw Measurements" and "Chronology" files).
+        Every available file for a DataTableID is therefore attempted — starting
+        with the one expected to be easiest to parse (NOAA structured .txt, then
+        Original Contributed .txt, then .csv, then web page/folder links) — and a
+        DataFrame is kept for every file that parses successfully; a file that
+        fails to parse is logged and skipped rather than aborting the others.
+
+        If the same DataTableID is (unexpectedly) associated with more than one
+        Study/Site, a warning is logged and files from *every* matching Study/Site
+        are attempted, so none of them are silently dropped.
 
         Parameters
         ----------
@@ -1067,10 +1289,11 @@ class NOAADataset(BaseDataset):
         Raises
         ------
         ValueError
-            For missing parent study mapping, missing file URL, or proprietary/unsupported file types.
+            For missing parent study mapping, missing file URL, or if none of the
+            available files for a DataTableID could be parsed.
         Exception
             Propagates any exceptions raised by the parser.
-        
+
         Examples
         --------
 
@@ -1086,17 +1309,56 @@ class NOAADataset(BaseDataset):
 
         # Process based on dataTableIDs.
         if dataTableIDs:
+            self._check_duplicate_datatable_ids(context="get_data(): ")
+
             dataTableIDs = assert_list(dataTableIDs)
             for dt_id in dataTableIDs:
 
-                mapping = self.data_table_index.get(dt_id)
-                if not mapping:
+                mappings = self.data_table_index_all.get(dt_id)
+                if not mappings:
                     raise ValueError(f"No parent study mapping found for Data Table ID '{dt_id}'. "
                                      "Please perform a search using this DataTableID or provide a specific file URL.")
-                file_url = mapping['paleo_data'].file_url
-                if not file_url:
-                    raise ValueError(f"File URL for Data Table ID '{dt_id}' is missing. Cannot fetch data.")
-                dfs.extend(self._process_file(file_url, mapping))
+
+                any_success = False
+                attempted_urls = []
+                last_error = None
+
+                for mapping in mappings:
+                    files = mapping['paleo_data'].files
+                    if not files:
+                        log.warning(
+                            f"get_data(): No files found for Data Table ID '{dt_id}' under Study "
+                            f"'{mapping['study_id']}' / Site '{mapping['site_id']}'; skipping."
+                        )
+                        continue
+
+                    # Attempt EVERY file for this DataTableID — easiest first (NOAA
+                    # structured .txt -> Original Contributed .txt -> .csv -> web
+                    # page/folder link) — since different files under the same ID
+                    # can hold genuinely different data (e.g. tree-ring "Chronology"
+                    # vs "Raw Measurements"), not just alternate formats of the same
+                    # table. A file failing to parse does not stop the others.
+                    for file_obj in sorted(files, key=self._rank_file_priority):
+                        url = file_obj.get('fileUrl')
+                        if not url:
+                            continue
+                        attempted_urls.append(url)
+                        try:
+                            dfs.extend(self._process_file(url, mapping))
+                            any_success = True
+                        except Exception as e:
+                            last_error = e
+                            log.warning(
+                                f"get_data(): Could not use file '{url}' for Data Table ID '{dt_id}' "
+                                f"(Study '{mapping['study_id']}' / Site '{mapping['site_id']}'): {e}. "
+                                "Trying next available file for this Data Table ID."
+                            )
+
+                if not any_success:
+                    raise ValueError(
+                        f"None of the {len(attempted_urls)} file(s) available for Data Table ID '{dt_id}' "
+                        f"could be parsed. URLs attempted: {attempted_urls}. Last error: {last_error}"
+                    )
             return dfs
 
         # Process based on file_urls provided directly.

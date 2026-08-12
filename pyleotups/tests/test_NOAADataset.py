@@ -383,7 +383,7 @@ class TestNOAADatasetGetDataMocked:
 
     # --- Test t05: file with unsupported extension ---
     def test_get_data_t05_unsupported_file_type_raises(self):
-        with pytest.raises(UnsupportedFileTypeError, match="Only .txt files are supported"):
+        with pytest.raises(UnsupportedFileTypeError, match="Invalid file type 'xlsx'"):
             self.ds._process_file("https://example.com/data.xlsx")
 
     # --- Test t06: unparsable file structure ---
@@ -523,6 +523,159 @@ class TestNOAADatasetAddBinary:
             "duplicate" in record.message.lower() and "study" in record.message.lower() and "18315" in record.message
             for record in caplog.records
         )
+
+
+# ---------------------------------------------------------------------------
+# Tests: multiple files per DataTableID -> easiest-first priority + fallback
+# ---------------------------------------------------------------------------
+
+class TestNOAADatasetMultiFilePriority:
+
+    def setup_method(self):
+        self.ds = NOAADataset()
+        self.mock_data = get_mock_study_response()
+        self.ds._parse_response(self.mock_data, limit=100)
+        self.dt_id = next(iter(self.ds.data_table_index_all))
+        self.mapping = self.ds.data_table_index[self.dt_id]
+
+        # Give this DataTableID two files of different formats, deliberately
+        # listed with the "harder" one first to prove ordering isn't positional.
+        self.mapping["paleo_data"].files = [
+            {"fileUrl": "https://example.com/original.csv", "urlDescription": "Alternate Format Data"},
+            {"fileUrl": "https://example.com/data-noaa.txt", "urlDescription": "NOAA Template File"},
+        ]
+
+    def test_rank_prefers_noaa_txt_over_csv(self):
+        """_rank_file_priority ranks a NOAA-templated .txt ahead of a .csv."""
+        files = self.mapping["paleo_data"].files
+        ranked = sorted(files, key=self.ds._rank_file_priority)
+        assert ranked[0]["fileUrl"].endswith("-noaa.txt")
+        assert ranked[1]["fileUrl"].endswith(".csv")
+
+    @patch.object(NOAADataset, "_process_file")
+    def test_get_data_tries_next_file_when_easiest_fails(self, mock_process):
+        """If the highest-priority file fails to parse, get_data falls back to the next one."""
+        def side_effect(url, mapping=None):
+            if url.endswith("-noaa.txt"):
+                raise RuntimeError("boom")
+            return [pd.DataFrame({"x": [1]})]
+
+        mock_process.side_effect = side_effect
+
+        result = self.ds.get_data(dataTableIDs=[self.dt_id])
+        assert len(result) == 1
+
+        called_urls = [c.args[0] for c in mock_process.call_args_list]
+        assert called_urls[0].endswith("-noaa.txt")  # easiest attempted first
+        assert called_urls[1].endswith(".csv")        # fallback attempted second
+
+    @patch.object(NOAADataset, "_process_file")
+    def test_get_data_raises_when_all_files_fail(self, mock_process):
+        """If every file for a DataTableID fails to parse, get_data raises ValueError."""
+        mock_process.side_effect = RuntimeError("boom")
+        with pytest.raises(ValueError, match="None of the"):
+            self.ds.get_data(dataTableIDs=[self.dt_id])
+
+    @patch.object(NOAADataset, "_process_file")
+    def test_get_data_keeps_every_file_that_succeeds(self, mock_process):
+        """
+        Different files under the same DataTableID can hold genuinely different
+        data (e.g. a tree-ring DataTableID bundling separate "Raw Measurements"
+        and "Chronology" files) rather than the same table in another format, so
+        get_data must not stop after the first successful file.
+        """
+        mock_process.side_effect = lambda url, mapping=None: [pd.DataFrame({"url": [url]})]
+
+        result = self.ds.get_data(dataTableIDs=[self.dt_id])
+        assert len(result) == 2  # both files parsed successfully; both are kept
+
+
+# ---------------------------------------------------------------------------
+# Tests: duplicate DataTableIDs across Study/Site pairs
+# ---------------------------------------------------------------------------
+
+class TestNOAADatasetDuplicateDataTableIDs:
+
+    def setup_method(self):
+        self.ds = NOAADataset()
+        self.mock_data = get_mock_study_response()
+        self.ds._parse_response(self.mock_data, limit=100)
+
+        # Force a collision: point a second Study/Site's PaleoData at the SAME
+        # DataTableID already used by a different Study/Site.
+        studies = list(self.ds.studies.values())
+        first_paleo = studies[0].sites[0].paleo_data[0]
+        self.dup_id = first_paleo.datatable_id
+        second_paleo = studies[1].sites[0].paleo_data[0]
+        second_paleo.datatable_id = self.dup_id
+        self.ds._reindex()
+
+    def test_get_tables_warns_on_duplicate(self, caplog):
+        with caplog.at_level("WARNING"):
+            self.ds.get_tables()
+        assert any(
+            "Duplicate DataTableID" in record.message and str(self.dup_id) in record.message
+            for record in caplog.records
+        )
+
+    @patch.object(NOAADataset, "_process_file")
+    def test_get_data_opens_files_from_every_colliding_entry(self, mock_process, caplog):
+        """Colliding entries are all attempted (not just the one left in the single-entry index)."""
+        mock_process.side_effect = lambda url, mapping=None: [pd.DataFrame({"url": [url]})]
+
+        with caplog.at_level("WARNING"):
+            result = self.ds.get_data(dataTableIDs=[self.dup_id])
+
+        assert any("Duplicate DataTableID" in record.message for record in caplog.records)
+        assert len(result) == 2  # one per colliding Study/Site
+
+
+# ---------------------------------------------------------------------------
+# Tests: .csv files and web page / directory-listing link extraction
+# ---------------------------------------------------------------------------
+
+class TestNOAADatasetCsvAndWebpage:
+
+    def setup_method(self):
+        self.ds = NOAADataset()
+
+    @patch("pandas.read_csv")
+    def test_process_csv_file(self, mock_read_csv):
+        mock_read_csv.return_value = pd.DataFrame({"a": [1, 2]})
+        result = self.ds._process_file("https://example.com/data.csv")
+        assert len(result) == 1
+        assert isinstance(result[0], pd.DataFrame)
+
+    def test_extract_links_from_html(self):
+        html = """
+        <html><body>
+        <a href="..">Parent Directory</a>
+        <a href="study.txt">study.txt</a>
+        <a href="study.csv">study.csv</a>
+        <a href="mailto:test@example.com">email</a>
+        </body></html>
+        """
+        links = self.ds._extract_links_from_html("https://example.com/folder/", html)
+        assert links == [
+            "https://example.com/folder/study.txt",
+            "https://example.com/folder/study.csv",
+        ]
+
+    @patch.object(NOAADataset, "_process_file")
+    def test_process_folder_page_tries_links_in_priority_order(self, mock_process):
+        html = """
+        <a href="data.csv">csv</a>
+        <a href="data-noaa.txt">txt</a>
+        """
+
+        def side_effect(url, mapping=None):
+            if url.endswith("noaa.txt"):
+                return [pd.DataFrame({"x": [1]})]
+            raise RuntimeError("nope")
+
+        mock_process.side_effect = side_effect
+        result = self.ds._process_folder_page("https://example.com/folder/", html)
+        assert len(result) == 1
 
 
 # ---------------------------------------------------------------------------

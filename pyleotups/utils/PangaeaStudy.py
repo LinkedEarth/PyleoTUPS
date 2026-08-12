@@ -114,6 +114,24 @@ class PangaeaStudy:
 
         return df
 
+    def _iter_events(self):
+        """
+        Iterate over this dataset's `PanEvent` objects.
+
+        pangaeapy changed the shape of `PanDataSet.events` between versions:
+        older releases exposed it as a list of `PanEvent` objects, while newer
+        releases (>=1.1) expose it as a dict of ``{eventLabel: PanEvent}``.
+        Support both so pyleotups doesn't break on the installed version.
+
+        Returns
+        -------
+        Iterable of PanEvent
+        """
+        events = self._panobj.events
+        if isinstance(events, dict):
+            return events.values()
+        return events
+
     # ------------------------------------------------------------------
     # Summary Metadata
     # ------------------------------------------------------------------
@@ -270,7 +288,7 @@ class PangaeaStudy:
         latitudes = []
         longitudes = []
 
-        for ev in self._panobj.events:
+        for ev in self._iter_events():
             lat1 = ev.latitude
             lat2 = ev.latitude2 if getattr(ev, "latitude2", None) is not None else lat1
             lon1 = ev.longitude
@@ -322,7 +340,7 @@ class PangaeaStudy:
             "ScienceKeywords": getattr(ds, "keywords", None),
             "Investigators": ", ".join(a.fullname for a in ds.authors),
             "Publications": ds.citation,
-            "Sites": [e.label for e in ds.events],
+            "Sites": [e.label for e in self._iter_events()],
             "Funding": [
                 {"name": p.name, "url": p.URL, "award": p.awardURI}
                 for p in ds.projects
@@ -348,7 +366,7 @@ class PangaeaStudy:
             DataFrame containing event-level geographic information.
         """
         rows = []
-        for ev in self._panobj.events:
+        for ev in self._iter_events():
             lat1 = ev.latitude
             lon1 = ev.longitude
             lat2 = ev.latitude2 if getattr(ev, "latitude2", None) is not None else lat1

@@ -31,6 +31,14 @@ PyleoTUPS is a Python package designed to streamline paleoclimate data workflows
 
 PyleoTUPS is designed for paleoclimate researchers, Earth system modelers, and data scientists working with paleoclimate observations. Whether you're conducting systematic data synthesis, model evaluation, or exploratory analysis, PyleoTUPS reduces the technical barriers to accessing and utilizing paleoclimate datasets.
 
+## Getting started
+
+The package is available on PyPI:
+
+```pip install pyleotups```
+
+The package is supported by extensive [API documentation](https://pyleotups.readthedocs.io/en/latest/) and [tutorials](https://linked.earth/pyleotupsTutorials/).
+
 ## Versions
 
 See our [releases page](https://github.com/LinkedEarth/PyleoTUPS/releases) for details on what's included in each version.

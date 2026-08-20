@@ -83,7 +83,7 @@ We used AI code completion to help fix some functionality, generate API document
 
 # Acknowledgements
 
-The authors were supported by NSF Award #2411267 and #2411268. We thank Dr. Georgina Falster at The University of Adelaide for testing the alpha version of this software and providing feedback on the early implementation. 
+The authors were supported by NSF Award #2411267 and #2411268. We thank Dr. Georgina Falster at The University of Adelaide for testing the alpha version of this software and providing feedback on the early implementation.
 
 
 # References
